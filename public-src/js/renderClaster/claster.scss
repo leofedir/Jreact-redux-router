@@ -1,0 +1,321 @@
+#map, #mapid { position: absolute; top:0; bottom:0; right:0; left:0; }
+
+#props {
+    width: 400px;
+    padding-bottom: 10px;
+    background: white;
+    z-index: 99999;
+    border-radius: 6px;
+    box-shadow: 0px 10px 25px 0px rgba(0,0,0,0.15);
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.popup_header {
+    border-radius: 6px 6px 0 0;
+    height: 30px;
+    background-color: #747474;
+}
+
+.layers {
+    top: 150px !important;
+}
+
+.closeButton {
+    background-image: url(/img/x.svg);
+    background-repeat: no-repeat;
+    background-size: 17px;
+    margin: 7px 93%;
+    width: 20px;
+    height: 20px;
+    border: 0;
+    background-color: transparent;
+}
+
+.popup_item {
+    display: flex;
+    /*justify-content: space-between;*/
+    align-items: center;
+    padding: 0 20px;
+}
+
+.popup_item p {
+    margin: 10px 0;
+    padding: 0;
+}
+
+.popup_item img {
+    width: 20px;
+    margin-right: 10px;
+}
+
+#props h5 {
+    margin: 10px;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.geocoder-control-suggestions {
+    z-index: 1000;
+}
+
+.leaflet-top .leaflet-control-locate {
+    top: 10px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 40px;
+}
+
+
+.marker-cluster {
+    background-clip: padding-box;
+    border-radius: 20px;
+}
+.marker-cluster div {
+    background-size: 100%;
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    margin-top: 5px;
+    text-align: center;
+    border-radius: 15px;
+    font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+.marker-cluster span {
+    line-height: 30px;
+}
+
+.marker-cluster-small {
+
+    background-color: rgba(181, 226, 140, 0.6);
+}
+.marker-cluster-small div {
+    /*background: url('/img/claster/green.svg') no-repeat;*/
+    background: url('/img/claster/point.svg') no-repeat;
+    background-size: 100%;
+    /* width: 32px; */
+    /*height: 60px;*/
+    background-color: rgba(110, 204, 57, 0.6);
+}
+
+.marker-cluster-medium {
+    background-color: rgba(241, 211, 87, 0.6);
+}
+
+.marker-cluster-medium div {
+    /*background: url('/img/claster/yellow.svg') no-repeat;*/
+    background-color: rgba(240, 194, 12, 0.6);
+}
+
+.marker-cluster-large {
+    background-color: rgba(253, 156, 115, 0.6);
+}
+
+.marker-cluster-large div {
+    /*background: url('/img/claster/red.svg') no-repeat;*/
+    background-color: rgba(241, 128, 23, 0.6);
+}
+
+input.geocoder-control-input.leaflet-bar {
+    border: none;
+    border-radius: 6px;
+    top: 3px;
+}
+
+.geocoder-control-suggestions.leaflet-bar {
+    border: none;
+}
+
+
+.geocoder-control-input {
+    background-image: url(/img/search.svg);
+    background-repeat: no-repeat;
+    background-size: 23px;
+    background-position: 6px;
+    left: 320px;
+    position: absolute;
+    width: 250px;
+    height: 30px;
+    padding-left: 45px;
+}
+
+.geocoder-control-suggestions {
+    position: absolute;
+    width: 250px;
+    left: 320px;
+    top: 45px;
+    background-color: #fff;
+}
+
+.geocoder-control-suggestions ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.geocoder-control-suggestions li {
+    padding: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.geocoder-control-input-disabled {
+    background-color: #f4f4f4;
+}
+.geocoder-control {
+    width: 26px;
+    height: 26px;
+    transition: width .175s ease-in
+}
+.geocoder-control-expanded,
+.leaflet-touch .geocoder-control-expanded {
+    width: 275px
+}
+.geocoder-control-input.geocoder-control-loading {
+    background-size: 26px
+}
+
+.geocoder-control-header {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #444;
+    background: #F2F2F2;
+    border-bottom: 1px solid #d5d5d5;
+    display: block;
+    padding: .5em
+}
+.geocoder-control-list {
+    list-style: none;
+    margin: 0;
+    padding: 0
+}
+.geocoder-control-suggestions .geocoder-control-suggestion {
+    font-size: 13px;
+    padding: 7px;
+    background: white;
+    border-top: 1px solid #f1f1f1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer
+}
+.geocoder-control-suggestions .geocoder-control-suggestion:first-child {
+    border: none
+}
+.geocoder-control-suggestions .geocoder-control-suggestion.geocoder-control-selected,
+.geocoder-control-suggestions .geocoder-control-suggestion:hover {
+    background: #7FDFFF;
+    border-color: #7FDFFF
+}
+
+#basemaps-wrapper2 {
+    width: 230px;
+    position: absolute;
+    top: 100px;
+    right: 10px;
+    z-index: 400;
+    text-align: left;
+    box-shadow: none;
+}
+
+#basemaps-wrapper2 p {
+    margin-left: 16px;
+}
+
+.layerWrapp {
+    padding-bottom: 10px;
+    border-radius: 6px;
+    background: white;
+    visibility: visible;
+    opacity: 1;
+    box-shadow: 0px 10px 25px 0px rgba(0,0,0,0.15);
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
+.hide_layers {
+    box-shadow: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.title_leayers {
+    height: 30px;
+    line-height: 30px;
+    border-radius: 6px 6px 0 0;
+    display: block;
+    /*padding: 5 px 10px;*/
+    padding-left: 30px;
+    background-color: #747474;
+    color: #fff;
+    background-image: url(/img/cub.svg);
+    background-repeat: no-repeat;
+    background-size: 18px;
+    background-position: 6px 6px;
+}
+
+.title_leayers img {
+    line-height: 30px;
+    margin-right: 6px;
+    margin-top: 6px;
+    float: right;
+    width: 17px;
+}
+
+.box {
+    position: absolute;
+    width: 50px;
+    top: -80px;
+    right: 45px;
+}
+
+.info {
+    right: -5px
+}
+
+.box:hover .cls-3,
+.box.active .cls-3,
+.box:hover .cls-4_1 {
+    stroke: #76797e;
+}
+
+.box:hover .cls-4_1 {
+    fill: #000
+}
+
+.box:hover .cls-2,
+.box.active .cls-2,
+.box:hover .cls-3_1 {
+    fill: #fff
+}
+
+label {
+    display: block;
+    position: relative;
+}
+.checkbox + .icon {
+    position: absolute;
+    left: 0; top: 0;
+    width: 20px;
+    height: 100%;
+    background: url('/img/eye.svg') no-repeat;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked + span {
+    background: url('/img/eye_a.svg') no-repeat;
+}
+
+label span.text {
+    margin-left: 10px;
+}
+
+/*.leaflet-marker-icon {*/
+    /*background: url('/img/marker-icon.svg') no-repeat;*/
+/*}*/
