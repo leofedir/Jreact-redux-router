@@ -311,8 +311,13 @@ header {
     z-index: 450;
 }
 
-.popup_header h5 {
+.hide .icons-menu__link:hover .submenu{
+    display: none;
+}
 
+.hide .icons-menu__link:hover {
+    background-color: transparent;
+    cursor: default;
 }
 
 .title_map {

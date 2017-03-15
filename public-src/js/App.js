@@ -42,27 +42,6 @@ class App extends Component {
             GetMaps(item.dataset.folder, item)
         });
 
-        document.querySelector('a.test').addEventListener('click' , (e) => {
-
-
-
-
-            // fetch('http://test.loc' , {
-            //             headers: {
-            //                         // 'Access-Control-Allow-Origin' : 'http://localhost' ,
-            //                         'Content-Type': 'application/x-www-form-urlencoded'
-            //             },
-            //             method: "POST",
-            //             body: 'name=test&period=2'
-            //     })
-            //     .then((e)=>{
-            //         console.log("Then -> " , e);
-            //     })
-            //     .catch((e)=>{
-            //         console.log("catch -> " , e);
-            //     })
-        });
-
         let arrow = document.getElementById('hide_menu');
         arrow.addEventListener('click', () => {
             document.querySelector('.menu_item').classList.toggle("hide")
