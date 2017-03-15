@@ -1,6 +1,6 @@
 .geocoder-control-input {
     position: absolute;
-    left: 0;
+    left: 320px;
     top: 0;
     background-color: white;
     background-repeat: no-repeat;
@@ -21,15 +21,10 @@
 }
 .geocoder-control-input-disabled {
     background-color: #f4f4f4;
-    //background-image: url("img/search-disabled.png")
 }
 .geocoder-control {
     width: 26px;
     height: 26px;
-    -webkit-transition: width .175s ease-in;
-    -moz-transition: width .175s ease-in;
-    -ms-transition: width .175s ease-in;
-    -o-transition: width .175s ease-in;
     transition: width .175s ease-in
 }
 .geocoder-control-expanded,

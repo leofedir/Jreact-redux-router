@@ -1,9 +1,8 @@
+@import './var';
 @import '../js/diagrama/diagrama';
 @import "../js/renderClaster/claster";
 @import "../js/renderClaster/geocoder";
 
-
-html,
 .map {
     padding: 0;
     margin: 0;
@@ -182,7 +181,7 @@ body {
 header {
     width: 100%;
     height: 60px;
-    background-color: #009971;
+    background-color: $green;
     z-index: 401;
     position: absolute;
     box-shadow: 0px 10px 25px 0px rgba(0,0,0,0.15);
@@ -228,7 +227,7 @@ header {
 
 .menu_item{
     margin-top: 85px;
-    width: 270px;
+    width: $menu_width;
     transition: all .5s;
     /*white-space: nowrap;*/
     overflow: hidden;
@@ -322,7 +321,7 @@ header {
     top: 60px;
     left: 0;
     width: 100vw;
-    padding-left: 270px;
+    padding-left: $menu_width;
     margin: 0;
     transition: all .5s;
 }
@@ -335,8 +334,8 @@ header {
     padding: 15px;
     font-size: 2em;
     font-weight: bold;
-    background-color: rgba(20, 200, 15, 0.1);
-    text-shadow: 0px 0px 9px rgba(255, 255, 255, 1);
+    background-color: rgba($green, 0.2);
+    text-shadow: 0 0 9px rgba(255, 255, 255, 1);
 }
 
 .simpleInfoWindow {
@@ -382,7 +381,7 @@ header {
 .popup_top,
 .popup_bottom {
     border-bottom: 1px solid #747474;
-    color: #009971;
+    color: $green;
 
 }
 

@@ -55,7 +55,7 @@ gulp.task('scss', function () {
 
 gulp.task('watch', function(){
     gulp.watch('./public-src/js/**/*.js', ['js']);
-    gulp.watch('./public-src/scss/**/*.scss', ['scss']);
+    gulp.watch('./public-src/**/*.scss', ['scss']);
 });
 
 gulp.task('imagemin', function() {
@@ -71,4 +71,4 @@ gulp.task('html', function() {
 
 gulp.task('default', ['js', 'scss', 'html', 'watch']);
 // gulp.task('default', Object.keys(paths).concat(['watch']));
-gulp.task('build', Object.keys(paths));
+gulp.task('build', ['js', 'scss', 'html', 'imagemin']);

@@ -28,6 +28,7 @@ class App extends Component {
 
     getMenu() {
         mapDefault = L.map('mapid', {zoomControl: false}).setView([49, 31], 6);
+        L.Icon.Default.imagePath = '/img/';
 
         esri.basemapLayer('Topographic').addTo(mapDefault);
 
