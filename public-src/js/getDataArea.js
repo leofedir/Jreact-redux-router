@@ -230,11 +230,11 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
 
             function createChart() {
                 setTimeout(() => {
+                    document.getElementById('simplechart').innerHTML = ''; //delete dubl chart
                     let data = []
                     document.querySelectorAll('.popup_bottom span').forEach(item => {
                         data.push(parseInt(item.innerHTML))
                     })
-                    data.sort((a, b) => {return a-b});
 
                     let chart1 = new Chart("simplechart");
                     chart1.setTheme(Minty);
@@ -242,9 +242,20 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
                     chart1.addAxis("y", { majorLabels: true,
                         minorTicks: false,
                         minorLabels: true,
-                        microTicks: false, min: data[0], max: data[data.length-1], vertical: true, fixLower: "major", fixUpper: "major", font: "normal normal 10pt Arial", fontColor: "#666", });
-                    chart1.addAxis("x", {fixLower: "major", fixUpper: "major", minorTicks: false, font: "normal normal 10pt Arial", fontColor: "#666",
-                        labels: [{value: 1, text: "2013р"}, {value: 2, text: "2014р"},
+                        microTicks: false,
+                        vertical: true,
+                        fixLower: "major",
+                        fixUpper: "major",
+                        font: "normal normal 10pt Arial",
+                        fontColor: "#666", });
+                    chart1.addAxis("x",
+                        {fixLower: "major",
+                            fixUpper: "major",
+                            minorTicks: false,
+                            font: "normal normal 10pt Arial",
+                            fontColor: "#666",
+                        labels: [{value: 1, text: "2013р"},
+                            {value: 2, text: "2014р"},
                             {value: 3, text: "2015р"}]
                     });
                     chart1.addSeries("Series 1", data);
