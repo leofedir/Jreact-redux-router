@@ -204,6 +204,7 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
             );
 
             fieldSelect.on("change", function(e) {
+
                 myItem = e;
                 fieldName = e;
                 saveData(layerDataHistogram[parametr], myItem)
@@ -299,7 +300,9 @@ export class AreaFields extends Component {
 
     openDiagram() {
         let icon = document.getElementById('diagrama_icon');
-        if (icon.getAttribute('src') === '/img/diagram.svg') {
+        let diagrama = document.getElementById('diagrama');
+        console.log('diagrama >>', diagrama.childNodes.length)
+        if (diagrama.childNodes.length === 0) {
             icon.setAttribute('src', '/img/diagram_white.svg')
         } else {
             icon.setAttribute('src', '/img/diagram.svg')
@@ -310,7 +313,7 @@ export class AreaFields extends Component {
 
         setTimeout(() => {
             if (document.getElementById('clase_diagram')) {
-                document.getElementById('clase_diagram').addEventListener('click', this.openDiagram.bind(this))
+                document.getElementById('clase_diagram').addEventListener('click', this.openDiagram)
             }
         }, 300)
     }

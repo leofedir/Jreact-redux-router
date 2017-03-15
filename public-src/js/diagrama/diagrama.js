@@ -10,7 +10,8 @@ let ChengeState = null;
 export function saveData(myParametr, myItem) {
     ChengeState({
         "myParametr":myParametr,
-        'myItem': myItem
+        'myItem': myItem,
+        'visible': false
     });
 }
 
@@ -380,7 +381,6 @@ class Diagrama extends Component {
         return (
             <div>
                 {(this.state.visible) ? this.createHistogram() : this.removeHistogram()}
-
                 <div id="diagrama"></div>
             </div>
 
