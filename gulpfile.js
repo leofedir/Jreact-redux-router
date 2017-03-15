@@ -63,7 +63,12 @@ gulp.task('imagemin', function() {
         .pipe(gulp.dest('public/img'));
 });
 
+gulp.task('html', function() {
+    return gulp.src('./public-src/index.html')
+        .pipe(gulp.dest('public/'));
+});
 
-gulp.task('default', ['js', 'scss', 'watch']);
+
+gulp.task('default', ['js', 'scss', 'html', 'watch']);
 // gulp.task('default', Object.keys(paths).concat(['watch']));
 gulp.task('build', Object.keys(paths));
