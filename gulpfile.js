@@ -68,7 +68,6 @@ gulp.task('html', function() {
         .pipe(gulp.dest('public/'));
 });
 
+gulp.task('build', ['js', 'scss', 'html', 'imagemin']);
 
 gulp.task('default', ['js', 'scss', 'html', 'watch']);
-// gulp.task('default', Object.keys(paths).concat(['watch']));
-gulp.task('build', ['js', 'scss', 'html', 'imagemin']);

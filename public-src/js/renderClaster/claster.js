@@ -41,12 +41,12 @@ export class Claster extends React.Component {
         L.Icon.Default.imagePath = '/img/';
 
         var greenIcon = L.icon({
-            iconUrl: 'leaf-green.png',
-            shadowUrl: 'leaf-shadow.png',
+            iconUrl: '/img/marker-icon.svg',
+            // shadowUrl: 'leaf-shadow.png',
 
-            iconSize:     [38, 95], // size of the icon
+            iconSize:     [25], // size of the icon
             shadowSize:   [50, 64], // size of the shadow
-            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+            iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
             shadowAnchor: [4, 62],  // the same for the shadow
             popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
@@ -81,7 +81,17 @@ export class Claster extends React.Component {
 
             list.layers.forEach(function(layer){
                 setLayers.push('<p><label><input type="checkbox" value="'+ layer.id +'" class="checkbox"><span class="icon"></span><span class="text">'+ layer.name +'</span></label></p>')
-                let m = Cluster.featureLayer({url: UrlLay + '/' + layer.id});
+                let m = Cluster.featureLayer({
+                    url: UrlLay + '/' + layer.id,
+                    // Cluster Options
+                    polygonOptions: {
+                        color: "#2d84c8"
+                    },
+                    // Feature Layer Options
+                    pointToLayer: function (geojson, latlng) {
+                        return L.marker(latlng, {icon: greenIcon});
+                    }
+                });
                 m.on('click', createPopup)
                 layers[layer.id] = m;
             });

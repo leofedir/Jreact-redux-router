@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, './public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride());
-
+console.log('ok')
 //move to config
 server.listen(9000);
 
