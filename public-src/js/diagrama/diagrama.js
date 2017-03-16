@@ -67,7 +67,7 @@ class Diagrama extends Component {
                 obj.koatuu = item.attributes.koatuu;
                 obj.size = item.attributes[this.state.myItem];
                 obj.children = dataM.children.filter(i => {
-                    return i.koatuu.slice(2, 5) == item.attributes.koatuu.slice(2, 5)
+                    return i.koatuu.slice(0, 5) == item.attributes.koatuu.slice(0, 5)
                 });
                 dataR.children.push(obj)
             });

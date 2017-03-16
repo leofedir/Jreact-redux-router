@@ -6,6 +6,7 @@ import MainMenu from './PageElement/MainMenu';
 import { Lmap } from './renderClaster/claster';
 import { map } from './getDataArea';
 import BaseMap from './PageElement/basemap';
+import { checkStatus, parseJSON} from './checkJSON';
 
 export let mapDefault;
 export let  server = 'https://js.arcgis.com/3.20/';
@@ -47,6 +48,24 @@ class App extends Component {
             document.querySelector('.menu_item').classList.toggle("hide")
             document.querySelector('.title_map').classList.toggle("hide_menu_title")
         });
+
+        document.querySelector('a.test').addEventListener('click', e => {
+            console.log(e)
+
+            var myHeaders = new Headers();
+
+            var myInit = { method: 'PUT',
+                headers: myHeaders,
+                mode: 'cors',
+                cache: 'default' };
+
+            fetch('/api/update', myInit)
+                .then(checkStatus)
+                // .then(parseJSON)
+                .then(data => {
+                    console.log(data)
+                })
+        })
 
         let zoomIn = document.getElementById('zoom_in');
         zoomIn.addEventListener('click', function () {
