@@ -32,12 +32,13 @@ gulp.task('js', function(done) {
                 .on('error' , (e) => { console.log("error  >> " , e)})
                 .pipe(source(entry))
                 .pipe(rename(function (path) {
-                    // console.log(path);
                     path.dirname = path.dirname.replace('public-src', '');
                     path.extname = ".bundle.js"
                 }))
                 .pipe(buffer())
+                .pipe(sourcemaps.init({loadMaps: true}))
                 // .pipe(uglify())
+                .pipe(sourcemaps.write())
                 .pipe(gulp.dest(paths.js.dist));
         });
         es.merge(tasks).on('end', done);

@@ -47,16 +47,18 @@ class Diagrama extends Component {
             children: [],
             name: 'Області'
         };
+        console.log('this.state.myParametr >>', this.state.myParametr)
 
-        // if ( this.state.myParametr[1]) {
-        //     this.state.myParametr[1].features.forEach((item, i) => {
-        //         let obj = {};
-        //         obj.name = item.attributes.name_ua;
-        //         obj.koatuu = item.attributes.koatuu;
-        //         obj.size = item.attributes[this.state.myItem];
-        //         dataM.children.push(obj)
-        //     })
-        // }
+        if ( this.state.myParametr[2]) {
+            this.state.myParametr[2].features.forEach((item, i) => {
+                let obj = {};
+                obj.name = item.attributes.name_ua;
+                obj.koatuu = item.attributes.koatuu;
+                obj.size = item.attributes[this.state.myItem];
+                dataM.children.push(obj)
+            })
+        }
+        console.log('dataM >>', dataM)
 
         if ( this.state.myParametr[1]) {
             this.state.myParametr[1].features.forEach((item, i) => {
@@ -64,17 +66,20 @@ class Diagrama extends Component {
                 obj.name = item.attributes.name_ua;
                 obj.koatuu = item.attributes.koatuu;
                 obj.size = item.attributes[this.state.myItem];
-                // obj.children = dataM.children.filter(i => {
-                //     return i.koatuu.slice(2, 5) == item.attributes.koatuu.slice(2, 5)
-                // });
+                obj.children = dataM.children.filter(i => {
+                    return i.koatuu.slice(2, 5) == item.attributes.koatuu.slice(2, 5)
+                });
                 dataR.children.push(obj)
             });
         }
+
+        console.log('dataR >>', dataR)
 
         this.state.myParametr[0].features.forEach((item, i) => {
             let obj = {};
             obj.name = item.attributes.name_ua;
             obj.koatuu = item.attributes.koatuu;
+            obj.size = item.attributes[this.state.myItem];
             obj.children = dataR.children.filter(i => {
                 return i.koatuu.slice(0, 2) == item.attributes.koatuu.slice(0, 2)
             });
@@ -130,7 +135,6 @@ class Diagrama extends Component {
         hierarchy.nodes(data);
         x.domain([0, data.value]).nice();
         down(data, 0);
-
 
         d3.select(".diagrama_title").append("span")
             .attr('class', 'clase' )
@@ -319,18 +323,19 @@ class Diagrama extends Component {
                 .text(function(d) {i++; return d.name + '  ('+i+")"; });
 
             bar.append("svg:rect")
-                .attr("width", function(d) {return x(d.value); })
+                .attr("width", function(d) {return x(d.size); })
                 .attr("height", y);
 
+            // text after bar
             bar.append("svg:text")
                 .attr("class", "text_val")
                 .attr("x", d => {
-                     return  x(d.value)
+                     return  x(d.size)
                 })
                 .attr("y", y / 2)
                 .attr("dy", ".35em")
                 .attr("text-anchor", "start")
-                .text(function(d) { return d.value; });
+                .text(function(d) { return (d.size != 0) ? d.size : 'Дані уточнюються'; });
 
             document.querySelector('#diagrama svg').setAttribute('height', bar[0].length * 24);
             // document.querySelector('#diagrama').style.minHeight =  bar[0].length * 24  + 40 + 'px';
