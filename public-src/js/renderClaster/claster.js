@@ -45,8 +45,8 @@ export class Claster extends React.Component {
             // shadowUrl: 'leaf-shadow.png',
 
             iconSize:     [25], // size of the icon
-            shadowSize:   [50, 64], // size of the shadow
-            iconAnchor:   [25, 60], // point of the icon which will correspond to marker's location
+            //shadowSize:   [50, 64], // size of the shadow
+            iconAnchor:   [15, -15] // point of the icon which will correspond to marker's location
         });
 
         fetch(UrlLay + '?f=pjson')
