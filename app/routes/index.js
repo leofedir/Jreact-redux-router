@@ -1,12 +1,19 @@
-const router = require('express').Router();
+const router = require('express').Router(),
+    bodyParser = require('body-parser');
+
+router.use(bodyParser.json());       // to support JSON-encoded bodies
+router.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+    extended: true
+}));
 
 
-router.put('/api/update', update);
-
-function update(req, res) {
+router.post('/test', function(req, res) {
+    var name = req.body.name,
+        color = req.body.color;
     console.log('updating-', req.body);
-    res.sendStatus(200);
-}
-
+    res.json({'state' : true , data: req.body});
+    // res.sendStatus(200);
+    // ...
+});
 
 module.exports = router;

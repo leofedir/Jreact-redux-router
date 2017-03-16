@@ -4,14 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "gulp & node index.js",
+    "start": "gulp",
     "server": "node index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "MD5": "latest",
-    "body-parser": "latest",
+    "body-parser": "^1.17.1",
     "cookie-parser": "latest",
     "d3": "~3.5.17",
     "esri-leaflet": "^2.0.7",

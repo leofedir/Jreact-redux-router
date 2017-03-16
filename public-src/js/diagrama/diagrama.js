@@ -54,7 +54,7 @@ class Diagrama extends Component {
                 let obj = {};
                 obj.name = item.attributes.name_ua;
                 obj.koatuu = item.attributes.koatuu;
-                obj.size = item.attributes[this.state.myItem];
+                obj.size = (item.attributes[this.state.myItem] == null ) ? 0 : item.attributes[this.state.myItem];
                 dataM.children.push(obj)
             })
         }
@@ -65,7 +65,7 @@ class Diagrama extends Component {
                 let obj = {};
                 obj.name = item.attributes.name_ua;
                 obj.koatuu = item.attributes.koatuu;
-                obj.size = item.attributes[this.state.myItem];
+                obj.size = (item.attributes[this.state.myItem] == null ) ? 0 : item.attributes[this.state.myItem];
                 obj.children = dataM.children.filter(i => {
                     return i.koatuu.slice(0, 5) == item.attributes.koatuu.slice(0, 5)
                 });
@@ -79,7 +79,7 @@ class Diagrama extends Component {
             let obj = {};
             obj.name = item.attributes.name_ua;
             obj.koatuu = item.attributes.koatuu;
-            obj.size = item.attributes[this.state.myItem];
+            obj.size = (item.attributes[this.state.myItem] == null ) ? 0 : item.attributes[this.state.myItem];
             obj.children = dataR.children.filter(i => {
                 return i.koatuu.slice(0, 2) == item.attributes.koatuu.slice(0, 2)
             });

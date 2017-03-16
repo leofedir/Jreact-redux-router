@@ -52,17 +52,17 @@ class App extends Component {
         document.querySelector('a.test').addEventListener('click', e => {
             console.log(e)
 
-            var myHeaders = new Headers();
-
-            var myInit = { method: 'PUT',
-                headers: myHeaders,
-                mode: 'cors',
-                cache: 'default' };
-
-            fetch('/api/update', myInit)
+            fetch('/test', {
+                method: 'post',
+                headers: {
+                    "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                body: 'foo=bar&lorem=ipsum'
+            })
                 .then(checkStatus)
-                // .then(parseJSON)
+                .then(parseJSON)
                 .then(data => {
+                    console.log('data')
                     console.log(data)
                 })
         })
