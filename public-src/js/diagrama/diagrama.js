@@ -47,7 +47,7 @@ class Diagrama extends Component {
             children: [],
             name: 'Області'
         };
-        console.log('this.state.myParametr >>', this.state.myParametr)
+        // console.log('this.state.myParametr >>', this.state.myParametr)
 
         if ( this.state.myParametr[2]) {
             this.state.myParametr[2].features.forEach((item, i) => {
@@ -58,7 +58,7 @@ class Diagrama extends Component {
                 dataM.children.push(obj)
             })
         }
-        console.log('dataM >>', dataM)
+        // console.log('dataM >>', dataM)
 
         if ( this.state.myParametr[1]) {
             this.state.myParametr[1].features.forEach((item, i) => {
@@ -73,7 +73,7 @@ class Diagrama extends Component {
             });
         }
 
-        console.log('dataR >>', dataR)
+        // console.log('dataR >>', dataR)
 
         this.state.myParametr[0].features.forEach((item, i) => {
             let obj = {};
@@ -86,6 +86,8 @@ class Diagrama extends Component {
             data.children.push(obj)
         })
 
+        // console.log('data >>', data)
+
         var m = [60, 160, 80, 230], // top right bottom left
             w = document.documentElement.clientWidth * .5, // width
             h = document.documentElement.clientHeight * .6, // height
@@ -96,6 +98,7 @@ class Diagrama extends Component {
         document.getElementById('diagrama').style.height = ( h + m[0] + m[2] + 70 +'px')
 
         var hierarchy = d3.layout.partition()
+            .sort(function(a, b) { return b.size - a.size; })
             .value(function(d) { return d.size; });
 
         var xAxis = d3.svg.axis()
@@ -126,7 +129,7 @@ class Diagrama extends Component {
 
         svg.append("svg:g")
             .attr("class", "x axis");
-;
+
         svg.append("svg:g")
             .attr("class", "y axis")
             .append("svg:line")
@@ -190,7 +193,7 @@ class Diagrama extends Component {
             enter.select("rect").style("fill", z(true));
 
             // Update the x-scale domain.
-            x.domain([0, d3.max(d.children, function(d) { return d.value; })]).nice();
+            x.domain([0, d3.max(d.children, function(d) { return d.size; })]).nice();
 
             // Update the x-axis.
             svg.selectAll(".x.axis").transition()
@@ -208,13 +211,13 @@ class Diagrama extends Component {
 
             // Transition entering rects to the new x-scale.
             enterTransition.select("rect")
-                .attr("width", function(d) { return x(d.value); })
+                .attr("width", function(d) { return x(d.size); })
                 .style("fill", function(d) { return z(!!d.children); });
 
 
             //padding text val from bar
             enterTransition.select(".text_val")
-                .attr("x", function(d) { return x(d.value) + 20; });
+                .attr("x", function(d) { return x(d.size) + 20; });
 
             // Transition exiting bars to fade out.
             var exitTransition = exit.transition()
@@ -223,7 +226,7 @@ class Diagrama extends Component {
                 .remove();
 
             // Transition exiting bars to the new x-scale.
-            exitTransition.selectAll("rect").attr("width", function(d) { return x(d.value); });
+            exitTransition.selectAll("rect").attr("width", function(d) { return x(d.size); });
 
             // Rebind the current node to the background.
             svg.select(".background").data([d]).transition().duration(duration * 2); d.index = i;
@@ -233,7 +236,13 @@ class Diagrama extends Component {
 
             if (!d.parent) return;
 
-            document.getElementById('name_diagram').innerHTML = `<h6>${d.parent.name}</h6>`;
+            if(d.parent.parent) {
+                name_diagram.innerHTML = `<div id="back_diagrama"></div> <h6 class="arrow_back">${d.name}</h6>`
+            } else {
+
+                document.getElementById('name_diagram').innerHTML = `<h6>${d.parent.name}</h6>`;
+            }
+
 
             let gg = document.querySelectorAll('.main')
             if (gg.length > 0) {
@@ -258,7 +267,7 @@ class Diagrama extends Component {
                 .style("fill-opacity", 1e-6);
 
             // Update the x-scale domain.
-            x.domain([0, d3.max(d.parent.children, function(d) { return d.value; })]).nice();
+            x.domain([0, d3.max(d.parent.children, function(d) { return d.size; })]).nice();
 
             // Update the x-axis.
             svg.selectAll(".x.axis").transition()
@@ -273,12 +282,12 @@ class Diagrama extends Component {
             // Transition entering rects to the new x-scale.
             // When the entering parent rect is done, make it visible!
             enterTransition.select("rect")
-                .attr("width", function(d) { return x(d.value); })
+                .attr("width", function(d) { return x(d.size); })
                 .each("end", function(p) { if (p === d) d3.select(this).style("fill-opacity", null); });
 
             //padding text val from bar
             enterTransition.select(".text_val")
-                .attr("x", function(d) { return x(d.value) + 20; });
+                .attr("x", function(d) { return x(d.size) + 20; });
 
             // Transition exiting bars to the parent's position.
             var exitTransition = exit.selectAll("g").transition()
@@ -292,7 +301,7 @@ class Diagrama extends Component {
 
             // Transition exiting rects to the new scale and fade to parent color.
             exitTransition.select("rect")
-                .attr("width", function(d) { return x(d.value); })
+                .attr("width", function(d) { return x(d.size); })
                 .style("fill", z(true));
 
             // Remove exiting nodes when the last child has finished transitioning.
@@ -347,7 +356,7 @@ class Diagrama extends Component {
             var x0 = 0;
             return function(d) {
                 var tx = "translate(" + x0 + "," + y * i * 1.2 + ")";
-                x0 += x(d.value);
+                x0 += x(d.size);
                 return tx;
             };
         }
