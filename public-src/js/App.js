@@ -50,7 +50,6 @@ class App extends Component {
         });
 
         document.querySelector('a.test').addEventListener('click', e => {
-            console.log(e)
 
             fetch('/test', {
                 method: 'post',
@@ -62,8 +61,44 @@ class App extends Component {
                 .then(checkStatus)
                 .then(parseJSON)
                 .then(data => {
-                    console.log('data')
-                    console.log(data)
+                    let poligon = []
+                    // console.log(data.data)
+                    data.data.map(item => {
+                        let obj = {}
+                        obj.type = "Feature";
+                        obj.popupContent = "This is where the Rockies play!";
+                        obj.properties = {};
+                        for(let key in item) {
+                            if (item.hasOwnProperty(key) && key !== 'geojson' && key != 'geom'){
+                                obj.properties[key] = item[key];
+                            }
+                        }
+                        obj.geometry = poligon.push(JSON.parse(item.geojson))
+                    })
+
+                    var myStyle = {
+                        "color": "#ff7800",
+                        "weight": 5,
+                        "opacity": 0.65
+                    };
+                    console.log(11);
+
+                    function onEachFeature(feature, layer) {
+                        // does this feature have a property named popupContent?
+                        if (feature.properties && feature.properties.popupContent) {
+                            console.log(22)
+                            layer.bindPopup(feature.properties.popupContent);
+                        }
+                    }
+
+                    L.geoJSON(poligon, {
+                        style: myStyle
+                    }).bindPopup('Hello world!')
+                        .addTo(mapDefault);
+
+                    // L.geoJSON(geojsonFeature).addTo(mapDefault);
+
+                    // console.log(data.data["0"].geojson);
                 })
         })
 
