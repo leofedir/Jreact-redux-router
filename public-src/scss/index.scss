@@ -3,16 +3,14 @@
 @import "../js/renderClaster/claster";
 @import "../js/renderClaster/geocoder";
 
-.map {
+.map,
+#mapid_root{
     padding: 0;
     margin: 0;
-    height: 100%;
     width: 100%;
-}
-
-.map {
     position: absolute;
     height: 100vh;
+    z-index: 399;
 }
 
 h3 {

@@ -26,23 +26,24 @@ clicked;
 export default function getDataArea(item, layerData) {
    document.getElementById('basemaps-wrapper').style.display = "none";
 
-
-
     if (!isLoaded()) {
         bootstrap((err) => {
             if (err) {
                 console.error(err);
             }
-            getFetch(item, layerData);
+            getDataAreaMain()
+            // getFetch(item, layerData);
         }, {
             url: server
         });
     } else {
-        getFetch(item, layerData);
+        getDataAreaMain()
+        // getFetch(item, layerData);
     }
 }
 
 function getFetch(item, layerData) {
+
     let myQuery = '/query?where=1%3D1&outFields=*&returnGeometry=false&f=pjson',
         parametr = item.value,
         typeServer = item.type;
@@ -81,212 +82,499 @@ function getFetch(item, layerData) {
 }
 
 function getDataAreaMain(item, parametr, layerData, typeServer) {
-    dojoRequire(
-        ["dojox/charting/themes/Minty", "dojox/charting/Chart", "dojox/charting/axis2d/Default", "dojox/charting/plot2d/Lines", "esri/dijit/InfoWindowLite", "esri/InfoTemplate", "esri/basemaps", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/ArcGISTiledMapServiceLayer",
-            'esri/map', 'dojo/_base/array', 'dojo/data/ItemFileReadStore', 'dijit/form/FilteringSelect', 'dojo/dom-construct', 'dojo/dom', 'esri/layers/FeatureLayer'],
-        (Minty, Chart, Default, Lines, InfoWindowLite, InfoTemplate, esriBasemaps,  ArcGISDynamicMapServiceLayer, ArcGISTiledMapServiceLayer, Map, array, ItemFileReadStore, FilteringSelect, domConstruct, dom, FeatureLayer) => {
-            if (!map) {
-                let tiled = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/Base_World_13_01/MapServer";
-                let anot = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/Аннотации_для_тематической/MapServer";
-                let megi = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/межі_областей/MapServer";
-                // let tot = 'https://gisserver.maping.so.org.ua/arcgis/rest/services/ТОТ/тот/MapServer';
-                esriBasemaps.delorme = {
-                    baseMapLayers: [{url: tiled}
-                    ],
-                    thumbnailUrl: "https://www.example.com/images/thumbnail_2014-11-25_61051.png",
-                    title: "Delorme"
-                };
-                let mapOptions = {
-                    basemap: "delorme",
-                    center: [31, 49],
-                    // zoom: 6,
+    dojoRequire([
+        "esri/map", "esri/symbols/SimpleMarkerSymbol", "esri/Color", "esri/renderers/SimpleRenderer",
+        "esri/tasks/FeatureSet", "esri/layers/FeatureLayer",
+        "dojo/domReady!"
+    ], function(
+        Map, SimpleMarkerSymbol, Color, SimpleRenderer,
+        FeatureSet, FeatureLayer
+    ) {
 
-                    maxScale : 3000000,
-                    minScale : 10000000,
+        var map = new Map("area", {
+            basemap : "streets",
+            center : [31, 49],
+            zoom : 12
+        });
 
+        // function createFeatureLayer() {
+            var jsonFS = {
+                "geometryType" : "esriGeometryPoint",
+                "features" : [
+                    {
+                        "attributes" : {
+                            "Name": "Point2",
+                            "OBJECTID": 2
 
-                slider: false
-                };
-                map = new Map("area", mapOptions);
-                mylayer = new ArcGISDynamicMapServiceLayer(anot);
-                map.addLayer(mylayer);
-
-                mylayer2 = new ArcGISDynamicMapServiceLayer(megi);
-                map.addLayer(mylayer2);
-
-                // mylayer3 = new ArcGISDynamicMapServiceLayer(tot);
-                // map.addLayer(mylayer3);
-
-
-            }
-            map.infoWindow.destroy();
-
-            map.getLayersVisibleAtScale().forEach( item => {
-                if (item.id === 'layer0' || item.id === 'layer1') {
-                } else {
-                    map.removeLayer(item)
-                }
-            });
-
-            let outFieldsFilter = layersDataStore[parametr].fields.filter(function(obj) {
-                return obj.type === "esriFieldTypeDouble" && obj.name !== "population";
-            });
-
-            outFields = outFieldsFilter.map(function(item) {
-                return item.name
-            });
-
-            myParametr = parametr;
-            myItem = outFields[0];
-
-            saveData(layerDataHistogram[parametr], myItem)
-
-            function createAliasFilds() {
-                outFields.forEach((item) => {
-                    fields[item] = `Станом на 20${item.substring(5)} рік`
-                });
-            }
-
-            createAliasFilds();
-
-            // create a store and a filtering select for the county layer's fields
-            let fieldNames, fieldStore, fieldSelect;
-            fieldNames = {
-                "identifier": "value",
-                "label": "name",
-                "items": []
+                        },
+                        "geometry" : {
+                            "x" :  2464297.784499999,
+                            "y" : 5525436.258199997
+                        }
+                    }
+                ]
             };
 
+            var fs = new FeatureSet(jsonFS);
 
-            array.forEach(outFields, function (f) {
-                fieldNames.items.push({
-                    "name": fields[f],
-                    "value": f
-                });
-            });
+            var layerDefinition = {
+                "displayFieldName" : "Name",
+                "geometryType" : "esriGeometryPoint",
+                "spatialReference" : {
+                    "wkid" : 102100
+                },
+                "fields" : [
+                    {
+                        "name" : "OBJECTID",
+                        "type" : "esriFieldTypeOID",
+                        "alias" : "OBJECTID"
+                    },
+                    {
+                        "name" : "Name",
+                        "type" : "esriFieldTypeString",
+                        "alias" : "Name",
+                        "length" : 10
+                    }
+                ]
+            }
+        fetch('/test', {
+            method: 'post',
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: 'foo=bar&lorem=ipsum'
+        })
+            .then(checkStatus)
+            .then(parseJSON)
+            .then(data => {
 
-            fieldStore = new ItemFileReadStore({
-                data: fieldNames
-            });
-
-            fieldSelect = new FilteringSelect({
-                displayedValue: fieldNames.items[0].name,
-                value: fieldNames.items[0].value,
-                name: "fieldsFS",
-                required: false,
-                store: fieldStore,
-                searchAttr: "name",
-                style: {
-                    "width": "210px",
-                    "fontSize": "12pt",
-                    "color": "#444"
-                }
-            }, domConstruct.create("div.my", null, dom.byId("fieldWrapper"), "replace"));
-
-            fieldName = outFields[0]
-
-            let popupInfo = []
-
-            fieldNames.items.forEach(item => {
-                popupInfo.push("<p>"+item.name[0]+"<span>${"+ item.value[0] +"} ${parameter}</span></p>")
             })
 
-            let infoWindow = new InfoWindowLite(null, domConstruct.create("div", null, null, map.root));
-            infoWindow.startup();
-            map.setInfoWindow(infoWindow);
+            var featureCollection = {
+                layerDefinition : layerDefinition,
+                featureSet : fs
+            };
 
-            let infoTemplate = new InfoTemplate();
-            infoTemplate.setTitle("${name_ua}");
-            infoTemplate.setContent(
-                "<div class='popup_top'><p>Код КОАТУУ <span>${koatuu}</span></p><p>Населення <span>${population} осіб</span></p></div>"+
-                "<div class='popup_bottom'><h4>"+ item.name +"</h4>" + popupInfo.join('') + "</div>"+
-                '<div id="simplechart"></div>'
-            );
+            let featureLayer = new FeatureLayer(featureCollection);
+            var symbol = new SimpleMarkerSymbol().setColor(new esri.Color([255,0,0,0.5]));
+            var renderer = new SimpleRenderer(symbol);
+            featureLayer.setRenderer(renderer);
 
-            fieldSelect.on("change", function(e) {
+            map.addLayer(featureLayer);
 
-                myItem = e;
-                fieldName = e;
-                saveData(layerDataHistogram[parametr], myItem)
-                updateAttribute(e, infoTemplate)
-            });
+    });
 
-            if(layerStore[parametr]) {
-                map.addLayers(layerStore[parametr]);
-                map.reorderLayer(mylayer, 4)
-            } else {
 
-                layerStore[parametr] = [];
 
-                for (let i = 0; i < layerData.layers.length; i++) {
-                    layerStore[parametr][i] = new FeatureLayer(UrlLay + parametr + '/' + typeServer + '/' + i, {
-                        "infoTemplate": infoTemplate,
-                        "mode": FeatureLayer.MODE_ONDEMAND,
-                        "outFields": '*',
-                        "opacity": 0.8
-                    });
-                }
-                map.addLayers(layerStore[parametr]);
-            }
-
-            function createChart() {
-                setTimeout(() => {
-                    document.getElementById('simplechart').innerHTML = ''; //delete dubl chart
-                    let data = []
-                    document.querySelectorAll('.popup_bottom span').forEach(item => {
-                        data.push(parseInt(item.innerHTML))
-                    })
-
-                    let chart1 = new Chart("simplechart");
-                    chart1.setTheme(Minty);
-                    chart1.addPlot("default", {type: "Lines","stroke": {color: "#ff6202", width: 2},fill: "lightblue", markers: true});
-                    chart1.addAxis("y", { majorLabels: true,
-                        minorTicks: false,
-                        minorLabels: true,
-                        microTicks: false,
-                        vertical: true,
-                        fixLower: "major",
-                        fixUpper: "major",
-                        font: "normal normal 10pt Arial",
-                        fontColor: "#666", });
-                    chart1.addAxis("x",
-                        {fixLower: "major",
-                            fixUpper: "major",
-                            minorTicks: false,
-                            font: "normal normal 10pt Arial",
-                            fontColor: "#666",
-                        labels: [{value: 1, text: "2013р"},
-                            {value: 2, text: "2014р"},
-                            {value: 3, text: "2015р"}]
-                    });
-                    chart1.addSeries("Series 1", data);
-                    chart1.render();
-                }, 500)
-                }
-
-            layerStore[parametr].forEach(function(item) {
-                item.on('resume', () => {
-                    curentLayer = item;
-                    createRender(curentLayer);
-                })
-
-                //hightlight selected
-                item.on('click', function(e) {
-                    if (clicked !== e.target && clicked !== undefined ) {
-                        clicked.setAttribute('stroke-width', '0.5')
-                        clicked.setAttribute('stroke', 'rgb(153, 153, 153)')
-                        clicked = e.target
-                        clicked.setAttribute('stroke-width', '2')
-                        clicked.setAttribute('stroke', 'rgb(95, 28, 15)')
-                    } else {
-                        clicked = e.target
-                        clicked.setAttribute('stroke-width', '2')
-                        clicked.setAttribute('stroke', 'rgb(95, 28, 15)')
-                    }
-                    createChart()
-                })
-            });
-        })
+    // dojoRequire(
+    //     ["esri/symbols/SimpleMarkerSymbol", "esri/Color", "esri/renderers/SimpleRenderer",
+    //         "esri/layers/FeatureLayer",
+    //         "dojo/domReady!", "dojox/charting/themes/Minty", "dojox/charting/Chart", "dojox/charting/axis2d/Default", "dojox/charting/plot2d/Lines", "esri/dijit/InfoWindowLite", "esri/InfoTemplate", "esri/basemaps", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/ArcGISTiledMapServiceLayer",
+    //         'esri/map', 'dojo/_base/array', 'dojo/data/ItemFileReadStore', 'dijit/form/FilteringSelect', 'dojo/dom-construct', 'dojo/dom', 'esri/layers/FeatureLayer'],
+    //     (SimpleMarkerSymbol, Color, SimpleRenderer,
+    //      FeatureSet, Minty, Chart, Default, Lines, InfoWindowLite, InfoTemplate, esriBasemaps,  ArcGISDynamicMapServiceLayer, ArcGISTiledMapServiceLayer, Map, array, ItemFileReadStore, FilteringSelect, domConstruct, dom, FeatureLayer) => {
+    //
+    //         var map = new Map("area", {
+    //             basemap : "streets",
+    //             center : [-73.76, 42.8],
+    //             zoom : 6
+    //         });
+    //         console.log(11)
+    //         // function createFeatureLayer() {
+    //         map.on('load', function() {
+    //
+    //             var jsonFS = {
+    //                 "geometryType": "esriGeometryPoint",
+    //                 "features": [
+    //                     {
+    //                         "attributes": {
+    //                             "Name": "Point2",
+    //                             "OBJECTID": 2
+    //
+    //                         },
+    //                         "geometry": {
+    //                             "x": -8208588.5985,
+    //                             "y": 5273995.736
+    //                         }
+    //                     }
+    //                 ]
+    //             };
+    //
+    //             var fs = new FeatureSet(jsonFS);
+    //
+    //             var layerDefinition = {
+    //                 "displayFieldName": "Name",
+    //                 "geometryType": "esriGeometryPoint",
+    //                 "spatialReference": {
+    //                     "wkid": 102100
+    //                 },
+    //                 "fields": [
+    //                     {
+    //                         "name": "OBJECTID",
+    //                         "type": "esriFieldTypeOID",
+    //                         "alias": "OBJECTID"
+    //                     },
+    //                     {
+    //                         "name": "Name",
+    //                         "type": "esriFieldTypeString",
+    //                         "alias": "Name",
+    //                         "length": 10
+    //                     }
+    //                 ]
+    //             }
+    //
+    //             var featureCollection = {
+    //                 layerDefinition: layerDefinition,
+    //                 featureSet: fs
+    //             };
+    //
+    //             let featureLayer = new FeatureLayer(featureCollection);
+    //             var symbol = new SimpleMarkerSymbol().setColor(new esri.Color([255, 0, 0, 0.5]));
+    //             var renderer = new SimpleRenderer(symbol);
+    //             featureLayer.setRenderer(renderer);
+    //
+    //             map.addLayer(featureLayer);
+    //         })
+    //
+    //         if (!map) {
+    //
+    //
+    //
+    //
+    //                 // let tiled = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/Base_World_13_01/MapServer";
+    //             // let anot = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/Аннотации_для_тематической/MapServer";
+    //             // let megi = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/межі_областей/MapServer";
+    //             // // let tot = 'https://gisserver.maping.so.org.ua/arcgis/rest/services/ТОТ/тот/MapServer';
+    //             // esriBasemaps.delorme = {
+    //             //     baseMapLayers: [{url: tiled}
+    //             //     ],
+    //             //     thumbnailUrl: "https://www.example.com/images/thumbnail_2014-11-25_61051.png",
+    //             //     title: "Delorme"
+    //             // };
+    //
+    //             //
+    //             // let mapOptions = {
+    //             //     basemap: "streets",
+    //             //     center: [31, 49],
+    //             //     zoom: 6,
+    //             //     //
+    //             //     // maxScale : 3000000,
+    //             //     // minScale : 10000000,
+    //             //
+    //             //
+    //             // slider: false
+    //             // };
+    //             // map = new Map("area", mapOptions);
+    //             //
+    //             // fetch('/test', {
+    //             //     method: 'post',
+    //             //     headers: {
+    //             //         "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+    //             //     },
+    //             //     body: 'foo=bar&lorem=ipsum'
+    //             // })
+    //             //     .then(checkStatus)
+    //             //     .then(parseJSON)
+    //             //     .then(data => {
+    //             //         let feature = []
+    //             //         // data.data.map(item => {
+    //             //         //     // console.log('coordinate', JSON.parse(item.geojson2).coordinates[0])
+    //             //         //     let obj = {}
+    //             //         //     obj.attributes = {}
+    //             //         //         for(let key in item) {
+    //             //         //             if (item.hasOwnProperty(key) && key !== 'geojson' && key != 'geom'){
+    //             //         //                 obj.attributes[key] = item[key];
+    //             //         //             }
+    //             //         //         }
+    //             //         //     obj.geometry = {
+    //             //         //         rings: JSON.parse(item.geojson2).coordinates[0]
+    //             //         //     }
+    //             //         //     feature.push(obj)
+    //             //         //
+    //             //         // })
+    //             //
+    //             //         let item = data.data[0]
+    //             //
+    //             //         let obj = {}
+    //             //             obj.attributes = {}
+    //             //                 for(let key in item) {
+    //             //                     if (item.hasOwnProperty(key) && key !== 'geojson' && key != 'geom'){
+    //             //                         obj.attributes[key] = item[key];
+    //             //                     }
+    //             //                 }
+    //             //             obj.geometry = {
+    //             //                 rings: JSON.parse(item.geojson2).coordinates[0][0]
+    //             //             }
+    //             //             feature.push(obj)
+    //             //
+    //             //         console.log(JSON.parse(item.geojson2).coordinates[0][0])
+    //             //
+    //             //         var fs = new FeatureSet(feature);
+    //             //
+    //             //         var featureCollection = {
+    //             //             layerDefinition: {
+    //             //                 "displayFieldName": "koatuu",
+    //             //                 "fieldAliases": {
+    //             //                     "id": "id",
+    //             //                     "koatuu": "koatuu",
+    //             //                     "name_ua": "name_ua",
+    //             //                     "name_en": "name_en",
+    //             //                     "year_13": "year_13",
+    //             //                     "year_14": "year_14",
+    //             //                     "year_15": "year_15",
+    //             //                     "population": "population",
+    //             //                     "parameter": "parameter"
+    //             //                 },
+    //             //                 "geometryType": "esriGeometryPolygon",
+    //             //                 "spatialReference": {
+    //             //                     "wkid": 102100,
+    //             //                     "latestWkid": 3857
+    //             //                 },
+    //             //                 "fields": [
+    //             //                     {
+    //             //                         "name": "id",
+    //             //                         "type": "esriFieldTypeOID",
+    //             //                         "alias": "id"
+    //             //                     },
+    //             //                     {
+    //             //                         "name": "koatuu",
+    //             //                         "type": "esriFieldTypeString",
+    //             //                         "alias": "koatuu",
+    //             //                         "length": 10
+    //             //                     },
+    //             //                     {
+    //             //                         "name": "name_ua",
+    //             //                         "type": "esriFieldTypeString",
+    //             //                         "alias": "name_ua",
+    //             //                         "length": 256
+    //             //                     },
+    //             //                     {
+    //             //                         "name": "name_en",
+    //             //                         "type": "esriFieldTypeString",
+    //             //                         "alias": "name_en",
+    //             //                         "length": 256
+    //             //                     },
+    //             //                     {
+    //             //                         "name": "year_13",
+    //             //                         "type": "esriFieldTypeDouble",
+    //             //                         "alias": "year_13"
+    //             //                     },
+    //             //                     {
+    //             //                         "name": "year_14",
+    //             //                         "type": "esriFieldTypeDouble",
+    //             //                         "alias": "year_14"
+    //             //                     },
+    //             //                     {
+    //             //                         "name": "year_15",
+    //             //                         "type": "esriFieldTypeDouble",
+    //             //                         "alias": "year_15"
+    //             //                     },
+    //             //                     {
+    //             //                         "name": "population",
+    //             //                         "type": "esriFieldTypeDouble",
+    //             //                         "alias": "population"
+    //             //                     },
+    //             //                     {
+    //             //                         "name": "parameter",
+    //             //                         "type": "esriFieldTypeString",
+    //             //                         "alias": "parameter",
+    //             //                         "length": 5
+    //             //                     }
+    //             //                 ]
+    //             //             },
+    //             //             features: fs
+    //             //         };
+    //             //
+    //             //         var featureLayer = new FeatureLayer(featureCollection, {
+    //             //             // "infoTemplate": infoTemplate,
+    //             //             "mode": FeatureLayer.MODE_ONDEMAND,
+    //             //             "outFields": '*',
+    //             //             "opacity": 0.8
+    //             //         });
+    //             //         map.addLayer(featureLayer)
+    //             //         console.log('featureLayer >>', featureLayer)
+    //             //
+    //             //     })
+    //
+    //             // mylayer = new ArcGISDynamicMapServiceLayer(anot);
+    //             // map.addLayer(mylayer);
+    //             //
+    //             // mylayer2 = new ArcGISDynamicMapServiceLayer(megi);
+    //             // map.addLayer(mylayer2);
+    //
+    //             // mylayer3 = new ArcGISDynamicMapServiceLayer(tot);
+    //             // map.addLayer(mylayer3);
+    //
+    //
+    //         }
+    //         // map.infoWindow.destroy();
+    //         //
+    //         // map.getLayersVisibleAtScale().forEach( item => {
+    //         //     if (item.id === 'layer0' || item.id === 'layer1') {
+    //         //     } else {
+    //         //         map.removeLayer(item)
+    //         //     }
+    //         // });
+    //         //
+    //         // let outFieldsFilter = layersDataStore[parametr].fields.filter(function(obj) {
+    //         //     return obj.type === "esriFieldTypeDouble" && obj.name !== "population";
+    //         // });
+    //         //
+    //         // outFields = outFieldsFilter.map(function(item) {
+    //         //     return item.name
+    //         // });
+    //         //
+    //         // myParametr = parametr;
+    //         // myItem = outFields[0];
+    //         //
+    //         // saveData(layerDataHistogram[parametr], myItem)
+    //         //
+    //         // function createAliasFilds() {
+    //         //     outFields.forEach((item) => {
+    //         //         fields[item] = `Станом на 20${item.substring(5)} рік`
+    //         //     });
+    //         // }
+    //         //
+    //         // createAliasFilds();
+    //         //
+    //         // // create a store and a filtering select for the county layer's fields
+    //         // let fieldNames, fieldStore, fieldSelect;
+    //         // fieldNames = {
+    //         //     "identifier": "value",
+    //         //     "label": "name",
+    //         //     "items": []
+    //         // };
+    //         //
+    //         //
+    //         // array.forEach(outFields, function (f) {
+    //         //     fieldNames.items.push({
+    //         //         "name": fields[f],
+    //         //         "value": f
+    //         //     });
+    //         // });
+    //         //
+    //         // fieldStore = new ItemFileReadStore({
+    //         //     data: fieldNames
+    //         // });
+    //         //
+    //         // fieldSelect = new FilteringSelect({
+    //         //     displayedValue: fieldNames.items[0].name,
+    //         //     value: fieldNames.items[0].value,
+    //         //     name: "fieldsFS",
+    //         //     required: false,
+    //         //     store: fieldStore,
+    //         //     searchAttr: "name",
+    //         //     style: {
+    //         //         "width": "210px",
+    //         //         "fontSize": "12pt",
+    //         //         "color": "#444"
+    //         //     }
+    //         // }, domConstruct.create("div.my", null, dom.byId("fieldWrapper"), "replace"));
+    //         //
+    //         // fieldName = outFields[0]
+    //         //
+    //         // let popupInfo = []
+    //         //
+    //         // fieldNames.items.forEach(item => {
+    //         //     popupInfo.push("<p>"+item.name[0]+"<span>${"+ item.value[0] +"} ${parameter}</span></p>")
+    //         // })
+    //         //
+    //         // let infoWindow = new InfoWindowLite(null, domConstruct.create("div", null, null, map.root));
+    //         // infoWindow.startup();
+    //         // map.setInfoWindow(infoWindow);
+    //         //
+    //         // let infoTemplate = new InfoTemplate();
+    //         // infoTemplate.setTitle("${name_ua}");
+    //         // infoTemplate.setContent(
+    //         //     "<div class='popup_top'><p>Код КОАТУУ <span>${koatuu}</span></p><p>Населення <span>${population} осіб</span></p></div>"+
+    //         //     "<div class='popup_bottom'><h4>"+ item.name +"</h4>" + popupInfo.join('') + "</div>"+
+    //         //     '<div id="simplechart"></div>'
+    //         // );
+    //         //
+    //         // fieldSelect.on("change", function(e) {
+    //         //
+    //         //     myItem = e;
+    //         //     fieldName = e;
+    //         //     saveData(layerDataHistogram[parametr], myItem)
+    //         //     updateAttribute(e, infoTemplate)
+    //         // });
+    //         //
+    //         // if(layerStore[parametr]) {
+    //         //     map.addLayers(layerStore[parametr]);
+    //         //     map.reorderLayer(mylayer, 4)
+    //         // } else {
+    //         //
+    //         //     layerStore[parametr] = [];
+    //         //
+    //         //     for (let i = 0; i < layerData.layers.length; i++) {
+    //         //         layerStore[parametr][i] = new FeatureLayer(UrlLay + parametr + '/' + typeServer + '/' + i, {
+    //         //             "infoTemplate": infoTemplate,
+    //         //             "mode": FeatureLayer.MODE_ONDEMAND,
+    //         //             "outFields": '*',
+    //         //             "opacity": 0.8
+    //         //         });
+    //         //     }
+    //         //     map.addLayers(layerStore[parametr]);
+    //         // }
+    //         //
+    //         // function createChart() {
+    //         //     setTimeout(() => {
+    //         //         document.getElementById('simplechart').innerHTML = ''; //delete dubl chart
+    //         //         let data = []
+    //         //         document.querySelectorAll('.popup_bottom span').forEach(item => {
+    //         //             data.push(parseInt(item.innerHTML))
+    //         //         })
+    //         //
+    //         //         let chart1 = new Chart("simplechart");
+    //         //         chart1.setTheme(Minty);
+    //         //         chart1.addPlot("default", {type: "Lines","stroke": {color: "#ff6202", width: 2},fill: "lightblue", markers: true});
+    //         //         chart1.addAxis("y", { majorLabels: true,
+    //         //             minorTicks: false,
+    //         //             minorLabels: true,
+    //         //             microTicks: false,
+    //         //             vertical: true,
+    //         //             fixLower: "major",
+    //         //             fixUpper: "major",
+    //         //             font: "normal normal 10pt Arial",
+    //         //             fontColor: "#666", });
+    //         //         chart1.addAxis("x",
+    //         //             {fixLower: "major",
+    //         //                 fixUpper: "major",
+    //         //                 minorTicks: false,
+    //         //                 font: "normal normal 10pt Arial",
+    //         //                 fontColor: "#666",
+    //         //             labels: [{value: 1, text: "2013р"},
+    //         //                 {value: 2, text: "2014р"},
+    //         //                 {value: 3, text: "2015р"}]
+    //         //         });
+    //         //         chart1.addSeries("Series 1", data);
+    //         //         chart1.render();
+    //         //     }, 500)
+    //         //     }
+    //         //
+    //         // layerStore[parametr].forEach(function(item) {
+    //         //     item.on('resume', () => {
+    //         //         curentLayer = item;
+    //         //         createRender(curentLayer);
+    //         //     })
+    //         //
+    //         //     //hightlight selected
+    //         //     item.on('click', function(e) {
+    //         //         if (clicked !== e.target && clicked !== undefined ) {
+    //         //             clicked.setAttribute('stroke-width', '0.5')
+    //         //             clicked.setAttribute('stroke', 'rgb(153, 153, 153)')
+    //         //             clicked = e.target
+    //         //             clicked.setAttribute('stroke-width', '2')
+    //         //             clicked.setAttribute('stroke', 'rgb(95, 28, 15)')
+    //         //         } else {
+    //         //             clicked = e.target
+    //         //             clicked.setAttribute('stroke-width', '2')
+    //         //             clicked.setAttribute('stroke', 'rgb(95, 28, 15)')
+    //         //         }
+    //         //         createChart()
+    //         //     })
+    //         // });
+    //     })
 }
 
 export class AreaFields extends Component {

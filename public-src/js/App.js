@@ -7,6 +7,9 @@ import { Lmap } from './renderClaster/claster';
 import { map } from './getDataArea';
 import BaseMap from './PageElement/basemap';
 import { checkStatus, parseJSON} from './checkJSON';
+import getDataArea from './getDataArea';
+import ReactDOM from 'react-dom';
+import { AreaFields } from './getDataArea';
 
 export let mapDefault;
 export let  server = 'https://js.arcgis.com/3.20/';
@@ -28,7 +31,7 @@ class App extends Component {
     }
 
     getMenu() {
-        mapDefault = L.map('mapid', {zoomControl: false}).setView([49, 31], 6);
+        mapDefault = L.map('mapid_root', {zoomControl: false}).setView([49, 31], 6);
         L.Icon.Default.imagePath = '/img/';
 
         esri.basemapLayer('Topographic').addTo(mapDefault);
@@ -50,56 +53,63 @@ class App extends Component {
         });
 
         document.querySelector('a.test').addEventListener('click', e => {
+            e.preventDefault()
+            removeMap()
+            document.getElementById('point').style.display = 'none';
+            document.getElementById('area').style.display = 'block';
+            // ReactDOM.unmountComponentAtNode(document.getElementById('area'));
+            ReactDOM.render(<AreaFields />, document.getElementById('area'));
+            getDataArea()
 
-            fetch('/test', {
-                method: 'post',
-                headers: {
-                    "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-                },
-                body: 'foo=bar&lorem=ipsum'
-            })
-                .then(checkStatus)
-                .then(parseJSON)
-                .then(data => {
-                    let poligon = []
-                    // console.log(data.data)
-                    data.data.map(item => {
-                        let obj = {}
-                        obj.type = "Feature";
-                        obj.popupContent = "This is where the Rockies play!";
-                        obj.properties = {};
-                        for(let key in item) {
-                            if (item.hasOwnProperty(key) && key !== 'geojson' && key != 'geom'){
-                                obj.properties[key] = item[key];
-                            }
-                        }
-                        obj.geometry = poligon.push(JSON.parse(item.geojson))
-                    })
-
-                    var myStyle = {
-                        "color": "#ff7800",
-                        "weight": 5,
-                        "opacity": 0.65
-                    };
-                    console.log(11);
-
-                    function onEachFeature(feature, layer) {
-                        // does this feature have a property named popupContent?
-                        if (feature.properties && feature.properties.popupContent) {
-                            console.log(22)
-                            layer.bindPopup(feature.properties.popupContent);
-                        }
-                    }
-
-                    L.geoJSON(poligon, {
-                        style: myStyle
-                    }).bindPopup('Hello world!')
-                        .addTo(mapDefault);
-
-                    // L.geoJSON(geojsonFeature).addTo(mapDefault);
-
-                    // console.log(data.data["0"].geojson);
-                })
+            // fetch('/test', {
+            //     method: 'post',
+            //     headers: {
+            //         "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            //     },
+            //     body: 'foo=bar&lorem=ipsum'
+            // })
+            //     .then(checkStatus)
+            //     .then(parseJSON)
+            //     .then(data => {
+            //         let poligon = []
+            //         // console.log(data.data)
+            //         data.data.map(item => {
+            //             let obj = {}
+            //             obj.type = "Feature";
+            //             obj.popupContent = "This is where the Rockies play!";
+            //             obj.properties = {};
+            //             for(let key in item) {
+            //                 if (item.hasOwnProperty(key) && key !== 'geojson' && key != 'geom'){
+            //                     obj.properties[key] = item[key];
+            //                 }
+            //             }
+            //             obj.geometry = poligon.push(JSON.parse(item.geojson))
+            //         })
+            //
+            //         var myStyle = {
+            //             "color": "#ff7800",
+            //             "weight": 5,
+            //             "opacity": 0.65
+            //         };
+            //         console.log(11);
+            //
+            //         function onEachFeature(feature, layer) {
+            //             // does this feature have a property named popupContent?
+            //             if (feature.properties && feature.properties.popupContent) {
+            //                 console.log(22)
+            //                 layer.bindPopup(feature.properties.popupContent);
+            //             }
+            //         }
+            //
+            //         L.geoJSON(poligon, {
+            //             style: myStyle
+            //         }).bindPopup('Hello world!')
+            //             .addTo(mapDefault);
+            //
+            //         // L.geoJSON(geojsonFeature).addTo(mapDefault);
+            //
+            //         // console.log(data.data["0"].geojson);
+            //     })
         })
 
         let zoomIn = document.getElementById('zoom_in');

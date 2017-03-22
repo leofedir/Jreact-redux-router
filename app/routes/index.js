@@ -38,7 +38,7 @@ router.post('/test', function(req, res) {
         }
         const k = '0522800000';
         client.query(`SELECT * 
-                      FROM test5`
+                      FROM test6`
                       , function(err, result) {
             // console.log(result);
             //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
