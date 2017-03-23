@@ -33,8 +33,7 @@ export default function createRender(curentLayer) {
                     classificationMethod: "quantile",
                     field: fieldName,
                     layer: curentLayer,
-                    scheme: schemes.secondarySchemes[3],
-                    normalizationType: 'percent-of-total'
+                    scheme: schemes.secondarySchemes[3]
 
                 };
 
