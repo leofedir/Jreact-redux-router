@@ -41,6 +41,14 @@ export default function createLegend(map, fieldName, curentLayer) {
 
                 legend.startup();
 
+                console.log( document.querySelectorAll('tbody svg path'))
+
+              let path = document.querySelectorAll('tbody svg path')
+                path = [].slice.call(path);
+                path.map(item => {
+                  console.log('item >>', item)
+              })
+
 
             })
     }
