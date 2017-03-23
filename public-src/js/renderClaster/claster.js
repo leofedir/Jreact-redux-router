@@ -46,7 +46,7 @@ export class Claster extends React.Component {
 
             iconSize:     [25], // size of the icon
             //shadowSize:   [50, 64], // size of the shadow
-            iconAnchor:   [15, -15] // point of the icon which will correspond to marker's location
+            iconAnchor:   [12, 50] // point of the icon which will correspond to marker's location
         });
 
         fetch(UrlLay + '?f=pjson')
