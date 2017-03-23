@@ -188,6 +188,7 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
             let popupInfo = []
 
             fieldNames.items.forEach(item => {
+                console.log(item)
                 popupInfo.push("<p>"+item.name[0]+"<span>${"+ item.value[0] +"} ${parameter}</span></p>")
             })
 
