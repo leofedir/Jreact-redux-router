@@ -38,19 +38,18 @@ router.post('/test', function(req, res) {
         }
         const k = '0522800000';
         client.query(`SELECT * 
-                      FROM test6`
-                      , function(err, result) {
-            // console.log(result);
-            //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
-            done(err);
+                      FROM test6`, function(err, result) {
+                // console.log(result);
+                //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+                done(err);
 
-            if(err) {
-                return console.error('error running query', err);
-            }
-            res.json({'state' : true , data: result.rows});
-            // console.log(result.rows);
-            //output: 1
-        });
+                if(err) {
+                    return console.error('error running query', err);
+                }
+                res.json({'state' : true , data: result.rows});
+                // console.log(result.rows);
+                //output: 1
+            });
     });
 
 
