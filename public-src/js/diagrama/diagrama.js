@@ -144,7 +144,7 @@ class Diagrama extends Component {
             .attr('id', 'clase_diagram');
 
         d3.select(".diagrama_title").append("span")
-            .text('Всього: '+ data.value + ' ' + this.state.myParametr["0"].features["0"].attributes.parameter);
+            .text('Всього: '+ new Intl.NumberFormat().format(data.value) + ' ' + this.state.myParametr["0"].features["0"].attributes.parameter);
 
         function down(d, i) {
             if (!d.children) return;
@@ -313,6 +313,9 @@ class Diagrama extends Component {
 
 // Creates a set of bars for the given data node, at the specified index.
         function bar(d) {
+            var number = 3500;
+
+            console.log();
             let i = 0;
             var bar = svg.insert("svg:g", ".y.axis")
                 .attr("transform", "translate(0,5)")
@@ -339,12 +342,12 @@ class Diagrama extends Component {
             bar.append("svg:text")
                 .attr("class", "text_val")
                 .attr("x", d => {
-                     return  x(d.size)
+                     return (x(d.size))
                 })
                 .attr("y", y / 2)
                 .attr("dy", ".35em")
                 .attr("text-anchor", "start")
-                .text(function(d) { return (d.size != 0) ? d.size : 'Дані уточнюються'; });
+                .text(function(d) { return (d.size != 0) ? new Intl.NumberFormat().format(d.size) : 'Дані уточнюються'; });
 
             document.querySelector('#diagrama svg').setAttribute('height', bar[0].length * 24);
             // document.querySelector('#diagrama').style.minHeight =  bar[0].length * 24  + 40 + 'px';

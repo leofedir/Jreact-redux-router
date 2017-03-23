@@ -19,8 +19,9 @@ export default function createRender(curentLayer) {
 
     function createRenderMain(curentLayer) {
         dojoRequire(
-            ['esri/renderers/smartMapping', "esri/styles/choropleth"],
-            (smartMapping, esriStylesChoropleth) => {
+            ['esri/renderers/smartMapping', "esri/styles/choropleth", "dojo/i18n!esri/nls/jsapi"],
+            (smartMapping, esriStylesChoropleth, b) => {
+                console.log(fieldName)
                     let schemes = esriStylesChoropleth.getSchemes({
                     theme: "high-to-low",
                     basemap: 'topo',
@@ -32,7 +33,9 @@ export default function createRender(curentLayer) {
                     classificationMethod: "quantile",
                     field: fieldName,
                     layer: curentLayer,
-                    scheme: schemes.secondarySchemes[3]
+                    scheme: schemes.secondarySchemes[3],
+                    normalizationType: 'percent-of-total'
+
                 };
 
                 smartMapping.createClassedColorRenderer(classedColorRenderParams).
@@ -44,6 +47,9 @@ export default function createRender(curentLayer) {
                     console.log("An error occurred while performing%s, Error: %o",
                         "Smart Mapping", error);
                 });
+                b.__proto__.smartMapping.minToMax = '-';
+                b.__proto__.smartMapping.other = 'Дані відсутні'
+
             })
     }
 }

@@ -124,7 +124,7 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
             });
 
             let outFieldsFilter = layersDataStore[parametr].fields.filter(function(obj) {
-                return obj.type === "esriFieldTypeDouble" && obj.name !== "population";
+                return obj.type === "esriFieldTypeDouble" && obj.name.slice(0, 4) == 'year';
             });
 
             outFields = outFieldsFilter.map(function(item) {
@@ -183,11 +183,7 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
             let popupInfo = []
 
             fieldNames.items.forEach(item => {
-
-                if (item.value[0].slice(0, 4) == 'year' ) {
                     popupInfo.push("<p>"+item.name[0]+"<span>${"+ item.value[0] +"} ${parameter}</span></p>")
-                }
-
             })
 
             let infoWindow = new InfoWindowLite(null, domConstruct.create("div", null, null, map.root));

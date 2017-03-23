@@ -41,15 +41,15 @@ export default function createLegend(map, fieldName, curentLayer) {
 
                 legend.startup();
 
-                console.log( document.querySelectorAll('tbody svg path'))
-
-              let path = document.querySelectorAll('tbody svg path')
-                path = [].slice.call(path);
-                path.map(item => {
-                  console.log('item >>', item)
-              })
-
-
+              //   console.log( document.querySelectorAll('tbody svg path'))
+              //
+              // let path = document.querySelectorAll('tbody svg path')
+              //   path = [].slice.call(path);
+              //   path.map(item => {
+              //     console.log('item >>', item)
+              //       item.setAttribute('stroke', '');
+              //       item.setAttribute('d', 'M-20-10L 10 -10L 10 10L-20 10L-20-10L');
+              // })
             })
     }
 }
