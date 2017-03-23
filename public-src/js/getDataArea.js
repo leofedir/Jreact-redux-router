@@ -21,10 +21,10 @@ let layerStore = {};
 let myParametr, myItem;
 let mylayer,mylayer2,
 // mylayer3,
-clicked;
+    clicked;
 
 export default function getDataArea(item, layerData) {
-   document.getElementById('basemaps-wrapper').style.display = "none";
+    document.getElementById('basemaps-wrapper').style.display = "none";
 
     if (!isLoaded()) {
         bootstrap((err) => {
@@ -41,7 +41,6 @@ export default function getDataArea(item, layerData) {
 }
 
 function getFetch(item, layerData) {
-
     let myQuery = '/query?where=1%3D1&outFields=*&returnGeometry=false&f=pjson',
         parametr = item.value,
         typeServer = item.type;
@@ -81,77 +80,10 @@ function getFetch(item, layerData) {
 
 function getDataAreaMain(item, parametr, layerData, typeServer) {
     dojoRequire(
-        ["esri/symbols/SimpleMarkerSymbol", "esri/Color", "esri/renderers/SimpleRenderer",
-            "esri/layers/FeatureLayer",
-            "dojo/domReady!", "dojox/charting/themes/Minty", "dojox/charting/Chart", "dojox/charting/axis2d/Default", "dojox/charting/plot2d/Lines", "esri/dijit/InfoWindowLite", "esri/InfoTemplate", "esri/basemaps", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/ArcGISTiledMapServiceLayer",
+        ["dojox/charting/themes/Minty", "dojox/charting/Chart", "dojox/charting/axis2d/Default", "dojox/charting/plot2d/Lines", "esri/dijit/InfoWindowLite", "esri/InfoTemplate", "esri/basemaps", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/ArcGISTiledMapServiceLayer",
             'esri/map', 'dojo/_base/array', 'dojo/data/ItemFileReadStore', 'dijit/form/FilteringSelect', 'dojo/dom-construct', 'dojo/dom', 'esri/layers/FeatureLayer'],
-        (SimpleMarkerSymbol, Color, SimpleRenderer,
-         FeatureSet, Minty, Chart, Default, Lines, InfoWindowLite, InfoTemplate, esriBasemaps,  ArcGISDynamicMapServiceLayer, ArcGISTiledMapServiceLayer, Map, array, ItemFileReadStore, FilteringSelect, domConstruct, dom, FeatureLayer) => {
-
-            var map = new Map("area", {
-                basemap : "streets",
-                center : [-73.76, 42.8],
-                zoom : 6
-            });
-            console.log(11)
-            // function createFeatureLayer() {
-            map.on('load', function() {
-
-                var jsonFS = {
-                    "geometryType": "esriGeometryPoint",
-                    "features": [
-                        {
-                            "attributes": {
-                                "Name": "Point2",
-                                "OBJECTID": 2
-
-                            },
-                            "geometry": {
-                                "x": -8208588.5985,
-                                "y": 5273995.736
-                            }
-                        }
-                    ]
-                };
-
-                var fs = new FeatureSet(jsonFS);
-
-                var layerDefinition = {
-                    "displayFieldName": "Name",
-                    "geometryType": "esriGeometryPoint",
-                    "spatialReference": {
-                        "wkid": 102100
-                    },
-                    "fields": [
-                        {
-                            "name": "OBJECTID",
-                            "type": "esriFieldTypeOID",
-                            "alias": "OBJECTID"
-                        },
-                        {
-                            "name": "Name",
-                            "type": "esriFieldTypeString",
-                            "alias": "Name",
-                            "length": 10
-                        }
-                    ]
-                }
-
-                var featureCollection = {
-                    layerDefinition: layerDefinition,
-                    featureSet: fs
-                };
-
-                let featureLayer = new FeatureLayer(featureCollection);
-                var symbol = new SimpleMarkerSymbol().setColor(new esri.Color([255, 0, 0, 0.5]));
-                var renderer = new SimpleRenderer(symbol);
-                featureLayer.setRenderer(renderer);
-
-                map.addLayer(featureLayer);
-            })
-
+        (Minty, Chart, Default, Lines, InfoWindowLite, InfoTemplate, esriBasemaps,  ArcGISDynamicMapServiceLayer, ArcGISTiledMapServiceLayer, Map, array, ItemFileReadStore, FilteringSelect, domConstruct, dom, FeatureLayer) => {
             if (!map) {
-
                 let tiled = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/Base_World_13_01/MapServer";
                 let anot = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/Аннотации_для_тематической/MapServer";
                 let megi = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/межі_областей/MapServer";
@@ -162,29 +94,23 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
                     thumbnailUrl: "https://www.example.com/images/thumbnail_2014-11-25_61051.png",
                     title: "Delorme"
                 };
-
-
                 let mapOptions = {
-                    basemap: "streets",
+                    basemap: "delorme",
                     center: [31, 49],
-                    zoom: 6,
-                    //
-                    // maxScale : 3000000,
-                    // minScale : 10000000,
-
-
-                slider: false
+                    // zoom: 6,
+                    maxScale : 3000000,
+                    minScale : 10000000,
+                    slider: false
                 };
                 map = new Map("area", mapOptions);
-
                 mylayer = new ArcGISDynamicMapServiceLayer(anot);
                 map.addLayer(mylayer);
 
                 mylayer2 = new ArcGISDynamicMapServiceLayer(megi);
                 map.addLayer(mylayer2);
 
-                mylayer3 = new ArcGISDynamicMapServiceLayer(tot);
-                map.addLayer(mylayer3);
+                // mylayer3 = new ArcGISDynamicMapServiceLayer(tot);
+                // map.addLayer(mylayer3);
 
 
             }
@@ -324,14 +250,14 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
                             minorTicks: false,
                             font: "normal normal 10pt Arial",
                             fontColor: "#666",
-                        labels: [{value: 1, text: "2013р"},
-                            {value: 2, text: "2014р"},
-                            {value: 3, text: "2015р"}]
-                    });
+                            labels: [{value: 1, text: "2013р"},
+                                {value: 2, text: "2014р"},
+                                {value: 3, text: "2015р"}]
+                        });
                     chart1.addSeries("Series 1", data);
                     chart1.render();
                 }, 500)
-                }
+            }
 
             layerStore[parametr].forEach(function(item) {
                 item.on('resume', () => {
