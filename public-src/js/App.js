@@ -50,6 +50,7 @@ class App extends Component {
         arrow.addEventListener('click', () => {
             document.querySelector('.menu_item').classList.toggle("hide")
             document.querySelector('.title_map').classList.toggle("hide_menu_title")
+            document.getElementById('slider').classList.toggle("slider_move")
         });
 
         let zoomIn = document.getElementById('zoom_in');

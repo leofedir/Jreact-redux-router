@@ -216,7 +216,7 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
             let popupInfo = []
 
             fieldNames.items.forEach(item => {
-                    popupInfo.push("<p>"+item.name +"<span>${"+ item.value +"} ${parameter}</span></p>")
+                popupInfo.push("<p>"+item.name +"<span>${"+ item.value +"} ${parameter}</span></p>")
             })
 
             let infoWindow = new InfoWindowLite(null, domConstruct.create("div", null, null, map.root));

@@ -43,7 +43,7 @@ h3 {
     box-shadow: 0 0 5px #888;
     overflow: hidden;
     transition: all 1s;
-    border-radius: 6px 6px 0 0;
+    border-radius: $radius;
 }
 
 .legend_show {
@@ -414,6 +414,12 @@ header {
     bottom: 20px;
     background-color: $grey;
     border-radius: $radius;
+    transition: all .5s;
+    overflow: hidden;
+}
+
+.slider_move {
+    left: 30px;
 }
 
 .slider_title {
@@ -428,6 +434,8 @@ header {
 }
 
 .slider_range {
-    width: 250px;
+    width: 200px;
     margin: 0 20px;
+
+    transition: all .5s;
 }

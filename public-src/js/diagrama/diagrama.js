@@ -315,7 +315,6 @@ class Diagrama extends Component {
         function bar(d) {
             var number = 3500;
 
-            console.log();
             let i = 0;
             var bar = svg.insert("svg:g", ".y.axis")
                 .attr("transform", "translate(0,5)")
