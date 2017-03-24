@@ -48,6 +48,7 @@ function GetMaps (folder, item) {
         let subMenuLink = document.querySelectorAll('.submenu_link')
         subMenuLink.forEach(item => {
             item.onclick = function() {
+                document.getElementById('slider').innerHTML="";
                 getLayers(this.dataset)
             }
         })

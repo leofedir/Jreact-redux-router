@@ -28,13 +28,14 @@ export default function createRender(curentLayer) {
                     geometryType: "polygon"
                 });
 
+                console.log('fieldName >>', fieldName)
+
                 let classedColorRenderParams = {
                     basemap: map.getBasemap(),
                     classificationMethod: "quantile",
                     field: fieldName,
                     layer: curentLayer,
-                    scheme: schemes.secondarySchemes[3]
-
+                    scheme: schemes.secondarySchemes[3],
                 };
 
                 smartMapping.createClassedColorRenderer(classedColorRenderParams).
@@ -46,6 +47,8 @@ export default function createRender(curentLayer) {
                     console.log("An error occurred while performing%s, Error: %o",
                         "Smart Mapping", error);
                 });
+
+                // change text
                 b.__proto__.smartMapping.minToMax = '-';
                 b.__proto__.smartMapping.other = 'Дані відсутні'
 

@@ -9,6 +9,7 @@ class MainMenu extends Component {
         return (
             <div>
                 <div className="icons-menu" id="menu">
+                    <div className="slider" id="slider"></div>
                     <img className="hide_menu_icon" id="hide_menu" src="./img/hide_menu.svg" alt="Сховати меню" />
                     <img className="zoom_in_icon" id="zoom_in" src="./img/plus.svg" alt="Сховати меню" />
                     <img className="zoom_out_icon" id="zoom_out" src="./img/minus.svg" alt="Сховати меню" />

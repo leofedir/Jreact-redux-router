@@ -47,7 +47,7 @@ h3 {
 }
 
 .legend_show {
-    height: 255px;
+    height: 226px;
 }
 
 .legent_title {
@@ -406,3 +406,28 @@ header {
     margin: 5px auto 0 auto;
 }
 
+.slider {
+    height: 60px;
+    padding: auto 20px;
+    position: absolute;
+    left: $menu_width + 20;
+    bottom: 20px;
+    background-color: $grey;
+    border-radius: $radius;
+}
+
+.slider_title {
+    margin: 6px 15px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+
+    p {
+        margin: 0;
+    }
+}
+
+.slider_range {
+    width: 250px;
+    margin: 0 20px;
+}

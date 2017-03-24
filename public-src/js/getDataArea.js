@@ -80,9 +80,25 @@ function getFetch(item, layerData) {
 
 function getDataAreaMain(item, parametr, layerData, typeServer) {
     dojoRequire(
-        ["dojox/charting/themes/Minty", "dojox/charting/Chart", "dojox/charting/axis2d/Default", "dojox/charting/plot2d/Lines", "esri/dijit/InfoWindowLite", "esri/InfoTemplate", "esri/basemaps", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/ArcGISTiledMapServiceLayer",
-            'esri/map', 'dojo/_base/array', 'dojo/data/ItemFileReadStore', 'dijit/form/FilteringSelect', 'dojo/dom-construct', 'dojo/dom', 'esri/layers/FeatureLayer'],
+        [   "dojox/charting/themes/Minty",
+            "dojox/charting/Chart",
+            "dojox/charting/axis2d/Default",
+            "dojox/charting/plot2d/Lines",
+            "esri/dijit/InfoWindowLite",
+            "esri/InfoTemplate",
+            "esri/basemaps",
+            "esri/layers/ArcGISDynamicMapServiceLayer",
+            "esri/layers/ArcGISTiledMapServiceLayer",
+            'esri/map',
+            'dojo/_base/array',
+            'dojo/data/ItemFileReadStore',
+            'dijit/form/FilteringSelect',
+            'dojo/dom-construct',
+            'dojo/dom',
+            'esri/layers/FeatureLayer'
+        ],
         (Minty, Chart, Default, Lines, InfoWindowLite, InfoTemplate, esriBasemaps,  ArcGISDynamicMapServiceLayer, ArcGISTiledMapServiceLayer, Map, array, ItemFileReadStore, FilteringSelect, domConstruct, dom, FeatureLayer) => {
+
             if (!map) {
                 let tiled = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/Base_World_13_01/MapServer";
                 let anot = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/Аннотации_для_тематической/MapServer";
@@ -112,7 +128,6 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
                 // mylayer3 = new ArcGISDynamicMapServiceLayer(tot);
                 // map.addLayer(mylayer3);
 
-
             }
             map.infoWindow.destroy();
 
@@ -136,9 +151,12 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
 
             saveData(layerDataHistogram[parametr], myItem)
 
+            let title_slider_range = []
+
             function createAliasFilds() {
                 outFields.forEach((item) => {
-                    fields[item] = `Станом на 20${item.substring(5)} рік`
+                    fields[item] = `Станом на 20${item.substring(5)} рік`;
+                    title_slider_range.push(`<p>20${item.substring(5)}</p>`)
                 });
             }
 
@@ -152,7 +170,6 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
                 "items": []
             };
 
-
             array.forEach(outFields, function (f) {
                 fieldNames.items.push({
                     "name": fields[f],
@@ -164,26 +181,42 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
                 data: fieldNames
             });
 
-            fieldSelect = new FilteringSelect({
-                displayedValue: fieldNames.items[0].name,
-                value: fieldNames.items[0].value,
-                name: "fieldsFS",
-                required: false,
-                store: fieldStore,
-                searchAttr: "name",
-                style: {
-                    "width": "210px",
-                    "fontSize": "12pt",
-                    "color": "#444"
-                }
-            }, domConstruct.create("div.my", null, dom.byId("fieldWrapper"), "replace"));
+            console.log('title_slider_range >>', title_slider_range)
+
+            let slider = document.getElementById('slider')
+            slider.innerHTML = `<div class="slider_title">${title_slider_range.join('')}</div>
+                                <input id='range' class="slider_range" type="range" min="0" max="${fieldNames.items.length - 1}" value="0" id="fader" step="1">`;
+
+            let range = document.getElementById('range');
+            range.addEventListener('change', function() {
+                let field = fieldNames.items[this.value].value;
+                myItem = field;
+                fieldName = field;
+                saveData(layerDataHistogram[parametr], myItem)
+                updateAttribute(field, infoTemplate)
+            })
+
+
+            // fieldSelect = new FilteringSelect({
+            //     displayedValue: fieldNames.items[0].name,
+            //     value: fieldNames.items[0].value,
+            //     name: "fieldsFS",
+            //     required: false,
+            //     store: fieldStore,
+            //     searchAttr: "name",
+            //     style: {
+            //         "width": "210px",
+            //         "fontSize": "12pt",
+            //         "color": "#444"
+            //     }
+            // }, domConstruct.create("div.my", null, dom.byId("fieldWrapper"), "replace"));
 
             fieldName = outFields[0]
 
             let popupInfo = []
 
             fieldNames.items.forEach(item => {
-                    popupInfo.push("<p>"+item.name[0]+"<span>${"+ item.value[0] +"} ${parameter}</span></p>")
+                    popupInfo.push("<p>"+item.name +"<span>${"+ item.value +"} ${parameter}</span></p>")
             })
 
             let infoWindow = new InfoWindowLite(null, domConstruct.create("div", null, null, map.root));
@@ -198,13 +231,13 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
                 '<div id="simplechart"></div>'
             );
 
-            fieldSelect.on("change", function(e) {
-
-                myItem = e;
-                fieldName = e;
-                saveData(layerDataHistogram[parametr], myItem)
-                updateAttribute(e, infoTemplate)
-            });
+            // fieldSelect.on("change", function(e) {
+            //     console.log('e input >>', e)
+            //     myItem = e;
+            //     fieldName = e;
+            //     saveData(layerDataHistogram[parametr], myItem)
+            //     updateAttribute(e, infoTemplate)
+            // });
 
             if(layerStore[parametr]) {
                 map.addLayers(layerStore[parametr]);
@@ -304,7 +337,7 @@ export class AreaFields extends Component {
         }
         this.setState({
             diagramVisible: !this.state.diagramVisible
-        })
+        });
 
         setTimeout(() => {
             if (document.getElementById('clase_diagram')) {
