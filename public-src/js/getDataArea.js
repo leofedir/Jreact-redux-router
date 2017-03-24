@@ -4,14 +4,15 @@ import { UrlLay } from './GetMaps';
 import { checkStatus, parseJSON} from './checkJSON';
 import updateAttribute from './updateAttribute';
 import Diagrama from './diagrama/diagrama';
-import { server } from './App'
+import { server } from './App';
+
 
 import createRender from './createRender';
 import React, { Component } from 'react';
 import { saveData } from './diagrama/diagrama'
 
 
-export let fieldName, popupTemplate, outFields, curentLayer, map;
+export let fieldName, popupTemplate, outFields, curentLayer, map = null;
 export let fields = {};
 export let response = {};
 
@@ -20,7 +21,7 @@ let layerDataHistogram = {};
 let layerStore = {};
 let myParametr, myItem;
 let mylayer,mylayer2,
-// mylayer3,
+    mylayer3,
     clicked;
 
 export default function getDataArea(item, layerData) {
@@ -45,19 +46,19 @@ function getFetch(item, layerData) {
         parametr = item.value,
         typeServer = item.type;
 
-    if (!layersDataStore[parametr]) {
-        fetch(UrlLay + parametr + '/' + typeServer + '/0' + myQuery)
-            .then(checkStatus)
-            .then(parseJSON)
-            .then(function(data) {
-                layersDataStore[parametr] = data;
-                layerDataHistogram[parametr] = {'0': data};
-            }).then(() => {
-            getDataAreaMain(item, parametr, layerData, typeServer)
-        })
-    } else {
+    // if (!layersDataStore[parametr]) {
+    fetch(UrlLay + parametr + '/' + typeServer + '/0' + myQuery)
+        .then(checkStatus)
+        .then(parseJSON)
+        .then(function(data) {
+            layersDataStore[parametr] = data;
+            layerDataHistogram[parametr] = {'0': data};
+        }).then(() => {
         getDataAreaMain(item, parametr, layerData, typeServer)
-    }
+    })
+    // } else {
+    //     getDataAreaMain(item, parametr, layerData, typeServer)
+    // }
 
     fetch(UrlLay + parametr + '/' + typeServer + '?f=pjson')
         .then(checkStatus)
@@ -99,44 +100,47 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
         ],
         (Minty, Chart, Default, Lines, InfoWindowLite, InfoTemplate, esriBasemaps,  ArcGISDynamicMapServiceLayer, ArcGISTiledMapServiceLayer, Map, array, ItemFileReadStore, FilteringSelect, domConstruct, dom, FeatureLayer) => {
 
-            if (!map) {
-                let tiled = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/Base_World_13_01/MapServer";
-                let anot = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/Аннотации_для_тематической/MapServer";
-                let megi = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/межі_областей/MapServer";
-                // let tot = 'https://gisserver.maping.so.org.ua/arcgis/rest/services/ТОТ/тот/MapServer';
-                esriBasemaps.delorme = {
-                    baseMapLayers: [{url: tiled}
-                    ],
-                    thumbnailUrl: "https://www.example.com/images/thumbnail_2014-11-25_61051.png",
-                    title: "Delorme"
-                };
-                let mapOptions = {
-                    basemap: "delorme",
-                    center: [31, 49],
-                    // zoom: 6,
-                    maxScale : 3000000,
-                    minScale : 10000000,
-                    slider: false
-                };
-                map = new Map("area", mapOptions);
-                mylayer = new ArcGISDynamicMapServiceLayer(anot);
-                map.addLayer(mylayer);
+            // if (!map) {
+            let tiled = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/Base_World_13_01/MapServer";
+            let anot = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/Аннотации_для_тематической/MapServer";
+            let megi = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/межі_областей/MapServer";
+            let tot = 'https://gisserver.maping.so.org.ua/arcgis/rest/services/ТОТ/тот/MapServer';
+            esriBasemaps.delorme = {
+                baseMapLayers: [{url: tiled}
+                ],
+                thumbnailUrl: "https://www.example.com/images/thumbnail_2014-11-25_61051.png",
+                title: "Delorme"
+            };
+            let mapOptions = {
+                basemap: "delorme",
+                center: [31, 49],
+                // zoom: 6,
+                maxScale : 3000000,
+                minScale : 10000000,
+                slider: false
+            };
+            map = new Map("area", mapOptions);
+            mylayer = new ArcGISDynamicMapServiceLayer(anot);
+            // map.addLayer(mylayer);
 
-                mylayer2 = new ArcGISDynamicMapServiceLayer(megi);
-                map.addLayer(mylayer2);
+            mylayer2 = new ArcGISDynamicMapServiceLayer(megi);
+            // map.addLayer(mylayer2);
 
-                // mylayer3 = new ArcGISDynamicMapServiceLayer(tot);
-                // map.addLayer(mylayer3);
+            map.addLayers([mylayer, mylayer2]);
 
+
+            if (map.infoWindow) {
+                map.infoWindow.destroy();
             }
-            map.infoWindow.destroy();
 
-            map.getLayersVisibleAtScale().forEach( item => {
-                if (item.id === 'layer0' || item.id === 'layer1') {
-                } else {
-                    map.removeLayer(item)
-                }
-            });
+
+
+            // map.getLayersVisibleAtScale().forEach( item => {
+            //     if (item.id === 'layer0' || item.id === 'layer1') {
+            //     } else {
+            //         map.removeLayer(item)
+            //     }
+            // });
 
             let outFieldsFilter = layersDataStore[parametr].fields.filter(function(obj) {
                 return obj.type === "esriFieldTypeDouble" && obj.name.slice(0, 4) == 'year';
@@ -181,8 +185,6 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
                 data: fieldNames
             });
 
-            console.log('title_slider_range >>', title_slider_range)
-
             let slider = document.getElementById('slider')
             slider.innerHTML = `<div class="slider_title">${title_slider_range.join('')}</div>
                                 <input id='range' class="slider_range" type="range" min="0" max="${fieldNames.items.length - 1}" value="0" id="fader" step="1">`;
@@ -194,6 +196,17 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
                 fieldName = field;
                 saveData(layerDataHistogram[parametr], myItem)
                 updateAttribute(field, infoTemplate)
+
+                if (myItem != 'year_13') {
+                    mylayer3 = new ArcGISDynamicMapServiceLayer(tot, {
+                        className: 'ato',
+                        imageTransparency: false,
+                        id: "ato"
+                    });
+                    map.addLayer(mylayer3)
+                } else {
+                    map.removeLayer(map.getLayer('ato'))
+                }
             })
 
 
@@ -239,23 +252,22 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
             //     updateAttribute(e, infoTemplate)
             // });
 
-            if(layerStore[parametr]) {
-                map.addLayers(layerStore[parametr]);
-                map.reorderLayer(mylayer, 4)
-            } else {
+            // if(layerStore[parametr]) {
+            //     map.addLayers(layerStore[parametr]);
+            // } else {
 
-                layerStore[parametr] = [];
+            layerStore[parametr] = [];
 
-                for (let i = 0; i < layerData.layers.length; i++) {
-                    layerStore[parametr][i] = new FeatureLayer(UrlLay + parametr + '/' + typeServer + '/' + i, {
-                        "infoTemplate": infoTemplate,
-                        "mode": FeatureLayer.MODE_ONDEMAND,
-                        "outFields": '*',
-                        "opacity": 0.8
-                    });
-                }
-                map.addLayers(layerStore[parametr]);
+            for (let i = 0; i < layerData.layers.length; i++) {
+                layerStore[parametr][i] = new FeatureLayer(UrlLay + parametr + '/' + typeServer + '/' + i, {
+                    "infoTemplate": infoTemplate,
+                    "mode": FeatureLayer.MODE_AUTO,
+                    "outFields": '*',
+                    "opacity": 0.8
+                });
             }
+            map.addLayers(layerStore[parametr]);
+            // }
 
             function createChart() {
                 setTimeout(() => {
@@ -314,6 +326,11 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
                     createChart()
                 })
             });
+            // map.on('update-end', () => {
+            //     console.log(map.getLayersVisibleAtScale())
+            //     map.reorderLayer(mylayer3, 0);
+            // })
+
         })
 }
 
@@ -329,7 +346,6 @@ export class AreaFields extends Component {
     openDiagram() {
         let icon = document.getElementById('diagrama_icon');
         let diagrama = document.getElementById('diagrama');
-        console.log('diagrama >>', diagrama.childNodes.length)
         if (diagrama.childNodes.length === 0) {
             icon.setAttribute('src', '/img/diagram_white.svg')
         } else {

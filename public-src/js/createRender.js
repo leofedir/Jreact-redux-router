@@ -19,9 +19,10 @@ export default function createRender(curentLayer) {
 
     function createRenderMain(curentLayer) {
         dojoRequire(
-            ['esri/renderers/smartMapping', "esri/styles/choropleth", "dojo/i18n!esri/nls/jsapi"],
+            ['esri/renderers/smartMapping',
+                "esri/styles/choropleth",
+                "dojo/i18n!esri/nls/jsapi"],
             (smartMapping, esriStylesChoropleth, b) => {
-                console.log(fieldName)
                     let schemes = esriStylesChoropleth.getSchemes({
                     theme: "high-to-low",
                     basemap: 'topo',

@@ -2,6 +2,7 @@
 @import '../js/diagrama/diagrama';
 @import "../js/renderClaster/claster";
 @import "../js/renderClaster/geocoder";
+@import "./input";
 
 .map,
 #mapid_root {
@@ -438,4 +439,12 @@ header {
     margin: 0 20px;
 
     transition: all .5s;
+}
+
+.ato img {
+    z-index: 9999;
+}
+
+.ato {
+    z-index: 9999;
 }

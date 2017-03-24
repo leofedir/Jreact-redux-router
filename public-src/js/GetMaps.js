@@ -1,5 +1,6 @@
 import { checkStatus, parseJSON} from './checkJSON';
 import getLayers from './getLayers';
+import { map } from './getDataArea'
 
 export const  byJson = '?f=pjson',
     UrlLay = 'https://gisserver.maping.so.org.ua/arcgis/rest/services/';

@@ -11,13 +11,17 @@ import getDataArea from './getDataArea';
 import ReactDOM from 'react-dom';
 import { AreaFields } from './getDataArea';
 
-export let mapDefault;
+export let mapDefault = null;
 export let  server = 'https://js.arcgis.com/3.20/';
 
 export function removeMap() {
     if(mapDefault !== null) {
         mapDefault.remove();
         mapDefault = null
+    } else if (map !== null) {
+        map.destroy()
+    } else if (Lmap !== null) {
+        Lmap.remove()
     }
 }
 
