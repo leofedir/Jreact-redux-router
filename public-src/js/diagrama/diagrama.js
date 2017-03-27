@@ -26,6 +26,7 @@ class Diagrama extends Component {
     }
 
     createHistogram() {
+        let full = false;
 
         let el = document.querySelector('#diagrama')
         if (el) {
@@ -105,14 +106,17 @@ class Diagrama extends Component {
             .scale(x)
             .orient("top");
 
-        d3.select("#diagrama").append('div')
+        let diagram = d3.select("#diagrama");
+
+        diagram.append('div')
             .attr("class", 'diagrama_title_wrap')
             .append("p")
             .attr("class", 'diagrama_title')
             .style('width', w + m[1] + m[3] +'px')
             .text('Рейтинг: ' + document.getElementsByClassName('title_text')[0].innerHTML + ', ' + this.state.myParametr["0"].features["0"].attributes.parameter);
 
-        let nameDiagram = d3.select("#diagrama").append('div')
+
+            diagram.append('div')
             .attr("id", 'name_diagram');
 
         var svg = d3.select("#diagrama").append("svg")
@@ -152,18 +156,32 @@ class Diagrama extends Component {
         d3.select(".diagrama_title").append("span")
             .text('Всього: '+ new Intl.NumberFormat().format(data.value) + ' ' + this.state.myParametr["0"].features["0"].attributes.parameter);
 
+
+
         let maximize = document.getElementById('max_diagram').addEventListener('click', () => {
-            w = document.documentElement.clientWidth; // width
-            h = document.documentElement.clientHeight; // height
-            x = d3.scale.linear().range([0, w]);
-            down(data, 0);
+
+            if (full == false){
+                diagram.attr("class", 'diagrama_max');
+                full = true;
+                w = document.documentElement.clientWidth; // width
+                h = document.documentElement.clientHeight; // height
+                x = d3.scale.linear().range([0, w]);
+                down(data, 0);
+            } else {
+                diagram.attr("class", '');
+                full = false
+                w = document.documentElement.clientWidth * .5; // width
+                h = document.documentElement.clientHeight * .6; // height
+                x = d3.scale.linear().range([0, w]);
+                down(data, 0);
+            }
+
         });
 
 
 
         function down(d, i) {
             if (!d.children) return;
-            console.log('w >>', w)
 
             let name_diagram = document.getElementById('name_diagram')
 
