@@ -7,7 +7,7 @@ import Geocoding from 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder';
 import 'leaflet.markercluster/dist/leaflet.markercluster-src';
 
 import React from 'react';
-export let Lmap;
+export let Lmap = null;
 let currentSearcherControl = null;
 let layers = {};
 
@@ -33,7 +33,7 @@ export class Claster extends React.Component {
         }
 
         function createMap() {
-            Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 6);
+           Lmap = L.map('point', {zoomControl: false}).setView([49, 31], 6);
            esri.basemapLayer('Topographic').addTo(Lmap);
 
         }
