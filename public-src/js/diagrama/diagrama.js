@@ -140,8 +140,8 @@ class Diagrama extends Component {
         down(data, 0);
 
         d3.select(".diagrama_title").append("span")
-            .attr('class', 'clase' )
-            .attr('id', 'clase_diagram');
+            .attr('class', 'close' )
+            .attr('id', 'close_diagram');
 
         d3.select(".diagrama_title").append("span")
             .text('Всього: '+ new Intl.NumberFormat().format(data.value) + ' ' + this.state.myParametr["0"].features["0"].attributes.parameter);

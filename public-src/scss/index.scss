@@ -4,9 +4,9 @@
 @import "../js/renderClaster/geocoder";
 @import "./input";
 
-.map,
 #mapid_root,
-#point{
+#area,
+#lmap {
     padding: 0;
     margin: 0;
     width: 100%;

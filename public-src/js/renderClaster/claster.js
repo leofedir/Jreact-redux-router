@@ -7,13 +7,14 @@ import Geocoding from 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder';
 import 'leaflet.markercluster/dist/leaflet.markercluster-src';
 
 import React from 'react';
-export let Lmap = null;
+export let Lmap;
 let currentSearcherControl = null;
 let layers = {};
 
 export class Claster extends React.Component {
 
     claster(aaa) {
+        Lmap = null;
         document.getElementById('basemaps-wrapper').style.display = "block";
 
         let provider = [];
@@ -26,27 +27,28 @@ export class Claster extends React.Component {
         }
 
         if (!Lmap) {
-            createMap()
-        } else {
-            Lmap.remove()
+            document.getElementById('lmap').remove();
             createMap()
         }
 
         function createMap() {
-           Lmap = L.map('point', {zoomControl: false}).setView([49, 31], 6);
+
+           let root = document.getElementById('piint_root');
+           let lmap = document.createElement('div');
+           lmap.setAttribute('id', 'lmap');
+           root.appendChild(lmap);
+
+           Lmap = L.map('lmap', {
+               zoomControl: false
+           }).setView([49, 31], 6);
            esri.basemapLayer('Topographic').addTo(Lmap);
 
         }
 
-        L.Icon.Default.imagePath = '/img/';
-
-        var greenIcon = L.icon({
+        let greenIcon = L.icon({
             iconUrl: '/img/marker-icon.svg',
-            // shadowUrl: 'leaf-shadow.png',
-
-            iconSize:     [25, 36], // size of the icon
-            //shadowSize:   [50, 64], // size of the shadow
-            iconAnchor:   [12, 33] // point of the icon which will correspond to marker's location
+            iconSize:     [25, 36],
+            iconAnchor:   [12, 33]
         });
 
         fetch(UrlLay + '?f=pjson')
@@ -62,6 +64,7 @@ export class Claster extends React.Component {
             let box = '<svg id="object" class="box" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 53 54"><defs><style>.cls-1{opacity:0.3;isolation:isolate;}.cls-2{fill:#747474;}.cls-3{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><g id="интерфейс"><image class="cls-1" width="53" height="54" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAA2CAYAAABnctHeAAAACXBIWXMAAAsSAAALEgHS3X78AAACuElEQVRoQ+2azYuNURzHv3PHmOsliryMUiMlsUAR2bCwYWHjJaUho2z8BRZqdsrCCkk2yk5ZzkZKCmsrG2USZaOUt8K4vp85z51753bdB3Wf0z2dxWd3e875nO/v93vqPkeNRkOpUf4DaaigFpm5fZTtt6eUWiKLzGIzaupmScXUi7XZA3sZVolgmQwPXG5WmTVmvRkzGypirFhzrVltVpilCoJzcqVSagmNmGXFgzaarWaH2W32mn0VwVp7zC6zzWxSkFypcOAcfK1MqilEOuvMluLhh80JM2HOmUlzvs9MFmudMafMUXPA7DTjCgdOeSI21FVKISV+QEIIbTeHzFlzyVw1N8xtc6ciWOumuWamzEVzzOw3mxXESGxBKXamVC9+SEIIXTBXzD0zbR6bp+Z5RTwzT8xD88DcMpfNaQWxcYVSpMcWSqmVEmVHD1FyJITQ/WKBl2bGvDXvKoK13phX5oV5ZO4qiB1XKEV6jOEx3E0KW6YcQ+GIQsmREEKvzQfzyXwxXyuCtT6bj+a9wsEiRmKU4kGF4cFUnO+t9tLjXcDoZMqdVOih6eJBCH0zP8xsxfw03xUEESMxSnFKYXgwFWmZ+RLs7CeiZGxPmOsKPTSjkBBCv0wjAqyLGIlRivQYw4OpyLgnDEKpdUoxHnnZ8W5glDJ5GArUNac0+xeL9xMSoxTpMYYHU5Fxz3uMMAilqxRvcYYE7wlGKv1Ew1LfsaVYn8PlkDlsDp3DJwTCYP8DKcU+2A/7Yn/sk/2y7yyVpfpIlpKyVDSylJSlopGlpCwVjSwlZaloZCkpS0UjS0lZKhpZSspS0chS0uBI/dffzsl9IEjyU86oEvvoluTn0fQ+ZHf0VRpXDjrSSudySFtaI0rlGk9bWk2xNC5cdYilcTWuh9xgX2L8g1xTMCY9Rf5JahD5DZFpHm1Tc/OuAAAAAElFTkSuQmCC"/><rect class="cls-2" x="6.18" y="4.83" width="40" height="40.33" rx="5" ry="5"/><polygon class="cls-3" points="26.18 36.83 16.18 31.83 16.18 19.83 26.18 24.83 26.18 36.83"/><polygon class="cls-3" points="26.18 36.83 36.18 31.83 36.18 19.83 26.18 24.83 26.18 36.83"/><polygon class="cls-3" points="16.18 19.83 26.18 24.83 36.18 19.83 26.18 14.83 16.18 19.83"/></g></svg>'
             let setLayers = ['<span class="title_leayers"><b>Об’єкти</b><img id="object_hide" src="/img/-.svg" alt=""> </span>'];
             layers = {};
+            console.log('list >>', list)
 
             function createPopup(e) {
                 let popapItems = [`<div class="popup_header"><button class="closeButton" onclick="document.getElementById('props').style.display = 'none'"></button></div>`];
@@ -205,10 +208,10 @@ export class Claster extends React.Component {
 
     render () {
         return (
-            <div>
+            <div id="piint_root">
+                <div id="lmap"></div>
                 <div id="props"></div>
                 <div id="selector"></div>
-                <div id="map"></div>
                 <div id="basemaps-wrapper2" className="leaflet-bar layers"></div>
             </div>
         );

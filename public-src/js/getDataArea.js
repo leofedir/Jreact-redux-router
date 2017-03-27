@@ -356,8 +356,8 @@ export class AreaFields extends Component {
         });
 
         setTimeout(() => {
-            if (document.getElementById('clase_diagram')) {
-                document.getElementById('clase_diagram').addEventListener('click', this.openDiagram)
+            if (document.getElementById('close_diagram')) {
+                document.getElementById('close_diagram').addEventListener('click', this.openDiagram)
             }
         }, 300)
     }
