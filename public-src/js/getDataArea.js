@@ -51,6 +51,7 @@ function getFetch(item, layerData) {
         .then(checkStatus)
         .then(parseJSON)
         .then(function(data) {
+            console.log(data)
             layersDataStore[parametr] = data;
             layerDataHistogram[parametr] = {'0': data};
         }).then(() => {

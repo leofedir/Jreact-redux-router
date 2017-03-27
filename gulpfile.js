@@ -64,11 +64,16 @@ gulp.task('imagemin', function() {
         .pipe(gulp.dest('public/img'));
 });
 
+gulp.task('font', function() {
+    return gulp.src('./public-src/lib/font-awesome/fonts/**/*')
+        .pipe(gulp.dest('public/fonts'));
+});
+
 gulp.task('html', function() {
     return gulp.src('./public-src/index.html')
         .pipe(gulp.dest('public/'));
 });
 
-gulp.task('build', ['js', 'scss', 'html', 'imagemin']);
+gulp.task('build', ['js', 'scss', 'html', 'imagemin', 'font']);
 
 gulp.task('default', ['js', 'scss', 'html', 'watch']);
