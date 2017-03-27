@@ -66,8 +66,10 @@ export class Claster extends React.Component {
             function createPopup(e) {
                 let popapItems = [`<div class="popup_header"><button class="closeButton" onclick="document.getElementById('props').style.display = 'none'"></button></div>`];
                 popup.style.display = 'block';
+                console.log('item >>', e.layer)
 
                 fields.forEach(item => {
+
                     if (item.title === 'Назва') {
                         popapItems.push(`<h5 className="name">${ e.layer.feature.properties[item.key] }</h5>`)
                     } else if (e.layer.feature.properties[item.key]) {

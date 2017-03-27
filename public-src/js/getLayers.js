@@ -47,7 +47,7 @@ function renderLayer(item) {
         ReactDOM.render(<AreaFields />, document.getElementById('area'));
         getDataArea(item, layerStore[parametr])
 
-    } else if (layerStore[parametr].serviceDescription === "point") {
+    } else if (layerStore[parametr].serviceDescription === "point" || layerStore[parametr].serviceDescription === 'point_school') {
         removeMap()
         document.getElementById('area').style.display = 'none';
         document.getElementById('point').style.display = 'block';
