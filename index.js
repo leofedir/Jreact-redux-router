@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride());
 //move to config
-server.listen(9000);
+server.listen(8000);
 console.log('ok')
 
 const routes = require('./app/routes');
