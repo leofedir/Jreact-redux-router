@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride());
 //move to config
 server.listen(config.server.port);
-console.log('ok')
+console.log('ok');
 
 const routes = require('./app/routes');
 

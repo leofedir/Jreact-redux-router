@@ -40,9 +40,7 @@ class App extends Component {
 
         esri.basemapLayer('Topographic').addTo(mapDefault);
 
-        let menu = document.getElementsByClassName('icons-menu__link')
-        menu = [].slice.call(menu);
-        menu.forEach((item) => {
+        document.querySelectorAll('.icons-menu__link').forEach((item) => {
             this.setState({
                 folder: item.dataset.folder,
                 item: item
