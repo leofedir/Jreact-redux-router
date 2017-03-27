@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import './diagrama.scss';
 import * as d3 from 'd3';
 
 let svg, data, row;
@@ -153,8 +152,8 @@ class Diagrama extends Component {
             .attr('id', 'max_diagram')
             .attr('aria-hidden', 'true');
 
-        d3.select(".diagrama_title").append("span")
-            .text('Всього: '+ new Intl.NumberFormat().format(data.value) + ' ' + this.state.myParametr["0"].features["0"].attributes.parameter);
+        // d3.select(".diagrama_title").append("span")
+        //     .text('Всього: '+ new Intl.NumberFormat().format(data.value) + ' ' + this.state.myParametr["0"].features["0"].attributes.parameter);
 
 
 
