@@ -376,7 +376,7 @@ export class AreaFields extends Component {
                     <img id="diagrama_icon" src="/img/diagram.svg" alt=""/>
                 </a>
                 <div id="infoWindow"></div>
-                <div id="legend" className="legend">
+                <div id="legend" className="legend legend_show">
                     <div className="legent_title">Легенда</div>
                     <div id="legendWrapper"></div>
                     <div id="fieldWrapper"></div>
