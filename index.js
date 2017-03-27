@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const Server  = require("http").Server;
 const server = Server(app);
+const config = require('./config');
 
 
 
@@ -22,7 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride());
 //move to config
-server.listen(8000);
+server.listen(config.server.port);
 console.log('ok')
 
 const routes = require('./app/routes');
