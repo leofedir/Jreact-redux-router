@@ -139,15 +139,31 @@ class Diagrama extends Component {
         x.domain([0, data.value]).nice();
         down(data, 0);
 
-        d3.select(".diagrama_title").append("span")
-            .attr('class', 'close' )
-            .attr('id', 'close_diagram');
+        d3.select(".diagrama_title").append("i")
+            .attr('class', 'close fa fa-window-close' )
+            .attr('id', 'close_diagram')
+            .attr('aria-hidden', 'true');
+
+        d3.select(".diagrama_title").append("i")
+            .attr('class', 'fa fa-window-maximize' )
+            .attr('id', 'max_diagram')
+            .attr('aria-hidden', 'true');
 
         d3.select(".diagrama_title").append("span")
             .text('Всього: '+ new Intl.NumberFormat().format(data.value) + ' ' + this.state.myParametr["0"].features["0"].attributes.parameter);
 
+        let maximize = document.getElementById('max_diagram').addEventListener('click', () => {
+            w = document.documentElement.clientWidth; // width
+            h = document.documentElement.clientHeight; // height
+            x = d3.scale.linear().range([0, w]);
+            down(data, 0);
+        });
+
+
+
         function down(d, i) {
             if (!d.children) return;
+            console.log('w >>', w)
 
             let name_diagram = document.getElementById('name_diagram')
 

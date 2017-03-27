@@ -69,12 +69,13 @@
 }
 
 .close {
-    background-image: url(/img/x.svg);
-    background-repeat: no-repeat;
-    background-size: 14px;
-    background-position: 10px 8px;
+    //background-image: url(/img/x.svg);
+    //background-repeat: no-repeat;
+    //background-size: 14px;
+    //background-position: 10px 8px;
     width: 30px;
     height: 30px;
+    cursor: pointer;
 }
 
 #name_diagram {
