@@ -109,8 +109,9 @@ class Diagrama extends Component {
 
         diagram.append('div')
             .attr("class", 'diagrama_title_wrap')
+            .append("div").attr("class", 'diagrama_top')
+            .append("div").attr("class", 'diagrama_title')
             .append("p")
-            .attr("class", 'diagrama_title')
             .style('width', w + m[1] + m[3] +'px')
             .text('Рейтинг: ' + document.getElementsByClassName('title_text')[0].innerHTML + ', ' + this.state.myParametr["0"].features["0"].attributes.parameter);
 
@@ -142,12 +143,15 @@ class Diagrama extends Component {
         x.domain([0, data.value]).nice();
         down(data, 0);
 
-        d3.select(".diagrama_title").append("i")
+        d3.select(".diagrama_top").append("div")
+            .attr('class', 'diagrama_button' );
+
+        d3.select(".diagrama_button").append("i")
             .attr('class', 'close fa fa-window-close' )
             .attr('id', 'close_diagram')
             .attr('aria-hidden', 'true');
 
-        d3.select(".diagrama_title").append("i")
+        d3.select(".diagrama_button").append("i")
             .attr('class', 'fa fa-window-maximize' )
             .attr('id', 'max_diagram')
             .attr('aria-hidden', 'true');
