@@ -6,6 +6,7 @@ import Cluster from 'esri-leaflet-cluster';
 import Geocoding from 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder';
 import 'leaflet.markercluster/dist/leaflet.markercluster-src';
 import * as d3 from 'd3';
+var Highcharts = require('highcharts');
 
 import React from 'react';
 export let Lmap;
@@ -17,9 +18,9 @@ export class Claster extends React.Component {
     claster(aaa) {
         Lmap = null;
         let alias = {
-            "teplopostachyannya": 'Теплопостачання',
+            teplo: 'Теплопостачання',
             elektroenergy: 'Електропостачання',
-            vodopostachyannya: 'Водопостачання',
+            water: 'Водопостачання',
             subvencii: 'Субвенції'
         }
         document.getElementById('basemaps-wrapper').style.display = "block";
@@ -59,99 +60,54 @@ export class Claster extends React.Component {
         });
 
         function Chart(data) {
-
-            // Set the dimensions of the canvas / graph
-            var margin = {top: 30, right: 20, bottom: 120, left: 80},
-                width = 400 - margin.left - margin.right,
-                height = 350 - margin.top - margin.bottom;
-
-            // Set the ranges
-            var x = d3.time.scale().range([0, width]);
-            var y = d3.scale.linear().range([height, 0]);
-
-            // Define the axes
-            var xAxis = d3.svg.axis().scale(x)
-                .orient("bottom").ticks(5);
-
-            var yAxis = d3.svg.axis().scale(y)
-                .orient("left").ticks(5);
-
-            // Define the line
-            var priceline = d3.svg.line()
-                .x(function(d) { return x(d.date); })
-                .y(function(d) { return y(d.value); });
-
-            // Adds the svg canvas
-            var svg = d3.select("#chart_point")
-                .append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform",
-                    "translate(" + margin.left + "," + margin.top + ")");
-
-            // Get the data
-            data.forEach(function(d) {
-                d.date = +d.date;
-                d.value = +d.value;
-            });
-
-            // Scale the range of the data
-            x.domain(d3.extent(data, function(d) { return d.date; }));
-            y.domain([0, d3.max(data, function(d) { return d.value; })]);
-
-            // Nest the entries by symbol
-            var dataNest = d3.nest()
-                .key(function(d) {return d.symbol;})
+            let dataNest = d3.nest()
+                .key(function(d) {return d.name;})
+                .rollup(function(v) { return {
+                    count: v.length,
+                    data: v.map(function(d) { return d.data; })
+                }; })
                 .entries(data);
 
-            var color = d3.scale.category10();   // set the colour scale
+            let newData = dataNest.map(item => {
+                console.log(item)
+                return {
+                    name: alias[item.key],
+                    data: item.values.data
+                }
+            })
 
-            // Loop through each symbol / key
-            dataNest.forEach(function(d,i) {
+            console.log(newData)
 
-                svg.append("path")
-                    .attr("class", "line")
-                    .style("stroke", function() { // Add the colours dynamically
-                        return d.color = color(d.key); })
-                    .attr("id", 'tag'+d.key.replace(/\s+/g, '')) // assign ID
-                    .attr("d", priceline(d.values));
+            Highcharts.chart('chart_point', {
 
-                // Add the Legend
-                svg.append("text")
-                    .attr("x", "0")  // space legend
-                    .attr("y", height + (margin.bottom/2)+ 5 + (i * 15))
-                    .attr("class", "legend_point")    // style the legend
-                    .style("fill", function() { // Add the colours dynamically
-                        return d.color = color(d.key); })
-                    .on("click", function(){
-                        // Determine if current line is visible
-                        let active   = d.active ? false : true,
-                            newOpacity = active ? 0 : 1,
-                            newClass = active ? "legend_point hide" : 'legend_point';
+                title: {
+                    text: 'Витрати'
+                },
 
-                        this.setAttribute("class", newClass)
+                subtitle: {
+                    text: 'школа така'
+                },
 
-                        // Hide or show the elements based on the ID
-                        d3.select("#tag"+d.key.replace(/\s+/g, ''))
-                            .transition().duration(200)
-                            .style("opacity", newOpacity);
-                        // Update whether or not the elements are active
-                        d.active = active;
-                    })
-                    .text(alias[d.key]);
+                yAxis: {
+                    title: {
+                        text: 'грн.'
+                    }
+                },
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                },
+
+                plotOptions: {
+                    series: {
+                        pointStart: 2014
+                    }
+                },
+
+                series: newData
+
             });
-
-            // Add the X Axis
-            svg.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + height + ")")
-                .call(xAxis);
-
-            // Add the Y Axis
-            svg.append("g")
-                .attr("class", "y axis")
-                .call(yAxis);
 
         }
 
@@ -183,27 +139,46 @@ export class Claster extends React.Component {
                     }
                 })
 
-                popapItems.push(`<div id="chart_point" className="chart"></div>`)
-
-                let dataChart = [];
-
                 let data = e.layer.feature.properties;
 
                 for (let key in data) {
-                    if (data.hasOwnProperty(key)) {
-                        let str = key.slice(0, key.indexOf('_'))
-                        if (str == 'teplopostachyannya' || str == 'elektroenergy' || str == 'vodopostachyannya' || str == 'subvencii' ) {
-                            let obj = {};
-                            obj.symbol = str;
-                            obj.date = `20${key.slice(key.indexOf('_') + 1)}`;
-                            obj.value = data[key];
-                            dataChart.push(obj)
+                    if (data.hasOwnProperty(key) && ~key.indexOf('_') && key.slice(0, key.indexOf('_')) == 'chart') {
+                        addChart();
+                        return
+                    }
+
+                };
+
+                popup.innerHTML = popapItems.join('')
+
+                addEventClose()
+
+                function addChart () {
+
+                    popapItems.push(`<div id="chart_point" className="chart"></div>`)
+                    let dataChart = [];
+
+                    for (let key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            let str = key.slice(0, key.indexOf('_'))
+                            if (str == 'chart') {
+                                str = (key.slice(key.indexOf('_') + 1, key.indexOf('_', key.indexOf('_') + 1)))
+                                let obj = {};
+                                obj.name = str;
+                                // obj.date = `${new Date(key.slice(key.lastIndexOf('_') + 1)).getTime()}`;
+                                // obj.date = `${key.slice(key.lastIndexOf('_') + 1)}`;
+                                obj.data = data[key];
+                                dataChart.push(obj)
+                            }
                         }
                     }
+                    popup.innerHTML = popapItems.join('')
+                    Chart(dataChart)
+                    addEventClose()
                 }
-                popup.innerHTML = popapItems.join('')
-                Chart(dataChart)
+            }
 
+            function addEventClose() {
                 let popups = document.querySelectorAll('#props');
 
                 function removePopups(e) {
@@ -212,7 +187,6 @@ export class Claster extends React.Component {
                         this.removeEventListener('click', removePopups);
                     }
                 };
-
                 window.addEventListener('click', removePopups);
             }
 
@@ -308,9 +282,6 @@ export class Claster extends React.Component {
                 })
 
                 currentSearcherControl.addTo(Lmap);
-                // // add search icon & placeholder
-                // let search = document.querySelector('.geocoder-control');
-                // search.innerHTML += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13.37 13.26"><defs><style>.cls-1,.cls-3{fill:#fff;}.cls-2{fill:#009971;}.cls-3{stroke:#009971;stroke-linecap:round;stroke-miterlimit:10;stroke-width:2px;}</style></defs><g id="Layer_2" data-name="Layer 2"><circle class="cls-1" cx="8.38" cy="5" r="4.5"/><path class="cls-2" d="M8.37,1a4,4,0,1,1-4,4,4,4,0,0,1,4-4m0-1a5,5,0,1,0,5,5,5,5,0,0,0-5-5Z"/><line class="cls-3" x1="1" y1="12.26" x2="4.82" y2="8.45"/></g></svg>';
                 document.querySelector('.geocoder-control-input').setAttribute("placeholder", "Введіть назву");
             }
 

@@ -19,6 +19,7 @@
     "esri-leaflet-geocoder": "^2.2.3",
     "esri-loader": "^0.1.2",
     "express": "^4.15.2",
+    "highcharts": "^5.0.9",
     "leaflet": "^1.0.3",
     "leaflet.locatecontrol": "^0.60.0",
     "leaflet.markercluster": "^1.0.3",

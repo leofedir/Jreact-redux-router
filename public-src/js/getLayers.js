@@ -23,12 +23,10 @@ export default function getLayer(item) {
 }
 
 function getFetch(item) {
-    console.log('myitem >>', item)
     fetch(UrlLay + parametr + '/' + typeServer + byJson)
         .then(checkStatus)
         .then(parseJSON)
         .then(function(data) {
-            console.log('data >>', data)
             layerStore[parametr] = data;
             renderLayer(item)
         })
