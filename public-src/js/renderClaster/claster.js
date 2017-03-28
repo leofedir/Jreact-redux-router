@@ -203,6 +203,17 @@ export class Claster extends React.Component {
                 }
                 popup.innerHTML = popapItems.join('')
                 Chart(dataChart)
+
+                let popups = document.querySelectorAll('#props');
+
+                function removePopups(e) {
+                    if(!e.target.matches('.popups *') && !e.target.matches('.leaflet-marker-icon')) {
+                        popups[0].style.display = 'none';
+                        this.removeEventListener('click', removePopups);
+                    }
+                };
+
+                window.addEventListener('click', removePopups);
             }
 
             list.layers.forEach(function(layer){
@@ -333,7 +344,7 @@ export class Claster extends React.Component {
         return (
             <div id="piint_root">
                 <div id="lmap"></div>
-                <div id="props"></div>
+                <div id="props" className="popups"></div>
                 <div id="selector"></div>
                 <div id="basemaps-wrapper2" className="leaflet-bar layers"></div>
             </div>
