@@ -162,8 +162,8 @@ class Diagrama extends Component {
             if (full == false){
                 diagram.attr("class", 'diagrama_max');
                 full = true;
-                w = document.documentElement.clientWidth; // width
-                h = document.documentElement.clientHeight; // height
+                w = document.documentElement.clientWidth * 0.8; // width
+                h = document.documentElement.clientHeight * 0.95; // height
                 x = d3.scale.linear().range([0, w]);
                 down(data, 0);
             } else {

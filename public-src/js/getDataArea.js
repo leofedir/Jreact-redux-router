@@ -347,6 +347,8 @@ export class AreaFields extends Component {
     openDiagram() {
         let icon = document.getElementById('diagrama_icon');
         let diagrama = document.getElementById('diagrama');
+        (diagrama.classList.contains('diagrama_max')) ? diagrama.classList.toggle("diagrama_max") : ''
+        // diagrama.classList.toggle("diagrama_max")
         if (diagrama.childNodes.length === 0) {
             icon.setAttribute('src', '/img/diagram_white.svg')
         } else {
