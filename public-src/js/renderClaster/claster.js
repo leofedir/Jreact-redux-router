@@ -99,6 +99,14 @@ export class Claster extends React.Component {
                     verticalAlign: 'bottom'
                 },
 
+                xAxis: {
+                    crosshair: true
+                },
+
+                tooltip: {
+                    shared: true,
+                },
+
                 plotOptions: {
                     series: {
                         pointStart: 2014
