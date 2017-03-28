@@ -5,7 +5,6 @@ import getFields from './setFields';
 import Cluster from 'esri-leaflet-cluster';
 import Geocoding from 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder';
 import 'leaflet.markercluster/dist/leaflet.markercluster-src';
-import * as d3 from 'd3';
 
 import React from 'react';
 export let Lmap;
@@ -15,13 +14,6 @@ let layers = {};
 export class Claster extends React.Component {
 
     claster(aaa) {
-        Lmap = null;
-        let alias = {
-            "teplopostachyannya": 'Теплопостачання',
-            elektroenergy: 'Електропостачання',
-            vodopostachyannya: 'Водопостачання',
-            subvencii: 'Субвенції'
-        }
         document.getElementById('basemaps-wrapper').style.display = "block";
 
         let provider = [];
@@ -34,127 +26,26 @@ export class Claster extends React.Component {
         }
 
         if (!Lmap) {
-            document.getElementById('lmap').remove();
+            createMap()
+        } else {
+            Lmap.remove()
             createMap()
         }
 
         function createMap() {
-
-           let root = document.getElementById('piint_root');
-           let lmap = document.createElement('div');
-           lmap.setAttribute('id', 'lmap');
-           root.appendChild(lmap);
-
-           Lmap = L.map('lmap', {
-               zoomControl: false
-           }).setView([49, 31], 6);
+            Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 6);
            esri.basemapLayer('Topographic').addTo(Lmap);
 
         }
 
-        let icon = L.icon({
+        L.Icon.Default.imagePath = '/img/';
+
+        var greenIcon = L.icon({
             iconUrl: '/img/marker-icon.svg',
-            iconSize:     [25, 36],
-            iconAnchor:   [12, 33]
+            iconSize:     [25], // size of the icon
+            shadowSize:   [50, 64], // size of the shadow
+            iconAnchor:   [25, 60], // point of the icon which will correspond to marker's location
         });
-
-        function Chart(data) {
-
-            // Set the dimensions of the canvas / graph
-            var margin = {top: 30, right: 20, bottom: 120, left: 80},
-                width = 400 - margin.left - margin.right,
-                height = 350 - margin.top - margin.bottom;
-
-            // Set the ranges
-            var x = d3.time.scale().range([0, width]);
-            var y = d3.scale.linear().range([height, 0]);
-
-            // Define the axes
-            var xAxis = d3.svg.axis().scale(x)
-                .orient("bottom").ticks(5);
-
-            var yAxis = d3.svg.axis().scale(y)
-                .orient("left").ticks(5);
-
-            // Define the line
-            var priceline = d3.svg.line()
-                .x(function(d) { return x(d.date); })
-                .y(function(d) { return y(d.value); });
-
-            // Adds the svg canvas
-            var svg = d3.select("#chart_point")
-                .append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform",
-                    "translate(" + margin.left + "," + margin.top + ")");
-
-            // Get the data
-            data.forEach(function(d) {
-                d.date = +d.date;
-                d.value = +d.value;
-            });
-
-            // Scale the range of the data
-            x.domain(d3.extent(data, function(d) { return d.date; }));
-            y.domain([0, d3.max(data, function(d) { return d.value; })]);
-
-            // Nest the entries by symbol
-            var dataNest = d3.nest()
-                .key(function(d) {return d.symbol;})
-                .entries(data);
-
-            var color = d3.scale.category10();   // set the colour scale
-
-            // Loop through each symbol / key
-            dataNest.forEach(function(d,i) {
-
-                svg.append("path")
-                    .attr("class", "line")
-                    .style("stroke", function() { // Add the colours dynamically
-                        return d.color = color(d.key); })
-                    .attr("id", 'tag'+d.key.replace(/\s+/g, '')) // assign ID
-                    .attr("d", priceline(d.values));
-
-                // Add the Legend
-                svg.append("text")
-                    .attr("x", "0")  // space legend
-                    .attr("y", height + (margin.bottom/2)+ 5 + (i * 15))
-                    .attr("class", "legend_point")    // style the legend
-                    .style("fill", function() { // Add the colours dynamically
-                        return d.color = color(d.key); })
-                    .on("click", function(){
-                        // Determine if current line is visible
-                        let active   = d.active ? false : true,
-                            newOpacity = active ? 0 : 1,
-                            newClass = active ? "legend_point hide" : 'legend_point';
-
-                        this.setAttribute("class", newClass)
-
-                        // Hide or show the elements based on the ID
-                        d3.select("#tag"+d.key.replace(/\s+/g, ''))
-                            .transition().duration(200)
-                            .style("opacity", newOpacity);
-                        // Update whether or not the elements are active
-                        d.active = active;
-                    })
-                    .text(alias[d.key]);
-            });
-
-            // Add the X Axis
-            svg.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + height + ")")
-                .call(xAxis);
-
-            // Add the Y Axis
-            svg.append("g")
-                .attr("class", "y axis")
-                .call(yAxis);
-
-        }
-
 
         fetch(UrlLay + '?f=pjson')
             .then(checkStatus)
@@ -175,34 +66,13 @@ export class Claster extends React.Component {
                 popup.style.display = 'block';
 
                 fields.forEach(item => {
-
                     if (item.title === 'Назва') {
                         popapItems.push(`<h5 className="name">${ e.layer.feature.properties[item.key] }</h5>`)
                     } else if (e.layer.feature.properties[item.key]) {
                         popapItems.push(`<div class="popup_item"><img src="${ item.img }"><p>${ e.layer.feature.properties[item.key] }</p></div> `)
                     }
                 })
-
-                popapItems.push(`<div id="chart_point" className="chart"></div>`)
-
-                let dataChart = [];
-
-                let data = e.layer.feature.properties;
-
-                for (let key in data) {
-                    if (data.hasOwnProperty(key)) {
-                        let str = key.slice(0, key.indexOf('_'))
-                        if (str == 'teplopostachyannya' || str == 'elektroenergy' || str == 'vodopostachyannya' || str == 'subvencii' ) {
-                            let obj = {};
-                            obj.symbol = str;
-                            obj.date = `20${key.slice(key.indexOf('_') + 1)}`;
-                            obj.value = data[key];
-                            dataChart.push(obj)
-                        }
-                    }
-                }
                 popup.innerHTML = popapItems.join('')
-                Chart(dataChart)
             }
 
             list.layers.forEach(function(layer){
@@ -215,7 +85,7 @@ export class Claster extends React.Component {
                     },
                     // Feature Layer Options
                     pointToLayer: function (geojson, latlng) {
-                        return L.marker(latlng, {icon: icon});
+                        return L.marker(latlng, {icon: greenIcon});
                     }
                 });
                 m.on('click', createPopup)
@@ -331,10 +201,10 @@ export class Claster extends React.Component {
 
     render () {
         return (
-            <div id="piint_root">
-                <div id="lmap"></div>
+            <div>
                 <div id="props"></div>
                 <div id="selector"></div>
+                <div id="map"></div>
                 <div id="basemaps-wrapper2" className="leaflet-bar layers"></div>
             </div>
         );
