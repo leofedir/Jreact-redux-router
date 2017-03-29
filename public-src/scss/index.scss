@@ -375,24 +375,26 @@ header {
     flex: 1;
 }
 
-#barChart {
-    position: absolute;
-    z-index: 400;
-    top: 66px;
-    right: 10px;
-}
+//#barChart {
+//    position: absolute;
+//    z-index: 400;
+//    top: 66px;
+//    right: 10px;
+//}
 
 #diagrama_icon {
     //width: 50px;
     //margin-right: 2px;
 }
 .square {
-    border-radius: 6px;
-    margin-right: 2px;
-    padding: 5px;
     background: #009971 none repeat scroll 0 0;
+    border-radius: 6px;
     color: white;
-    transition: 0.4s;
+    margin: 0 4px;
+    padding: 5px;
+    text-align: center;
+    transition: all 0.4s ease 0s;
+    width: 30px;
 }
 .square:hover {
     background: #1ab38b none repeat scroll 0 0;
@@ -438,6 +440,10 @@ header {
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
+}
+
+.title_button {
+    padding-right: 70px;
 }
 
 .hide_menu_title {

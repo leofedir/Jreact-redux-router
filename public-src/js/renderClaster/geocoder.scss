@@ -1,32 +1,48 @@
 .geocoder-control-input {
+    //background-color: white;
+    //background-repeat: no-repeat;
+    //background-image: url("../img/search.svg");
+    //background-size: 26px;
+    //border: none;
+    //padding: 0;
+    //text-indent: 6px;
+    //font-size: 13px;
+    //line-height: normal;
+    //height: auto;
+    //padding-top: 5px;
+    //padding-bottom: 5px;
+    ////width: 100%;
+    //background-position: right center;
+    //cursor: pointer;
+    //box-sizing: border-box
     background-color: white;
+    background: rgba(234, 234, 234, 1) url("../img/search.svg");
+    background-position: 13px center;
     background-repeat: no-repeat;
-    background-image: url("../img/search.svg");
-    background-size: 26px;
-    border: none;
-    padding: 0;
-    text-indent: 6px;
-    font-size: 13px;
-    line-height: normal;
-    height: auto;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    //width: 100%;
-    background-position: right center;
+    background-size: 26px auto;
+    border: medium none;
+    box-sizing: border-box;
     cursor: pointer;
-    box-sizing: border-box
+    font-size: 13px;
+    height: 59px !important;
+    line-height: normal;
+    padding-left: 45px;
+    text-indent: 6px;
+    width: 100%;
+    //background: #eaeaea none repeat scroll 0 0;
+
 }
 .geocoder-control-input-disabled {
     background-color: #f4f4f4;
 }
 .geocoder-control {
-    width: 26px;
+    width: 50px !important;
     height: 26px;
     transition: width .175s ease-in
 }
 .geocoder-control-expanded,
 .leaflet-touch .geocoder-control-expanded {
-    width: 275px
+    width: 275px !important;
 }
 .geocoder-control-input.geocoder-control-loading {
     background-image: url("img/loading.gif");
@@ -54,13 +70,13 @@ only screen and (min-device-pixel-ratio: 2) {
     display: none
 }
 .geocoder-control-suggestions {
-    width: 100%;
-    position: absolute;
-    top: 26px;
+    display: none;
     left: 0;
     margin-top: 10px;
     overflow: auto;
-    display: none
+    position: absolute;
+    top: 49px;
+    width: 100%;
 }
 .geocoder-control-list+.geocoder-control-header {
     border-top: 1px solid #d5d5d5

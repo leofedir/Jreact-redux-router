@@ -246,10 +246,10 @@ export class Claster extends React.Component {
             let layerWrapp = document.querySelector('.layerWrapp')
             let titleButton = document.querySelector('.title_button')
             let layer_icon = document.createElement('i');
-            layer_icon.className = 'fa fa-database ';
+            layer_icon.className = 'fa fa-database fa-2x square';
             layer_icon.id = 'object';
             let info_icon = document.createElement('i');
-            info_icon.className = 'fa fa-info ';
+            info_icon.className = 'fa fa-info fa-2x square';
 
             titleButton.appendChild(layer_icon)
             titleButton.appendChild(info_icon)

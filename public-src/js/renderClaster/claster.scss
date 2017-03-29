@@ -58,6 +58,21 @@
     font-size: 1.2em;
 }
 
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+    border: none !important;
+}
+.leaflet-bar {
+    box-shadow: none !important;
+    border-radius: 0px !important;
+}
+
+.leaflet-right .leaflet-control {
+    margin-right: 0px !important;
+}
+.leaflet-top .leaflet-control {
+    margin-top: 0px !important;
+}
+
 .geocoder-control-suggestions {
     z-index: 1000;
 }
