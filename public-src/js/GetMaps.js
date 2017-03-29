@@ -31,7 +31,7 @@ function GetMaps (folder, item) {
 
         let curentMenuItem = item
         let submenu = document.createElement('ul')
-        submenu.className += " submenu";
+        submenu.className += "submenu";
         curentMenuItem.appendChild(submenu)
         let items = [];
 

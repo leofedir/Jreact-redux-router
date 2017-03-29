@@ -42,10 +42,6 @@ class App extends Component {
 
         esri.basemapLayer('Topographic').addTo(mapDefault);
 
-        // esri.tiledMapLayer({
-        //     url: 'https://gisserver.maping.so.org.ua/arcgis/rest/services/enter/border4/MapServer'
-        // }).addTo(mapDefault);
-
         fetch('/test', {
             method: 'post',
             headers: {
@@ -75,24 +71,10 @@ class App extends Component {
                     "weight": 2,
                     "opacity": 0.79
                 };
-                console.log(11);
-
-                function onEachFeature(feature, layer) {
-                    // does this feature have a property named popupContent?
-                    if (feature.properties && feature.properties.popupContent) {
-                        console.log(22)
-                        layer.bindPopup(feature.properties.popupContent);
-                    }
-                }
 
                 L.geoJSON(poligon, {
                     style: myStyle
-                }).bindPopup('Hello world!')
-                    .addTo(mapDefault);
-
-                // L.geoJSON(geojsonFeature).addTo(mapDefault);
-
-                // console.log(data.data["0"].geojson);
+                }).addTo(mapDefault);
             })
 
         document.querySelectorAll('.icons-menu__link').forEach((item) => {

@@ -366,6 +366,7 @@ export class AreaFields extends Component {
     }
 
     componentDidMount() {
+        console.log('mount')
         document.querySelector('.legent_title').addEventListener('click', function() {
             document.getElementById('legend').classList.toggle("legend_show")
         });
@@ -375,9 +376,22 @@ export class AreaFields extends Component {
                 </a>`
 
         document.querySelector('#diagrama_icon').addEventListener('click', () => {
+            console.log('click')
             this.openDiagram()
         })
 
+    }
+
+    componentDidUpdate() {
+        document.querySelector('.title_button').innerHTML = `<a href="#" id="barChart">
+                    <i id="diagrama_icon" class="fa fa-bar-chart fa-2x square"/>
+                </a>`
+        document.querySelector('#diagrama_icon').addEventListener('click', () => {
+            console.log('click')
+            this.openDiagram()
+        })
+
+        console.log('update')
     }
 
     render() {
