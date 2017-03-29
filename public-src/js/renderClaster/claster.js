@@ -215,6 +215,7 @@ export class Claster extends React.Component {
             function addEventResize() {
                 document.querySelector('.resizeChart').addEventListener('click', () => {
                     document.querySelector('#props').classList.toggle("resize")
+                    document.querySelector('#chart_point').classList.toggle("modal")
                     chart.reflow();
                 })
 
