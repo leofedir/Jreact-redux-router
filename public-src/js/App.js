@@ -46,9 +46,9 @@ class App extends Component {
         // })
 
         esri.basemapLayer('Topographic').addTo(mapDefault);
-        esri.featureLayer({
-            url: 'https://gisserver.maping.so.org.ua/arcgis/rest/services/enter/border/MapServer/0'
-        }).addTo(mapDefault);
+        // esri.featureLayer({
+        //     url: 'https://gisserver.maping.so.org.ua/arcgis/rest/services/enter/border2/MapServer/0'
+        // }).addTo(mapDefault);
 
         document.querySelectorAll('.icons-menu__link').forEach((item) => {
             this.setState({

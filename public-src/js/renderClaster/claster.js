@@ -84,6 +84,16 @@ export class Claster extends React.Component {
                     text: 'Витрати'
                 },
 
+                exporting: {
+                    buttons: {
+                        exportButton: {
+                            symbol: 'url(http://highcharts.com/demo/gfx/sun.png)',
+                            symbolX:5,
+                            symbolY:0
+                        }
+                    }
+                },
+
                 chart: {
                     type: 'line',
                     marginRight: 20
@@ -95,11 +105,11 @@ export class Claster extends React.Component {
                     href: 'http://enter.co.ua'
                 },
 
-                navigation: {
-                    buttonOptions: {
-                        enabled: false
-                    }
-                },
+                // navigation: {
+                //     buttonOptions: {
+                //         enabled: false
+                //     }
+                // },
 
                 // subtitle: {
                 //     text: ''
@@ -206,7 +216,7 @@ export class Claster extends React.Component {
 
             function addEventResize() {
                 document.querySelector('.resizeChart').addEventListener('click', () => {
-                    document.querySelector('.wrapp_chart').classList.toggle("modal")
+                    document.querySelector('#chart_point').classList.toggle("modal")
                     chart.reflow();
                 })
 
