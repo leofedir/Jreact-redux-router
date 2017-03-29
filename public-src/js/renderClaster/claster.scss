@@ -328,14 +328,3 @@ label span.text {
     margin-right: 10px;
   }
 }
-
-.modal {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.7);
-}
-
-.modal .highcharts-container {
-  height: 90%;
-}
