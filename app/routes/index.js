@@ -39,7 +39,7 @@ router.post('/test', function(req, res) {
         const k = '0522800000';
         client.query(`SELECT geojson 
                       FROM borders`, function(err, result) {
-                 console.log(result.rows);
+                 // console.log(result.rows);
                 //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
                 done(err);
 
