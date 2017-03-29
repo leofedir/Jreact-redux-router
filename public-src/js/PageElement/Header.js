@@ -4,11 +4,11 @@ class App extends Component {
 
     render() {
 
-        return (
-            <div className="main_header">
-                <a href="/"><img className="logo" src="./img/Logo.svg" alt=""/></a>
-            </div>
-        );
+        // return (
+            // <div className="main_header">
+            //     <a href="/"><img className="logo" src="./img/Logo.svg" alt=""/></a>
+            // </div>
+        // );
     }
 }
 

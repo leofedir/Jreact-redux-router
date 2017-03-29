@@ -172,7 +172,21 @@ body {
 .logo {
     margin: 5px;
     width: 240px;
-    margin-left:20px;
+    margin-left:10px;
+}
+
+.logo-link {
+    background: #009971 none repeat scroll 0 0;
+    display: block;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 270px;
+    transition: all 0.5s ease 0s;
+    height: 59px;
+}
+.menu_item.hide .logo-link {
+    margin-left: -270px;
 }
 
 .leaflet-pane {
@@ -224,6 +238,7 @@ header {
     position: absolute;
     top: 45%;
     left: 100%;
+    cursor: pointer;
 }
 .hide_menu_icon:hover{
     opacity: 0.8;
@@ -280,7 +295,8 @@ header {
 }
 
 .menu_item{
-    margin-top: 85px;
+    //margin-top: 85px;
+    padding-top: 70px;
     width: $menu_width;
     margin-left: $margin-menu;
     transition: all .5s;
@@ -293,6 +309,7 @@ header {
     direction: rtl;
     text-align: left;
 }
+
 
 .menu_item.hide {
     opacity: 0;
@@ -327,7 +344,7 @@ header {
 }
 
 .icons-menu__link {
-    padding: 5px 20px;
+    padding: 5px 35px;
     margin-top: 5px;
     display: flex;
     align-items: center;
@@ -366,8 +383,19 @@ header {
 }
 
 #diagrama_icon {
-    width: 50px;
+    //width: 50px;
+    //margin-right: 2px;
+}
+.square {
+    border-radius: 6px;
     margin-right: 2px;
+    padding: 5px;
+    background: #009971 none repeat scroll 0 0;
+    color: white;
+    transition: 0.4s;
+}
+.square:hover {
+    background: #1ab38b none repeat scroll 0 0;
 }
 
 .icons-menu__link:hover .submenu{
@@ -385,28 +413,49 @@ header {
     cursor: default;
 }
 
+//.title_map {
+//    position: fixed;
+//    box-sizing: border-box;
+//    top: 60px;
+//    left: 0;
+//    width: 100vw;
+//    padding-left: $menu_width + $margin-menu;
+//    //padding-left: calc(285px - 15px);
+//    margin: 0;
+//    transition: all .5s;
+//}
 .title_map {
-    position: fixed;
+    background: rgba(0, 0, 0, 0.7) none repeat scroll 0 0;
     box-sizing: border-box;
-    top: 60px;
-    left: 0;
-    width: 100vw;
-    padding-left: $menu_width + $margin-menu;
-    //padding-left: calc(285px - 15px);
+    height: 59px;
     margin: 0;
-    transition: all .5s;
+    position: fixed;
+    right: 0;
+    top: 0;
+    transition: all 0.5s ease 0s;
+    width: calc(100vw - 270px);
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .hide_menu_title {
-    padding-left: 10px;
+    //padding-left: 10px;
+}
+
+.hide_menu_title.title_map {
+    width: 100vw;
+    transition: all 0.5s ease 0s;
 }
 
 .title_text {
-    padding: 15px;
+    padding-left: 15px;
     font-size: 2em;
     font-weight: bold;
-    background-color: rgba($green, 0.2);
-    text-shadow: 0 0 9px rgba(255, 255, 255, 1);
+    color: white;
+    //background-color: rgba($green, 0.2);
+    //text-shadow: 0 0 9px rgba(255, 255, 255, 1);
 }
 
 .simpleInfoWindow {

@@ -376,7 +376,8 @@ export class AreaFields extends Component {
         return (
             <div className="area_page">
                 <a href="#" id="barChart" onClick={this.openDiagram}>
-                    <img id="diagrama_icon" src="/img/diagram.svg" alt=""/>
+                    {/*<img id="diagrama_icon" src="/img/diagram.svg" alt=""/>*/}
+                    <i id="diagrama_icon" className="fa fa-bar-chart fa-2x square"/>
                 </a>
                 <div id="infoWindow"></div>
                 <div id="legend" className="legend legend_show">
