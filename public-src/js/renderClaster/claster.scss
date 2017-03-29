@@ -321,6 +321,23 @@ label span.text {
 /*}*/
 
 //chart
-#chart_point {
+.wrapp_chart {
 
+  i{
+    float: right;
+    margin-right: 10px;
+  }
+}
+
+.modal {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7);
+
+  .chart {
+    height: 90%;
+  }
 }

@@ -17,11 +17,12 @@ export class Claster extends React.Component {
 
     claster(aaa) {
         Lmap = null;
+        let chart;
         let alias = {
             teplo: 'Теплопостачання',
             elektroenergy: 'Електропостачання',
             water: 'Водопостачання',
-            subvencii: 'Субвенції'
+            inshivydatky: 'Інші видатки'
         }
         document.getElementById('basemaps-wrapper').style.display = "block";
 
@@ -76,17 +77,33 @@ export class Claster extends React.Component {
                 }
             })
 
-            console.log(newData)
-
-            Highcharts.chart('chart_point', {
+            chart = Highcharts.chart('chart_point', {
+                colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
 
                 title: {
                     text: 'Витрати'
                 },
 
-                subtitle: {
-                    text: 'школа така'
+                chart: {
+                    type: 'line',
+                    marginRight: 20
                 },
+
+                credits: {
+                    // enabled: false,
+                    text: 'Енциклопедія територій',
+                    href: 'http://enter.co.ua'
+                },
+
+                navigation: {
+                    buttonOptions: {
+                        enabled: false
+                    }
+                },
+
+                // subtitle: {
+                //     text: ''
+                // },
 
                 yAxis: {
                     title: {
@@ -163,7 +180,7 @@ export class Claster extends React.Component {
 
                 function addChart () {
 
-                    popapItems.push(`<div id="chart_point" className="chart"></div>`)
+                    popapItems.push(`<div class="wrapp_chart"><i class="fa fa-expand resizeChart" aria-hidden="true"></i><div id="chart_point" className="chart"></div></div>`)
                     let dataChart = [];
 
                     for (let key in data) {
@@ -182,8 +199,17 @@ export class Claster extends React.Component {
                     }
                     popup.innerHTML = popapItems.join('')
                     Chart(dataChart)
+                    addEventResize()
                     addEventClose()
                 }
+            }
+
+            function addEventResize() {
+                document.querySelector('.resizeChart').addEventListener('click', () => {
+                    document.querySelector('.wrapp_chart').classList.toggle("modal")
+                    chart.reflow();
+                })
+
             }
 
             function addEventClose() {
