@@ -41,10 +41,59 @@ class App extends Component {
         L.Icon.Default.imagePath = '/img/';
 
         esri.basemapLayer('Topographic').addTo(mapDefault);
-        esri.tiledMapLayer({
-            url: 'https://gisserver.maping.so.org.ua/arcgis/rest/services/enter/border4/MapServer'
 
-        }).addTo(mapDefault);
+        // esri.tiledMapLayer({
+        //     url: 'https://gisserver.maping.so.org.ua/arcgis/rest/services/enter/border4/MapServer'
+        // }).addTo(mapDefault);
+
+        fetch('/test', {
+            method: 'post',
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: 'foo=bar&lorem=ipsum'
+        })
+            .then(checkStatus)
+            .then(parseJSON)
+            .then(data => {
+                let poligon = []
+                // console.log(data.data)
+                data.data.map(item => {
+                    let obj = {}
+                    obj.type = "Feature";
+                    obj.properties = {};
+                    for(let key in item) {
+                        if (item.hasOwnProperty(key) && key !== 'geojson' && key != 'geom'){
+                            obj.properties[key] = item[key];
+                        }
+                    }
+                    obj.geometry = poligon.push(JSON.parse(item.geojson))
+                })
+
+                var myStyle = {
+                    "color": "#009971",
+                    "weight": 2,
+                    "opacity": 0.79
+                };
+                console.log(11);
+
+                function onEachFeature(feature, layer) {
+                    // does this feature have a property named popupContent?
+                    if (feature.properties && feature.properties.popupContent) {
+                        console.log(22)
+                        layer.bindPopup(feature.properties.popupContent);
+                    }
+                }
+
+                L.geoJSON(poligon, {
+                    style: myStyle
+                }).bindPopup('Hello world!')
+                    .addTo(mapDefault);
+
+                // L.geoJSON(geojsonFeature).addTo(mapDefault);
+
+                // console.log(data.data["0"].geojson);
+            })
 
         document.querySelectorAll('.icons-menu__link').forEach((item) => {
             this.setState({

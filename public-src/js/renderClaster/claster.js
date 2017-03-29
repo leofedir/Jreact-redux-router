@@ -188,7 +188,7 @@ export class Claster extends React.Component {
 
                 function addChart () {
 
-                    popapItems.push(`<div class="wrapp_chart"><i class="fa fa-expand resizeChart" aria-hidden="true"></i><div id="chart_point" className="chart"></div></div>`)
+                    popapItems.push(`<div class="wrapp_chart"><div id="chart_point" className="chart"></div></div>`)
                     let dataChart = [];
 
                     for (let key in data) {
@@ -207,18 +207,8 @@ export class Claster extends React.Component {
                     }
                     popup.innerHTML = popapItems.join('')
                     Chart(dataChart)
-                    addEventResize()
                     addEventClose()
                 }
-            }
-
-            function addEventResize() {
-                document.querySelector('.resizeChart').addEventListener('click', () => {
-                    document.querySelector('#props').classList.toggle("resize")
-                    document.querySelector('#chart_point').classList.toggle("modal")
-                    chart.reflow();
-                })
-
             }
 
             function addEventClose() {

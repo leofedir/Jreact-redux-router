@@ -8,9 +8,9 @@ const pg = require('pg');
 // will be read if the config is not present
 const config = {
     user: 'postgres',
-    database: 'enterlocal',
-    password: 'postgres',
-    host: '192.168.30.134',
+    database: 'enter',
+    password: 'CecgskmytJrj1600',
+    host: '195.200.90.83',
     port: 5432,
     max: 10, // max number of clients in the pool
     idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
@@ -37,9 +37,9 @@ router.post('/test', function(req, res) {
             return console.error('error fetching client from pool', err);
         }
         const k = '0522800000';
-        client.query(`SELECT * 
-                      FROM test6`, function(err, result) {
-                // console.log(result);
+        client.query(`SELECT geojson 
+                      FROM borders`, function(err, result) {
+                 console.log(result.rows);
                 //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
                 done(err);
 
