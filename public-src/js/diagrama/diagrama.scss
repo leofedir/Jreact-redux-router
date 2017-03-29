@@ -1,9 +1,10 @@
 #diagrama {
     position: absolute;
     z-index: 2;
-    left: 25%;
+    left: 22%;
     top: 130px;
     max-height: 80%;
+    background: white;
     /*height: 74%;*/
     /*overflow-y: scroll;*/
 }
@@ -17,7 +18,7 @@
     font-size: 14px;
     background-color: #fff;
     overflow: visible;
-    box-shadow: 0 10px 25px 0 rgba(0,0,0,0.15);
+    //box-shadow: 0 10px 25px 0 rgba(0,0,0,0.15);
 }
 
 #diagrama rect.background {
@@ -43,39 +44,69 @@
 
 .diagrama_title {
     box-sizing: border-box;
-    padding-left: 10px;
-    position: fixed;
+    //padding-left: 10px;
+    //position: fixed;
     height: 30px;
     line-height: 30px;
     border-radius: 6px 6px 0 0;
     margin: 0;
-    background-color: #747474;
+    //background-color: #747474;
     color: #fff;
     text-transform: uppercase;
     font-weight: bold;
-    left: 25%;
+    //left: 25%;
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+}
+.diagrama_title > p {
+    padding: 0 0 0 10px;
 }
 
 .diagrama_title_wrap {
-    position: relative;
-    left: 25%;
-    z-index: 2;
+
+    //position: relative;
+    //left: 25%;
+    //z-index: 2;
 }
 
+.diagrama_button {
+    display: flex;
+    flex-wrap: nowrap;
+}
+.diagrama_button i {
+    color: white;
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3px;
+}
+.diagrama_top {
+    align-items: center;
+    background-color: #747474;
+    display: flex;
+    flex-wrap: nowrap;
+}
 .diagrama_title span {
     font-weight: normal;
     float: right;
     padding-right: 15px;
 }
 
-.close {
-    //background-image: url(/img/x.svg);
-    //background-repeat: no-repeat;
-    //background-size: 14px;
-    //background-position: 10px 8px;
-    width: 30px;
-    height: 30px;
+.ico-opacity {
+    transition: 0.4s;
+    opacity: 0.6;
+}
+.ico-opacity:hover {
+    opacity: 1;
+}
+
+.diagrama_title i {
     cursor: pointer;
+    margin: 8px;
 }
 
 #name_diagram {

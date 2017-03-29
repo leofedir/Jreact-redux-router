@@ -147,13 +147,13 @@ class Diagrama extends Component {
             .attr('class', 'diagrama_button' );
 
         d3.select(".diagrama_button").append("i")
-            .attr('class', 'close fa fa-window-close' )
-            .attr('id', 'close_diagram')
+            .attr('class', 'fa fa-expand ico-opacity' )
+            .attr('id', 'max_diagram')
             .attr('aria-hidden', 'true');
 
         d3.select(".diagrama_button").append("i")
-            .attr('class', 'fa fa-window-maximize' )
-            .attr('id', 'max_diagram')
+            .attr('class', 'close fa fa-window-close ico-opacity' )
+            .attr('id', 'close_diagram')
             .attr('aria-hidden', 'true');
 
         // d3.select(".diagrama_title").append("span")

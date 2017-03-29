@@ -366,8 +366,16 @@ export class AreaFields extends Component {
     }
 
     componentDidMount() {
-        document.getElementsByClassName('legent_title')[0].addEventListener('click', function() {
+        document.querySelector('.legent_title').addEventListener('click', function() {
             document.getElementById('legend').classList.toggle("legend_show")
+        });
+
+        document.querySelector('.title_button').innerHTML = `<a href="#" id="barChart">
+                    <i id="diagrama_icon" class="fa fa-bar-chart fa-2x square"/>
+                </a>`
+
+        document.querySelector('#diagrama_icon').addEventListener('click', () => {
+            this.openDiagram()
         })
 
     }
@@ -375,9 +383,6 @@ export class AreaFields extends Component {
     render() {
         return (
             <div className="area_page">
-                <a href="#" id="barChart" onClick={this.openDiagram}>
-                    <img id="diagrama_icon" src="/img/diagram.svg" alt=""/>
-                </a>
                 <div id="infoWindow"></div>
                 <div id="legend" className="legend legend_show">
                     <div className="legent_title">Легенда</div>

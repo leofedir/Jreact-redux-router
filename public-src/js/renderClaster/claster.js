@@ -84,6 +84,16 @@ export class Claster extends React.Component {
                     text: 'Витрати'
                 },
 
+                exporting: {
+                    buttons: {
+                        exportButton: {
+                            symbol: 'url(http://highcharts.com/demo/gfx/sun.png)',
+                            symbolX:5,
+                            symbolY:0
+                        }
+                    }
+                },
+
                 chart: {
                     type: 'line',
                     marginRight: 20
@@ -95,11 +105,11 @@ export class Claster extends React.Component {
                     href: 'http://enter.co.ua'
                 },
 
-                navigation: {
-                    buttonOptions: {
-                        enabled: false
-                    }
-                },
+                // navigation: {
+                //     buttonOptions: {
+                //         enabled: false
+                //     }
+                // },
 
                 // subtitle: {
                 //     text: ''
@@ -145,9 +155,7 @@ export class Claster extends React.Component {
         function process(list){
             let popup = document.getElementById('props');
             let fields = getFields();
-            let layersBox = document.getElementsByClassName('layers')[0];
-            let info = '<svg class="box info" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 53 54"><defs><style>.cls-2_1{opacity:0.3;mix-blend-mode:multiply;}.cls-3_1{fill:#747474;}.cls-4_1{fill:#fff;}</style></defs><g id="интерфейс"><image class="cls-2_1" width="53" height="54" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAA2CAYAAABnctHeAAAACXBIWXMAAAsSAAALEgHS3X78AAACuElEQVRoQ+2azYuNURzHv3PHmOsliryMUiMlsUAR2bCwYWHjJaUho2z8BRZqdsrCCkk2yk5ZzkZKCmsrG2USZaOUt8K4vp85z51753bdB3Wf0z2dxWd3e875nO/v93vqPkeNRkOpUf4DaaigFpm5fZTtt6eUWiKLzGIzaupmScXUi7XZA3sZVolgmQwPXG5WmTVmvRkzGypirFhzrVltVpilCoJzcqVSagmNmGXFgzaarWaH2W32mn0VwVp7zC6zzWxSkFypcOAcfK1MqilEOuvMluLhh80JM2HOmUlzvs9MFmudMafMUXPA7DTjCgdOeSI21FVKISV+QEIIbTeHzFlzyVw1N8xtc6ciWOumuWamzEVzzOw3mxXESGxBKXamVC9+SEIIXTBXzD0zbR6bp+Z5RTwzT8xD88DcMpfNaQWxcYVSpMcWSqmVEmVHD1FyJITQ/WKBl2bGvDXvKoK13phX5oV5ZO4qiB1XKEV6jOEx3E0KW6YcQ+GIQsmREEKvzQfzyXwxXyuCtT6bj+a9wsEiRmKU4kGF4cFUnO+t9tLjXcDoZMqdVOih6eJBCH0zP8xsxfw03xUEESMxSnFKYXgwFWmZ+RLs7CeiZGxPmOsKPTSjkBBCv0wjAqyLGIlRivQYw4OpyLgnDEKpdUoxHnnZ8W5glDJ5GArUNac0+xeL9xMSoxTpMYYHU5Fxz3uMMAilqxRvcYYE7wlGKv1Ew1LfsaVYn8PlkDlsDp3DJwTCYP8DKcU+2A/7Yn/sk/2y7yyVpfpIlpKyVDSylJSlopGlpCwVjSwlZaloZCkpS0UjS0lZKhpZSspS0chS0uBI/dffzsl9IEjyU86oEvvoluTn0fQ+ZHf0VRpXDjrSSudySFtaI0rlGk9bWk2xNC5cdYilcTWuh9xgX2L8g1xTMCY9Rf5JahD5DZFpHm1Tc/OuAAAAAElFTkSuQmCC"/><rect class="cls-3_1" x="6.18" y="4.83" width="40" height="40.33" rx="5" ry="5"/><path class="cls-4_1" d="M24.58,29.45a7.91,7.91,0,0,1,.34-2.72,6.88,6.88,0,0,1,1.71-2,29.76,29.76,0,0,0,1.91-2.44,3.62,3.62,0,0,0,.57-2.06A3,3,0,0,0,28.34,18a2.94,2.94,0,0,0-2.19-.77,3.33,3.33,0,0,0-2.1.67,2.34,2.34,0,0,0-.87,2H20.64l0-.08a4.21,4.21,0,0,1,1.54-3.49,6.07,6.07,0,0,1,4-1.31,5.88,5.88,0,0,1,4.14,1.36,4.91,4.91,0,0,1,1.48,3.8,5.69,5.69,0,0,1-1,3.2,17.82,17.82,0,0,1-2.53,3,3.17,3.17,0,0,0-.89,1.31,7.65,7.65,0,0,0-.16,1.81ZM27.34,35H24.55V32.18h2.79Z"/></g></svg>'
-            let box = '<svg id="object" class="box" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 53 54"><defs><style>.cls-1{opacity:0.3;isolation:isolate;}.cls-2{fill:#747474;}.cls-3{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><g id="интерфейс"><image class="cls-1" width="53" height="54" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAA2CAYAAABnctHeAAAACXBIWXMAAAsSAAALEgHS3X78AAACuElEQVRoQ+2azYuNURzHv3PHmOsliryMUiMlsUAR2bCwYWHjJaUho2z8BRZqdsrCCkk2yk5ZzkZKCmsrG2USZaOUt8K4vp85z51753bdB3Wf0z2dxWd3e875nO/v93vqPkeNRkOpUf4DaaigFpm5fZTtt6eUWiKLzGIzaupmScXUi7XZA3sZVolgmQwPXG5WmTVmvRkzGypirFhzrVltVpilCoJzcqVSagmNmGXFgzaarWaH2W32mn0VwVp7zC6zzWxSkFypcOAcfK1MqilEOuvMluLhh80JM2HOmUlzvs9MFmudMafMUXPA7DTjCgdOeSI21FVKISV+QEIIbTeHzFlzyVw1N8xtc6ciWOumuWamzEVzzOw3mxXESGxBKXamVC9+SEIIXTBXzD0zbR6bp+Z5RTwzT8xD88DcMpfNaQWxcYVSpMcWSqmVEmVHD1FyJITQ/WKBl2bGvDXvKoK13phX5oV5ZO4qiB1XKEV6jOEx3E0KW6YcQ+GIQsmREEKvzQfzyXwxXyuCtT6bj+a9wsEiRmKU4kGF4cFUnO+t9tLjXcDoZMqdVOih6eJBCH0zP8xsxfw03xUEESMxSnFKYXgwFWmZ+RLs7CeiZGxPmOsKPTSjkBBCv0wjAqyLGIlRivQYw4OpyLgnDEKpdUoxHnnZ8W5glDJ5GArUNac0+xeL9xMSoxTpMYYHU5Fxz3uMMAilqxRvcYYE7wlGKv1Ew1LfsaVYn8PlkDlsDp3DJwTCYP8DKcU+2A/7Yn/sk/2y7yyVpfpIlpKyVDSylJSlopGlpCwVjSwlZaloZCkpS0UjS0lZKhpZSspS0chS0uBI/dffzsl9IEjyU86oEvvoluTn0fQ+ZHf0VRpXDjrSSudySFtaI0rlGk9bWk2xNC5cdYilcTWuh9xgX2L8g1xTMCY9Rf5JahD5DZFpHm1Tc/OuAAAAAElFTkSuQmCC"/><rect class="cls-2" x="6.18" y="4.83" width="40" height="40.33" rx="5" ry="5"/><polygon class="cls-3" points="26.18 36.83 16.18 31.83 16.18 19.83 26.18 24.83 26.18 36.83"/><polygon class="cls-3" points="26.18 36.83 36.18 31.83 36.18 19.83 26.18 24.83 26.18 36.83"/><polygon class="cls-3" points="16.18 19.83 26.18 24.83 36.18 19.83 26.18 14.83 16.18 19.83"/></g></svg>'
+            let layersBox = document.querySelector('#layer_list');
             let setLayers = ['<span class="title_leayers"><b>Об’єкти</b><img id="object_hide" src="/img/-.svg" alt=""> </span>'];
             layers = {};
 
@@ -206,7 +214,8 @@ export class Claster extends React.Component {
 
             function addEventResize() {
                 document.querySelector('.resizeChart').addEventListener('click', () => {
-                    document.querySelector('.wrapp_chart').classList.toggle("modal")
+                    document.querySelector('#props').classList.toggle("resize")
+                    document.querySelector('#chart_point').classList.toggle("modal")
                     chart.reflow();
                 })
 
@@ -242,11 +251,18 @@ export class Claster extends React.Component {
             });
 
 
-            let layerWrapp = document.createElement('div')
-            layerWrapp.className = 'layerWrapp ';
-            layerWrapp.id = 'layerWrapp';
-            layersBox.innerHTML = info + box
-            layersBox.appendChild(layerWrapp)
+            layersBox.innerHTML = `<div class="layerWrapp" id="layerWrapp"></div>`;
+
+            let layerWrapp = document.querySelector('.layerWrapp')
+            let titleButton = document.querySelector('.title_button')
+            let layer_icon = document.createElement('i');
+            layer_icon.className = 'fa fa-database ';
+            layer_icon.id = 'object';
+            let info_icon = document.createElement('i');
+            info_icon.className = 'fa fa-info ';
+
+            titleButton.appendChild(layer_icon)
+            titleButton.appendChild(info_icon)
 
 
             layerWrapp.innerHTML = setLayers.join('');
@@ -311,6 +327,7 @@ export class Claster extends React.Component {
 
                 currentSearcherControl = Geocoding.geosearch({
                     providers: provider,
+                    position: 'topright',
                     title: 'Пошук',
                     placeholder: ''
                 })
@@ -351,7 +368,7 @@ export class Claster extends React.Component {
                 <div id="lmap"></div>
                 <div id="props" className="popups"></div>
                 <div id="selector"></div>
-                <div id="basemaps-wrapper2" className="leaflet-bar layers"></div>
+                <div id="layer_list" className="leaflet-bar layers"></div>
             </div>
         );
     }

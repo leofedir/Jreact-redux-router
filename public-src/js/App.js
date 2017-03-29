@@ -40,11 +40,14 @@ class App extends Component {
         mapDefault = L.map('mapid_root', {zoomControl: false}).setView([49, 31], 6);
         L.Icon.Default.imagePath = '/img/';
 
+        //
+        // esri.FeatureLayer({
+        //     url: 'https://gisserver.maping.so.org.ua/arcgis/rest/services/enter/border/MapServer'
+        // })
+
         esri.basemapLayer('Topographic').addTo(mapDefault);
-        esri.tiledMapLayer({
-            url: 'https://gisserver.maping.so.org.ua/arcgis/rest/services/enter/border4/MapServer'
-
-
+        esri.featureLayer({
+            url: 'https://gisserver.maping.so.org.ua/arcgis/rest/services/enter/border/MapServer/0'
         }).addTo(mapDefault);
 
         document.querySelectorAll('.icons-menu__link').forEach((item) => {
