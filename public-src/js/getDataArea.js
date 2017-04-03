@@ -51,7 +51,6 @@ function getFetch(item, layerData) {
         .then(checkStatus)
         .then(parseJSON)
         .then(function(data) {
-            console.log(data)
             layersDataStore[parametr] = data;
             layerDataHistogram[parametr] = {'0': data};
         }).then(() => {
@@ -101,11 +100,12 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
         ],
         (Minty, Chart, Default, Lines, InfoWindowLite, InfoTemplate, esriBasemaps,  ArcGISDynamicMapServiceLayer, ArcGISTiledMapServiceLayer, Map, array, ItemFileReadStore, FilteringSelect, domConstruct, dom, FeatureLayer) => {
 
+            console.log('ok')
             // if (!map) {
-            let tiled = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/Base_World_13_01/MapServer";
-            let anot = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/Аннотации_для_тематической/MapServer";
-            let megi = "https://gisserver.maping.so.org.ua/arcgis/rest/services/Базова_карта/межі_областей/MapServer";
-            let tot = 'https://gisserver.maping.so.org.ua/arcgis/rest/services/ТОТ/тот/MapServer';
+            let tiled = "https://gisserver.maping.so.org.ua/arcgis/rest/services/basemaps/Base_World/MapServer";
+            let anot = "https://gisserver.maping.so.org.ua/arcgis/rest/services/basemaps/Аннотации/MapServer";
+            let megi = "https://gisserver.maping.so.org.ua/arcgis/rest/services/basemaps/border_regions/MapServer";
+            let tot = "https://gisserver.maping.so.org.ua/arcgis/rest/services/basemaps/tot/MapServer";
             esriBasemaps.delorme = {
                 baseMapLayers: [{url: tiled}
                 ],
@@ -122,10 +122,10 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
             };
             map = new Map("area", mapOptions);
             mylayer = new ArcGISDynamicMapServiceLayer(anot);
-            // map.addLayer(mylayer);
+            map.addLayer(mylayer);
 
             mylayer2 = new ArcGISDynamicMapServiceLayer(megi);
-            // map.addLayer(mylayer2);
+            map.addLayer(mylayer2);
 
             map.addLayers([mylayer, mylayer2]);
 
@@ -307,6 +307,7 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
 
             layerStore[parametr].forEach(function(item) {
                 item.on('resume', () => {
+                    console.log('resume')
                     curentLayer = item;
                     createRender(curentLayer);
                 })
