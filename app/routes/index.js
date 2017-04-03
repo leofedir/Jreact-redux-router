@@ -10,7 +10,7 @@ const config = {
     user: 'postgres',
     database: 'enter',
     password: 'CecgskmytJrj1600',
-    host: '195.200.90.83',
+    host: '89.184.82.170',
     port: 5432,
     max: 10, // max number of clients in the pool
     idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
