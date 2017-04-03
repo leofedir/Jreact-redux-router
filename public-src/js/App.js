@@ -113,7 +113,7 @@ class App extends Component {
             } else if (map) {
                 map.setLevel(map.getLevel() - 1)
             }
-        })
+        });
 
         let marker = null, circle = null;
 
@@ -146,7 +146,7 @@ class App extends Component {
         });
 
         function onLocationFound(e, map) {
-            if (marker != null || circle != null) {
+            if (marker !== null || circle !== null) {
                 map.removeLayer(marker)
                 map.removeLayer(circle)
                 marker = null;
@@ -170,8 +170,8 @@ class App extends Component {
                 <MainMenu />
                 <BaseMap />
                 <div id="mapid" />
-                <div id="area"></div>
-                <div id="point"></div>
+                <div id="area" /><
+                <div id="point" />
             </div>
         );
     }
