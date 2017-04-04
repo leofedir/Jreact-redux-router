@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import esri from 'esri-leaflet/dist/esri-leaflet';
-import { Lmap } from '../renderClaster/claster';
-import { map } from '../getDataArea';
-import { mapDefault } from '../App';
+import { Lmap } from '../App';
 
 class BaseMap extends Component {
 
     changeBasemap(e){
-        if (mapDefault) {
-            change(mapDefault)
-        } else if (Lmap) {
+        if (Lmap) {
             change(Lmap)
-        } else if (map) {
-            changeEsri(map)
         }
         let layer;
 
@@ -21,12 +15,7 @@ class BaseMap extends Component {
                 myMap.removeLayer(layer);
             }
             layer = esri.basemapLayer(e.target.value);
-
             myMap.addLayer(layer);
-        }
-        function changeEsri(myMap) {
-
-            myMap.setBasemap(e.target.valu)
         }
     }
 

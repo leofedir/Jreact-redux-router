@@ -1,24 +1,18 @@
 import React, { Component } from 'react';
 import L from 'leaflet/dist/leaflet-src';
 import esri from 'esri-leaflet/dist/esri-leaflet';
-import GetMaps from './GetMaps';
 import MainMenu from './PageElement/MainMenu';
-import { Lmap } from './renderClaster/claster';
 import { map } from './getDataArea';
 import BaseMap from './PageElement/basemap';
 import { checkStatus, parseJSON} from './checkJSON';
-import getDataArea from './getDataArea';
-import ReactDOM from 'react-dom';
-import { AreaFields } from './getDataArea';
 
-export let mapDefault = null;
-export let  server = 'https://js.arcgis.com/3.20/';
+export let Lmap = null;
 
 export function removeMap() {
-    if(mapDefault !== null) {
-        mapDefault.off();
-        mapDefault.remove();
-        mapDefault = null
+    if(Lmap !== null) {
+        Lmap.off();
+        Lmap.remove();
+        Lmap = null
     } else if (map !== null) {
         map.destroy()
     } else if (Lmap !== null) {
@@ -37,10 +31,10 @@ class App extends Component {
     }
 
     getMenu() {
-        mapDefault = L.map('mapid_root', {zoomControl: false}).setView([49, 31], 6);
+        Lmap = L.map('mapid_root', {zoomControl: false}).setView([49, 31], 6);
         L.Icon.Default.imagePath = '/img/';
 
-        esri.basemapLayer('Topographic').addTo(mapDefault);
+        esri.basemapLayer('Topographic').addTo(Lmap);
 
         fetch('/test', {
             method: 'post',
@@ -59,14 +53,14 @@ class App extends Component {
                     obj.type = "Feature";
                     obj.properties = {};
                     for(let key in item) {
-                        if (item.hasOwnProperty(key) && key !== 'geojson' && key != 'geom'){
+                        if (item.hasOwnProperty(key) && key !== 'geojson' && key !== 'geom'){
                             obj.properties[key] = item[key];
                         }
                     }
                     obj.geometry = poligon.push(JSON.parse(item.geojson))
                 })
 
-                var myStyle = {
+                let myStyle = {
                     "color": "#009971",
                     "weight": 2,
                     "opacity": 0.79
@@ -74,16 +68,8 @@ class App extends Component {
 
                 L.geoJSON(poligon, {
                     style: myStyle
-                }).addTo(mapDefault);
-            })
-
-        document.querySelectorAll('.icons-menu__link').forEach((item) => {
-            this.setState({
-                folder: item.dataset.folder,
-                item: item
+                }).addTo(Lmap);
             });
-            GetMaps(item.dataset.folder, item)
-        });
 
         let arrow = document.getElementById('hide_menu');
         arrow.addEventListener('click', () => {
@@ -94,8 +80,8 @@ class App extends Component {
 
         let zoomIn = document.getElementById('zoom_in');
         zoomIn.addEventListener('click', function () {
-            if (mapDefault) {
-                mapDefault.zoomIn(1)
+            if (Lmap) {
+                Lmap.zoomIn(1)
             } else if (Lmap) {
                 Lmap.zoomIn(1)
             } else if (map) {
@@ -106,8 +92,8 @@ class App extends Component {
         let zoomOut = document.getElementById('zoom_out');
 
         zoomOut.addEventListener('click', function () {
-            if (mapDefault) {
-                mapDefault.zoomOut(1)
+            if (Lmap) {
+                Lmap.zoomOut(1)
             } else if (Lmap) {
                 Lmap.zoomOut(1)
             } else if (map) {
@@ -120,12 +106,7 @@ class App extends Component {
         let locate = document.getElementById('geolocate');
 
         locate.addEventListener('click', () => {
-            if (mapDefault) {
-                mapDefault.locate({setView: true})
-                mapDefault.once('locationfound', function(e) {
-                    onLocationFound (e, this)
-                });
-            } else if (Lmap) {
+            if (Lmap) {
                 Lmap.locate({setView: true})
                 Lmap.once('locationfound', function(e) {
                     onLocationFound (e, this)
@@ -170,7 +151,7 @@ class App extends Component {
                 <MainMenu />
                 <BaseMap />
                 <div id="mapid" />
-                <div id="area" /><
+                <div id="area" />
                 <div id="point" />
             </div>
         );
