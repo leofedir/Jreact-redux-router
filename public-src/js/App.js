@@ -13,11 +13,6 @@ export function removeMap() {
         Lmap.off();
         Lmap.remove();
         Lmap = null
-    } else if (map !== null) {
-        map.destroy()
-    } else if (Lmap !== null) {
-        Lmap.off()
-        Lmap.remove()
     }
 }
 
@@ -36,7 +31,7 @@ class App extends Component {
 
         esri.basemapLayer('Topographic').addTo(Lmap);
 
-        fetch('/test', {
+        fetch('/main', {
             method: 'post',
             headers: {
                 "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
@@ -47,7 +42,8 @@ class App extends Component {
             .then(parseJSON)
             .then(data => {
                 let poligon = []
-                // console.log(data.data)
+
+                console.log(data.data)
                 data.data.map(item => {
                     let obj = {}
                     obj.type = "Feature";
