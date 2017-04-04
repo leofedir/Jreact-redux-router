@@ -26,6 +26,9 @@ class MainMenu extends Component {
                                     <li className="submenu_item">
                                         <a href="#" className="submenu_link" data-value="/иуякщишетш">Кількість безробітніх</a>
                                     </li>
+                                    <li className="submenu_item">
+                                        <a href="#" className="submenu_link" data-value="/иуякщишетш">Кількість безробітніх</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
