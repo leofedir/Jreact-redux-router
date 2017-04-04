@@ -1,8 +1,6 @@
-var pg      = require('pg'),
+const pg      = require('pg'),
     when    = require('when'),
     config  = require('../../config');
-
-var instance = {};
 
 module.exports = function(db){
 

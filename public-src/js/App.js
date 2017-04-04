@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import L from 'leaflet/dist/leaflet-src';
 import esri from 'esri-leaflet/dist/esri-leaflet';
 import MainMenu from './PageElement/MainMenu';
-import { map } from './getDataArea';
 import BaseMap from './PageElement/basemap';
 import { checkStatus, parseJSON} from './checkJSON';
 
@@ -25,7 +24,11 @@ class App extends Component {
         };
     }
 
-    getMenu() {
+    addLinkEvent() {
+        console.log(111)
+    }
+
+    getBase() {
         Lmap = L.map('mapid_root', {zoomControl: false}).setView([49, 31], 6);
         L.Icon.Default.imagePath = '/img/';
 
@@ -67,9 +70,11 @@ class App extends Component {
                 }).addTo(Lmap);
             });
 
+        this.addLinkEvent();
+
         let arrow = document.getElementById('hide_menu');
         arrow.addEventListener('click', () => {
-            document.querySelector('.menu_item').classList.toggle("hide")
+            document.querySelector('.left_sidebar').classList.toggle("hide")
             document.querySelector('.title_map').classList.toggle("hide_menu_title")
             document.getElementById('slider').classList.toggle("slider_move")
         });
@@ -78,10 +83,6 @@ class App extends Component {
         zoomIn.addEventListener('click', function () {
             if (Lmap) {
                 Lmap.zoomIn(1)
-            } else if (Lmap) {
-                Lmap.zoomIn(1)
-            } else if (map) {
-                map.setLevel(map.getLevel() + 1)
             }
         })
 
@@ -90,10 +91,6 @@ class App extends Component {
         zoomOut.addEventListener('click', function () {
             if (Lmap) {
                 Lmap.zoomOut(1)
-            } else if (Lmap) {
-                Lmap.zoomOut(1)
-            } else if (map) {
-                map.setLevel(map.getLevel() - 1)
             }
         });
 
@@ -107,25 +104,13 @@ class App extends Component {
                 Lmap.once('locationfound', function(e) {
                     onLocationFound (e, this)
                 });
-            } else if (map) {
-                if(navigator.geolocation){
-                    navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
-                }
-                function locationError(error) {
-                    console.log(error)
-                }
-
-                function zoomToLocation(location) {
-                    var pt = [location.coords.longitude, location.coords.latitude];
-                    map.centerAndZoom(pt, 15);
-                }
             }
         });
 
         function onLocationFound(e, map) {
             if (marker !== null || circle !== null) {
-                map.removeLayer(marker)
-                map.removeLayer(circle)
+                map.removeLayer(marker);
+                map.removeLayer(circle);
                 marker = null;
                 circle = null;
             } else {
@@ -138,7 +123,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.getMenu();
+        this.getBase();
     }
 
     render() {
