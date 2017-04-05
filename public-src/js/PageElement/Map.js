@@ -16,7 +16,6 @@ class Map extends Component {
         L.Icon.Default.imagePath = '/img/';
 
         esri.basemapLayer('Topographic').addTo(Lmap);
-
         fetch('/main', {
             method: 'post',
             headers: {

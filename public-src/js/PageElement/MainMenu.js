@@ -2,43 +2,48 @@ import React, { Component } from 'react';
 import { menu } from './menu'
 
 class MainMenu extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            showMenu: true
+        };
+    }
+
     componentWillMount() {
     }
 
-    hideMenu(){
-        document.querySelector('.left_sidebar').classList.toggle("hide")
+    hideMenu(element){
+        console.log('element >>', element.target)
     }
 
-    addLinkEvent() {
-
+    getMap(item) {
+        console.log('item >>', item.target)
     }
 
     getSubmenu(item) {
-        console.log('item >>', item)
         return <ul className="menu__submenu">
-            {item.map(link => <li key={link.key} className="submenu__item"><a href="#" data-url={link.url}>{link.name}</a></li>)}
+            {item.map(link => <li key={link.key} className="submenu__item"><a href="#" onClick={this.getMap} data-url={link.url}>{link.name}</a></li>)}
             </ul>
     }
 
     getItem(items) {
-        let item_menu = [];
-            items.map(item => {
-                item_menu.push(
+        return items.map(item => {
+                return (
                     <li className="menu__item" key={item.key}>
                         <img className="menu__icon" src={'img/menu/' + item.icon}/>{item.name}
                         {item.submenu && this.getSubmenu(item.submenu)}
                     </li>)
-            })
-        return item_menu
+            });
     }
 
     render() {
 
         return (
             <div id="menu_wrapper">
-                <div className="icons-menu" id="menu">
+                <div className={`icons-menu`} id="menu">
                     <div className="slider" id="slider" />
-                    <i className="fa fa-chevron-left fa-lg hide_menu_icon" id="hide_menu"/>
+                    <i className="fa fa-chevron-left fa-lg hide_menu_icon" onClick={this.hideMenu} id="hide_menu"/>
 
                     <div className="menu">
                         <a className="menu__logo-link" href="/"><img className="menu__logo" src="./img/Logo.svg" alt=""/></a>
