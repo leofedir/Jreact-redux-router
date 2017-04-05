@@ -27,7 +27,7 @@ gulp.task('js', function(done) {
         if(err) done(err);
         const tasks = files.map(function (entry) {
             return browserify({entries: [entry]})
-                .transform('babelify', {presets: ["es2015" , "react"]})
+                .transform('babelify', { presets: ["react", "es2015", "stage-0"]})
                 .bundle()
                 .on('error' , (e) => { console.log("error  >> " , e)})
                 .pipe(source(entry))

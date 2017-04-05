@@ -1,19 +1,8 @@
 import React, { Component } from 'react';
-import L from 'leaflet/dist/leaflet-src';
-import esri from 'esri-leaflet/dist/esri-leaflet';
+
 import MainMenu from './PageElement/MainMenu';
-import BaseMap from './PageElement/basemap';
-import { checkStatus, parseJSON} from './checkJSON';
+import Map from './PageElement/Map';
 
-export let Lmap = null;
-
-export function removeMap() {
-    if(Lmap !== null) {
-        Lmap.off();
-        Lmap.remove();
-        Lmap = null
-    }
-}
 
 class App extends Component {
     constructor(props) {
@@ -24,60 +13,8 @@ class App extends Component {
         };
     }
 
-    addLinkEvent() {
-        console.log(111)
-    }
-
     getBase() {
-        Lmap = L.map('mapid_root', {zoomControl: false}).setView([49, 31], 6);
-        L.Icon.Default.imagePath = '/img/';
 
-        esri.basemapLayer('Topographic').addTo(Lmap);
-
-        fetch('/main', {
-            method: 'post',
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-            },
-            body: 'foo=bar&lorem=ipsum'
-        })
-            .then(checkStatus)
-            .then(parseJSON)
-            .then(data => {
-                let poligon = []
-
-                console.log(data.data)
-                data.data.map(item => {
-                    let obj = {}
-                    obj.type = "Feature";
-                    obj.properties = {};
-                    for(let key in item) {
-                        if (item.hasOwnProperty(key) && key !== 'geojson' && key !== 'geom'){
-                            obj.properties[key] = item[key];
-                        }
-                    }
-                    obj.geometry = poligon.push(JSON.parse(item.geojson))
-                })
-
-                let myStyle = {
-                    "color": "#009971",
-                    "weight": 2,
-                    "opacity": 0.79
-                };
-
-                L.geoJSON(poligon, {
-                    style: myStyle
-                }).addTo(Lmap);
-            });
-
-        this.addLinkEvent();
-
-        let arrow = document.getElementById('hide_menu');
-        arrow.addEventListener('click', () => {
-            document.querySelector('.left_sidebar').classList.toggle("hide")
-            document.querySelector('.title_map').classList.toggle("hide_menu_title")
-            document.getElementById('slider').classList.toggle("slider_move")
-        });
 
         let zoomIn = document.getElementById('zoom_in');
         zoomIn.addEventListener('click', function () {
@@ -128,12 +65,9 @@ class App extends Component {
 
     render() {
         return (
-            <div>
+            <div id="wrapper">
                 <MainMenu />
-                <BaseMap />
-                <div id="mapid" />
-                <div id="area" />
-                <div id="point" />
+                <Map />
             </div>
         );
     }

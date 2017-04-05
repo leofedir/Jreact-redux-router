@@ -7,8 +7,4 @@ ReactDOM.render(
   <App />,
   document.getElementById('root')
 );
-// ReactDOM.render(
-//     <Header />,
-//     document.getElementById('header')
-// );
 
