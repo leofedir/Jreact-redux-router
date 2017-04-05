@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { menu } from './menu'
+import getMap from '../getMap'
 
 class MainMenu extends Component {
 
@@ -21,13 +22,9 @@ class MainMenu extends Component {
         });
     }
 
-    getMap(item) {
-        console.log('item >>', item.target)
-    }
-
     getSubmenu(item) {
         return <ul className="menu__submenu">
-            {item.map(link => <li key={link.key} className="submenu__item"><a href="#" onClick={this.getMap} data-url={link.url}>{link.name}</a></li>)}
+            {item.map(link => <li key={link.key} className="submenu__item"><a href="#" onClick={getMap} data-url={link.url}>{link.name}</a></li>)}
             </ul>
     }
 

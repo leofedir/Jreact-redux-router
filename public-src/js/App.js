@@ -25,7 +25,7 @@ class App extends Component {
                     <MainMenu />
                     <div className="main">
                         <div className="block block-top"><Map /></div>
-                        <div className="block block-bottom"></div>
+                        <div className="block block-bottom" />
 
                     </div>
                     <div className="aside aside-1">

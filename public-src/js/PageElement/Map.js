@@ -60,7 +60,6 @@ class Map extends Component {
     createMap() {
 
         Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 6);
-        L.Icon.Default.imagePath = '/img/';
 
         esri.basemapLayer('Topographic').addTo(Lmap);
         fetch('/main', {
