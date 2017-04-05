@@ -10,11 +10,15 @@ class MainMenu extends Component {
         };
     }
 
+
     componentWillMount() {
     }
 
-    hideMenu(element){
-        console.log('element >>', element.target)
+    hideMenu(){
+        console.log('this.state >>', this.state)
+        this.setState({
+            showMenu: !this.state.showMenu
+        });
     }
 
     getMap(item) {
@@ -36,16 +40,15 @@ class MainMenu extends Component {
                     </li>)
             });
     }
-
     render() {
 
         return (
             <div id="menu_wrapper">
                 <div className={`icons-menu`} id="menu">
                     <div className="slider" id="slider" />
-                    <i className="fa fa-chevron-left fa-lg hide_menu_icon" onClick={this.hideMenu} id="hide_menu"/>
+                    <i className="fa fa-chevron-left fa-lg hide_menu_icon" onClick={::this.hideMenu} id="hide_menu"/>
 
-                    <div className="menu">
+                    <div className={(this.state.showMenu) ? 'menu' : "menu hide"}>
                         <a className="menu__logo-link" href="/"><img className="menu__logo" src="./img/Logo.svg" alt=""/></a>
                         <ul className="menu__items">
                             {this.getItem(menu)}

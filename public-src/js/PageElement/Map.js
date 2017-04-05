@@ -5,13 +5,60 @@ import esri from 'esri-leaflet/dist/esri-leaflet';
 
 export let Lmap = null;
 
+let icon = L.icon({
+    iconUrl: '/img/marker-icon.svg',
+    iconSize:     [25, 36],
+    iconAnchor:   [12, 33]
+});
+
 class Map extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            showMenu: true
+        };
+    }
 
     componentDidMount() {
         this.createMap()
     }
 
+    zoom_in() {
+        Lmap.zoomIn(1)
+    }
+
+    zoom_out() {
+        Lmap.zoomOut(1)
+    }
+
+    geolocate() {
+        let marker = null, circle = null;
+        if (Lmap) {
+            Lmap.locate({setView: true})
+            Lmap.once('locationfound', function(e) {
+                onLocationFound (e, this)
+            });
+        }
+
+        function onLocationFound(e, map) {
+            if (marker !== null || circle !== null) {
+                map.removeLayer(marker);
+                map.removeLayer(circle);
+                marker = null;
+                circle = null;
+            } else {
+                let radius = e.accuracy / 2;
+                marker = L.marker(e.latlng, {icon: icon}).addTo(map)
+                    .bindPopup("Ви знаходитесь в межах " + radius + " метрів від цієї точки").openPopup();
+                circle = L.circle(e.latlng, radius).addTo(map);
+            }
+        }
+
+    }
+
     createMap() {
+
         Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 6);
         L.Icon.Default.imagePath = '/img/';
 
@@ -69,9 +116,9 @@ class Map extends Component {
     render() {
         return (
             <div id="map_wrapper">
-                <i className="fa fa-plus fa-lg zoom_in_icon" id="zoom_in"/>
-                <i className="fa fa-minus fa-lg zoom_out_icon" id="zoom_out"/>
-                <i className="fa fa-location-arrow fa-lg geolocate_icon" id="geolocate"/>
+                <i className="fa fa-plus fa-lg zoom_in_icon"  onClick={::this.zoom_in} id="zoom_in"/>
+                <i className="fa fa-minus fa-lg zoom_out_icon" onClick={::this.zoom_out} id="zoom_out"/>
+                <i className="fa fa-location-arrow fa-lg geolocate_icon" onClick={::this.geolocate} id="geolocate"/>
                 <div id="map" />
                 <div id="basemaps-wrapper">
                     <p className="basemap_title">Базова карта</p>
