@@ -20,8 +20,25 @@ class App extends Component {
     render() {
         return (
             <div id="wrapper">
-                <MainMenu />
-                <Map />
+                <div className="heder" />
+                <div className="content__wrap">
+                    <MainMenu />
+                    <div className="main">
+                        <div className="block block-top"><Map /></div>
+                        <div className="block block-bottom"></div>
+
+                    </div>
+                    <div className="aside aside-1">
+                        <div className="block block-top" />
+                        <div className="block block-bottom" />
+                    </div>
+
+                    <div className="aside aside-2">
+                        <div className="block block-top" />
+                        <div className="block block-bottom" />
+                    </div>
+
+                </div>
             </div>
         );
     }

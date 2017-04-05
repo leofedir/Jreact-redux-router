@@ -8,6 +8,99 @@
 @import "./mainMenu";
 @import "./map";
 
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#root {
+  height: 100%;
+}
+#wrapper {
+  height: 100%;
+}
+
+.content__wrap {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  height: calc(100% - 40px);
+}
+
+.main {
+  text-align: left;
+  margin: 0;
+  height: 100%;
+}
+
+.main .block {
+  margin: 15px 0;
+}
+
+.aside {
+  flex-grow: 0;
+  flex-shrink: 0;
+  height: 100%;
+}
+
+.aside-1 {
+  flex-basis: 350px;
+}
+
+.aside-2 {
+  flex-basis: 250px;
+}
+
+.block {
+  background: gold none repeat scroll 0 0;
+  box-sizing: border-box;
+  padding: 5px;
+  width: 100%;
+}
+
+.aside .block {
+  width: calc(100% - 30px);
+  margin: 15px;
+}
+
+.my_block {
+  height: 100%;
+}
+
+.heder {
+  background: black none repeat scroll 0 0;
+  color: white;
+  flex-basis: 100%;
+  height: 40px;
+  width: 100%;
+}
+.block-top {
+  height: 55%;
+}
+.block.block-bottom {
+  height: calc(45% - 45px);
+}
+
+@media all and (min-width: 700px) {
+  .main    { flex: 3 0px; }
+  .aside-1 { order: 1; }
+  .main    { order: 2; }
+  .aside-2 { order: 3; }
+  .footer  { order: 4; }
+}
+
+
 //#mapid_root,
 //#area,
 //#lmap {
