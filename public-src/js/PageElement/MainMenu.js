@@ -7,19 +7,12 @@ class MainMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showMenu: true
+
         };
     }
 
 
     componentWillMount() {
-    }
-
-    hideMenu(){
-        console.log('this.state >>', this.state)
-        this.setState({
-            showMenu: !this.state.showMenu
-        });
     }
 
     getSubmenu(item) {
@@ -43,9 +36,7 @@ class MainMenu extends Component {
             <div id="menu_wrapper">
                 <div className={`icons-menu`} id="menu">
                     <div className="slider" id="slider" />
-                    <i className="fa fa-chevron-left fa-lg hide_menu_icon" onClick={::this.hideMenu} id="hide_menu"/>
-
-                    <div className={(this.state.showMenu) ? 'menu' : "menu hide"}>
+                    <div className="menu">
                         <a className="menu__logo-link" href="/"><img className="menu__logo" src="./img/Logo.svg" alt=""/></a>
                         <ul className="menu__items">
                             {this.getItem(menu)}

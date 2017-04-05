@@ -9,18 +9,25 @@ class App extends Component {
         super(props);
         this.state = {
             folder: null,
-            item: null
+            item: null,
+            showMenu: true
         };
     }
 
-
+    hideMenu(){
+        this.setState({
+            showMenu: !this.state.showMenu
+        });
+    }
 
     componentDidMount() {}
 
     render() {
         return (
-            <div id="wrapper">
-                <div className="heder" />
+            <div id="wrapper" className={(this.state.showMenu) ? '' : "hide"}>
+                <div className="heder" >
+                    <i className="fa fa-bars fa-lg" onClick={::this.hideMenu} id="hide_menu"/>
+                </div>
                 <div className="content__wrap">
                     <MainMenu />
                     <div className="main">
