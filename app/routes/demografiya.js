@@ -1,16 +1,11 @@
 
-const pgdb = require('../libs/pgdb')();
+const pgdb = require('../libs/pgdb')(),
+    GeoJson = require( '../libs/createGeoJson');
 
 module.exports = function (router){
 
     router.post('/bezrobitni' , function (req , res) {
-        pgdb.query(`SELECT * FROM test6 `)
-            .then((d)=>{
-                res.json({'state' : true , data: d});
-            })
-            .catch((e)=>{
-                console.log("Error" , e);
-            })
+        GeoJson.queryBase(req.originalUrl, 'test6', res);
     });
 
 }
