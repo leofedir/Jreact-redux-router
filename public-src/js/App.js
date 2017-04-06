@@ -25,13 +25,15 @@ class App extends Component {
     render() {
         return (
             <div id="wrapper" className={(this.state.showMenu) ? '' : "hide"}>
+                <MainMenu />
                 <div className="heder" >
-                    <i className="fa fa-bars fa-lg" onClick={::this.hideMenu} id="hide_menu"/>
+                    <i className="fa fa-bars fa-2x menu_ico" onClick={::this.hideMenu} id="hide_menu"/>
+                    <a className="logo-link" href="/"><img className="logo-link_img" src="./img/Logo.svg" alt=""/></a>
                 </div>
                 <div className="content__wrap">
-                    <MainMenu />
+
                     <div className="main">
-                        <div className="block block-top"><Map /></div>
+                        <div className="block block-top block_map" ><Map /></div>
                         <div className="block block-bottom" />
 
                     </div>

@@ -33,11 +33,11 @@ class MainMenu extends Component {
     render() {
 
         return (
-            <div id="menu_wrapper">
+            <div id="menu_wrapper" className="menu_wrapper">
                 <div className={`icons-menu`} id="menu">
                     <div className="slider" id="slider" />
                     <div className="menu">
-                        <a className="menu__logo-link" href="/"><img className="menu__logo" src="./img/Logo.svg" alt=""/></a>
+
                         <ul className="menu__items">
                             {this.getItem(menu)}
                         </ul>
