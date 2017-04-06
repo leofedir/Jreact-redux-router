@@ -1,4 +1,4 @@
-import choropleth from 'leaflet-choropleth'
+import choropleth from './colorRender'
 
 import { Lmap, ukraine } from "./PageElement/Map";
 import { checkStatus, parseJSON} from './checkJSON';
@@ -45,7 +45,7 @@ export default function getMap(item) {
 			<div class="max">' + limits[limits.length - 1] + '</div></div>'
 
                 limits.forEach(function (limit, index) {
-                    labels.push('<li style="background-color: ' + colors[index] + '"></li>')
+                    labels.push('<li style="background-color: ' + colors[index] + '">' +  limits[index] + '</li>')
                 })
 
                 div.innerHTML += '<ul>' + labels.join('') + '</ul>'
