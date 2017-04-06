@@ -28,7 +28,7 @@ export default function getMap(item) {
                     fillOpacity: 0.8
                 },
                 onEachFeature: function (feature, layer) {
-                    layer.bindPopup('District ' + feature.properties.name_ua )
+                    layer.bindPopup(feature.properties.name_ua + "   " + feature.properties.year_13 )
                 }
             }).addTo(Lmap)
 
