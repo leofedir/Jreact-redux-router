@@ -4,6 +4,7 @@ import L from 'leaflet/dist/leaflet-src';
 import esri from 'esri-leaflet/dist/esri-leaflet';
 
 export let Lmap = null;
+export let ukraine;
 
 let icon = L.icon({
     iconUrl: '/img/marker-icon.svg',
@@ -72,28 +73,16 @@ class Map extends Component {
             .then(checkStatus)
             .then(parseJSON)
             .then(data => {
-                let poligon = []
-                data.data.map(item => {
-                    let obj = {}
-                    obj.type = "Feature";
-                    obj.properties = {};
-                    for(let key in item) {
-                        if (item.hasOwnProperty(key) && key !== 'geojson' && key !== 'geom'){
-                            obj.properties[key] = item[key];
-                        }
-                    }
-                    obj.geometry = poligon.push(JSON.parse(item.geojson))
-                })
-
                 let myStyle = {
                     "color": "#009971",
                     "weight": 2,
-                    "opacity": 0.79
+                    "opacity": .9
                 };
 
-                L.geoJSON(poligon, {
+                ukraine = L.geoJSON(data.data, {
                     style: myStyle
-                }).addTo(Lmap);
+                });
+                Lmap.addLayer(ukraine)
             });
     }
 

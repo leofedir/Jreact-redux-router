@@ -1,10 +1,12 @@
-import L from 'leaflet/dist/leaflet-src';
-import esri from 'esri-leaflet/dist/esri-leaflet';
-import { Lmap } from "./PageElement/Map"
+import choropleth from 'leaflet-choropleth'
+
+import { Lmap, ukraine } from "./PageElement/Map";
 import { checkStatus, parseJSON} from './checkJSON';
 
 export default function getMap(item) {
-    console.log('item.dataset >>', item.target.dataset.url)
+    console.log('Lmap.haslayer(ukraine >>', Lmap.hasLayer(ukraine));
+    Lmap.removeLayer(ukraine)
+
     fetch(item.target.dataset.url, {
         method: 'post',
         headers: {
@@ -15,28 +17,40 @@ export default function getMap(item) {
         .then(checkStatus)
         .then(parseJSON)
         .then(data => {
-            console.log('data >>', data)
-            let poligon = []
-            data.data.map(item => {
-                let obj = {}
-                obj.type = "Feature";
-                obj.properties = {};
-                for(let key in item) {
-                    if (item.hasOwnProperty(key) && key !== 'geojson' && key !== 'geom'){
-                        obj.properties[key] = item[key];
-                    }
+            var choroplethLayer = L.choropleth(data.data, {
+                valueProperty: 'year_13',
+                scale: ['#fbe9bd', '#a12f19'],
+                steps: 5,
+                mode: 'q',
+                style: {
+                    color: '#a12f19',
+                    weight: 1,
+                    fillOpacity: 0.8
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup('District ' + feature.properties.name_ua )
                 }
-                obj.geometry = poligon.push(JSON.parse(item.geojson))
-            })
+            }).addTo(Lmap)
 
-            let myStyle = {
-                "color": "#009971",
-                "weight": 2,
-                "opacity": 0.79
-            };
+            // Add legend (don't forget to add the CSS from index.html)
+            var legend = L.control({ position: 'bottomright' })
+            legend.onAdd = function (Lmap) {
+                var div = L.DomUtil.create('div', 'info legend')
+                var limits = choroplethLayer.options.limits
+                var colors = choroplethLayer.options.colors
+                var labels = []
 
-            L.geoJSON(poligon, {
-                style: myStyle
-            }).addTo(Lmap);
+                // Add min & max
+                div.innerHTML = '<div class="labels"><div class="min">' + limits[0] + '</div> \
+			<div class="max">' + limits[limits.length - 1] + '</div></div>'
+
+                limits.forEach(function (limit, index) {
+                    labels.push('<li style="background-color: ' + colors[index] + '"></li>')
+                })
+
+                div.innerHTML += '<ul>' + labels.join('') + '</ul>'
+                return div
+            }
+            legend.addTo(Lmap)
         });
 }
