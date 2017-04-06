@@ -11,7 +11,6 @@ module.exports = {
         return store[url]
     },
 
-
     queryBase(url, table, res) {
         if (this.checkStore(url)) {
             res.json({'state' : true , data: store[url]})

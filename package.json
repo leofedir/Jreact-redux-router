@@ -21,6 +21,7 @@
     "express": "^4.15.2",
     "highcharts": "^5.0.9",
     "leaflet": "^1.0.3",
+    "leaflet-choropleth": "^1.1.3",
     "leaflet.locatecontrol": "^0.60.0",
     "leaflet.markercluster": "^1.0.3",
     "method-override": "latest",

@@ -76,7 +76,7 @@ class Map extends Component {
                 let myStyle = {
                     "color": "#009971",
                     "weight": 2,
-                    "opacity": 0.79
+                    "opacity": .9
                 };
 
                 ukraine = L.geoJSON(data.data, {
