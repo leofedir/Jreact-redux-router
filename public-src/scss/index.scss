@@ -16,6 +16,7 @@ body {
   margin: 0;
   padding: 0;
   background: #e7ecf2;
+  overflow: hidden;
 }
 #root {
   height: 100%;
@@ -55,9 +56,11 @@ body {
 }
 .aside-1 {
   flex-basis: $aside-1-width;
+  transition: $transition-win;
 }
 .aside-2 {
   flex-basis: $aside-2-width;
+  transition: $transition-win;
 }
 .block {
   background: $white;
@@ -65,6 +68,7 @@ body {
   box-sizing: border-box;
   //padding: 5px;
   width: 100%;
+  position: relative;
 }
 .aside .block {
   width: calc(100% - ( #{$block-margin} * 2 );
@@ -83,9 +87,11 @@ body {
 }
 .block-top {
   height: $block-top;
+  transition: $transition-win;
 }
 .block-bottom {
   height: calc(45% - ( #{$block-margin} * 3 ) );
+  transition: $transition-win;
 }
 .heder {
   display: flex;
@@ -100,8 +106,30 @@ body {
   transition: all 0.5s ease 0s;
   width: 270px;
 }
+.item_header {
+  background: gray none repeat scroll 0 0;
+  display: flex;
+  height: 36px;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 101;
+  align-items: center;
+  box-shadow: $shadow;
+}
 
-
+.ico_hover {
+  color: white;
+  cursor: pointer;
+  margin: 0px;
+  opacity: 0.7;
+  transition: 0.3s;
+}
+.ico_hover:hover {
+  color: white;
+  opacity: 1;
+}
 
 @media all and (min-width: 700px) {
   .main    { flex: 3 0px; }

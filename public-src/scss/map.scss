@@ -21,16 +21,17 @@
   height: 100%;
   z-index: 100;
 }
+
 #basemaps-wrapper {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 101;
-  background: $white;
+  background: #fff none repeat scroll 0 0;
+  border-radius: 4px;
+  bottom: 10px;
+  box-shadow: 0 1px 3px 0 rgba(191, 205, 222, 0.75);
   padding: 7px;
-  border-radius: $radius;
-  box-shadow: $shadow;
+  position: absolute;
+  right: 10px;
   text-align: center;
+  z-index: 101;
 }
 #basemaps-wrapper p {
   padding-bottom: 7px;
@@ -38,12 +39,12 @@
 .zoom_in_icon, .zoom_out_icon, .geolocate_icon {
   background: #747474 none repeat scroll 0 0;
   color: white;
-  height: 37px;
-  line-height: 37px;
+  height: 32px;
+  line-height: 32px;
   text-align: center;
-  width: 37px;
+  width: 32px;
   z-index: 101;
-  margin-left: $block-margin;
+  margin-left: 10px;
   box-shadow: $shadow;
   cursor: pointer;
 }
@@ -53,17 +54,23 @@
 }
 .zoom_in_icon {
   border-radius: $radius $radius 0 0;
-  bottom: 102px;
+  bottom: 84px;
 }
 .zoom_out_icon {
   border-radius: 0 0 $radius $radius;
-  bottom: 65px;
+  bottom: 52px;
 }
 .geolocate_icon {
   border-radius: $radius;
-  bottom: 15px;
+  bottom: 10px;
 }
-
+.ico_map_full {
+  margin: 0;
+  padding: 10px;
+}
+.map_heder_title {
+  padding-left: 10px;
+}
 .legend  {
   .labels {
     width: 100px;
@@ -81,4 +88,14 @@
       border: 1px solid #000;
     }
   }
+}
+.mapFull .aside-1 {
+  flex-basis: 0px;
+  //transition: 0.3s;
+}
+.mapFull .main .block-bottom {
+  height: 0;
+}
+.mapFull .main .block-top {
+  height: calc(100% - ( #{$block-margin} * 2 ) );
 }
