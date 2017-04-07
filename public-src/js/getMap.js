@@ -40,7 +40,7 @@ export default function getMap(item) {
 
                 limits.forEach(function (limit, i) {
                     labels.push('<i style="background:' + colors[i] + '"></i> ' +
-                        (limits[i] !== null) ? limits[i] : dani + ((i !== limits.length -1 && limits[i + 1] !== null) ? ' &ndash; ' + limits[i + 1] + '<br>' : (limits[i ] !== null) ? ' +<br/>' : '<br/>'))
+                        ((limits[i] !== null) ? limits[i] : dani) + ((i !== limits.length -1 && limits[i + 1] !== null) ? ' &ndash; ' + limits[i + 1] + '<br>' : (limits[i ] !== null) ? ' +<br/>' : '<br/>'))
                 })
 
                 div.innerHTML += labels.join('')
