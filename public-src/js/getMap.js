@@ -1,5 +1,4 @@
 import choropleth from './colorRender'
-
 import { Lmap, ukraine } from "./PageElement/Map";
 import { checkStatus, parseJSON} from './checkJSON';
 
@@ -33,24 +32,18 @@ export default function getMap(item) {
             }).addTo(Lmap)
 
             // Add legend (don't forget to add the CSS from index.html)
-            var legend = L.control({ position: 'bottomright' })
-            legend.onAdd = function (Lmap) {
-                var div = L.DomUtil.create('div', 'info legend')
+                var div = document.getElementById('legend')
                 var limits = choroplethLayer.options.limits
                 var colors = choroplethLayer.options.colors
                 var labels = []
 
-                // Add min & max
-                div.innerHTML = '<div class="labels"><div class="min">' + limits[0] + '</div> \
-			<div class="max">' + limits[limits.length - 1] + '</div></div>'
-
-                limits.forEach(function (limit, index) {
-                    labels.push('<li style="background-color: ' + colors[index] + '">' +  limits[index] + '</li>')
+                limits.forEach(function (limit, i) {
+                    labels.push('<i style="background:' + colors[i] + '"></i> ' +
+                        limits[i] + (limits[i + 1] ? ' &ndash; ' + limits[i + 1] + '<br>' : '+<br>'))
                 })
 
-                div.innerHTML += '<ul>' + labels.join('') + '</ul>'
+                div.innerHTML += labels.join('')
                 return div
-            }
-            legend.addTo(Lmap)
+
         });
 }

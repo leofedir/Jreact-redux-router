@@ -24,9 +24,10 @@ L.choropleth = module.exports = function (geojson, opts) {
         if (typeof opts.valueProperty === 'function') {
             return opts.valueProperty(item)
         } else {
-            return item.properties[opts.valueProperty]
+            return +item.properties[opts.valueProperty]
         }
     })
+
     var limits = chroma.limits(values, opts.mode, opts.steps - 1)
     limits.push(null)
 

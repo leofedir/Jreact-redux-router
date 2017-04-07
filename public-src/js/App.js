@@ -55,7 +55,9 @@ class App extends Component {
 
                     <div className="aside aside-2">
                         <div className="block block-top" />
-                        <div className="block block-bottom" />
+                        <div className="block block-bottom">
+                            <div id="legend" />
+                        </div>
                     </div>
 
                 </div>
