@@ -8,4 +8,8 @@ module.exports = function (router){
         GeoJson.queryBase(req.originalUrl, 'test6', res);
     });
 
+    router.post('/vik_naselenya' , function (req , res) {
+        GeoJson.queryBase(req.originalUrl, 'test7', res);
+    });
+
 }

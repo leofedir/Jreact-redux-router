@@ -6,6 +6,8 @@ export default function getMap(item) {
     console.log('Lmap.haslayer(ukraine >>', Lmap.hasLayer(ukraine));
     Lmap.removeLayer(ukraine)
 
+    let property = 'year_13'
+
     fetch(item.target.dataset.url, {
         method: 'post',
         headers: {
@@ -17,7 +19,7 @@ export default function getMap(item) {
         .then(parseJSON)
         .then(data => {
             var choroplethLayer = L.choropleth(data.data, {
-                valueProperty: 'year_13',
+                valueProperty: property,
                 scale: ['#fbe9bd', '#a12f19'],
                 steps: 5,
                 mode: 'q',

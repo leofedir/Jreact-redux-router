@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { menu } from './menu'
-import getMap from '../getMap'
+import getMap from '../getMapArea'
 
 class MainMenu extends Component {
 
