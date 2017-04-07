@@ -35,7 +35,6 @@ class MainMenu extends Component {
         return (
             <div id="menu_wrapper" className="menu_wrapper">
                 <div className={`icons-menu`} id="menu">
-                    <div className="slider" id="slider" />
                     <div className="menu">
 
                         <ul className="menu__items">

@@ -1,0 +1,30 @@
+.slider {
+    height: 60px;
+    bottom: 12px;
+    background-color: $grey;
+    border-radius: $radius;
+    transition: all .5s;
+    overflow: hidden;
+}
+
+.slider_move {
+    left: 30px;
+}
+
+.slider_title {
+    margin: 6px 15px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+
+    p {
+        margin: 0;
+    }
+}
+
+.slider_range {
+    width: 200px;
+    margin: 0 20px;
+
+    transition: all .5s;
+}

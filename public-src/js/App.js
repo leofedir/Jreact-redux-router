@@ -95,6 +95,7 @@ class App extends Component {
                         <div className="block block-top">
                             <div className="item_header">
                                 <div className="map_heder_title">333</div>
+                                <div className="slider" id="slider" />
                             </div>
                         </div>
                         <div className="block block-bottom">

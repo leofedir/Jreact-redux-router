@@ -7,6 +7,8 @@
 @import "./input";
 @import "./mainMenu";
 @import "./map";
+@import "./loader";
+@import "./rangeSlider.scss";
 
 html {
   height: 100%;
@@ -71,7 +73,7 @@ body {
   position: relative;
 }
 .aside .block {
-  width: calc(100% - ( #{$block-margin} * 2 );
+  width: calc(100% - ( #{$block-margin} * 2 ));
   margin: $block-margin;
 }
 .my_block {
