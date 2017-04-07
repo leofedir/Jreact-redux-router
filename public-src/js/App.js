@@ -10,7 +10,8 @@ class App extends Component {
         this.state = {
             folder: null,
             item: null,
-            showMenu: true
+            showMenu: true,
+            mapFull: false
         };
     }
 
@@ -20,11 +21,18 @@ class App extends Component {
         });
     }
 
+    mapFull(){
+        console.log('this.state >>', this.state.mapFull)
+        this.setState({
+            mapFull: !this.state.mapFull
+        });
+    }
+
     componentDidMount() {}
 
     render() {
         return (
-            <div id="wrapper" className={(this.state.showMenu) ? '' : "hide"}>
+            <div id="wrapper" className={(this.state.showMenu) ? "" + ( ( this.state.mapFull ) ? "mapFull" : "") : "hide " + ( ( this.state.mapFull ) ? "mapFull" : "")}>
                 <MainMenu />
                 <div className="heder" >
                     <i className="fa fa-bars fa-2x menu_ico" onClick={::this.hideMenu} id="hide_menu"/>
@@ -33,7 +41,10 @@ class App extends Component {
                 <div className="content__wrap">
 
                     <div className="main">
-                        <div className="block block-top block_map" ><Map /></div>
+                        <div className="block block-top block_map" >
+                            <i className="fa fa-expand fa-2x menu_ico" onClick={::this.mapFull} />
+                            <Map />
+                        </div>
                         <div className="block block-bottom" />
 
                     </div>
