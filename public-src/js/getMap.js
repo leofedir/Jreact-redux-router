@@ -36,6 +36,7 @@ export default function getMap(item) {
                 var limits = choroplethLayer.options.limits
                 var colors = choroplethLayer.options.colors
                 var labels = []
+            div.innerHTML = `<h5 className="legend__title">Назва показника</h5>`
             let dani = 'Дані відсутні'
 
                 limits.forEach(function (limit, i) {
