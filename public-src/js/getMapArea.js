@@ -6,8 +6,8 @@ let choroplethLayer;
 let tableStore = {};
 let dataStore = {};
 
-export default function getMap(item) {
-    let url = item.target.dataset.url
+export default function getMap(url) {
+    // let url = item.target.dataset.url
     // if(tableStore[url]) {
     //
     // } else {

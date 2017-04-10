@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
+import { menu } from './PageElement/menu'
+import { checkStatus, parseJSON} from './checkJSON';
 
 import MainMenu from './PageElement/MainMenu';
 import Map from './PageElement/Map';
+
+let wrapper = document.getElementById('wrapper')
 
 
 class App extends Component {
@@ -11,16 +15,51 @@ class App extends Component {
             folder: null,
             item: null,
             showMenu: true,
-            mapFull: false
+            category: 'main',
+            fields: null
         };
+    }
+
+    chengeCategory(e) {
+        let url = e.target.dataset.url
+        fetch(url, {
+            method: 'post',
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: `category=${ url }`
+        })
+            .then(checkStatus)
+            .then(parseJSON)
+            .then(data => {
+                return data.data.map(item => {
+                    return item.table_name
+                })
+            }).then(d => {
+            console.log('d >>', d)
+            this.setState({
+                category: url,
+                fields: d
+            })
+
+            console.log('this.state >>', this.state)
+        })
+    }
+
+    getItem(items) {
+        return items.map(item => {
+            return (
+                <li className="menu__item" key={item.key}>
+                    <img className="menu__icon" src={'img/menu/' + item.icon}/>
+                    <a href="#" onClick={ ::this.chengeCategory } data-url={item.url}>{item.name}</a>
+                </li>)
+        });
     }
 
     autoCloseMenu() {
         function removePopups(e) {
-            if (!e.target.matches('.menu *') && !e.target.matches('.menu_ico') && this.state.showMenu) {
-                this.setState({
-                    showMenu: !this.state.showMenu
-                });
+            if (!e.target.matches('.menu *') && !e.target.matches('.menu_ico') && !document.getElementById('wrapper').classList.contains('hide') ) {
+                document.getElementById('wrapper').classList.toggle('hide')
                 window.removeEventListener('click', removePopups);
             }
         };
@@ -28,33 +67,34 @@ class App extends Component {
     }
 
     hideMenu() {
-        this.setState({
-            showMenu: !this.state.showMenu
-        });
+        document.getElementById('wrapper').classList.toggle('hide')
     }
 
-    mapFull() {
-        console.log('this.state >>', this.state.mapFull)
-        this.setState({
-            mapFull: !this.state.mapFull
-        });
+    full() {
+
     }
 
     componentWillMount() {
-        console.log('mount')
         this.autoCloseMenu()
     }
 
     componentWillUpdate() {
-        console.log('update')
         this.autoCloseMenu()
     }
 
     render() {
         return (
             <div id="wrapper"
-                 className={(this.state.showMenu) ? "" + ( ( this.state.mapFull ) ? "mapFull" : "") : "hide " + ( ( this.state.mapFull ) ? "mapFull" : "")}>
-                <MainMenu />
+                 className={(this.state.showMenu) ? "" : "hide " }>
+                <div id="menu_wrapper" className="menu_wrapper">
+                    <div className={`icons-menu`} id="menu">
+                        <div className="menu">
+                            <ul className="menu__items">
+                                {this.getItem(menu)}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                 <div className="heder">
                     <i className="fa fa-bars fa-2x menu_ico" onClick={::this.hideMenu} id="hide_menu"/>
                     <a className="logo-link" href="/"><img className="logo-link_img" src="./img/Logo.svg" alt=""/></a>
@@ -62,18 +102,14 @@ class App extends Component {
                 <div className="content__wrap">
 
                     <div className="main">
-                        <div className="block block-top block_map">
-                            <div className="item_header">
-                                <div className="map_heder_title">1111</div>
-                                <i className="fa fa-expand fa-1x ico_map_full ico_hover" onClick={::this.mapFull}/>
-                            </div>
-                            <Map />
-                        </div>
+
+                        <Map category={this.state.category} fields={this.state.fields}/>
+
                         <div className="block block-bottom">
                             <div className="item_header">
                                 <div className="map_heder_title">444</div>
                                 <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"
-                                   onClick={::this.mapFull}/></div>
+                                   onClick={::this.full}/></div>
                         </div>
 
                     </div>
@@ -87,7 +123,7 @@ class App extends Component {
                             <div className="item_header">
                                 <div className="map_heder_title">5555</div>
                                 <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"
-                                   onClick={::this.mapFull}/>
+                                   onClick={::this.full}/>
                             </div>
                         </div>
                     </div>

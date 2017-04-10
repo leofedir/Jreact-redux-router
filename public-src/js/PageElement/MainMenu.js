@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { menu } from './menu'
-import getMap from '../getMapArea'
+import getMap from './Map'
 
 class MainMenu extends Component {
 
@@ -15,28 +15,17 @@ class MainMenu extends Component {
     componentWillMount() {
     }
 
-    getSubmenu(item) {
-        return <ul className="menu__submenu">
-            {item.map(link => <li key={link.key} className="submenu__item"><a href="#" onClick={getMap} data-url={link.url}>{link.name}</a></li>)}
-            </ul>
+    getSubmenu() {
+
     }
 
-    getItem(items) {
-        return items.map(item => {
-                return (
-                    <li className="menu__item" key={item.key}>
-                        <img className="menu__icon" src={'img/menu/' + item.icon}/>
-                        <a href="#" onClick={getMap} data-url={item.url}>{item.name}</a>
-                    </li>)
-            });
-    }
+
     render() {
 
         return (
             <div id="menu_wrapper" className="menu_wrapper">
                 <div className={`icons-menu`} id="menu">
                     <div className="menu">
-
                         <ul className="menu__items">
                             {this.getItem(menu)}
                         </ul>

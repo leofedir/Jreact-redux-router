@@ -8,6 +8,7 @@ export let menu = [
     {
         key: 2,
         name: 'Земельні ресурси',
-        icon: '3.png'
+        icon: '3.png',
+        url: 'zemres'
     }
 ]
