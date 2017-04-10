@@ -18,7 +18,7 @@
   padding: 0;
   margin: 0;
   width: 100%;
-  height: 100%;
+  height: calc(100% - #{$block-heder-height});
   z-index: 100;
 }
 
@@ -76,6 +76,9 @@
 .mapFull .aside-1 {
   flex-basis: 0px;
   opacity: 0;
+}
+.mapFull .aside-1 .block * {
+display: none;
 }
 .mapFull .aside-1 .block-top {
   margin: 0 0 0 15px;
