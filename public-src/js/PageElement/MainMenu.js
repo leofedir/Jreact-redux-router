@@ -25,8 +25,8 @@ class MainMenu extends Component {
         return items.map(item => {
                 return (
                     <li className="menu__item" key={item.key}>
-                        <img className="menu__icon" src={'img/menu/' + item.icon}/>{item.name}
-                        {item.submenu && this.getSubmenu(item.submenu)}
+                        <img className="menu__icon" src={'img/menu/' + item.icon}/>
+                        <a href="#" onClick={getMap} data-url={item.url}>{item.name}</a>
                     </li>)
             });
     }

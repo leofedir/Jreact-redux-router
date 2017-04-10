@@ -8,22 +8,22 @@ let dataStore = {};
 
 export default function getMap(item) {
     let url = item.target.dataset.url
-    if(tableStore[url]) {
-
-    } else {
-        fetch('/gettable', {
-            method: 'post',
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-            },
-            body: 'foo=bar&lorem=ipsum'
-        })
-            .then(checkStatus)
-            .then(parseJSON)
-            .then(data => {
-                tableStore[url] = data
-            })
-    }
+    // if(tableStore[url]) {
+    //
+    // } else {
+    //     fetch('/gettable', {
+    //         method: 'post',
+    //         headers: {
+    //             "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+    //         },
+    //         body: `category=${ url }`
+    //     })
+    //         .then(checkStatus)
+    //         .then(parseJSON)
+    //         .then(data => {
+    //             tableStore[url] = data
+    //         })
+    // }
 
     Lmap.removeLayer(ukraine);
 
@@ -48,7 +48,7 @@ export default function getMap(item) {
             headers: {
                 "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
             },
-            body: 'foo=bar&lorem=ipsum'
+            body: `category=${ url }`
         })
             .then(checkStatus)
             .then(parseJSON)
@@ -61,6 +61,7 @@ export default function getMap(item) {
     }
 
     function createMap(data) {
+        console.log('data >>', data)
 
         let filds =  data.data[0].properties;
         let propertys = []
@@ -111,7 +112,7 @@ export default function getMap(item) {
 
             choroplethLayer = L.choropleth(data.data, {
                 valueProperty: property,
-                scale: ['#fbe9bd', '#a12f19'],
+                scale: ['#edf8b1', '#253494'],
                 steps: 5,
                 mode: 'q',
                 style: {

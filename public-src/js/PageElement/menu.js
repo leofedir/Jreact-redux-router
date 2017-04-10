@@ -3,18 +3,7 @@ export let menu = [
         key: 1,
         name: 'Демографія',
         icon: '4.png',
-        submenu: [
-            {
-                key: 101,
-                name: 'Кількість населення',
-                url: '/bezrobitni'
-            },
-            {
-                key: 102,
-                name: 'Середній вік населення',
-                url: '/vik_naselenya'
-            }
-        ]
+        url: 'demography'
     },
     {
         key: 2,
