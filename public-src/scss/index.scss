@@ -7,9 +7,12 @@
 @import "./input";
 @import "./mainMenu";
 @import "./map";
+@import "./legend";
 @import "./loader";
 @import "./rangeSlider.scss";
-
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300&subset=cyrillic-ext,cyrillic);
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:400,700&subset=cyrillic-ext,cyrillic);
+@import url(http://fonts.googleapis.com/css?family=Marck+Script&subset=cyrillic);
 html {
   height: 100%;
 }
@@ -19,6 +22,9 @@ body {
   padding: 0;
   background: #e7ecf2;
   overflow: hidden;
+  font-family: 'Open Sans';
+  font-style: regular;
+  font-weight: 300;
 }
 #root {
   height: 100%;
@@ -109,7 +115,7 @@ body {
   width: 270px;
 }
 .item_header {
-  background: gray none repeat scroll 0 0;
+  background: $header-color none repeat scroll 0 0;
   display: flex;
   height: 36px;
   justify-content: space-between;
@@ -119,6 +125,7 @@ body {
   z-index: 101;
   align-items: center;
   box-shadow: $shadow;
+  color: $white;
 }
 
 .ico_hover {

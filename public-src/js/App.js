@@ -80,34 +80,43 @@ class App extends Component {
                     <div className="aside aside-1">
                         <div className="block block-top">
                             <div className="item_header">
-                                <div className="map_heder_title">222</div>
+                                <div className="map_heder_title">Довідка</div>
                             </div>
                         </div>
                         <div className="block block-bottom">
                             <div className="item_header">
                                 <div className="map_heder_title">5555</div>
                                 <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"
-                                   onClick={::this.mapFull}/></div>
+                                   onClick={::this.mapFull}/>
+                            </div>
                         </div>
                     </div>
 
                     <div className="aside aside-2">
                         <div className="block block-top">
+                            <div className="block-top-1">
+                                <div className="slider" id="slider"/>
+                            </div>
+
+
+                        <div className="block-top-2">
                             <div className="item_header">
                                 <div className="map_heder_title">333</div>
-                                <div className="slider" id="slider" />
                             </div>
                         </div>
-                        <div className="block block-bottom">
-                            <div className="item_header">
-                                <div className="map_heder_title">666</div>
-                            </div>
-                            <div id="legend"/>
                         </div>
+
+                    <div className="block block-bottom">
+                        <div className="item_header">
+                            <div className="map_heder_title">Легенда</div>
+                        </div>
+                        <div id="legend"/>
                     </div>
+                </div>
 
                 </div>
             </div>
+
         );
     }
 }

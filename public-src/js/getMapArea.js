@@ -129,13 +129,13 @@ export default function getMap(item) {
         renderLayer();
 
 
-        // Add legend (don't forget to add the CSS from index.html)
-        var div = document.getElementById('legend')
-        var limits = choroplethLayer.options.limits
-        var colors = choroplethLayer.options.colors
-        var labels = []
-        div.innerHTML = `<h5 className="legend__title">Назва показника</h5>`
-        let dani = 'Дані відсутні'
+            // Add legend (don't forget to add the CSS from index.html)
+                var div = document.getElementById('legend')
+                var limits = choroplethLayer.options.limits
+                var colors = choroplethLayer.options.colors
+                var labels = []
+            // div.innerHTML = `<h5 className="legend__title">Назва показника</h5>`
+            let dani = 'Дані відсутні'
 
         limits.forEach(function (limit, i) {
             labels.push('<i style="background:' + colors[i] + '"></i> ' +
