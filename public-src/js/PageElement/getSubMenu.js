@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { alias } from '../aliasMapName'
 
 
 let tableStore = {};
@@ -9,56 +10,46 @@ class SubMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            category: props.parametr
+            category: props.category,
+            fields: props.fields
         };
     }
 
-    getListMaps(){
-        console.log('getListMaps')
-        url = this.state.category;
-
-    }
-
     componentWillReceiveProps(nextProps) {
-        if(JSON.stringify(this.props.parametr) !== JSON.stringify(nextProps.parametr))
+        if(JSON.stringify(this.props.category) !== JSON.stringify(nextProps.category))
         {
             this.setState({
-                category: nextProps.parametr
+                category: nextProps.category,
+            })
+
+        }
+
+        if(JSON.stringify(this.props.fields) !== JSON.stringify(nextProps.fields))
+        {
+            this.setState({
+                fields: nextProps.fields
             })
 
         }
     }
 
-    componentDidMount() {
-        console.log('did mount')
-    }
-
-    componentWillUpdate(np , ns) {
-
-        console.log('will update' , np);
-    }
-
-    componentDidUpdate() {
-        console.log('did update')
-    }
-
-    getItem(items) {
-        console.log('get itemsu')
-        return items.map((item, i) => {
-            return (
-                <option  className="menu__item" key={i} value="volvo">
-                    {item}
-                </option >)
+    getItem(){
+        const items = this.state.fields.map((item, i) => {
+            return <option  className="menu__item" key={i} value={item}>
+                {alias[item]}
+            </option>
         });
+        return (
+            <select className="test" onChange={::this.getMap}>
+                {items}
+            </select>
+        )
     }
 
     render() {
-        console.log('this.props >>', this.props)
-
         return (
             <div className="map_heder_title">
-                {this.getListMaps()}
-                {tableStore[url] ? <select>{this.getItem(tableStore[url])}</select> : ''}
+                {this.state.fields ? this.getItem() : ''}
             </div>
         )
     }

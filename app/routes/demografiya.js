@@ -15,6 +15,9 @@ module.exports = function (router){
                 console.log("Error" , e);
             })
     });
+    router.post('/main', function(req, res) {
+        GeoJson.queryBase(req.originalUrl, 'borders', res);
+    });
 
     // router.post('/bezrobitni' , function (req , res) {
     //     GeoJson.queryBase(req.originalUrl, 'demography_population_region', res);

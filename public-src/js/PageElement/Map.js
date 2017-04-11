@@ -3,7 +3,6 @@ import { checkStatus, parseJSON} from '../checkJSON';
 import L from 'leaflet/dist/leaflet-src';
 import esri from 'esri-leaflet/dist/esri-leaflet';
 import SubMenu from "./getSubMenu";
-import GetMapArea from "../getMapArea";
 
 export let Lmap = null;
 export let ukraine;
@@ -26,7 +25,6 @@ class Map extends Component {
     }
 
     componentDidMount() {
-        console.log('this.props 1111>>', this.state)
         this.createMap()
     }
 
@@ -39,7 +37,8 @@ class Map extends Component {
         if(JSON.stringify(this.props.category) !== JSON.stringify(nextProps.category))
         {
             this.setState({
-                category: nextProps.category
+                category: nextProps.category,
+                fields: nextProps.fields
             })
         }
     }
@@ -127,7 +126,7 @@ class Map extends Component {
         return (
         <div className="block block-top block_map">
             <div className="item_header">
-                <SubMenu parametr={this.state.category} items={this.state.fields}/>
+                <SubMenu category={this.state.category} fields={this.state.fields}/>
                 <i className="fa fa-expand fa-1x ico_map_full ico_hover" onClick={::this.mapFull}/>
             </div>
             <div id="map_wrapper" className="map_wrapper">

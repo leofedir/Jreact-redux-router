@@ -52,13 +52,10 @@ class App extends Component {
                     return item.table_name
                 })
             }).then(d => {
-            console.log('d >>', d)
             this.setState({
                 category: url,
                 fields: d
             })
-            console.log('$ >>', $)
-            console.log('this.state >>', this.state)
         })
     }
 
@@ -87,7 +84,6 @@ class App extends Component {
     }
 
     switchTabs(tab){
-        console.log(tab);
         this.setState({
             tab
         })
@@ -98,7 +94,6 @@ class App extends Component {
     }
 
     componentWillMount() {
-        console.log('$ >>', $)
         this.autoCloseMenu()
     }
 
