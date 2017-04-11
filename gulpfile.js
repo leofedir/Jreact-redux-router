@@ -5,8 +5,6 @@ const rename     = require('gulp-rename');
 const es = require('event-stream');
 const glob = require('glob');
 const sass = require('gulp-sass');
-const prefix = require('gulp-autoprefixer');
-const cssMin = require('gulp-minify-css');
 const uglify = require('gulp-uglify');
 const buffer = require('vinyl-buffer');
 const sourcemaps = require('gulp-sourcemaps');
@@ -20,9 +18,21 @@ const paths = {
         src : './public-src/scss/index.scss',
         dist : './public/css'
     }
-};
+}
 
-gulp.task('js', function(done) {
+gulp.task('js', function() {
+    browserify({ entries: './public-src/js/index.js', debug: true })
+        .transform('babelify', {presets: ["react", "es2015", "stage-0"]})
+        .bundle()
+        .on('error' , (e) => { console.log("error  >> " , e)})
+        .pipe(source('index.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest('public/js'));
+});
+
+gulp.task('js_old', function(done) {
     glob(paths.js.src, function(err, files) {
         if(err) done(err);
         const tasks = files.map(function (entry) {
