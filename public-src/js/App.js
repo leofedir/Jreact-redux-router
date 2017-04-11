@@ -17,7 +17,22 @@ class App extends Component {
             item: null,
             showMenu: true,
             category: 'main',
-            fields: null
+            fields: null,
+            tab : 0,
+            tabs : [
+                <div>
+                    <h1>Hello world1</h1>
+                    <p>Hello world1</p>
+                </div>,
+                <div>
+                    <h1>Hello world2</h1>
+                    <p>Hello world2</p>
+                </div>,
+                <div>
+                    <h1>Hello world3</h1>
+                    <p>Hello world3</p>
+                </div>,
+            ]
         };
     }
 
@@ -42,6 +57,7 @@ class App extends Component {
                 category: url,
                 fields: d
             })
+            console.log('$ >>', $)
             console.log('this.state >>', this.state)
         })
     }
@@ -70,16 +86,35 @@ class App extends Component {
         document.getElementById('wrapper').classList.toggle('hide')
     }
 
+    switchTabs(tab){
+        console.log(tab);
+        this.setState({
+            tab
+        })
+    }
+
     full() {
 
     }
 
     componentWillMount() {
+        console.log('$ >>', $)
         this.autoCloseMenu()
     }
 
     componentWillUpdate() {
         this.autoCloseMenu()
+    }
+
+    displayTabs(){
+        const tabs = this.state.tabs.map((t, i) => {
+            return <li key={i} className={this.state.tab == i ? 'select' : ''} onClick={this.switchTabs.bind(this, i)}><a >Вкладка {i + 1}</a></li>
+        });
+        return (
+            <ul className="tab-nav">
+                {tabs}
+            </ul>
+        )
     }
 
     render() {
@@ -110,10 +145,17 @@ class App extends Component {
                                 <div className="map_heder_title">444</div>
                                 <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"
                                    onClick={::this.full}/></div>
-                            <div className="item_content">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus commodo ultricies lectus ac varius. Mauris orci diam, rutrum a mi eu, dignissim suscipit ante. Aliquam elit lectus, fringilla non scelerisque sit amet, ornare a mauris. Donec ante dolor, condimentum sed lectus nec, interdum euismod turpis. Mauris at egestas diam, id semper nisi. Nam quis massa nisl. Donec bibendum cursus finibus. Vestibulum ut justo nibh. Quisque scelerisque odio eu mattis fringilla. Aenean sit amet laoreet ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit, arcu vel tempus semper, metus urna scelerisque ipsum, id mattis lorem eros eu libero. Donec at semper orci. In interdum et sapien sit amet posuere. Fusce scelerisque dictum neque, et ultricies ligula ullamcorper sit amet.
-                                Phasellus ac massa sed nisl porttitor varius. Curabitur diam nisl, lacinia nec lectus at, rhoncus vehicula turpis. Ut bibendum felis ligula. Etiam semper sed nisl ac tempor. Nullam eget porttitor neque, ut laoreet ligula. Duis varius, urna sed congue imperdiet, ipsum mi euismod odio, a rhoncus velit tortor eget tortor. Etiam quis turpis mauris. Ut nibh nisi, convallis ac imperdiet sed, varius in lacus. Cras nec interdum mauris. Vestibulum rhoncus neque non aliquet egestas. Aenean consectetur tristique nulla, a sagittis elit euismod vel. Fusce venenatis, ligula aliquet faucibus dictum, leo lacus tempor nulla, ut mattis tortor quam ac diam. Aenean scelerisque tincidunt orci, sit amet iaculis sem varius id. Sed commodo ut dui non cursus. Nunc pellentesque augue id magna iaculis pulvinar. Morbi aliquet erat nulla, et consectetur dolor posuere vitae.
-                                Donec in mattis quam. Fusce placerat lacus volutpat ullamcorper sodales. Praesent sagittis, sem quis facilisis porta, orci odio ultrices sem, tristique egestas urna ipsum sit amet nunc. Curabitur dictum sodales turpis at venenatis. Suspendisse pretium, felis sit amet efficitur sollicitudin, est ante placerat diam, malesuada malesuada elit nulla eget turpis. Pellentesque vitae porttitor lacus. Maecenas commodo elit nibh, non egestas nunc faucibus nec. Suspendisse tristique diam eu vestibulum gravida. Etiam at enim nec est gravida fermentum a eget magna. Ut laoreet consectetur magna, ut scelerisque lectus suscipit non. Phasellus venenatis metus fermentum nunc sodales, id molestie velit blandit. Vestibulum semper, justo et rhoncus efficitur, purus ex feugiat risus, nec consequat odio est sit amet magna.
+                            <div className="item_content item_diagram">
+                                    <div className="v-tab">
+                                        <div className="tab-box">
+                                            {this.displayTabs()}
+                                            <div className="tab-panels">
+                                                {this.state.tabs.map((e, i) => {
+                                                    return <div key={i} style={{ display : this.state.tab == i ? 'block' : 'none' }}>{e}</div>
+                                                })}
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
 
