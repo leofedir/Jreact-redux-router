@@ -9,7 +9,6 @@ router.use(bodyParser.urlencoded({
     extended: true
 }));
 
-
 router.post('/main', function(req, res) {
     GeoJson.queryBase(req.originalUrl, 'borders', res);
 });

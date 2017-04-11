@@ -5,18 +5,27 @@ const pgdb = require('../libs/pgdb')(),
 module.exports = function (router){
 
     router.post('/demography', function(req, res) {
-        console.log('req.body >>', req.body);
-        let category =  `'${req.body.category}%'`;
-        pgdb.query(`select table_name from enter.INFORMATION_SCHEMA.TABLES where table_name like $1` , [ req.body.category + '%' ])
+        pgdb.query(`select table_name from enter.INFORMATION_SCHEMA.TABLES where table_name like $1` , ['%' + req.body.category + '%' ])
             .then((d)=>{
-                res.json({data: d});
+                let obj = {};
+                d.forEach(item => {
+                    let name = item.table_name.slice(0, item.table_name.indexOf("__"));
+                    obj[name] ? obj[name].push(item.table_name.slice(item.table_name.indexOf("__"))) : obj[name] = [item.table_name.slice(item.table_name.indexOf("__"))];
+                })
+                res.json(obj);
             })
             .catch((e)=>{
                 console.log("Error" , e);
             })
     });
-    router.post('/main', function(req, res) {
-        GeoJson.queryBase(req.originalUrl, 'borders', res);
+    router.post('/render', function(req, res) {
+        pgdb.query(`select table_name from enter.INFORMATION_SCHEMA.TABLES where table_name like $1` , ['%' + req.body.table + '%' ])
+            .then((d)=>{
+                console.log('d >>', d)
+                console.log('req.body >>', req.body.table)
+                GeoJson.queryBase(req.originalUrl, d[0].table_name, res);
+            })
+
     });
 
     // router.post('/bezrobitni' , function (req , res) {

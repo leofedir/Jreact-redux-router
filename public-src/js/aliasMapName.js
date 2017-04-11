@@ -1,4 +1,5 @@
 export let alias = {
-    demography_population_distrikt: 'Населення',
-    demography_population_region: 'Yfctktyyz 2'
+    area_demography_kilkistbezrobitnyh: 'Кількість безробітніх',
+    point_demography_proffspilk: 'Профспілки',
+    area_demography_population: "Кількість населення"
 }

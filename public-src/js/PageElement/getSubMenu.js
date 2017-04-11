@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { alias } from '../aliasMapName'
-
+import getMapArea from '../getMapArea'
 
 let tableStore = {};
 let url;
@@ -33,14 +33,19 @@ class SubMenu extends Component {
         }
     }
 
+    getMap(e) {
+        getMapArea(e.target.value)
+        console.log(e.target.value)
+    }
+
     getItem(){
         const items = this.state.fields.map((item, i) => {
             return <option  className="menu__item" key={i} value={item}>
-                {alias[item]}
+                {alias[item] ? alias[item] : item}
             </option>
         });
         return (
-            <select className="test" onChange={::this.getMap}>
+            <select className="test" onChange={this.getMap}>
                 {items}
             </select>
         )

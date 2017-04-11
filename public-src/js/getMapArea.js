@@ -6,25 +6,7 @@ let choroplethLayer;
 let tableStore = {};
 let dataStore = {};
 
-export default function getMap(url) {
-    // let url = item.target.dataset.url
-    // if(tableStore[url]) {
-    //
-    // } else {
-    //     fetch('/gettable', {
-    //         method: 'post',
-    //         headers: {
-    //             "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-    //         },
-    //         body: `category=${ url }`
-    //     })
-    //         .then(checkStatus)
-    //         .then(parseJSON)
-    //         .then(data => {
-    //             tableStore[url] = data
-    //         })
-    // }
-
+export default function getMap(table) {
     Lmap.removeLayer(ukraine);
 
     let loader = document.getElementById('loader')
@@ -42,22 +24,22 @@ export default function getMap(url) {
 
     let property;
 
-    if (!dataStore[url]) {
-        fetch(url, {
+    if (!dataStore[table]) {
+        fetch('/render', {
             method: 'post',
             headers: {
                 "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
             },
-            body: `category=${ url }`
+            body: `table=${ table }`
         })
             .then(checkStatus)
             .then(parseJSON)
             .then(data => {
-                dataStore[url] = data;
+                dataStore[table] = data;
                 createMap(data);
             });
     } else {
-        createMap(dataStore[url])
+        createMap(dataStore[table])
     }
 
     function createMap(data) {

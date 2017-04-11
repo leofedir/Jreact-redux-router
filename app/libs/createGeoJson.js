@@ -15,9 +15,11 @@ module.exports = {
         if (this.checkStore(url)) {
             res.json({'state' : true , data: store[url]})
         } else {
+            console.log('table >>', table)
             let query = `SELECT * FROM ${ table }`;
             pgdb.query(query)
                 .then((d)=>{
+                console.log('query')
                     let newData = d.map(item => {
                         let obj = {}
                         obj.type = "Feature";

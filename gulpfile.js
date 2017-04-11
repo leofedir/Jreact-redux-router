@@ -32,28 +32,28 @@ gulp.task('js', function() {
         .pipe(gulp.dest('public/js'));
 });
 
-gulp.task('js_old', function(done) {
-    glob(paths.js.src, function(err, files) {
-        if(err) done(err);
-        const tasks = files.map(function (entry) {
-            return browserify({entries: [entry]})
-                .transform('babelify', { presets: ["react", "es2015", "stage-0"]})
-                .bundle()
-                .on('error' , (e) => { console.log("error  >> " , e)})
-                .pipe(source(entry))
-                .pipe(rename(function (path) {
-                    path.dirname = path.dirname.replace('public-src', '');
-                    path.extname = ".bundle.js"
-                }))
-                .pipe(buffer())
-                .pipe(sourcemaps.init({loadMaps: true}))
-                // .pipe(uglify())
-                .pipe(sourcemaps.write())
-                .pipe(gulp.dest(paths.js.dist));
-        });
-        es.merge(tasks).on('end', done);
-    });
-});
+// gulp.task('js_old', function(done) {
+//     glob(paths.js.src, function(err, files) {
+//         if(err) done(err);
+//         const tasks = files.map(function (entry) {
+//             return browserify({entries: [entry]})
+//                 .transform('babelify', { presets: ["react", "es2015", "stage-0"]})
+//                 .bundle()
+//                 .on('error' , (e) => { console.log("error  >> " , e)})
+//                 .pipe(source(entry))
+//                 .pipe(rename(function (path) {
+//                     path.dirname = path.dirname.replace('public-src', '');
+//                     path.extname = ".bundle.js"
+//                 }))
+//                 .pipe(buffer())
+//                 .pipe(sourcemaps.init({loadMaps: true}))
+//                 // .pipe(uglify())
+//                 .pipe(sourcemaps.write())
+//                 .pipe(gulp.dest(paths.js.dist));
+//         });
+//         es.merge(tasks).on('end', done);
+//     });
+// });
 
 gulp.task('scss', function () {
     return gulp.src(paths.scss.src) //Выберем наш основной файл стилей

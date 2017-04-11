@@ -48,15 +48,11 @@ class App extends Component {
             .then(checkStatus)
             .then(parseJSON)
             .then(data => {
-                return data.data.map(item => {
-                    return item.table_name
+                this.setState({
+                    category: url,
+                    fields: Object.keys(data)
                 })
-            }).then(d => {
-            this.setState({
-                category: url,
-                fields: d
             })
-        })
     }
 
     getItem(items) {
