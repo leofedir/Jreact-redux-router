@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { menu } from './PageElement/menu'
 import { checkStatus, parseJSON} from './checkJSON';
+import $ from "jquery";
 
 import MainMenu from './PageElement/MainMenu';
 import Map from './PageElement/Map';
@@ -41,7 +42,6 @@ class App extends Component {
                 category: url,
                 fields: d
             })
-
             console.log('this.state >>', this.state)
         })
     }
