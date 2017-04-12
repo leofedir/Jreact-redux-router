@@ -94,7 +94,7 @@ export default function getMap(table) {
 
             choroplethLayer = L.choropleth(data.data, {
                 valueProperty: property,
-                scale: ['#edf8b1', '#253494'],
+                scale: ['#ffffb2', '#bd0026'],
                 steps: 5,
                 mode: 'q',
                 style: {
@@ -116,7 +116,8 @@ export default function getMap(table) {
                 var limits = choroplethLayer.options.limits
                 var colors = choroplethLayer.options.colors
                 var labels = []
-            // div.innerHTML = `<h5 className="legend__title">Назва показника</h5>`
+        div.innerHTML = '';
+            div.innerHTML = `<h5 className="legend__title">Одиниці виміру: ${ filds.parameter }</h5>`
             let dani = 'Дані відсутні'
 
         limits.forEach(function (limit, i) {
