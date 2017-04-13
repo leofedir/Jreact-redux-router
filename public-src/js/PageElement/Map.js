@@ -133,7 +133,7 @@ class Map extends Component {
                 <div id="loader" />
                 <i className="fa fa-plus fa-1x zoom_in_icon"  onClick={::this.zoom_in} id="zoom_in"/>
                 <i className="fa fa-minus fa-1x zoom_out_icon" onClick={::this.zoom_out} id="zoom_out"/>
-                <i className="fa fa-location-arrow fa-1x geolocate_icon" onClick={::this.geolocate} id="geolocate"/>
+                <i className="fa fa-dot-circle-o fa-1x geolocate_icon" onClick={::this.geolocate} id="geolocate"/>
                 <div id="map" className="maps__items"/>
                 <div id="basemaps-wrapper">
                     <p className="basemap_title">Базова карта</p>

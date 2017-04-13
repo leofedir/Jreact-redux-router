@@ -135,29 +135,75 @@ class App extends Component {
                 <div className="content__wrap">
 
                     <div className="main">
+                        <div className="main__map">
+                            <Map category={this.state.category} fields={this.state.fields}/>
+                        </div>
+                        <div className="main__right">
 
-                        <Map category={this.state.category} fields={this.state.fields}/>
+                                <div className="slider" id="slider"/>
 
-                        <div className="block block-bottom">
-                            <div className="item_header">
-                                <div className="map_heder_title">Аналітика</div>
-                                <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"
-                                   onClick={::this.full}/></div>
-                            <div className="item_content item_diagram">
-                                    <div className="v-tab">
-                                        <div className="tab-box">
-                                            {this.displayTabs()}
-                                            <div className="tab-panels">
-                                                {this.state.tabs.map((e, i) => {
-                                                    return <div key={i} style={{ display : this.state.tab == i ? 'block' : 'none' }}>{e.data}</div>
-                                                })}
-                                            </div>
-                                        </div>
+                            <div className="legend">
+                                <div className="item_header">
+                                    <div className="map_heder_title">Легенда</div>
+                                </div>
+                                <div className="item_content">
+                                    <div className="item_content" id="legend" />
+                                </div>
+                            </div>
+
+                                <div className="info">
+                                    <div className="item_header">
+                                        <div className="map_heder_title">777</div>
                                     </div>
+                                    <div className="item_content">
+                                        Lorem ipsum dolor sit amet
+                                    </div>
+                                </div>
+                                <div className="description">
+                                    <div className="item_header">
+                                        <div className="map_heder_title">333</div>
+                                    </div>
+                                    <div className="item_content">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus commodo ultricies lectus ac varius. Mauris orci diam, rutrum a mi eu, dignissim suscipit ante.
+                                    </div>
+                                </div>
+
+
+                        </div>
+                        <div className="main__chart">
+                            <div className="chart_1">
+                                <div className="item_header">
+                                    <div className="map_heder_title">Аналітика</div>
+                                    <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"
+                                       onClick={::this.full}/></div>
+                                <div className="item_content item_diagram">
+                                    {/*<div className="v-tab">*/}
+                                        {/*<div className="tab-box">*/}
+                                            {/*{this.displayTabs()}*/}
+                                            {/*<div className="tab-panels">*/}
+                                                {/*{this.state.tabs.map((e, i) => {*/}
+                                                    {/*return <div key={i}*/}
+                                                                {/*style={{display: this.state.tab == i ? 'block' : 'none'}}>{e.data}</div>*/}
+                                                {/*})}*/}
+                                            {/*</div>*/}
+                                        {/*</div>*/}
+                                    {/*</div>*/}
+                                </div>
+                            </div>
+                            <div className="chart_2">
+                                <div className="item_header">
+                                    <div className="map_heder_title">Аналітика</div>
+                                    <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"
+                                       onClick={::this.full}/></div>
+                                <div className="item_content">
+                                </div>
                             </div>
                         </div>
 
                     </div>
+
+
+
                     <div className="aside aside-1">
                         <div id="menu_wrapper" className="menu_wrapper">
                             <div className={`icons-menu`} id="menu">
@@ -169,65 +215,9 @@ class App extends Component {
                             </div>
                         </div>
 
-{/*                        <div className="block block-top">
-                            <div className="item_header">
-                                <div className="map_heder_title">Довідка</div>
-
-                            </div>
-                            <div className="item_content">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus commodo ultricies lectus ac varius. Mauris orci diam, rutrum a mi eu, dignissim suscipit ante. Aliquam elit lectus, fringilla non scelerisque sit amet, ornare a mauris. Donec ante dolor, condimentum sed lectus nec, interdum euismod turpis. Mauris at egestas diam, id semper nisi. Nam quis massa nisl. Donec bibendum cursus finibus. Vestibulum ut justo nibh. Quisque scelerisque odio eu mattis fringilla. Aenean sit amet laoreet ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit, arcu vel tempus semper, metus urna scelerisque ipsum, id mattis lorem eros eu libero. Donec at semper orci. In interdum et sapien sit amet posuere. Fusce scelerisque dictum neque, et ultricies ligula ullamcorper sit amet.
-                            Phasellus ac massa sed nisl porttitor varius. Curabitur diam nisl, lacinia nec lectus at, rhoncus vehicula turpis. Ut bibendum felis ligula. Etiam semper sed nisl ac tempor. Nullam eget porttitor neque, ut laoreet ligula. Duis varius, urna sed congue imperdiet, ipsum mi euismod odio, a rhoncus velit tortor eget tortor. Etiam quis turpis mauris. Ut nibh nisi, convallis ac imperdiet sed, varius in lacus. Cras nec interdum mauris. Vestibulum rhoncus neque non aliquet egestas. Aenean consectetur tristique nulla, a sagittis elit euismod vel. Fusce venenatis, ligula aliquet faucibus dictum, leo lacus tempor nulla, ut mattis tortor quam ac diam. Aenean scelerisque tincidunt orci, sit amet iaculis sem varius id. Sed commodo ut dui non cursus. Nunc pellentesque augue id magna iaculis pulvinar. Morbi aliquet erat nulla, et consectetur dolor posuere vitae.
-                            Donec in mattis quam. Fusce placerat lacus volutpat ullamcorper sodales. Praesent sagittis, sem quis facilisis porta, orci odio ultrices sem, tristique egestas urna ipsum sit amet nunc. Curabitur dictum sodales turpis at venenatis. Suspendisse pretium, felis sit amet efficitur sollicitudin, est ante placerat diam, malesuada malesuada elit nulla eget turpis. Pellentesque vitae porttitor lacus. Maecenas commodo elit nibh, non egestas nunc faucibus nec. Suspendisse tristique diam eu vestibulum gravida. Etiam at enim nec est gravida fermentum a eget magna. Ut laoreet consectetur magna, ut scelerisque lectus suscipit non. Phasellus venenatis metus fermentum nunc sodales, id molestie velit blandit. Vestibulum semper, justo et rhoncus efficitur, purus ex feugiat risus, nec consequat odio est sit amet magna.
-                        </div>
-                        </div>*/}
-  {/*                      <div className="block block-bottom">
-                            <div className="item_header">
-                                <div className="map_heder_title">5555</div>
-                                <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"
-                                   onClick={::this.full}/>
-                            </div>
-                            <div className="item_content">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus commodo ultricies lectus ac varius. Mauris orci diam, rutrum a mi eu, dignissim suscipit ante. Aliquam elit lectus, fringilla non scelerisque sit amet, ornare a mauris. Donec ante dolor, condimentum sed lectus nec, interdum euismod turpis. Mauris at egestas diam, id semper nisi. Nam quis massa nisl. Donec bibendum cursus finibus. Vestibulum ut justo nibh. Quisque scelerisque odio eu mattis fringilla. Aenean sit amet laoreet ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit, arcu vel tempus semper, metus urna scelerisque ipsum, id mattis lorem eros eu libero. Donec at semper orci. In interdum et sapien sit amet posuere. Fusce scelerisque dictum neque, et ultricies ligula ullamcorper sit amet.
-                                Phasellus ac massa sed nisl porttitor varius. Curabitur diam nisl, lacinia nec lectus at, rhoncus vehicula turpis. Ut bibendum felis ligula. Etiam semper sed nisl ac tempor. Nullam eget porttitor neque, ut laoreet ligula. Duis varius, urna sed congue imperdiet, ipsum mi euismod odio, a rhoncus velit tortor eget tortor. Etiam quis turpis mauris. Ut nibh nisi, convallis ac imperdiet sed, varius in lacus. Cras nec interdum mauris. Vestibulum rhoncus neque non aliquet egestas. Aenean consectetur tristique nulla, a sagittis elit euismod vel. Fusce venenatis, ligula aliquet faucibus dictum, leo lacus tempor nulla, ut mattis tortor quam ac diam. Aenean scelerisque tincidunt orci, sit amet iaculis sem varius id. Sed commodo ut dui non cursus. Nunc pellentesque augue id magna iaculis pulvinar. Morbi aliquet erat nulla, et consectetur dolor posuere vitae.
-                                Donec in mattis quam. Fusce placerat lacus volutpat ullamcorper sodales. Praesent sagittis, sem quis facilisis porta, orci odio ultrices sem, tristique egestas urna ipsum sit amet nunc. Curabitur dictum sodales turpis at venenatis. Suspendisse pretium, felis sit amet efficitur sollicitudin, est ante placerat diam, malesuada malesuada elit nulla eget turpis. Pellentesque vitae porttitor lacus. Maecenas commodo elit nibh, non egestas nunc faucibus nec. Suspendisse tristique diam eu vestibulum gravida. Etiam at enim nec est gravida fermentum a eget magna. Ut laoreet consectetur magna, ut scelerisque lectus suscipit non. Phasellus venenatis metus fermentum nunc sodales, id molestie velit blandit. Vestibulum semper, justo et rhoncus efficitur, purus ex feugiat risus, nec consequat odio est sit amet magna.
-                            </div>
-                        </div>*/}
                     </div>
 
-                    <div className="aside aside-2">
-                        <div className="block">
-                                <div className="slider" id="slider"/>
 
-
-                            <div className="info">
-                                <div className="item_header">
-                                    <div className="map_heder_title">777</div>
-                                </div>
-                                <div className="item_content">
-                                    Lorem ipsum dolor sit amet
-                                </div>
-                            </div>
-
-
-                        <div className="description">
-                            <div className="item_header">
-                                <div className="map_heder_title">333</div>
-                            </div>
-                            <div className="item_content">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus commodo ultricies lectus ac varius. Mauris orci diam, rutrum a mi eu, dignissim suscipit ante. Aliquam elit lectus, fringilla non scelerisque sit amet, ornare a mauris. Donec ante dolor, condimentum sed lectus nec, interdum euismod turpis. Mauris at egestas diam, id semper nisi. Nam quis massa nisl. Donec bibendum cursus finibus. Vestibulum ut justo nibh. Quisque scelerisque odio eu mattis fringilla. Aenean sit amet laoreet ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit, arcu vel tempus semper, metus urna scelerisque ipsum, id mattis lorem eros eu libero. Donec at semper orci. In interdum et sapien sit amet posuere. Fusce scelerisque dictum neque, et ultricies ligula ullamcorper sit amet.
-                                Phasellus ac massa sed nisl porttitor varius. Curabitur diam nisl, lacinia nec lectus at, rhoncus vehicula turpis. Ut bibendum felis ligula. Etiam semper sed nisl ac tempor. Nullam eget porttitor neque, ut laoreet ligula. Duis varius, urna sed congue imperdiet, ipsum mi euismod odio, a rhoncus velit tortor eget tortor. Etiam quis turpis mauris. Ut nibh nisi, convallis ac imperdiet sed, varius in lacus. Cras nec interdum mauris. Vestibulum rhoncus neque non aliquet egestas. Aenean consectetur tristique nulla, a sagittis elit euismod vel. Fusce venenatis, ligula aliquet faucibus dictum, leo lacus tempor nulla, ut mattis tortor quam ac diam. Aenean scelerisque tincidunt orci, sit amet iaculis sem varius id. Sed commodo ut dui non cursus. Nunc pellentesque augue id magna iaculis pulvinar. Morbi aliquet erat nulla, et consectetur dolor posuere vitae.
-                                Donec in mattis quam. Fusce placerat lacus volutpat ullamcorper sodales. Praesent sagittis, sem quis facilisis porta, orci odio ultrices sem, tristique egestas urna ipsum sit amet nunc. Curabitur dictum sodales turpis at venenatis. Suspendisse pretium, felis sit amet efficitur sollicitudin, est ante placerat diam, malesuada malesuada elit nulla eget turpis. Pellentesque vitae porttitor lacus. Maecenas commodo elit nibh, non egestas nunc faucibus nec. Suspendisse tristique diam eu vestibulum gravida. Etiam at enim nec est gravida fermentum a eget magna. Ut laoreet consectetur magna, ut scelerisque lectus suscipit non. Phasellus venenatis metus fermentum nunc sodales, id molestie velit blandit. Vestibulum semper, justo et rhoncus efficitur, purus ex feugiat risus, nec consequat odio est sit amet magna.
-                            </div>
-                        </div>
-
-                        <div className="item_header">
-                            <div className="map_heder_title">Легенда</div>
-                        </div>
-                        <div className="item_content">
-                            <div className="item_content" id="legend" />
-                        </div>
-                    </div>
-                </div>
 
                 </div>
             </div>
