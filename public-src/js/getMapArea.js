@@ -35,6 +35,7 @@ export default function getMap(table) {
             .then(checkStatus)
             .then(parseJSON)
             .then(data => {
+                 console.log('data >>', data)
                 dataStore[table] = data;
                 createMap(data);
             });
