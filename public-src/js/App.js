@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { menu } from './PageElement/menu'
 import { checkStatus, parseJSON} from './checkJSON';
+import { connect } from 'react-redux'
 
-import MainMenu from './PageElement/MainMenu';
 import Map from './PageElement/Map';
 
 let wrapper = document.getElementById('wrapper')
@@ -126,7 +126,7 @@ class App extends Component {
         return (
             <div id="wrapper"
                  className={(this.state.menu)}>
-
+                { console.log('this.props.user >>', this.props.user) }
                 <div className="heder">
                     <i className="fa fa-bars fa-2x menu_ico" onClick={::this.hideMenu} id="hide_menu"/>
                     {/*<a className="logo-link" href="/"><img className="logo-link_img" src="./img/Logo.svg" alt=""/></a>*/}
@@ -225,4 +225,12 @@ class App extends Component {
     }
 }
 
-export default App;
+function mapStateToProps (state) {
+    console.log(state)
+    return {
+        user: state.user,
+        page: state.page
+    }
+}
+
+export default connect(mapStateToProps)(App);
