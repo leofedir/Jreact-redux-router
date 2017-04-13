@@ -123,6 +123,7 @@ class Map extends Component {
     }
 
     render() {
+
         return (
         <div className="block block-top block_map">
             <div className="item_header">
