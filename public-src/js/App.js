@@ -20,18 +20,30 @@ class App extends Component {
             fields: null,
             tab : 0,
             tabs : [
-                <div>
-                    <h1>Hello world1</h1>
-                    <p>Hello world1</p>
-                </div>,
-                <div>
-                    <h1>Hello world2</h1>
-                    <p>Hello world2</p>
-                </div>,
-                <div>
-                    <h1>Hello world3</h1>
-                    <p>Hello world3</p>
-                </div>,
+                {
+                    label : 'Диаграмма',
+                    data:
+                        <div>
+                            <h1>Hello world1</h1>
+                            <p>Hello world1</p>
+                        </div>
+                },
+                {
+                    label : 'Тренд',
+                    data:
+                        <div>
+                            <h1>Hello world2</h1>
+                            <p>Hello world2</p>
+                        </div>
+                },
+                {
+                    label : 'Теплова карта',
+                    data:
+                        <div>
+                            <h1>Hello world3</h1>
+                            <p>Hello world3</p>
+                        </div>
+                }
             ]
         };
     }
@@ -65,18 +77,21 @@ class App extends Component {
         });
     }
 
-    autoCloseMenu() {
-        function removePopups(e) {
-            if (!e.target.matches('.menu *') && !e.target.matches('.menu_ico') && !document.getElementById('wrapper').classList.contains('hide') ) {
-                document.getElementById('wrapper').classList.toggle('hide')
-                window.removeEventListener('click', removePopups);
-            }
-        };
-        window.addEventListener('click', removePopups.bind(this));
-    }
+    // autoCloseMenu() {
+    //     function removePopups(e) {
+    //         if (!e.target.matches('.menu *') && !e.target.matches('.menu_ico') && !document.getElementById('wrapper').classList.contains('hide') ) {
+    //             document.getElementById('wrapper').classList.toggle('hide')
+    //             window.removeEventListener('click', removePopups);
+    //         }
+    //     };
+    //     window.addEventListener('click', removePopups.bind(this));
+    // }
 
     hideMenu() {
-        document.getElementById('wrapper').classList.toggle('hide')
+        this.setState({
+            menu : this.state.menu == 'hide'  ? '' : 'hide'
+        });
+        // document.getElementById('wrapper').classList.toggle('hide')
     }
 
     switchTabs(tab){
@@ -89,17 +104,17 @@ class App extends Component {
 
     }
 
-    componentWillMount() {
-        this.autoCloseMenu()
-    }
-
-    componentWillUpdate() {
-        this.autoCloseMenu()
-    }
+    // componentWillMount() {
+    //     this.autoCloseMenu()
+    // }
+    //
+    // componentWillUpdate() {
+    //     this.autoCloseMenu()
+    // }
 
     displayTabs(){
         const tabs = this.state.tabs.map((t, i) => {
-            return <li key={i} className={this.state.tab == i ? 'select' : ''} onClick={this.switchTabs.bind(this, i)}><a >Вкладка {i + 1}</a></li>
+            return <li key={i} className={this.state.tab == i ? 'select' : ''} onClick={this.switchTabs.bind(this, i)}><a >{t.label}</a></li>
         });
         return (
             <ul className="tab-nav">
@@ -111,19 +126,11 @@ class App extends Component {
     render() {
         return (
             <div id="wrapper"
-                 className={(this.state.showMenu) ? "" : "hide " }>
-                <div id="menu_wrapper" className="menu_wrapper">
-                    <div className={`icons-menu`} id="menu">
-                        <div className="menu">
-                            <ul className="menu__items">
-                                {this.getItem(menu)}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                 className={(this.state.menu)}>
+
                 <div className="heder">
                     <i className="fa fa-bars fa-2x menu_ico" onClick={::this.hideMenu} id="hide_menu"/>
-                    <a className="logo-link" href="/"><img className="logo-link_img" src="./img/Logo.svg" alt=""/></a>
+                    {/*<a className="logo-link" href="/"><img className="logo-link_img" src="./img/Logo.svg" alt=""/></a>*/}
                 </div>
                 <div className="content__wrap">
 
@@ -133,7 +140,7 @@ class App extends Component {
 
                         <div className="block block-bottom">
                             <div className="item_header">
-                                <div className="map_heder_title">444</div>
+                                <div className="map_heder_title">Аналітика</div>
                                 <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"
                                    onClick={::this.full}/></div>
                             <div className="item_content item_diagram">
@@ -142,7 +149,7 @@ class App extends Component {
                                             {this.displayTabs()}
                                             <div className="tab-panels">
                                                 {this.state.tabs.map((e, i) => {
-                                                    return <div key={i} style={{ display : this.state.tab == i ? 'block' : 'none' }}>{e}</div>
+                                                    return <div key={i} style={{ display : this.state.tab == i ? 'block' : 'none' }}>{e.data}</div>
                                                 })}
                                             </div>
                                         </div>
@@ -152,7 +159,17 @@ class App extends Component {
 
                     </div>
                     <div className="aside aside-1">
-                        <div className="block block-top">
+                        <div id="menu_wrapper" className="menu_wrapper">
+                            <div className={`icons-menu`} id="menu">
+                                <div className="menu">
+                                    <ul className="menu__items">
+                                        {this.getItem(menu)}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+{/*                        <div className="block block-top">
                             <div className="item_header">
                                 <div className="map_heder_title">Довідка</div>
 
@@ -162,8 +179,8 @@ class App extends Component {
                             Phasellus ac massa sed nisl porttitor varius. Curabitur diam nisl, lacinia nec lectus at, rhoncus vehicula turpis. Ut bibendum felis ligula. Etiam semper sed nisl ac tempor. Nullam eget porttitor neque, ut laoreet ligula. Duis varius, urna sed congue imperdiet, ipsum mi euismod odio, a rhoncus velit tortor eget tortor. Etiam quis turpis mauris. Ut nibh nisi, convallis ac imperdiet sed, varius in lacus. Cras nec interdum mauris. Vestibulum rhoncus neque non aliquet egestas. Aenean consectetur tristique nulla, a sagittis elit euismod vel. Fusce venenatis, ligula aliquet faucibus dictum, leo lacus tempor nulla, ut mattis tortor quam ac diam. Aenean scelerisque tincidunt orci, sit amet iaculis sem varius id. Sed commodo ut dui non cursus. Nunc pellentesque augue id magna iaculis pulvinar. Morbi aliquet erat nulla, et consectetur dolor posuere vitae.
                             Donec in mattis quam. Fusce placerat lacus volutpat ullamcorper sodales. Praesent sagittis, sem quis facilisis porta, orci odio ultrices sem, tristique egestas urna ipsum sit amet nunc. Curabitur dictum sodales turpis at venenatis. Suspendisse pretium, felis sit amet efficitur sollicitudin, est ante placerat diam, malesuada malesuada elit nulla eget turpis. Pellentesque vitae porttitor lacus. Maecenas commodo elit nibh, non egestas nunc faucibus nec. Suspendisse tristique diam eu vestibulum gravida. Etiam at enim nec est gravida fermentum a eget magna. Ut laoreet consectetur magna, ut scelerisque lectus suscipit non. Phasellus venenatis metus fermentum nunc sodales, id molestie velit blandit. Vestibulum semper, justo et rhoncus efficitur, purus ex feugiat risus, nec consequat odio est sit amet magna.
                         </div>
-                        </div>
-                        <div className="block block-bottom">
+                        </div>*/}
+  {/*                      <div className="block block-bottom">
                             <div className="item_header">
                                 <div className="map_heder_title">5555</div>
                                 <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"
@@ -174,17 +191,25 @@ class App extends Component {
                                 Phasellus ac massa sed nisl porttitor varius. Curabitur diam nisl, lacinia nec lectus at, rhoncus vehicula turpis. Ut bibendum felis ligula. Etiam semper sed nisl ac tempor. Nullam eget porttitor neque, ut laoreet ligula. Duis varius, urna sed congue imperdiet, ipsum mi euismod odio, a rhoncus velit tortor eget tortor. Etiam quis turpis mauris. Ut nibh nisi, convallis ac imperdiet sed, varius in lacus. Cras nec interdum mauris. Vestibulum rhoncus neque non aliquet egestas. Aenean consectetur tristique nulla, a sagittis elit euismod vel. Fusce venenatis, ligula aliquet faucibus dictum, leo lacus tempor nulla, ut mattis tortor quam ac diam. Aenean scelerisque tincidunt orci, sit amet iaculis sem varius id. Sed commodo ut dui non cursus. Nunc pellentesque augue id magna iaculis pulvinar. Morbi aliquet erat nulla, et consectetur dolor posuere vitae.
                                 Donec in mattis quam. Fusce placerat lacus volutpat ullamcorper sodales. Praesent sagittis, sem quis facilisis porta, orci odio ultrices sem, tristique egestas urna ipsum sit amet nunc. Curabitur dictum sodales turpis at venenatis. Suspendisse pretium, felis sit amet efficitur sollicitudin, est ante placerat diam, malesuada malesuada elit nulla eget turpis. Pellentesque vitae porttitor lacus. Maecenas commodo elit nibh, non egestas nunc faucibus nec. Suspendisse tristique diam eu vestibulum gravida. Etiam at enim nec est gravida fermentum a eget magna. Ut laoreet consectetur magna, ut scelerisque lectus suscipit non. Phasellus venenatis metus fermentum nunc sodales, id molestie velit blandit. Vestibulum semper, justo et rhoncus efficitur, purus ex feugiat risus, nec consequat odio est sit amet magna.
                             </div>
-                        </div>
+                        </div>*/}
                     </div>
 
                     <div className="aside aside-2">
-                        <div className="block block-top">
-                            <div className="block-top-1">
+                        <div className="block">
                                 <div className="slider" id="slider"/>
+
+
+                            <div className="info">
+                                <div className="item_header">
+                                    <div className="map_heder_title">777</div>
+                                </div>
+                                <div className="item_content">
+                                    Lorem ipsum dolor sit amet
+                                </div>
                             </div>
 
 
-                        <div className="block-top-2">
+                        <div className="description">
                             <div className="item_header">
                                 <div className="map_heder_title">333</div>
                             </div>
@@ -194,13 +219,13 @@ class App extends Component {
                                 Donec in mattis quam. Fusce placerat lacus volutpat ullamcorper sodales. Praesent sagittis, sem quis facilisis porta, orci odio ultrices sem, tristique egestas urna ipsum sit amet nunc. Curabitur dictum sodales turpis at venenatis. Suspendisse pretium, felis sit amet efficitur sollicitudin, est ante placerat diam, malesuada malesuada elit nulla eget turpis. Pellentesque vitae porttitor lacus. Maecenas commodo elit nibh, non egestas nunc faucibus nec. Suspendisse tristique diam eu vestibulum gravida. Etiam at enim nec est gravida fermentum a eget magna. Ut laoreet consectetur magna, ut scelerisque lectus suscipit non. Phasellus venenatis metus fermentum nunc sodales, id molestie velit blandit. Vestibulum semper, justo et rhoncus efficitur, purus ex feugiat risus, nec consequat odio est sit amet magna.
                             </div>
                         </div>
-                        </div>
 
-                    <div className="block block-bottom">
                         <div className="item_header">
                             <div className="map_heder_title">Легенда</div>
                         </div>
-                        <div className="item_content" id="legend" />
+                        <div className="item_content">
+                            <div className="item_content" id="legend" />
+                        </div>
                     </div>
                 </div>
 

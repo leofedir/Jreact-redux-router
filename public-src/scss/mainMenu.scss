@@ -42,8 +42,13 @@
   color: gray;
 }
 
-.hide .menu__items {
-  margin-left: -285px;
+//.hide .menu__items {
+//  margin-left: -285px;
+//}
+
+.hide .aside-1 {
+  flex-basis: 0;
+  opacity: 0;
 }
 .menu__item {
   align-items: center;

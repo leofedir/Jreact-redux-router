@@ -94,3 +94,9 @@ display: none;
 .mapFull .main .block-top {
   height: calc(100% - ( #{$block-margin} * 2 ) );
 }
+.mapFull .main {
+  margin-left: $block-margin;
+}
+.mapFull .aside-1 {
+  width: $aside-1-width;
+}

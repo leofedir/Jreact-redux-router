@@ -28,7 +28,7 @@
   width: 100%;
 }
 .tab-nav li a {
-  color: black;
+  color: $text-color;
   display: block;
   font-size: 12px;
   height: 100%;
@@ -37,20 +37,23 @@
   box-shadow: $shadow;
 }
 .tab-nav li a:hover{
-  color:#fff;
+  color: $text-color;
   text-decoration:none;
-  //background:#777;
-  background:#D8D8D8;
+  //opacity: 0.2;
+  background: #f4f4f4;
+  transition: 0.2s;
 }
 .tab-nav li.select a{
-  background:#9B9B9B;
+  background: #4f5b62;
+  color: #f0f7e8;
 }
 .tab-nav li {
   position: relative;
+  text-align: center;
 }
 .tab-nav li.select::after {
   border-bottom: 13px solid transparent;
-  border-left: 10px solid #9B9B9B;
+  border-left: 10px solid #4f5b62;
   border-top: 13px solid transparent;
   content: "";
   left: 100%;
