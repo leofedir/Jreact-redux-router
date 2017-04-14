@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import page from './page'
+import menu from './toggle_menu'
 import user from './user'
 
 export default combineReducers({
-    page,
+    menu,
     user
 })
