@@ -123,10 +123,11 @@ class Map extends Component {
     }
 
     render() {
+        console.log('this.props >>', this.props)
         return (
         <div className="block block-top block_map">
             <div className="item_header">
-                <SubMenu category={this.props.category} fields={this.props.fields}/>
+                <SubMenu fields={this.props.fields}/>
                 <i className="fa fa-expand fa-1x ico_map_full ico_hover" onClick={::this.omButtonMapClick}/>
             </div>
             <div id="map_wrapper" className="map_wrapper">
