@@ -15,14 +15,14 @@ let icon = L.icon({
 
 class Map extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            showMenu: true,
-            category: props.category,
-            fields: props.fields
-        };
-    }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         showMenu: true,
+    //         category: props.category,
+    //         fields: props.fields
+    //     };
+    // }
 
     componentDidMount() {
         this.createMap()
@@ -33,15 +33,15 @@ class Map extends Component {
     }
 
 
-    componentWillReceiveProps(nextProps) {
-        if(JSON.stringify(this.props.category) !== JSON.stringify(nextProps.category))
-        {
-            this.setState({
-                category: nextProps.category,
-                fields: nextProps.fields
-            })
-        }
-    }
+    // componentWillReceiveProps(nextProps) {
+    //     if(JSON.stringify(this.props.category) !== JSON.stringify(nextProps.category))
+    //     {
+    //         this.setState({
+    //             category: nextProps.category,
+    //             fields: nextProps.fields
+    //         })
+    //     }
+    // }
 
     zoom_in() {
         Lmap.zoomIn(1)
@@ -103,8 +103,8 @@ class Map extends Component {
             });
     }
 
-    mapFull() {
-        document.getElementById('wrapper').classList.toggle('mapFull')
+    omButtonMapClick() {
+        this.props.resizeMap(this.props.mapFull)
     }
 
     changeBasemap(e){
@@ -123,12 +123,11 @@ class Map extends Component {
     }
 
     render() {
-
         return (
         <div className="block block-top block_map">
             <div className="item_header">
-                <SubMenu category={this.state.category} fields={this.state.fields}/>
-                <i className="fa fa-expand fa-1x ico_map_full ico_hover" onClick={::this.mapFull}/>
+                <SubMenu category={this.props.category} fields={this.props.fields}/>
+                <i className="fa fa-expand fa-1x ico_map_full ico_hover" onClick={::this.omButtonMapClick}/>
             </div>
             <div id="map_wrapper" className="map_wrapper">
                 <div id="loader" />

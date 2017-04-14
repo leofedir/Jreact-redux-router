@@ -8,7 +8,7 @@ class Menu extends Component {
         return items.map(item => {
             return (
                 <li className="menu__item" key={item.key}>
-                    <a href="#" data-url={item.url}><img className="menu__icon" src={'img/menu/' + item.icon}/><span className="menu__item-text">{item.name}</span></a>
+                    <a href="#" className="menu__link" data-url={item.url}><img className="menu__icon" src={'img/menu/' + item.icon}/><span className="menu__item-text">{item.name}</span></a>
                 </li>)
         });
     }

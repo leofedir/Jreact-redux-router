@@ -36,7 +36,7 @@ function renderLayer(item) {
     // create title map data from item.name
     title.className = 'title_map';
     title.innerHTML = `<div class="title_text">${ item.name }</div><div class="title_button"></div>`;
-    let perent = document.querySelector('.icons-menu');
+    let perent = document.querySelector('.icons-main');
     perent.appendChild(title)
 
     if (layerStore[parametr].serviceDescription === "area") {

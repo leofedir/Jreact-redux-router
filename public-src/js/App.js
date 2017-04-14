@@ -7,7 +7,7 @@ import { checkStatus, parseJSON} from './checkJSON';
 import Map from './PageElement/Map';
 import Menu from './PageElement/Menu';
 import ButtonMenu from './PageElement/buttonMenu';
-import * as menuActions from './actions/menu_actions';
+import * as Actions from './actions/actions';
 
 let wrapper = document.getElementById('wrapper')
 
@@ -71,7 +71,7 @@ class App extends Component {
 
     // autoCloseMenu() {
     //     function removePopups(e) {
-    //         if (!e.target.matches('.menu *') && !e.target.matches('.menu_ico') && !document.getElementById('wrapper').classList.contains('hide') ) {
+    //         if (!e.target.matches('.main *') && !e.target.matches('.menu_ico') && !document.getElementById('wrapper').classList.contains('hide') ) {
     //             document.getElementById('wrapper').classList.toggle('hide')
     //             window.removeEventListener('click', removePopups);
     //         }
@@ -81,7 +81,7 @@ class App extends Component {
 
     // hideMenu() {
     //     this.setState({
-    //         menu : this.state.menu == 'hide'  ? '' : 'hide'
+    //         main : this.state.main == 'hide'  ? '' : 'hide'
     //     });
     //     // document.getElementById('wrapper').classList.toggle('hide')
     // }
@@ -117,11 +117,12 @@ class App extends Component {
 
 
     render() {
-        const { category, fields, showMenu } = this.props.menu;
-        const togglMenu = this.props.menuActions.toggleMenu;
+        const { category, fields, showMenu, mapFull } = this.props.main;
+        const togglMenu = this.props.Actions.toggleMenu;
+        const resizeMap = this.props.Actions.resizeMap;
 
         return (
-            <div id="wrapper" className={ showMenu ? '' : 'hide'}>
+            <div id="wrapper" className={ (showMenu ? '' : 'hide' ) + (mapFull ? ' mapFull' : '')}>
                 <div className="heder">
                    <ButtonMenu toggleMenu={ togglMenu } showMenu={ showMenu }/>
                     {/*<a className="logo-link" href="/"><img className="logo-link_img" src="./img/Logo.svg" alt=""/></a>*/}
@@ -130,7 +131,7 @@ class App extends Component {
 
                     <div className="main">
                         <div className="main__map">
-                            <Map category={category} fields={fields}/>
+                            <Map category={category} fields={fields} resizeMap={ resizeMap } mapFull={ mapFull }/>
                         </div>
                         <div className="main__right">
 
@@ -213,13 +214,13 @@ class App extends Component {
 
 function mapStateToProps(state) {
     return {
-        menu: state.menu
+        main: state.main,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        menuActions: bindActionCreators(menuActions, dispatch)
+        Actions: bindActionCreators(Actions, dispatch)
     }
 }
 
