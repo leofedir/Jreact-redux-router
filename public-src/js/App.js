@@ -1,51 +1,54 @@
 import React, {Component} from 'react';
-import { menu } from './PageElement/menu'
-import { checkStatus, parseJSON} from './checkJSON';
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+import { checkStatus, parseJSON} from './checkJSON';
+
 import Map from './PageElement/Map';
+import Menu from './PageElement/Menu';
+import ButtonMenu from './PageElement/buttonMenu';
+import * as menuActions from './actions/menu_actions';
 
 let wrapper = document.getElementById('wrapper')
 
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            folder: null,
-            item: null,
-            showMenu: true,
-            category: 'main',
-            fields: null,
-            tab : 0,
-            tabs : [
-                {
-                    label : 'Диаграмма',
-                    data:
-                        <div>
-                            <h1>Hello world1</h1>
-                            <p>Hello world1</p>
-                        </div>
-                },
-                {
-                    label : 'Тренд',
-                    data:
-                        <div>
-                            <h1>Hello world2</h1>
-                            <p>Hello world2</p>
-                        </div>
-                },
-                {
-                    label : 'Теплова карта',
-                    data:
-                        <div>
-                            <h1>Hello world3</h1>
-                            <p>Hello world3</p>
-                        </div>
-                }
-            ]
-        };
-    }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         folder: null,
+    //         item: null,
+    //         category: 'main',
+    //         fields: null,
+    //         tab : 0,
+    //         tabs : [
+    //             {
+    //                 label : 'Диаграмма',
+    //                 data:
+    //                     <div>
+    //                         <h1>Hello world1</h1>
+    //                         <p>Hello world1</p>
+    //                     </div>
+    //             },
+    //             {
+    //                 label : 'Тренд',
+    //                 data:
+    //                     <div>
+    //                         <h1>Hello world2</h1>
+    //                         <p>Hello world2</p>
+    //                     </div>
+    //             },
+    //             {
+    //                 label : 'Теплова карта',
+    //                 data:
+    //                     <div>
+    //                         <h1>Hello world3</h1>
+    //                         <p>Hello world3</p>
+    //                     </div>
+    //             }
+    //         ]
+    //     };
+    // }
 
     chengeCategory(e) {
         let url = e.target.dataset.url
@@ -66,15 +69,6 @@ class App extends Component {
             })
     }
 
-    getItem(items) {
-        return items.map(item => {
-            return (
-                <li className="menu__item" key={item.key}>
-                    <a href="#" onClick={ ::this.chengeCategory } data-url={item.url}><img className="menu__icon" src={'img/menu/' + item.icon}/><span className="menu__item-text">{item.name}</span></a>
-                </li>)
-        });
-    }
-
     // autoCloseMenu() {
     //     function removePopups(e) {
     //         if (!e.target.matches('.menu *') && !e.target.matches('.menu_ico') && !document.getElementById('wrapper').classList.contains('hide') ) {
@@ -85,12 +79,12 @@ class App extends Component {
     //     window.addEventListener('click', removePopups.bind(this));
     // }
 
-    hideMenu() {
-        this.setState({
-            menu : this.state.menu == 'hide'  ? '' : 'hide'
-        });
-        // document.getElementById('wrapper').classList.toggle('hide')
-    }
+    // hideMenu() {
+    //     this.setState({
+    //         menu : this.state.menu == 'hide'  ? '' : 'hide'
+    //     });
+    //     // document.getElementById('wrapper').classList.toggle('hide')
+    // }
 
     switchTabs(tab){
         this.setState({
@@ -121,20 +115,22 @@ class App extends Component {
         )
     }
 
+
     render() {
+        const { category, fields, showMenu } = this.props.menu;
+        const togglMenu = this.props.menuActions.toggleMenu;
+
         return (
-            <div id="wrapper"
-                 className={(this.state.menu)}>
-                { console.log('this.props.user >>', this.state) }
+            <div id="wrapper" className={ showMenu ? '' : 'hide'}>
                 <div className="heder">
-                    <i className="fa fa-bars fa-2x menu_ico" onClick={::this.hideMenu} id="hide_menu"/>
+                   <ButtonMenu toggleMenu={ togglMenu } showMenu={ showMenu }/>
                     {/*<a className="logo-link" href="/"><img className="logo-link_img" src="./img/Logo.svg" alt=""/></a>*/}
                 </div>
                 <div className="content__wrap">
 
                     <div className="main">
                         <div className="main__map">
-                            <Map category={this.state.category} fields={this.state.fields}/>
+                            <Map category={category} fields={fields}/>
                         </div>
                         <div className="main__right">
 
@@ -203,16 +199,7 @@ class App extends Component {
 
 
                     <div className="aside aside-1">
-                        <div id="menu_wrapper" className="menu_wrapper">
-                            <div className={`icons-menu`} id="menu">
-                                <div className="menu">
-                                    <ul className="menu__items">
-                                        {this.getItem(menu)}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
+                        <Menu />
                     </div>
 
 
@@ -224,11 +211,16 @@ class App extends Component {
     }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     return {
-        user: state.user,
-        page: state.page
+        menu: state.menu
     }
 }
 
-export default connect(mapStateToProps)(App);
+function mapDispatchToProps(dispatch) {
+    return {
+        menuActions: bindActionCreators(menuActions, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
