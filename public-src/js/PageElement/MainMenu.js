@@ -15,10 +15,6 @@ class MainMenu extends Component {
     componentWillMount() {
     }
 
-    getSubmenu() {
-
-    }
-
 
     render() {
 

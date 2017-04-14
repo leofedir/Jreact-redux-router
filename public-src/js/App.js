@@ -70,8 +70,7 @@ class App extends Component {
         return items.map(item => {
             return (
                 <li className="menu__item" key={item.key}>
-                    <img className="menu__icon" src={'img/menu/' + item.icon}/>
-                    <a href="#" onClick={ ::this.chengeCategory } data-url={item.url}>{item.name}</a>
+                    <a href="#" onClick={ ::this.chengeCategory } data-url={item.url}><img className="menu__icon" src={'img/menu/' + item.icon}/><span className="menu__item-text">{item.name}</span></a>
                 </li>)
         });
     }
@@ -126,7 +125,7 @@ class App extends Component {
         return (
             <div id="wrapper"
                  className={(this.state.menu)}>
-                { console.log('this.props.user >>', this.props.user) }
+                { console.log('this.props.user >>', this.state) }
                 <div className="heder">
                     <i className="fa fa-bars fa-2x menu_ico" onClick={::this.hideMenu} id="hide_menu"/>
                     {/*<a className="logo-link" href="/"><img className="logo-link_img" src="./img/Logo.svg" alt=""/></a>*/}
@@ -226,7 +225,6 @@ class App extends Component {
 }
 
 function mapStateToProps (state) {
-    console.log(state)
     return {
         user: state.user,
         page: state.page
