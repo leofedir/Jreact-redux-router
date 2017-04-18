@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import main from './toggle_menu'
+import main from './main'
 
 export default combineReducers({
     main
