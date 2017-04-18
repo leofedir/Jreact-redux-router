@@ -100,8 +100,7 @@ function getDataAreaMain(item, parametr, layerData, typeServer) {
         ],
         (Minty, Chart, Default, Lines, InfoWindowLite, InfoTemplate, esriBasemaps,  ArcGISDynamicMapServiceLayer, ArcGISTiledMapServiceLayer, Map, array, ItemFileReadStore, FilteringSelect, domConstruct, dom, FeatureLayer) => {
 
-            console.log('ok')
-            // if (!map) {
+           // if (!map) {
             let tiled = "https://gisserver.maping.so.org.ua/arcgis/rest/services/basemaps/Base_World/MapServer";
             let anot = "https://gisserver.maping.so.org.ua/arcgis/rest/services/basemaps/Аннотации/MapServer";
             let megi = "https://gisserver.maping.so.org.ua/arcgis/rest/services/basemaps/border_regions/MapServer";

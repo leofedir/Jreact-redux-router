@@ -4,7 +4,8 @@ import {
     GET_SUBMENU,
     GET_SUBMENU_REQUEST,
     GET_SUBMENU_SUCCESS,
-    GET_SUBMENU_ERROR
+    GET_SUBMENU_ERROR,
+    GET_MAP_AREA_REQUEST
 } from '../actions/constant'
 
 const initialState = {
@@ -15,7 +16,7 @@ const initialState = {
     fetching: false
 };
 
-export default function menu(state = initialState, action) {
+export default function main(state = initialState, action) {
     switch (action.type) {
         case TOGGLE_MENU:
             return {...state, showMenu: action.payload};

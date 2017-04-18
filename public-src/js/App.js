@@ -8,6 +8,7 @@ import Map from './PageElement/Map';
 import Menu from './PageElement/Menu';
 import ButtonMenu from './PageElement/buttonMenu';
 import * as Actions from './actions/actions';
+import * as MapActions from './actions/get_map_area';
 
 let wrapper = document.getElementById('wrapper')
 
@@ -30,8 +31,11 @@ class App extends Component {
     }
 
     render() {
+        // console.log('this.props >>', this.props)
         const { category, fields, showMenu, mapFull, fetching } = this.props.main;
+        const { fetching_map, curentMap} = this.props.map_reducer
         const {toggleMenu, resizeMap, get_submenu} = this.props.Actions;
+        const { get_map_area } = this.props.MapActions;
 
         return (
             <div id="wrapper" className={ (showMenu ? '' : 'hide' ) + (mapFull ? ' mapFull' : '')}>
@@ -47,7 +51,11 @@ class App extends Component {
                                 fields={fields}
                                 resizeMap={ resizeMap }
                                 mapFull={ mapFull }
-                                fetching={ fetching }/>
+                                fetching={ fetching }
+                                fetching_map={ fetching_map }
+                                curentMap={ curentMap }
+                                get_map_area={ get_map_area }
+                            />
                         </div>
                         <div className="main__right">
 
@@ -108,15 +116,16 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-
     return {
         main: state.main,
+        map_reducer: state.map_reducer
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        Actions: bindActionCreators(Actions, dispatch)
+        Actions: bindActionCreators(Actions, dispatch),
+        MapActions: bindActionCreators(MapActions, dispatch)
     }
 }
 

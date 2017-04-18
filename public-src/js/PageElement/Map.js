@@ -123,15 +123,16 @@ class Map extends Component {
     }
 
     render() {
-        const {fetching, fields} = this.props
+
+        const {fetching, fields, get_map_area, fetching_map, curentMap} = this.props
         return (
         <div className="block block-top block_map">
             <div className="item_header">
-                <SubMenu fields={fields}/>
+                <SubMenu fields={ fields } get_map_area={ get_map_area } curentMap={ curentMap }/>
                 <i className="fa fa-expand fa-1x ico_map_full ico_hover" onClick={::this.omButtonMapClick}/>
             </div>
             <div id="map_wrapper" className="map_wrapper">
-                <div id="loader" className={fetching ? "show" : ''} />
+                <div id="loader" className={(fetching ? "show" : '') || (fetching_map ? 'show' : '')} />
                 <i className="fa fa-plus fa-1x zoom_in_icon"  onClick={::this.zoom_in} id="zoom_in"/>
                 <i className="fa fa-minus fa-1x zoom_out_icon" onClick={::this.zoom_out} id="zoom_out"/>
                 <i className="fa fa-dot-circle-o fa-1x geolocate_icon" onClick={::this.geolocate} id="geolocate"/>

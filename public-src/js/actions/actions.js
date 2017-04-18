@@ -6,6 +6,7 @@ import {
     GET_SUBMENU_REQUEST,
     GET_SUBMENU_SUCCESS,
     GET_SUBMENU_ERROR
+
 } from './constant';
 
 export function toggleMenu(curent) {
@@ -23,7 +24,6 @@ export function resizeMap(curent) {
 }
 
 export function get_submenu(url) {
-    console.log('url >>', url)
     return (dispatch) => {
         dispatch({
             type: GET_SUBMENU_REQUEST
@@ -39,7 +39,6 @@ export function get_submenu(url) {
             .then(checkStatus)
             .then(parseJSON)
             .then(data => {
-                console.log('data >>', data)
                 dispatch({
                     type: GET_SUBMENU_SUCCESS,
                     payload: Object.keys(data)

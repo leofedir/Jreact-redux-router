@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { alias } from '../aliasMapName'
-import getMapArea from '../getMapArea'
 
 class SubMenu extends Component {
     getMap(e) {
-        getMapArea(e.target.value)
-        console.log('terget',e.target.value)
+        let mapName = e.target.value;
+        mapName.indexOf('area') == 0 ? this.props.get_map_area(mapName) : console.log('mapName >>', mapName)
     }
 
     getItem(){
@@ -15,7 +14,8 @@ class SubMenu extends Component {
             </option>
         });
         return (
-            <select className="test" onChange={this.getMap}>
+            <select className="test" onChange={::this.getMap}>
+                <option />
                 {items}
             </select>
         )
@@ -29,5 +29,6 @@ class SubMenu extends Component {
         )
     }
 }
+
 
 export default SubMenu;
