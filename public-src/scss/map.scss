@@ -104,16 +104,14 @@
 //  opacity: 0;
 //}
 
-
-
 .mapFull  .main__map {
   float: left;
   height: calc(100vh - 85px);
 }
 
-
-
-
+.mapFull .fa-expand::before {
+  content: "\f066";
+}
 
 
 //
