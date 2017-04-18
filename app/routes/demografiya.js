@@ -19,13 +19,7 @@ module.exports = function (router){
             })
     });
     router.post('/render', function(req, res) {
-        pgdb.query(`select table_name from enter.INFORMATION_SCHEMA.TABLES where table_name like $1` , ['%' + req.body.table + '%' ])
-            .then((d)=>{
-                console.log('d >>', d)
-                console.log('req.body >>', req.body.table)
-                GeoJson.queryBase(req.originalUrl, d[0].table_name, res);
-            })
-
+                GeoJson.queryBase(req.originalUrl, req.body.table, res);
     });
 
     // router.post('/bezrobitni' , function (req , res) {

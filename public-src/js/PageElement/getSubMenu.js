@@ -4,11 +4,24 @@ import { alias } from '../aliasMapName'
 class SubMenu extends Component {
     getMap(e) {
         let mapName = e.target.value;
-        mapName.indexOf('area') == 0 ? this.props.get_map_area(mapName) : console.log('mapName >>', mapName)
+        let arr = this.props.fields[mapName]
+        function isPositive(item) {
+            return number == '__region';
+        }
+
+        if (arr.some(item => item == '__region')) {
+            mapName.indexOf('area') == 0 ? this.props.get_map_area(mapName + '__region') : console.log('mapName >>', mapName)
+        }
+
+
+
+        console.log('this.props.fields[mapName] >>',mapName + arr)
+
     }
 
     getItem(){
-        const items = this.props.fields.map((item, i) => {
+        const arr = Object.keys(this.props.fields)
+        const items = arr.map((item, i) => {
             return <option  className="menu__item" key={i} value={item}>
                 {alias[item] ? alias[item] : item}
             </option>

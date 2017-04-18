@@ -41,7 +41,7 @@ export function get_submenu(url) {
             .then(data => {
                 dispatch({
                     type: GET_SUBMENU_SUCCESS,
-                    payload: Object.keys(data)
+                    payload: data
                 })
             }).catch(() => {
                 dispatch({

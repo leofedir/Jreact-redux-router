@@ -5,6 +5,7 @@ let choroplethLayer;
 
 export default function getMap(data) {
     Lmap.removeLayer(ukraine);
+    Lmap.setView([49, 31], 5);
 
     if (Lmap.hasLayer(choroplethLayer)) {
         Lmap.removeLayer(choroplethLayer)

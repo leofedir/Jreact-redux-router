@@ -25,7 +25,17 @@ class Map extends Component {
     // }
 
     componentDidMount() {
-        this.createMap()
+        this.createMap();
+        Lmap.on('zoomend', () => {
+            console.log('this.props >>', this.props)
+            if (Lmap.getZoom() <= 5 && this.props.curentMap != null && this.props.curentMap.indexOf('region') >= 0 ) {
+
+            } else if (Lmap.getZoom() >= 7 && this.props.curentMap != null && this.props.curentMap.indexOf('region') >= 0) {
+                let mapName = this.props.curentMap.slice(0, this.props.curentMap.indexOf('__region'))
+                this.props.get_map_area(mapName + '__district')
+            }
+            console.log('getZoom() >>',Lmap.getZoom())
+        })
     }
 
     componentDidUpdate() {
@@ -52,27 +62,28 @@ class Map extends Component {
     }
 
     geolocate() {
-        let marker = null, circle = null;
-        if (Lmap) {
-            Lmap.locate({setView: true})
-            Lmap.once('locationfound', function(e) {
-                onLocationFound (e, this)
-            });
-        }
-
-        function onLocationFound(e, map) {
-            if (marker !== null || circle !== null) {
-                map.removeLayer(marker);
-                map.removeLayer(circle);
-                marker = null;
-                circle = null;
-            } else {
-                let radius = e.accuracy / 2;
-                marker = L.marker(e.latlng, {icon: icon}).addTo(map)
-                    .bindPopup("Ви знаходитесь в межах " + radius + " метрів від цієї точки").openPopup();
-                circle = L.circle(e.latlng, radius).addTo(map);
-            }
-        }
+        Lmap.setView([49, 31], 5)
+        // let marker = null, circle = null;
+        // if (Lmap) {
+        //     Lmap.locate({setView: true})
+        //     Lmap.once('locationfound', function(e) {
+        //         onLocationFound (e, this)
+        //     });
+        // }
+        //
+        // function onLocationFound(e, map) {
+        //     if (marker !== null || circle !== null) {
+        //         map.removeLayer(marker);
+        //         map.removeLayer(circle);
+        //         marker = null;
+        //         circle = null;
+        //     } else {
+        //         let radius = e.accuracy / 2;
+        //         marker = L.marker(e.latlng, {icon: icon}).addTo(map)
+        //             .bindPopup("Ви знаходитесь в межах " + radius + " метрів від цієї точки").openPopup();
+        //         circle = L.circle(e.latlng, radius).addTo(map);
+        //     }
+        // }
 
     }
 

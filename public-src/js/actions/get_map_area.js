@@ -4,7 +4,7 @@ import getMap from '../getMapArea'
 import {
     GET_MAP_AREA_REQUEST,
     GET_MAP_AREA_SUCCESS,
-    GET_SUBMENU_ERROR
+    GET_MAP_AREA_ERROR
 
 } from './constant';
 
@@ -33,7 +33,9 @@ export function get_map_area(url) {
                 })
 
             }).catch(() => {
-                console.error("ERROR")
+                dispatch({
+                    type: GET_MAP_AREA_ERROR
+                })
         });
     }
 }
