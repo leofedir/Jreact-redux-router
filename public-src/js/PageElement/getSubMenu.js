@@ -9,7 +9,6 @@ class SubMenu extends Component {
     }
 
     getItem(){
-        console.log('this.props >>', this.props)
         const items = this.props.fields.map((item, i) => {
             return <option  className="menu__item" key={i} value={item}>
                 {alias[item] ? alias[item] : item}

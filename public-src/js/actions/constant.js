@@ -1,3 +1,5 @@
 export const TOGGLE_MENU = 'TOGGLE_MENU';
 export const FULL_MAP = 'FULL_MAP';
-export const GET_MAPS = 'GET_MAPS';
+export const GET_SUBMENU_REQUEST = 'GET_SUBMENU_REQUEST';
+export const GET_SUBMENU_SUCCESS = 'GET_SUBMENU_SUCCESS';
+export const GET_SUBMENU_ERROR = 'GET_SUBMENU_ERROR';

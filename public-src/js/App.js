@@ -30,21 +30,24 @@ class App extends Component {
     }
 
     render() {
-        const { category, fields, showMenu, mapFull } = this.props.main;
-        const togglMenu = this.props.Actions.toggleMenu;
-        const resizeMap = this.props.Actions.resizeMap;
-        const get_submenu = this.props.Actions.get_submenu;
+        const { category, fields, showMenu, mapFull, fetching } = this.props.main;
+        const {toggleMenu, resizeMap, get_submenu} = this.props.Actions;
 
         return (
             <div id="wrapper" className={ (showMenu ? '' : 'hide' ) + (mapFull ? ' mapFull' : '')}>
                 <div className="heder">
-                   <ButtonMenu toggleMenu={ togglMenu } showMenu={ showMenu }/>
+                   <ButtonMenu toggleMenu={ toggleMenu } showMenu={ showMenu }/>
                 </div>
                 <div className="content__wrap">
 
                     <div className="main">
                         <div className="main__map">
-                            <Map category={category} fields={fields} resizeMap={ resizeMap } mapFull={ mapFull }/>
+                            <Map
+                                category={category}
+                                fields={fields}
+                                resizeMap={ resizeMap }
+                                mapFull={ mapFull }
+                                fetching={ fetching }/>
                         </div>
                         <div className="main__right">
 
@@ -105,6 +108,7 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
+
     return {
         main: state.main,
     }
