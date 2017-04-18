@@ -14,7 +14,7 @@ class Menu extends Component {
         return items.map(item => {
             return (
                 <li className="menu__item" key={item.key}>
-                    <a href="#" onClick={::this.onItemClick} className="menu__link" data-url={item.url}>
+                    <a data-title={item.name} href="#" onClick={::this.onItemClick} className="menu__link" data-url={item.url}>
                         <img className="menu__icon" src={'img/menu/' + item.icon}/>
                         <span className="menu__item-text">{item.name}</span>
                     </a>

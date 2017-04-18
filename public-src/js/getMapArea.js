@@ -118,7 +118,7 @@ export default function getMap(table) {
                 var colors = choroplethLayer.options.colors
                 var labels = []
         div.innerHTML = '';
-            div.innerHTML = `<h5 className="legend__title">Одиниці виміру: ${ filds.parameter }</h5>`
+            div.innerHTML = `<h5 class="legend__title">Одиниці виміру: <span>${ filds.parameter }</span></h5>`
             let dani = 'Дані відсутні'
 
         limits.forEach(function (limit, i) {

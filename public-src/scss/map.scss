@@ -1,13 +1,3 @@
-//#map {
-//  padding: 0;
-//  margin: 0;
-//  width: 800px;
-//  height: 500px;
-//}
-
-
-
-
 .block_map {
   position: relative;
 }
@@ -82,27 +72,15 @@
 
 .map_heder_title .test {
   color: #606060;
-  height: 22px;
+  font-size: 17px;
+  height: 26px;
   width: 100%;
 }
 
-
-
-//.mapFull .aside-1 {
-//  flex-basis: 50px;
-//  //opacity: 0;
-//}
-//
-//.mapFull .menu__items {
-//  width: 65px;
-//}
 .menu__item-text {
   transition: $transition-win;
   white-space: nowrap;
 }
-//.mapFull .menu__item-text {
-//  opacity: 0;
-//}
 
 .mapFull  .main__map {
   float: left;
@@ -112,34 +90,3 @@
 .mapFull .fa-expand::before {
   content: "\f066";
 }
-
-
-//
-//
-//.mapFull .aside-1 {
-//  flex-basis: 0px;
-//  opacity: 0;
-//}
-//.mapFull .aside-1 .block * {
-//display: none;
-//}
-////.mapFull .aside-1 .block-top {
-////  margin: 0 0 0 15px;
-////}
-////.mapFull .aside-1 .main__bottom {
-////  margin: 0 0 0 15px ;
-////}
-//
-//.mapFull .main .main__bottom {
-//  height: 0;
-//  opacity: 0;
-//}
-//.mapFull .main .block-top {
-//  height: calc(100% - ( #{$block-margin} * 2 ) );
-//}
-//.mapFull .main {
-//  margin-left: $block-margin;
-//}
-//.mapFull .aside-1 {
-//  width: $aside-1-width;
-//}

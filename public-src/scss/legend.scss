@@ -25,5 +25,8 @@
   }
 }
 .legend__title {
-  font-style: italic !important;
+  span {
+    font-style: italic !important;
+    font-weight: bold;
+  }
 }
