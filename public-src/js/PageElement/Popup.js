@@ -30,9 +30,9 @@ class ButtonMenu extends Component {
             }
         }
 
-        feature.forEach(item => {
-            popupInfo.push("<p>"+item.name +"<span>${"+ item.value +"} ${parameter}</span></p>")
-        })
+        // feature.forEach(item => {
+        //     popupInfo.push("<p>"+item.name +"<span>${"+ item.value +"} ${parameter}</span></p>")
+        // })
         return (
             <div className="item_header">
                 <div className="map_heder_title">{feature.name_ua}</div>
