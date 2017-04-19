@@ -4,16 +4,17 @@ import getMap from '../getMapArea'
 import {
     GET_MAP_AREA_REQUEST,
     GET_MAP_AREA_SUCCESS,
-    GET_MAP_AREA_ERROR
+    GET_MAP_AREA_ERROR,
+    CLICK_ON_FEATURE
 
 } from './constant';
 
 
-export function get_map_area(url, rebuild = true) {
+export function get_map_area(url, alias, rebuild = true) {
     return (dispatch) => {
         dispatch({
             type: GET_MAP_AREA_REQUEST,
-            payload: url
+            payload: [url, alias]
         })
 
         fetch('/render', {
@@ -26,12 +27,11 @@ export function get_map_area(url, rebuild = true) {
             .then(checkStatus)
             .then(parseJSON)
             .then(data => {
-                console.log('data >>', data)
-                getMap(data, rebuild);
+                getMap(data[1], rebuild);
 
                 dispatch({
                     type: GET_MAP_AREA_SUCCESS,
-                    payload: data.info
+                    payload: data[0]
                 })
 
             }).catch(() => {
@@ -39,5 +39,12 @@ export function get_map_area(url, rebuild = true) {
                     type: GET_MAP_AREA_ERROR
                 })
         });
+    }
+}
+
+export function clickOnFeature(feature) {
+    return {
+        type: CLICK_ON_FEATURE,
+        payload: feature
     }
 }

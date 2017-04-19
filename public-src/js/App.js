@@ -7,6 +7,7 @@ import {checkStatus, parseJSON} from './checkJSON';
 import Map from './PageElement/Map';
 import Menu from './PageElement/Menu';
 import ButtonMenu from './PageElement/buttonMenu';
+import Popup from './PageElement/Popup';
 import * as Actions from './actions/actions';
 import * as MapActions from './actions/get_map_area';
 
@@ -34,7 +35,7 @@ class App extends Component {
     render() {
         // console.log('this.props >>', this.props)
         const {category, fields, showMenu, mapFull, fetching} = this.props.main;
-        const {fetching_map, curentMap, info} = this.props.map_reducer
+        const {fetching_map, curentMap, info, feature, alias} = this.props.map_reducer
         const {toggleMenu, resizeMap, get_submenu} = this.props.Actions;
         const {get_map_area} = this.props.MapActions;
 
@@ -55,6 +56,7 @@ class App extends Component {
                                 fetching={ fetching }
                                 fetching_map={ fetching_map }
                                 curentMap={ curentMap }
+                                alias={ alias }
                                 get_map_area={ get_map_area }
                             />
                         </div>
@@ -62,15 +64,7 @@ class App extends Component {
 
                             <div className="slider" id="slider"/>
 
-                            <div className="description">
-                                <div className="item_header">
-                                    <div className="map_heder_title">333</div>
-                                </div>
-                                <div className="item_content">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus commodo ultricies
-                                    lectus ac varius. Mauris orci diam, rutrum a mi eu, dignissim suscipit ante.
-                                </div>
-                            </div>
+                            <Popup feature={ feature } alias={ alias } />
 
                             <div className="info">
                                 <div className="item_header">

@@ -1,6 +1,9 @@
 import choropleth from './colorRender'
 import {Lmap, ukraine} from "./PageElement/Map";
 
+import { clickOnFeature } from './actions/get_map_area'
+import { store } from './index'
+
 let choroplethLayer;
 
 export default function getMap(data, rebuild = true) {
@@ -14,7 +17,7 @@ export default function getMap(data, rebuild = true) {
 
     let property;
 
-    let filds = data.data[0].properties;
+    let filds = data[0].properties;
     let propertys = []
 
     // select field width data
@@ -61,7 +64,7 @@ export default function getMap(data, rebuild = true) {
             Lmap.removeLayer(choroplethLayer)
         }
 
-        choroplethLayer = L.choropleth(data.data, {
+        choroplethLayer = L.choropleth(data, {
             valueProperty: property,
             scale: ['#ffffb2', '#bd0026'],
             steps: 5,
@@ -72,29 +75,32 @@ export default function getMap(data, rebuild = true) {
                 fillOpacity: 1
             },
             onEachFeature: function (feature, layer) {
-                layer.bindPopup(feature.properties.name_ua + "   " + feature.properties.year_13)
+                layer.on('click', whenClicked)
             }
         }).addTo(Lmap)
+
+        function whenClicked(e) {
+            store.dispatch(clickOnFeature(e.target.feature.properties))
+        }
+
+        // Add legend (don't forget to add the CSS from index.html)
+        var div = document.getElementById('legend')
+        var limits = choroplethLayer.options.limits
+        var colors = choroplethLayer.options.colors
+        var labels = []
+        div.innerHTML = '';
+        div.innerHTML = `<h5 class="legend__title">Одиниці виміру: <span>${ filds.parameter }</span></h5>`
+        let dani = 'Дані відсутні'
+
+        limits.forEach(function (limit, i) {
+            labels.push('<i style="background:' + colors[i] + '"></i> ' +
+                ((limits[i] !== null) ?  new Intl.NumberFormat().format(limits[i]) : dani) + ((i !== limits.length - 1 && limits[i + 1] !== null) ? ' &ndash; ' + new Intl.NumberFormat().format(limits[i + 1]) + '<br>' : (limits[i] !== null) ? '  +<br/>' : '<br/>'))
+        })
+
+        div.innerHTML += labels.join('')
+        return div
     }
 
     renderLayer();
-
-
-    // Add legend (don't forget to add the CSS from index.html)
-    var div = document.getElementById('legend')
-    var limits = choroplethLayer.options.limits
-    var colors = choroplethLayer.options.colors
-    var labels = []
-    div.innerHTML = '';
-    div.innerHTML = `<h5 class="legend__title">Одиниці виміру: <span>${ filds.parameter }</span></h5>`
-    let dani = 'Дані відсутні'
-
-    limits.forEach(function (limit, i) {
-        labels.push('<i style="background:' + colors[i] + '"></i> ' +
-            ((limits[i] !== null) ? limits[i] : dani) + ((i !== limits.length - 1 && limits[i + 1] !== null) ? ' &ndash; ' + limits[i + 1] + '<br>' : (limits[i] !== null) ? ' +<br/>' : '<br/>'))
-    })
-
-    div.innerHTML += labels.join('')
-    return div
 
 }

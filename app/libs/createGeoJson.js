@@ -1,7 +1,7 @@
 const pgdb = require('../libs/pgdb')();
 
 let store = {};
-let info = null;
+
 
 module.exports = {
     checkStore(table) {
@@ -14,13 +14,15 @@ module.exports = {
 
     queryBase(url, table, res) {
         if (this.checkStore(table)) {
-            res.json({'state' : true , data: store[table]})
+            res.json(store[table])
         } else {
             let query = `SELECT * FROM ${ table }`;
+            let info = null;
             pgdb.query(query)
                 .then((d)=>{
                     let newData = d.map(item => {
                         let obj = {}
+
                         obj.type = "Feature";
                         obj.properties = {};
                         for (let key in item) {
@@ -34,9 +36,9 @@ module.exports = {
                         obj.geometry = JSON.parse(item.geojson)
                         return obj;
                     })
-                    store[table] = newData;
+                    store[table] = [info, newData];
                 }).then(() => {
-                res.json({'info' : info , data: store[table]})
+                res.json(store[table])
             })
                 .catch((e)=>{
                     console.log("Error" , e);

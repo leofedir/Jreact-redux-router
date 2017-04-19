@@ -66,7 +66,7 @@ class Map extends Component {
                     "opacity": .9
                 };
 
-                ukraine = L.geoJSON(data.data, {
+                ukraine = L.geoJSON(data[1], {
                     style: myStyle
                 });
                 Lmap.addLayer(ukraine)
