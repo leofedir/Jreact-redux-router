@@ -19,11 +19,13 @@ class Map extends Component {
         this.createMap();
         Lmap.on('zoomend', () => {
             console.log('this.props >>', this.props)
-            if (Lmap.getZoom() <= 5 && this.props.curentMap != null && this.props.curentMap.indexOf('region') >= 0 ) {
+            if (Lmap.getZoom() <= 5 && this.props.curentMap != null && this.props.curentMap.indexOf('region') <= 0 ) {
+                let mapName = this.props.curentMap.slice(0, this.props.curentMap.indexOf('__district'))
+                this.props.get_map_area(mapName + '__region', false)
 
             } else if (Lmap.getZoom() >= 7 && this.props.curentMap != null && this.props.curentMap.indexOf('region') >= 0) {
                 let mapName = this.props.curentMap.slice(0, this.props.curentMap.indexOf('__region'))
-                this.props.get_map_area(mapName + '__district')
+                this.props.get_map_area(mapName + '__district', false)
             }
             console.log('getZoom() >>',Lmap.getZoom())
         })
@@ -94,7 +96,8 @@ class Map extends Component {
 
     render() {
 
-        const {fetching, fields, get_map_area, fetching_map, curentMap} = this.props
+        const {fetching, fields, get_map_area, fetching_map, curentMap} = this.props;
+
         return (
         <div className="block block-top block_map">
             <div className="item_header">

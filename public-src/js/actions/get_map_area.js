@@ -9,7 +9,7 @@ import {
 } from './constant';
 
 
-export function get_map_area(url) {
+export function get_map_area(url, rebuild = true) {
     return (dispatch) => {
         dispatch({
             type: GET_MAP_AREA_REQUEST,
@@ -26,7 +26,7 @@ export function get_map_area(url) {
             .then(checkStatus)
             .then(parseJSON)
             .then(data => {
-                getMap(data);
+                getMap(data, rebuild);
 
                 dispatch({
                     type: GET_MAP_AREA_SUCCESS

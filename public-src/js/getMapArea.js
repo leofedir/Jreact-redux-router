@@ -3,9 +3,12 @@ import {Lmap, ukraine} from "./PageElement/Map";
 
 let choroplethLayer;
 
-export default function getMap(data) {
+export default function getMap(data, rebuild = true) {
     Lmap.removeLayer(ukraine);
-    Lmap.setView([49, 31], 5);
+
+    console.log('rebuild >>', rebuild)
+
+    rebuild ? Lmap.setView([49, 31], 5) : '';
 
     if (Lmap.hasLayer(choroplethLayer)) {
         Lmap.removeLayer(choroplethLayer)
