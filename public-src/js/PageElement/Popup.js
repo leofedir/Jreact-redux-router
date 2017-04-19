@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class ButtonMenu extends Component {
+class Popup extends Component {
 
 
     rtr() {
@@ -23,12 +23,17 @@ class ButtonMenu extends Component {
 
     getInfo(feature, alias) {
         let popupInfo = []
-
+        let i = 0;
         for (let key in feature) {
-            if (feature.hasOwnProperty(key) && key.indexOf('year_')) {
-
+            if (feature.hasOwnProperty(key) && key.indexOf('year_') >= 0) {
+                popupInfo.push(<p key={feature.id + i}>Станом на 20{key.substring(5)} <span>{new Intl.NumberFormat().format(feature[key])} {feature.parameter}</span></p>)
+                i++
             }
         }
+
+        console.log('popupInfo >>', popupInfo)
+
+
 
         // feature.forEach(item => {
         //     popupInfo.push("<p>"+item.name +"<span>${"+ item.value +"} ${parameter}</span></p>")
@@ -46,9 +51,7 @@ class ButtonMenu extends Component {
                     </div>
                     <div className="popup_bottom">
                         <h4>{ alias }</h4>
-                        <p>Код КОАТУУ <span>{feature.koatuu}</span></p>
-                        <p>Населення <span>{feature.population} осіб</span></p>
-                        <p>Площа території <span>{feature.area} га</span></p>
+                        {popupInfo}
                     </div>
                 </div>
             </div>
@@ -65,7 +68,7 @@ class ButtonMenu extends Component {
     }
 }
 
-export default ButtonMenu
+export default Popup
 
 
 

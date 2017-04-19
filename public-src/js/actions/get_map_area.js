@@ -10,7 +10,7 @@ import {
 } from './constant';
 
 
-export function get_map_area(url, alias, rebuild = true) {
+export function get_map_area(url, rebuild = true, alias) {
     return (dispatch) => {
         dispatch({
             type: GET_MAP_AREA_REQUEST,

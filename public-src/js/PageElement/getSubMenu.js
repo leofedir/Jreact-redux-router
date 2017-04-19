@@ -9,9 +9,9 @@ class SubMenu extends Component {
         const { get_map_area } = this.props;
 
         if (arr.some(item => item == '__region')) {
-            mapName.indexOf('area') == 0 ? get_map_area(mapName + '__region', alias[mapName]) : console.log('mapName >>', mapName)
+            mapName.indexOf('area') == 0 ? get_map_area(mapName + '__region', true, alias[mapName]) : console.log('mapName >>', mapName)
         } else if (arr.some(item => item == '__district')) {
-            mapName.indexOf('area') == 0 ? get_map_area(mapName + '__district', alias[mapName]) : console.log('mapName >>', mapName)
+            mapName.indexOf('area') == 0 ? get_map_area(mapName + '__district', true, alias[mapName]) : console.log('mapName >>', mapName)
         }
     }
 
