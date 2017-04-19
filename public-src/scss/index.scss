@@ -166,7 +166,7 @@ body {
 
 }
 .main__chart {
-  height: 400px;
+  height: 280px;
   margin: 0 $block-margin $block-margin $block-margin;
   width: calc(100% - #{$main__right} - (3 * #{$block-margin}));
   float: left;

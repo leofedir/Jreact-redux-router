@@ -8,6 +8,7 @@ import Map from './PageElement/Map';
 import Menu from './PageElement/Menu';
 import ButtonMenu from './PageElement/buttonMenu';
 import Popup from './PageElement/Popup';
+import Chart from './PageElement/Chart';
 import * as Actions from './actions/actions';
 import * as MapActions from './actions/get_map_area';
 
@@ -64,14 +65,15 @@ class App extends Component {
 
                             <div className="slider" id="slider"/>
 
-                            <Popup feature={ feature } alias={ alias } />
+                            <Popup feature={ feature } alias={ alias }/>
 
                             <div className="info">
                                 <div className="item_header">
                                     <div className="map_heder_title">Довідка</div>
                                 </div>
                                 <div className="item_content">
-                                    <div id="info" dangerouslySetInnerHTML={info ? {__html: info} : {__html: 'Загальна інформація'}}/>
+                                    <div id="info"
+                                         dangerouslySetInnerHTML={info ? {__html: info} : {__html: 'Загальна інформація'}}/>
                                 </div>
                             </div>
 
@@ -85,16 +87,12 @@ class App extends Component {
                             </div>
                         </div>
                         <div className="main__chart">
-                            <div className="chart_1">
-                                <div className="item_header">
-                                    <div className="map_heder_title">Аналітика</div>
-                                    <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"
-                                       onClick={::this.full}/></div>
-                                <div className="item_content item_diagram"/>
-                            </div>
+
+                            <Chart feature={ feature } alias={ alias }/>
+
                             <div className="chart_2">
                                 <div className="item_header">
-                                    <div className="map_heder_title">Аналітика</div>
+                                    <div className="map_heder_title">Аналітика2</div>
                                     <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"
                                        onClick={::this.full}/></div>
                                 <div className="item_content">
