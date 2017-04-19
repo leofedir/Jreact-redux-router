@@ -34,18 +34,22 @@ class ButtonMenu extends Component {
         //     popupInfo.push("<p>"+item.name +"<span>${"+ item.value +"} ${parameter}</span></p>")
         // })
         return (
-            <div className="item_header">
-                <div className="map_heder_title">{feature.name_ua}</div>
-                <div className="popup_top">
-                    <p>Код КОАТУУ <span>{feature.koatuu}</span></p>
-                    <p>Населення <span>{feature.population} осіб</span></p>
-                    <p>Площа території <span>{feature.area} га</span></p>
+            <div className="description">
+                <div className="item_header">
+                    <div className="map_heder_title">{feature.name_ua}</div>
                 </div>
-                <div className="popup_bottom">
-                    <h4>{ alias }</h4>
-                    <p>Код КОАТУУ <span>{feature.koatuu}</span></p>
-                    <p>Населення <span>{feature.population} осіб</span></p>
-                    <p>Площа території <span>{feature.area} га</span></p>
+                <div className="item_content">
+                    <div className="popup_top">
+                        <p>Код КОАТУУ <span>{feature.koatuu}</span></p>
+                        <p>Населення <span>{feature.population} осіб</span></p>
+                        <p>Площа території <span>{feature.area} га</span></p>
+                    </div>
+                    <div className="popup_bottom">
+                        <h4>{ alias }</h4>
+                        <p>Код КОАТУУ <span>{feature.koatuu}</span></p>
+                        <p>Населення <span>{feature.population} осіб</span></p>
+                        <p>Площа території <span>{feature.area} га</span></p>
+                    </div>
                 </div>
             </div>
 
@@ -57,11 +61,7 @@ class ButtonMenu extends Component {
         const {feature, alias} = this.props
         console.log('this.props >>', this.props)
         console.log('feature >>', feature)
-        return (
-            <div className="description" style={{display: feature != null ? 'block' : 'none'}}>
-                {feature != null ? this.getInfo(feature, alias) : ''}
-            </div>
-        )
+        return feature != null ? this.getInfo(feature, alias) : null
     }
 }
 
