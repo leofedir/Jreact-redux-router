@@ -15,15 +15,6 @@ let icon = L.icon({
 
 class Map extends Component {
 
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         showMenu: true,
-    //         category: props.category,
-    //         fields: props.fields
-    //     };
-    // }
-
     componentDidMount() {
         this.createMap();
         Lmap.on('zoomend', () => {
@@ -38,20 +29,9 @@ class Map extends Component {
         })
     }
 
-    componentDidUpdate() {
-
+    componentWillUpdate() {
+        setTimeout(() => Lmap.invalidateSize(), 200);
     }
-
-
-    // componentWillReceiveProps(nextProps) {
-    //     if(JSON.stringify(this.props.category) !== JSON.stringify(nextProps.category))
-    //     {
-    //         this.setState({
-    //             category: nextProps.category,
-    //             fields: nextProps.fields
-    //         })
-    //     }
-    // }
 
     zoom_in() {
         Lmap.zoomIn(1)
@@ -63,34 +43,13 @@ class Map extends Component {
 
     geolocate() {
         Lmap.setView([49, 31], 5)
-        // let marker = null, circle = null;
-        // if (Lmap) {
-        //     Lmap.locate({setView: true})
-        //     Lmap.once('locationfound', function(e) {
-        //         onLocationFound (e, this)
-        //     });
-        // }
-        //
-        // function onLocationFound(e, map) {
-        //     if (marker !== null || circle !== null) {
-        //         map.removeLayer(marker);
-        //         map.removeLayer(circle);
-        //         marker = null;
-        //         circle = null;
-        //     } else {
-        //         let radius = e.accuracy / 2;
-        //         marker = L.marker(e.latlng, {icon: icon}).addTo(map)
-        //             .bindPopup("Ви знаходитесь в межах " + radius + " метрів від цієї точки").openPopup();
-        //         circle = L.circle(e.latlng, radius).addTo(map);
-        //     }
-        // }
-
     }
 
     createMap() {
         Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 5);
 
         esri.basemapLayer('Topographic').addTo(Lmap);
+
         fetch(this.props.category, {
             method: 'post',
             headers: {
