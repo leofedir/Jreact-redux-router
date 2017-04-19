@@ -11,6 +11,7 @@
 @import "./loader";
 @import "./rangeSlider.scss";
 @import "./diagram.scss";
+@import "./popup.scss";
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300&subset=cyrillic-ext,cyrillic);
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:400,700&subset=cyrillic-ext,cyrillic);
 @import url(http://fonts.googleapis.com/css?family=Marck+Script&subset=cyrillic);
@@ -50,7 +51,7 @@ body {
   flex-grow: 0;
   flex-shrink: 0;
   //height: 100%;
-  background: $white;
+  //background: $white;
   box-shadow: $shadow;
 }
 .aside-1 {
@@ -204,13 +205,13 @@ body {
 
 
 @media screen and (max-width:1600px)  {
-  .map_heder_title {
+  .map_heder_title .test{
     width: 50%;
   }
 
 }
 @media screen and (max-width:1400px)  {
-  .map_heder_title {
+  .map_heder_title .test {
     width: 80%;
   }
 
@@ -231,7 +232,7 @@ body {
 
 }
 @media screen and (max-width:1024px)  {
-  .map_heder_title {
+  .map_heder_title .test {
     width: 100%;
     padding-right: 10px;
   }
@@ -240,9 +241,10 @@ body {
     top: 40px;
   }
   .fa-bars.fa-2x {
-    font-size: 1em;
+    font-size: 2em;
     margin: 0;
-    padding: 10px;
+    padding: 2px;
+    margin-left: 10px;
   }
   .heder {
     height: 40px;
@@ -271,6 +273,15 @@ body {
   }
 
 }
+@media screen and (max-width:768px) {
+  .hide .aside-1 {
+    margin-left: -50px;
+  }
+  .aside-1 {
+    flex-basis: 0;
+  }
+}
+
 @media screen and (max-width:400px)  {
   .main__map {
     height: 280px;

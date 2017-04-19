@@ -1,0 +1,14 @@
+.popup_top, .popup_bottom {
+  color: #009971;
+  font-size: 1em;
+  padding: 10px 0;
+  width: calc(100% - 15px);
+}
+.popup_top {
+  border-bottom: 1px solid #747474;
+}
+.popup_top span, .popup_bottom span {
+  float: right;
+  font-weight: bold;
+  color: #747474;
+}

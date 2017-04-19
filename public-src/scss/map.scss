@@ -67,14 +67,15 @@
 
 .map_heder_title {
   padding-left: 10px;
-  width: 35%;
+  width: calc(100% - #{$block-margin});
 }
+
 
 .map_heder_title .test {
   color: #606060;
   font-size: 17px;
   height: 26px;
-  width: 100%;
+  width: 30%;
 }
 
 .menu__item-text {
