@@ -18,7 +18,6 @@ class Map extends Component {
     componentDidMount() {
         this.createMap();
         Lmap.on('zoomend', () => {
-            console.log('this.props >>', this.props)
             if (Lmap.getZoom() <= 5 && this.props.curentMap != null && this.props.curentMap.indexOf('region') <= 0 ) {
                 let mapName = this.props.curentMap.slice(0, this.props.curentMap.indexOf('__district'))
                 this.props.get_map_area(mapName + '__region', false)
@@ -27,7 +26,6 @@ class Map extends Component {
                 let mapName = this.props.curentMap.slice(0, this.props.curentMap.indexOf('__region'))
                 this.props.get_map_area(mapName + '__district', false)
             }
-            console.log('getZoom() >>',Lmap.getZoom())
         })
     }
 

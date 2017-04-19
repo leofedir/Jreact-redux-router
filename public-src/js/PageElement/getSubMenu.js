@@ -12,11 +12,6 @@ class SubMenu extends Component {
         if (arr.some(item => item == '__region')) {
             mapName.indexOf('area') == 0 ? this.props.get_map_area(mapName + '__region') : console.log('mapName >>', mapName)
         }
-
-
-
-        console.log('this.props.fields[mapName] >>',mapName + arr)
-
     }
 
     getItem(){

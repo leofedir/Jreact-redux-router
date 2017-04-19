@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 
-import { checkStatus, parseJSON} from './checkJSON';
+import {checkStatus, parseJSON} from './checkJSON';
 
 import Map from './PageElement/Map';
 import Menu from './PageElement/Menu';
@@ -19,9 +19,10 @@ class App extends Component {
 
     }
 
-    displayTabs(){
+    displayTabs() {
         const tabs = this.state.tabs.map((t, i) => {
-            return <li key={i} className={this.state.tab == i ? 'select' : ''} onClick={this.switchTabs.bind(this, i)}><a >{t.label}</a></li>
+            return <li key={i} className={this.state.tab == i ? 'select' : ''} onClick={this.switchTabs.bind(this, i)}>
+                <a >{t.label}</a></li>
         });
         return (
             <ul className="tab-nav">
@@ -32,15 +33,15 @@ class App extends Component {
 
     render() {
         // console.log('this.props >>', this.props)
-        const { category, fields, showMenu, mapFull, fetching } = this.props.main;
-        const { fetching_map, curentMap} = this.props.map_reducer
+        const {category, fields, showMenu, mapFull, fetching} = this.props.main;
+        const {fetching_map, curentMap, info} = this.props.map_reducer
         const {toggleMenu, resizeMap, get_submenu} = this.props.Actions;
-        const { get_map_area } = this.props.MapActions;
+        const {get_map_area} = this.props.MapActions;
 
         return (
             <div id="wrapper" className={ (showMenu ? '' : 'hide' ) + (mapFull ? ' mapFull' : '')}>
                 <div className="heder">
-                   <ButtonMenu toggleMenu={ toggleMenu } showMenu={ showMenu }/>
+                    <ButtonMenu toggleMenu={ toggleMenu } showMenu={ showMenu }/>
                 </div>
                 <div className="content__wrap">
 
@@ -59,33 +60,35 @@ class App extends Component {
                         </div>
                         <div className="main__right">
 
-                                <div className="slider" id="slider"/>
+                            <div className="slider" id="slider"/>
+
+                            <div className="description">
+                                <div className="item_header">
+                                    <div className="map_heder_title">333</div>
+                                </div>
+                                <div className="item_content">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus commodo ultricies
+                                    lectus ac varius. Mauris orci diam, rutrum a mi eu, dignissim suscipit ante.
+                                </div>
+                            </div>
+
+                            <div className="info">
+                                <div className="item_header">
+                                    <div className="map_heder_title">Довідка</div>
+                                </div>
+                                <div className="item_content">
+                                    <div id="info" dangerouslySetInnerHTML={info ? {__html: info} : {__html: 'Загальна інформація'}}/>
+                                </div>
+                            </div>
 
                             <div className="legend">
                                 <div className="item_header">
                                     <div className="map_heder_title">Легенда</div>
                                 </div>
                                 <div className="item_content">
-                                    <div className="item_content" id="legend" />
+                                    <div className="item_content" id="legend"/>
                                 </div>
                             </div>
-
-                                <div className="info">
-                                    <div className="item_header">
-                                        <div className="map_heder_title">777</div>
-                                    </div>
-                                    <div className="item_content">
-                                        Lorem ipsum dolor sit amet
-                                    </div>
-                                </div>
-                                <div className="description">
-                                    <div className="item_header">
-                                        <div className="map_heder_title">333</div>
-                                    </div>
-                                    <div className="item_content">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus commodo ultricies lectus ac varius. Mauris orci diam, rutrum a mi eu, dignissim suscipit ante.
-                                    </div>
-                                </div>
                         </div>
                         <div className="main__chart">
                             <div className="chart_1">

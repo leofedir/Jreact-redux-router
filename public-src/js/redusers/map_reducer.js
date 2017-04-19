@@ -5,7 +5,9 @@ import {
 } from '../actions/constant'
 
 const initialState = {
-    curentMap: null
+    curentMap: null,
+    info: null,
+    fetching_map: false
 };
 
 export default function map(state = initialState, action) {
@@ -15,7 +17,7 @@ export default function map(state = initialState, action) {
             return {...state, fetching_map: true, curentMap: action.payload}
 
         case GET_MAP_AREA_SUCCESS:
-            return {...state, fetching_map: false}
+            return {...state, fetching_map: false, info: action.payload}
 
         case GET_MAP_AREA_ERROR:
             return {...state, fetching_map: false}

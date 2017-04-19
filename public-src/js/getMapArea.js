@@ -6,8 +6,6 @@ let choroplethLayer;
 export default function getMap(data, rebuild = true) {
     Lmap.removeLayer(ukraine);
 
-    console.log('rebuild >>', rebuild)
-
     rebuild ? Lmap.setView([49, 31], 5) : '';
 
     if (Lmap.hasLayer(choroplethLayer)) {

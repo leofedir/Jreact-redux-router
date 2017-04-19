@@ -26,10 +26,12 @@ export function get_map_area(url, rebuild = true) {
             .then(checkStatus)
             .then(parseJSON)
             .then(data => {
+                console.log('data >>', data)
                 getMap(data, rebuild);
 
                 dispatch({
-                    type: GET_MAP_AREA_SUCCESS
+                    type: GET_MAP_AREA_SUCCESS,
+                    payload: data.info
                 })
 
             }).catch(() => {
