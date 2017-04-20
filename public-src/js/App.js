@@ -2,13 +2,12 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 
-import {checkStatus, parseJSON} from './checkJSON';
-
 import Map from './PageElement/Map';
 import Menu from './PageElement/Menu';
 import ButtonMenu from './PageElement/buttonMenu';
 import Popup from './PageElement/Popup';
 import Chart from './PageElement/Chart';
+import BarChart from './PageElement/BarChart';
 import * as Actions from './actions/actions';
 import * as MapActions from './actions/get_map_area';
 
@@ -90,14 +89,7 @@ class App extends Component {
 
                             <Chart feature={ feature } alias={ alias }/>
 
-                            <div className="chart_2">
-                                <div className="item_header">
-                                    <div className="map_heder_title">Аналітика2</div>
-                                    <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"
-                                       onClick={::this.full}/></div>
-                                <div className="item_content">
-                                </div>
-                            </div>
+                            <BarChart />
                         </div>
                     </div>
                     <div className="aside aside-1">

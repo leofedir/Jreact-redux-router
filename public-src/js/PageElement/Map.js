@@ -3,6 +3,7 @@ import { checkStatus, parseJSON} from '../checkJSON';
 import L from 'leaflet/dist/leaflet-src';
 import esri from 'esri-leaflet/dist/esri-leaflet';
 import SubMenu from "./getSubMenu";
+import { alias } from '../aliasMapName';
 
 export let Lmap = null;
 export let ukraine;
@@ -20,11 +21,11 @@ class Map extends Component {
         Lmap.on('zoomend', () => {
             if (Lmap.getZoom() <= 5 && this.props.curentMap != null && this.props.curentMap.indexOf('region') <= 0 ) {
                 let mapName = this.props.curentMap.slice(0, this.props.curentMap.indexOf('__district'))
-                this.props.get_map_area(mapName + '__region', false)
+                this.props.get_map_area(mapName + '__region', false, alias[mapName])
 
             } else if (Lmap.getZoom() >= 7 && this.props.curentMap != null && this.props.curentMap.indexOf('region') >= 0) {
                 let mapName = this.props.curentMap.slice(0, this.props.curentMap.indexOf('__region'))
-                this.props.get_map_area(mapName + '__district', false)
+                this.props.get_map_area(mapName + '__district', false, alias[mapName])
             }
         })
     }

@@ -12,8 +12,6 @@ class Chart extends Component {
 
         if (feature != null) {
 
-            console.log('feature >>', feature)
-
             let myData = [
                 {
                     name: alias,
@@ -21,15 +19,11 @@ class Chart extends Component {
                 }
             ];
 
-            console.log(' myData>>', myData)
-
             chart = Highcharts.chart('item_chart', {
                 colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
-
                 title: {
                     text: alias
                 },
-
                 exporting: {
                     buttons: {
                         exportButton: {
@@ -39,12 +33,10 @@ class Chart extends Component {
                         }
                     }
                 },
-
                 chart: {
                     type: 'line',
                     marginRight: 20
                 },
-
                 credits: {
                     text: 'Енциклопедія територій',
                     href: 'http://enter.co.ua'
