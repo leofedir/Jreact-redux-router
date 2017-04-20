@@ -5,8 +5,8 @@ module.exports = {
     db:{
         user: 'postgres',
         database: 'enter',
-        password: 'postgres',
-        host: '192.168.30.134',
+        password: 'CecgskmytJrj1600',
+        host: '89.184.82.170',
         port: 5432,
         max: 10,
         idleTimeoutMillis: 30000,

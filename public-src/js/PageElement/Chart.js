@@ -39,7 +39,8 @@ class Chart extends Component {
                 },
                 credits: {
                     text: 'Енциклопедія територій',
-                    href: 'http://enter.co.ua'
+                    href: 'http://enter.co.ua',
+                    enabled: false
                 },
                 yAxis: {
                     title: {
