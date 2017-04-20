@@ -22,7 +22,7 @@ class Chart extends Component {
             chart = Highcharts.chart('item_chart', {
                 colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
                 title: {
-                    text: alias
+                    text: feature.name_ua
                 },
                 exporting: {
                     buttons: {

@@ -1,8 +1,8 @@
 const L = require('leaflet')
 const chroma = require('chroma-js')
 const _ = {
-    defaults: require('lodash.defaults'),
-    extend: require('lodash.assign')
+    defaults: require('lodash/defaults'),
+    extend: require('lodash/assign')
 }
 
 L.choropleth = module.exports = function (geojson, opts) {
