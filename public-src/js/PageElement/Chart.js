@@ -112,7 +112,7 @@ class Chart extends Component {
         return (
             <div className="chart_1">
                 <div className="item_header">
-                    <div className="map_heder_title">Аналітика1</div>
+                    <div className="map_heder_title">Тренд</div>
                     <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"/>
                 </div>
                 <div className="item_content" id="item_chart"/>

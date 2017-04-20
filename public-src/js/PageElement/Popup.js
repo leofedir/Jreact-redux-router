@@ -7,7 +7,7 @@ class Popup extends Component {
         let i = 0;
         for (let key in feature) {
             if (feature.hasOwnProperty(key) && key.indexOf('year_') >= 0) {
-                popupInfo.push(<p key={feature.id + i}>Станом на 20{key.substring(5)} <span>{new Intl.NumberFormat().format(feature[key])} {feature.parameter}</span></p>)
+                popupInfo.push(<p key={feature.id + i}>Станом на 20{key.substring(5)}р. <span>{new Intl.NumberFormat().format(feature[key])} {feature.parameter}</span></p>)
                 i++
             }
         }
