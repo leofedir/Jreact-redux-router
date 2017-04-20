@@ -19,13 +19,17 @@ class BarChart extends Component {
     createChart() {
         const { feature, alias, properties} = this.props.map_reducer;
 
-        console.log('properties >>', this.props)
+        console.log('properties >>',properties)
 
         if (properties != null) {
 
             bar = null;
 
-            let newData = properties.map(item => {
+            let keys = Object.keys(properties)
+
+            console.log('keys >>', keys)
+
+            let newData = properties[keys[0]].map(item => {
                 let obj = {};
                 obj.name = item.name_ua;
                 obj.y = +item.year_13

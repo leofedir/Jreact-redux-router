@@ -57,7 +57,6 @@ class App extends Component {
                                 fetching_map={ fetching_map }
                                 curentMap={ curentMap }
                                 alias={ alias }
-                                get_map_area={ get_map_area }
                             />
                         </div>
                         <div className="main__right">

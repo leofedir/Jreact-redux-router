@@ -1,6 +1,6 @@
 module.exports = {
     server : {
-        port : 8000
+        port : 9000
     },
     db:{
         user: 'postgres',
