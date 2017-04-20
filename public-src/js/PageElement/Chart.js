@@ -1,34 +1,32 @@
 import React, {Component} from 'react';
+import { year_labels, dataToChart} from './Popup'
+
 const Highcharts = require('highcharts');
 
+let chart = null;
 
 class Chart extends Component {
 
-
     Chart() {
+
+        console.log('year_labels >>', year_labels)
+        console.log('dataToChart >>', dataToChart)
         const { feature, alias} = this.props
 
         if (feature != null) {
 
-            console.log('alias >>', alias)
-            // let newData = dataNest.map(item => {
-            //     console.log(item)
-            //     return {
-            //         name: alias[item.key],
-            //         data: item.values.data
-            //     }
-            // })
+            console.log('feature >>', feature)
 
             let myData = [
                 {
                     name: alias,
-                    data: [+feature.year_13, +feature.year_14, +feature.year_15]
+                    data: dataToChart
                 }
             ];
 
-            console.log('nyData >>', myData);
+            console.log(' myData>>', myData)
 
-            Highcharts.chart('item_chart', {
+            chart = Highcharts.chart('item_chart', {
                 colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
 
                 title: {
@@ -51,21 +49,9 @@ class Chart extends Component {
                 },
 
                 credits: {
-                    // enabled: false,
                     text: 'Енциклопедія територій',
                     href: 'http://enter.co.ua'
                 },
-
-                // navigation: {
-                //     buttonOptions: {
-                //         enabled: false
-                //     }
-                // },
-
-                // subtitle: {
-                //     text: ''
-                // },
-
                 yAxis: {
                     title: {
                         text: feature.parameter
@@ -76,28 +62,18 @@ class Chart extends Component {
                     align: 'center',
                     verticalAlign: 'bottom'
                 },
-
                 xAxis: {
-                    crosshair: true
+                    crosshair: true,
+                    categories: year_labels
                 },
-
                 tooltip: {
                     shared: true,
                 },
-
-                plotOptions: {
-                    series: {
-                        pointStart: 2014
-                    }
-                },
-
                 series: myData
-
             });
+        } else {
+            chart != null ? chart.destroy() : ''
         }
-
-
-
     }
 
     componentDidMount() {
@@ -113,7 +89,6 @@ class Chart extends Component {
             <div className="chart_1">
                 <div className="item_header">
                     <div className="map_heder_title">Аналітика1</div>
-                    <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"/>
                 </div>
                 <div className="item_content" id="item_chart"/>
             </div>

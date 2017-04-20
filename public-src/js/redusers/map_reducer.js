@@ -20,7 +20,7 @@ export default function map(state = initialState, action) {
             return {...state, fetching_map: true, curentMap: action.payload[0], alias: action.payload[1]};
 
         case GET_MAP_AREA_SUCCESS:
-            return {...state, fetching_map: false, info: action.payload}
+            return {...state, fetching_map: false, info: action.payload, feature: null}
 
         case GET_MAP_AREA_ERROR:
             return {...state, fetching_map: false}
