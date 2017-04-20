@@ -5,7 +5,6 @@ class SubMenu extends Component {
     getMap(e) {
         let mapName = e.target.value;
         let arr = this.props.fields[mapName]
-        console.log('this.props >>', this.props)
         const { get_map_area } = this.props;
 
         if (arr.some(item => item == '__region')) {
