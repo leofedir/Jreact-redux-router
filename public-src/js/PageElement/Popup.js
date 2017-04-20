@@ -26,8 +26,8 @@ class Popup extends Component {
                 <div className="item_content">
                     <div className="popup_top">
                         <p>Код КОАТУУ <span>{feature.koatuu}</span></p>
-                        <p>Населення <span>{feature.population} осіб</span></p>
-                        <p>Площа території <span>{feature.area} га</span></p>
+                        <p>Населення <span>{new Intl.NumberFormat().format(feature.population)} осіб</span></p>
+                        <p>Площа території <span>{new Intl.NumberFormat().format(feature.area)} га</span></p>
                     </div>
                     <div className="popup_bottom">
                         <h4>{ alias }</h4>
