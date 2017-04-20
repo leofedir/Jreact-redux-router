@@ -76,8 +76,9 @@
   font-size: 17px;
   height: 26px;
   width: 30%;
+  opacity: 0.7;
+  transition: 0.5s;
 }
-
 .menu__item-text {
   transition: $transition-win;
   white-space: nowrap;
