@@ -22,6 +22,9 @@ class BarChart extends Component {
         console.log('properties >>', this.props)
 
         if (properties != null) {
+
+            bar = null;
+
             let newData = properties.map(item => {
                 let obj = {};
                 obj.name = item.name_ua;
@@ -60,7 +63,8 @@ class BarChart extends Component {
                 series: [{
                     name: alias,
                     // colorByPoint: true,
-                    data: newData
+                    data: newData,
+                    color: '#fccc0e'
                 }],
                 drilldown: {
                     drillUpButton: {
