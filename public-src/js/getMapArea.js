@@ -94,7 +94,7 @@ export default function getMap(data, rebuild = true) {
 
         limits.forEach(function (limit, i) {
             labels.push('<i style="background:' + colors[i] + '"></i> ' +
-                ((limits[i] !== null) ?  new Intl.NumberFormat().format(limits[i]) : dani) + ((i !== limits.length - 1 && limits[i + 1] !== null) ? ' &ndash; ' + new Intl.NumberFormat().format(limits[i + 1]) + '<br>' : (limits[i] !== null) ? '  +<br/>' : '<br/>'))
+                ((limits[i] !== null) ?  new Intl.NumberFormat().format(limits[i]) : dani) + ((i !== limits.length - 1 && limits[i + 1] !== null) ? ' до ' + new Intl.NumberFormat().format(limits[i + 1]) + '<br>' : (limits[i] !== null) ? '  +<br/>' : '<br/>'))
         })
 
         div.innerHTML += labels.join('')

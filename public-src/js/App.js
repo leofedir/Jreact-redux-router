@@ -73,7 +73,7 @@ class App extends Component {
                                 </div>
                                 <div className="item_content">
                                     <div id="info"
-                                         dangerouslySetInnerHTML={info ? {__html: info} : {__html: 'Загальна інформація'}}/>
+                                         dangerouslySetInnerHTML={info ? {__html: info} : {__html: 'Україна - держава у Східній Європі. Столиця - м.Київ. Площа - 60357712 га. Населення - 44933290 особи'}}/>
                                 </div>
                             </div>
 
