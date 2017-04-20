@@ -203,6 +203,15 @@ body {
   margin-bottom: $block-margin;
 }
 
+.barChart_full {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+}
+
 
 @media screen and (max-width:1600px)  {
   .map_heder_title .test{

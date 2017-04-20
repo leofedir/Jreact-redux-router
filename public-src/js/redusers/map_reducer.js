@@ -2,7 +2,8 @@ import {
     GET_MAP_AREA_REQUEST,
     GET_MAP_AREA_SUCCESS,
     GET_MAP_AREA_ERROR,
-    CLICK_ON_FEATURE
+    CLICK_ON_FEATURE,
+    BARCHART_TOGGLE
 } from '../actions/constant'
 
 const initialState = {
@@ -11,6 +12,8 @@ const initialState = {
     fetching_map: false,
     feature: null,
     alias: null,
+    properties: null,
+    bar_cahrt_full: false
 };
 
 export default function map(state = initialState, action) {
@@ -20,10 +23,13 @@ export default function map(state = initialState, action) {
             return {...state, fetching_map: true, curentMap: action.payload[0], alias: action.payload[1]};
 
         case GET_MAP_AREA_SUCCESS:
-            return {...state, fetching_map: false, info: action.payload, feature: null}
+            return {...state, fetching_map: false, info: action.payload[0], feature: null, properties: action.payload[1]}
 
         case GET_MAP_AREA_ERROR:
             return {...state, fetching_map: false}
+
+        case BARCHART_TOGGLE:
+            return {...state, bar_cahrt_full: action.payload}
 
         case CLICK_ON_FEATURE:
             return {...state, feature: action.payload}

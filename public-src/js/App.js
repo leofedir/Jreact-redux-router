@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {bindActionCreators} from 'redux'
-import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 import Map from './PageElement/Map';
 import Menu from './PageElement/Menu';
