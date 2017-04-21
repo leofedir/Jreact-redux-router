@@ -1,4 +1,9 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as MapActions from '../REDUX/actions/get_map_area';
+
+
 import { year_labels, dataToChart} from './Popup'
 
 const Highcharts = require('highcharts');
@@ -8,7 +13,7 @@ let chart = null;
 class Chart extends Component {
 
     Chart() {
-        const { feature, alias} = this.props
+        const { feature, alias} = this.props.map_reducer
 
         if (feature != null) {
 
@@ -87,7 +92,13 @@ class Chart extends Component {
     }
 }
 
-export default Chart
+function mapStateToProps(state) {
+    return {
+        map_reducer: state.map_reducer
+    }
+}
+
+export default connect(mapStateToProps)(Chart);
 
 
 

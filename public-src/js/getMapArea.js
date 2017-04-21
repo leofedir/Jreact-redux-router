@@ -79,8 +79,6 @@ export default function getMap(data, rebuild = true) {
             }
         }).addTo(Lmap)
 
-        console.log('choroplethLayer >>', choroplethLayer)
-
         function whenClicked(e) {
             store.dispatch(clickOnFeature(e.target.feature.properties))
         }

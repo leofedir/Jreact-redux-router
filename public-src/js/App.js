@@ -35,7 +35,7 @@ class App extends Component {
     render() {
         // console.log('this.props >>', this.props)
         const {category, fields, showMenu, mapFull, fetching} = this.props.main;
-        const {fetching_map, curentMap, info, feature, alias} = this.props.map_reducer
+        const {fetching_map, curentMap, info, feature, alias} = this.props.map_reducer;
         const {toggleMenu, resizeMap, get_submenu} = this.props.Actions;
         const {get_map_area} = this.props.MapActions;
 
@@ -86,7 +86,7 @@ class App extends Component {
                         </div>
                         <div className="main__chart">
 
-                            <Chart feature={ feature } alias={ alias }/>
+                            <Chart />
 
                             <BarChart />
                         </div>

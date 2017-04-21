@@ -8,7 +8,8 @@ import {
     CLICK_ON_FEATURE,
     BARCHART_TOGGLE,
     GET_MAP_DATA_SUCCESS,
-    GET_MAP_DATA_ERROR
+    GET_MAP_DATA_ERROR,
+    GET_MAP_DATA_REQUEST
 
 } from './constant';
 
@@ -30,7 +31,6 @@ export function get_map_area(url, rebuild = true, alias) {
             .then(checkStatus)
             .then(parseJSON)
             .then(data => {
-                console.log('data111 >>', data)
                 getMap(data[1], rebuild);
                 dispatch({
                     type: GET_MAP_AREA_SUCCESS,
@@ -47,29 +47,33 @@ export function get_map_area(url, rebuild = true, alias) {
 
 export function getMapData(tableData= null, arr = null){
     return (dispatch) => {
-        fetch('/demography_data', {
-            method: 'post',
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-            },
-            body: `table=${ tableData }&ident=${ arr }`
-        })
-            .then(checkStatus)
-            .then(parseJSON)
-            .then(data => {
-                console.log('data >>', data)
-                dispatch({
-                    type: GET_MAP_DATA_SUCCESS,
-                    payload: data
-                })
-
-            }).catch(() => {
-            dispatch({
-                type: GET_MAP_DATA_ERROR
-            })
+        dispatch({
+            type: GET_MAP_DATA_REQUEST
         });
-    }
 
+        if(arr !== null && tableData !== null) {
+            Promise.all(tableData.map((item, i) =>
+                fetch('/getmapdata', {
+                    method: 'post',
+                    headers: {
+                        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                    },
+                    body: `table=${ item }`
+                }).then(parseJSON)
+            )).then((resp) => {
+                let obj = {};
+                  resp.forEach((item, i) => obj[arr[i]] = item)
+                  dispatch({
+                      type: GET_MAP_DATA_SUCCESS,
+                      payload: obj
+                  })
+                }).catch((err) => {
+                    console.log('err >>', err);
+                    dispatch({
+                        type: GET_MAP_DATA_ERROR
+                    })})
+        }
+    }
 }
 
 export function clickOnFeature(feature) {
