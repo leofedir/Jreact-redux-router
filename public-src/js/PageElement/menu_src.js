@@ -57,7 +57,7 @@ export let menu = [
         key: 10,
         name: 'Бюджет',
         icon: '19.png',
-        url: 'budget'
+        url: 'budgets'
     },
     {
         key: 11,
