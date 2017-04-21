@@ -1,7 +1,7 @@
 import choropleth from './colorRender'
 import {Lmap, ukraine} from "./PageElement/Map";
 
-import { clickOnFeature } from './actions/get_map_area'
+import { clickOnFeature } from './REDUX/actions/get_map_area'
 import { store } from './index'
 
 let choroplethLayer;

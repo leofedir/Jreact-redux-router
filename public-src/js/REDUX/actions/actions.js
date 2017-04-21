@@ -1,4 +1,4 @@
-import { checkStatus, parseJSON} from '../checkJSON';
+import { checkStatus, parseJSON} from '../../checkJSON';
 
 import {
     TOGGLE_MENU,
