@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import { menu } from './menu_src'
+import {menu} from './menu_src'
 
 
 class Menu extends Component {
@@ -14,7 +14,8 @@ class Menu extends Component {
         return items.map(item => {
             return (
                 <li className="menu__item" key={item.key}>
-                    <a title={item.name} href="#" onClick={::this.onItemClick} className="menu__link" data-url={item.url}>
+                    <a title={item.name} href="#" onClick={::this.onItemClick} className="menu__link"
+                       data-url={item.url}>
                         <img className="menu__icon" src={'img/menu/' + item.icon}/>
                         <span className="menu__item-text">{item.name}</span>
                     </a>
@@ -22,17 +23,29 @@ class Menu extends Component {
         });
     }
 
+    autoCloseMenu() {
+        function removePopups(e) {
+            if(!e.target.matches('.heder *') && this.props.showMenu) {
+                this.props.toggleMenu(true)
+                window.removeEventListener('click', removePopups);
+            }
+        };
+        window.addEventListener('click', removePopups.bind(this));
+    }
+
+    componentDidMount() {
+        this.autoCloseMenu()
+    }
+
+    componentDidUpdate() {
+        this.autoCloseMenu()
+    }
+
     render() {
         return (
-            // <div id="menu_wrapper" className="menu_wrapper">
-            //     <div className={`icons-menu`} id="menu">
-                    //<div className="menu">//
-                        <ul className="menu__items">
-                            {this.getItem(menu)}
-                        </ul>
-                    // </div>
-            //     </div>
-            // </div>
+            <ul className="menu__items">
+                {this.getItem(menu)}
+            </ul>
         )
     }
 }

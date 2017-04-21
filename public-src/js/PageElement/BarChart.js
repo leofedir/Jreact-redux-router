@@ -12,23 +12,51 @@ let bar = null;
 class BarChart extends Component {
 
     toggleChart() {
-        const { barChartToggle } = this.props.MapActions;
-        barChartToggle(this.props.map_reducer.bar_cahrt_full)
+        const {barChartToggle} = this.props.MapActions;
+        barChartToggle(this.props.map_reducer.bar_cahrt_full);
     }
 
     createChart() {
-        const { alias, properties, data_success} = this.props.map_reducer;
-        
+        const {alias, properties, data_success} = this.props.map_reducer;
+
         if (data_success && properties.__region != undefined) {
 
+
             bar = null;
+
+            let district = {};
+            let district_arr = [];
+
+            properties.__district.forEach(item => {
+
+                district[item.koatuu.slice(0, 2)] ? '' : district[item.koatuu.slice(0, 2)] = [];
+
+                let _item = district[item.koatuu.slice(0, 2)];
+
+                _item.push([item.name_ua, +item.year_13])
+
+            });
+
+            for (let key in district) {
+                if (district.hasOwnProperty(key)) {
+                    let obj = {};
+                    obj.id = key;
+                    obj.data = district[key].sort((a, b) => b[1] - a[1]);
+
+
+                    district_arr.push(obj);
+                }
+            }
 
             let newData = properties.__region.map(item => {
                 let obj = {};
                 obj.name = item.name_ua;
-                obj.y = +item.year_13
+                obj.y = +item.year_13;
+                obj.drilldown = item.koatuu.slice(0, 2);
                 return obj
-            })
+            });
+
+            newData.sort((a, b) => b.y - a.y);
 
             // Create the chart
             bar = Highcharts.chart('item_bar_chart', {
@@ -47,13 +75,18 @@ class BarChart extends Component {
                     text: alias
                 },
                 xAxis: {
-                    type: 'category'
+                    type: 'category',
                 },
 
                 legend: {
                     enabled: false
                 },
+                yAxis: {
+                    title: {
+                        enabled: false
+                    }
 
+                },
                 plotOptions: {
                     series: {
                         borderWidth: 0,
@@ -67,7 +100,12 @@ class BarChart extends Component {
                     name: alias,
                     // colorByPoint: true,
                     data: newData,
-                    color: '#fccc0e'
+                    zones: [{
+                        value: 0,
+                        color: '#93E1D8'
+                    }, {
+                        color: '#fccc0e'
+                    }]
                 }],
                 drilldown: {
                     drillUpButton: {
@@ -93,29 +131,7 @@ class BarChart extends Component {
                         }
 
                     },
-                    series: [{
-                        id: 'animals',
-                        data: [
-                            ['Cats', 4],
-                            ['Dogs', 2],
-                            ['Cows', 1],
-                            ['Sheep', 2],
-                            ['Pigs', 1]
-                        ]
-                    }, {
-                        id: 'fruits',
-                        data: [
-                            ['Apples', 4],
-                            ['Oranges', 2]
-                        ]
-                    }, {
-                        id: 'cars',
-                        data: [
-                            ['Toyota', 4],
-                            ['Opel', 2],
-                            ['Volkswagen', 2]
-                        ]
-                    }]
+                    series: district_arr
                 }
             });
         } else {
@@ -129,7 +145,7 @@ class BarChart extends Component {
     }
 
     componentDidUpdate() {
-        bar === null ? this.createChart() : ''
+        this.createChart()
     }
 
     render() {

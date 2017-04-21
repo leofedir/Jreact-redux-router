@@ -92,7 +92,7 @@ class App extends Component {
                         </div>
                     </div>
                     <div className="aside">
-                        <Menu get_submenu={ get_submenu }/>
+                        <Menu get_submenu={ get_submenu } toggleMenu={ toggleMenu } showMenu={ showMenu }/>
                     </div>
                 </div>
             </div>
