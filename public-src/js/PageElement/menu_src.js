@@ -27,19 +27,19 @@ export let menu = [
         key: 5,
         name: 'Освіта',
         icon: '6.png',
-        url: 'osvita'
+        url: 'osvitaa'
     },
     {
         key: 6,
         name: 'Культура',
         icon: '8.png',
-        url: 'culture'
+        url: 'culturee'
     },
     {
         key: 7,
         name: 'Наука',
         icon: '9.png',
-        url: 'nauka'
+        url: 'naukaa'
     },
     {
         key: 8,
@@ -81,13 +81,13 @@ export let menu = [
         key: 14,
         name: 'Енергетика',
         icon: '15.png',
-        url: 'energy'
+        url: 'energyy'
     },
     {
         key: 15,
         name: 'Екологія',
         icon: '16.png',
-        url: 'ekology'
+        url: 'ekologyy'
     },
     {
         key: 16,
