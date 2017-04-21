@@ -27,7 +27,7 @@ module.exports = function (router){
 
     });
 
-    router.post('/demography', function(req, res) {
+    router.post('/getsubmenu', function(req, res) {
 
         pgdb.query(`select table_name from enter.INFORMATION_SCHEMA.TABLES where table_name like $1` , ['%' + req.body.category + '%' ])
             .then((d)=>{
@@ -35,7 +35,8 @@ module.exports = function (router){
                 d.forEach(item => {
                     let name = item.table_name.slice(0, item.table_name.indexOf("__"));
                     obj[name] ? obj[name].push(item.table_name.slice(item.table_name.indexOf("__"))) : obj[name] = [item.table_name.slice(item.table_name.indexOf("__"))];
-                })
+                });
+                console.log('obj >>', obj)
                 res.json(obj);
             })
             .catch((e)=>{

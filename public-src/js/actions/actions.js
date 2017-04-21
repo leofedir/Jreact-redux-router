@@ -29,7 +29,7 @@ export function get_submenu(url) {
             type: GET_SUBMENU_REQUEST
         })
 
-        fetch(url, {
+        fetch('getsubmenu', {
             method: 'post',
             headers: {
                 "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
