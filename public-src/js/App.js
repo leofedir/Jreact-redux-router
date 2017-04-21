@@ -49,12 +49,12 @@ class App extends Component {
                     <div className="main">
                         <div className="main__map">
                             <Map
-                                category={category}
-                                fields={fields}
-                                resizeMap={ resizeMap }
-                                mapFull={ mapFull }
                                 fetching={ fetching }
                                 fetching_map={ fetching_map }
+                                category={category}
+                                resizeMap={ resizeMap }
+                                mapFull={ mapFull }
+                                get_map_area={ get_map_area  }
                                 curentMap={ curentMap }
                                 alias={ alias }
                             />
