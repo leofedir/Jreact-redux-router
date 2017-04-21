@@ -8,8 +8,8 @@ import ButtonMenu from './PageElement/buttonMenu';
 import Popup from './PageElement/Popup';
 import Chart from './PageElement/Chart';
 import BarChart from './PageElement/BarChart';
-import * as Actions from './actions/actions';
-import * as MapActions from './actions/get_map_area';
+import * as Actions from './REDUX/actions/actions';
+import * as MapActions from './REDUX/actions/get_map_area';
 
 let wrapper = document.getElementById('wrapper')
 

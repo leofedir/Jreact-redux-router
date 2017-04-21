@@ -1,5 +1,5 @@
-import {checkStatus, parseJSON} from '../checkJSON';
-import getMap from '../getMapArea'
+import {checkStatus, parseJSON} from '../../checkJSON';
+import getMap from '../../getMapArea'
 
 import {
     GET_MAP_AREA_REQUEST,
