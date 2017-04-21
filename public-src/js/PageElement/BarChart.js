@@ -41,6 +41,7 @@ class BarChart extends Component {
                 if (district.hasOwnProperty(key)) {
                     let obj = {};
                     obj.id = key;
+                    obj.name = alias;
                     obj.data = district[key].sort((a, b) => b[1] - a[1]);
 
 
@@ -61,7 +62,7 @@ class BarChart extends Component {
             // Create the chart
             bar = Highcharts.chart('item_bar_chart', {
                 lang: {
-                    drillUpText: 'Назад до {series.name}'
+                    drillUpText: 'Назад'
                 },
                 chart: {
                     type: 'bar'
@@ -72,7 +73,7 @@ class BarChart extends Component {
                     enabled: false
                 },
                 title: {
-                    text: alias
+                    text: alias+', ' + properties.__district["0"].parameter
                 },
                 xAxis: {
                     type: 'category',
@@ -134,8 +135,6 @@ class BarChart extends Component {
                     series: district_arr
                 }
             });
-        } else {
-            bar != null ? bar.destroy() : ''
         }
 
     }

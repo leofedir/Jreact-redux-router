@@ -161,6 +161,7 @@ body {
   margin-right: $block-margin;
 }
 .chart_2 {
+  min-width: 45%;
   flex-basis:50%;
 }
 .main__right {
@@ -188,6 +189,12 @@ body {
   z-index: 9999;
   width: 100vw;
   height: 100vh;
+}
+
+.highcharts-drilldown-axis-label {
+  text-decoration: none !important;
+  color: $text-color !important;
+  fill: $text-color !important;
 }
 
 @media screen and (max-width:1600px)  {
