@@ -24,8 +24,6 @@ body {
   font-style: regular;
   font-weight: 300;
 }
-
-
 .content__wrap {
   display: -webkit-box;
   display: -moz-box;
@@ -39,24 +37,20 @@ body {
   width: 100%;
   margin: 0 auto;
 }
-
 .main {
   text-align: left;
-  margin: 0;
   height: 100%;
   transition: $transition-win;
+  width: 100%;
+  flex: 3 0;
+  order: 2;
 }
-
-.aside {
+ .aside {
   flex-grow: 0;
   flex-shrink: 0;
-  //height: 100%;
-  //background: $white;
-  box-shadow: $shadow;
-}
-.aside-1 {
-  flex-basis: $aside-1-width;
+  flex-basis: 50px;
   transition: $transition-win;
+  position: relative;
 }
 .heder {
   background: $header-color;
@@ -130,21 +124,10 @@ body {
   color: white;
   opacity: 1;
 }
-
-//@media all and (min-width: 700px) {
-  .main    { flex: 3 0; }
-  //.aside-1 { order: 1; }
-  .main    { order: 2; }
-  //.aside-2 { order: 3; }
-  //.footer  { order: 4; }
-//}
 .slider {
   background-color: $bloc-header-color;
   box-shadow: $shadow;
-  //height: 50px;
 }
-
-
 .info_type-body {
   background: rgb(255, 255, 255) none repeat scroll 0 0;
   border: 1px solid #cecece;
@@ -158,19 +141,12 @@ body {
   transform: translateY(-50%);
   width: 30%;
 }
-
-
-.main {
-  width: 100%;
-}
-
 .main__map {
   margin: $block-margin;
   height: 630px;
   width: calc(100% - #{$main__right} - (3 * #{$block-margin}));
   float: left;
   transition: $transition-win;
-
 }
 .main__chart {
   height: 280px;
@@ -184,20 +160,16 @@ body {
   flex-basis: 50%;
   margin-right: $block-margin;
 }
-
 .chart_2 {
   flex-basis:50%;
-  //margin-left: $block-margin;
 }
 .main__right {
   width: $main__right;
   float: right;
   margin:  $block-margin $block-margin $block-margin 0;
 }
-
 .main__right .slider {
   margin-bottom: $block-margin;
-  //  background: $white;
   box-shadow: $shadow;
 }
 .main__right .info{
@@ -209,7 +181,6 @@ body {
 .main__right .legend{
   margin-bottom: $block-margin;
 }
-
 .barChart_full {
   position: absolute;
   top: 0;
@@ -219,21 +190,19 @@ body {
   height: 100vh;
 }
 
-
 @media screen and (max-width:1600px)  {
   .map_heder_title .test{
     width: 50%;
   }
-
 }
+
 @media screen and (max-width:1400px)  {
   .map_heder_title .test {
     width: 80%;
   }
-
 }
-@media screen and (max-width:1280px)  {
 
+@media screen and (max-width:1280px)  {
   .main__chart {
     flex-wrap: wrap;
   }
@@ -245,16 +214,12 @@ body {
     flex-basis: 100%;
     margin-top: $block-margin;
   }
-
 }
+
 @media screen and (max-width:1024px)  {
   .map_heder_title .test {
     width: 100%;
     padding-right: 10px;
-  }
-
-  .menu__items {
-    top: 40px;
   }
   .fa-bars.fa-2x {
     font-size: 2em;
@@ -265,7 +230,6 @@ body {
   .heder {
     height: 40px;
   }
-
   .fa-expand {
     display: none;
   }
@@ -275,27 +239,21 @@ body {
     margin: $block-margin;
     height: 350px;
   }
-
   .main__chart {
     width: calc(100% - (2 * #{$block-margin}));
     float: none;
     margin: $block-margin;
   }
-
   .main__right {
     width: calc(100% - (2 * #{$block-margin}));
     float: none;
     margin: $block-margin;
   }
-
 }
+
 @media screen and (max-width:768px) {
-  .hide .aside-1 {
-    margin-left: -50px;
-  }
-  .aside-1 {
-    flex-basis: 0;
-  }
+
+
 }
 
 @media screen and (max-width:400px)  {

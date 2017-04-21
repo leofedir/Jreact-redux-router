@@ -91,7 +91,7 @@ class App extends Component {
                             <BarChart />
                         </div>
                     </div>
-                    <div className="aside aside-1">
+                    <div className="aside">
                         <Menu get_submenu={ get_submenu }/>
                     </div>
                 </div>
