@@ -94,13 +94,12 @@ class Map extends Component {
     }
 
     render() {
-
-        const {fetching, fields, get_map_area, fetching_map, curentMap} = this.props;
+        const {fetching, fetching_map} = this.props;
 
         return (
         <div className="block block-top block_map">
             <div className="item_header">
-                <SubMenu fields={ fields } get_map_area={ get_map_area } curentMap={ curentMap }/>
+                <SubMenu />
                 <i className="fa fa-expand fa-1x ico_map_full ico_hover" onClick={::this.omButtonMapClick}/>
             </div>
             <div id="map_wrapper" className="map_wrapper">
