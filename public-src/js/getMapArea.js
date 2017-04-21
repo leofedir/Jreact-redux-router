@@ -72,7 +72,8 @@ export default function getMap(data, rebuild = true) {
             style: {
                 color: '#a12f19',
                 weight: 0.2,
-                fillOpacity: 1
+                fillOpacity: 0.85
+
             },
             onEachFeature: function (feature, layer) {
                 layer.on('click', whenClicked)
