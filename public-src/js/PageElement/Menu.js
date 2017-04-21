@@ -24,15 +24,15 @@ class Menu extends Component {
 
     render() {
         return (
-            <div id="menu_wrapper" className="menu_wrapper">
-                <div className={`icons-menu`} id="menu">
-                    <div className="menu">
+            // <div id="menu_wrapper" className="menu_wrapper">
+            //     <div className={`icons-menu`} id="menu">
+                    //<div className="menu">//
                         <ul className="menu__items">
                             {this.getItem(menu)}
                         </ul>
-                    </div>
-                </div>
-            </div>
+                    // </div>
+            //     </div>
+            // </div>
         )
     }
 }

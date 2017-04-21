@@ -35,7 +35,7 @@ class App extends Component {
     render() {
         // console.log('this.props >>', this.props)
         const {category, fields, showMenu, mapFull, fetching} = this.props.main;
-        const {fetching_map, curentMap, info, feature, alias} = this.props.map_reducer
+        const {fetching_map, curentMap, info, feature, alias} = this.props.map_reducer;
         const {toggleMenu, resizeMap, get_submenu} = this.props.Actions;
         const {get_map_area} = this.props.MapActions;
 
@@ -49,12 +49,12 @@ class App extends Component {
                     <div className="main">
                         <div className="main__map">
                             <Map
-                                category={category}
-                                fields={fields}
-                                resizeMap={ resizeMap }
-                                mapFull={ mapFull }
                                 fetching={ fetching }
                                 fetching_map={ fetching_map }
+                                category={category}
+                                resizeMap={ resizeMap }
+                                mapFull={ mapFull }
+                                get_map_area={ get_map_area  }
                                 curentMap={ curentMap }
                                 alias={ alias }
                             />
@@ -86,12 +86,12 @@ class App extends Component {
                         </div>
                         <div className="main__chart">
 
-                            <Chart feature={ feature } alias={ alias }/>
+                            <Chart />
 
                             <BarChart />
                         </div>
                     </div>
-                    <div className="aside aside-1">
+                    <div className="aside">
                         <Menu get_submenu={ get_submenu }/>
                     </div>
                 </div>

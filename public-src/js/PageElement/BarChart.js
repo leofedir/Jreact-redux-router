@@ -17,19 +17,13 @@ class BarChart extends Component {
     }
 
     createChart() {
-        const { feature, alias, properties} = this.props.map_reducer;
-
-        console.log('properties >>',properties)
-
-        if (properties != null) {
+        const { alias, properties, data_success} = this.props.map_reducer;
+        
+        if (data_success && properties.__region != undefined) {
 
             bar = null;
 
-            let keys = Object.keys(properties)
-
-            console.log('keys >>', keys)
-
-            let newData = properties[keys[0]].map(item => {
+            let newData = properties.__region.map(item => {
                 let obj = {};
                 obj.name = item.name_ua;
                 obj.y = +item.year_13
@@ -43,6 +37,11 @@ class BarChart extends Component {
                 },
                 chart: {
                     type: 'bar'
+                },
+                credits: {
+                    text: 'Енциклопедія територій',
+                    href: 'http://enter.co.ua',
+                    enabled: false
                 },
                 title: {
                     text: alias
@@ -130,12 +129,13 @@ class BarChart extends Component {
     }
 
     componentDidUpdate() {
-        this.createChart()
+        bar === null ? this.createChart() : ''
     }
 
     render() {
+        const {bar_cahrt_full} = this.props.map_reducer;
         return (
-            <div className={this.props.map_reducer.bar_cahrt_full ? 'chart_2 barChart_full' : 'chart_2'}>
+            <div className={bar_cahrt_full ? 'chart_2 barChart_full' : 'chart_2'}>
                 <div className="item_header">
                     <div className="map_heder_title">Діаграма</div>
                     <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>
