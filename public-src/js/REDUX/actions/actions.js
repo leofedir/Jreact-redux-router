@@ -5,7 +5,10 @@ import {
     FULL_MAP,
     GET_SUBMENU_REQUEST,
     GET_SUBMENU_SUCCESS,
-    GET_SUBMENU_ERROR
+    GET_SUBMENU_ERROR,
+    SET_SUBMENU_ITEM,
+    SET_RANGE_ITEMS,
+    SET_RANGE_ITEM
 
 } from './constant';
 
@@ -48,5 +51,26 @@ export function get_submenu(url) {
                     type: GET_SUBMENU_ERROR
                 })
         })
+    }
+}
+
+export function set_submenu_item(item) {
+    return {
+        type: SET_SUBMENU_ITEM,
+        payload: item
+    }
+}
+
+export function set_Range_items(items) {
+    return {
+        type: SET_RANGE_ITEMS,
+        payload: items
+    }
+}
+
+export function set_Range_item(item) {
+    return {
+        type: SET_RANGE_ITEM,
+        payload: item
     }
 }

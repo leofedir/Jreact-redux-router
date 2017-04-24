@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as MapActions from '../REDUX/actions/get_map_area';
-
 
 import { year_labels, dataToChart} from './Popup'
 

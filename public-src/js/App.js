@@ -8,6 +8,7 @@ import ButtonMenu from './PageElement/buttonMenu';
 import Popup from './PageElement/Popup';
 import Chart from './PageElement/Chart';
 import BarChart from './PageElement/BarChart';
+import SliderRange from './PageElement/sliderRange';
 import * as Actions from './REDUX/actions/actions';
 import * as MapActions from './REDUX/actions/get_map_area';
 
@@ -16,27 +17,27 @@ let wrapper = document.getElementById('wrapper')
 
 class App extends Component {
 
-    full() {
+    // full() {
+    //
+    // }
 
-    }
-
-    displayTabs() {
-        const tabs = this.state.tabs.map((t, i) => {
-            return <li key={i} className={this.state.tab == i ? 'select' : ''} onClick={this.switchTabs.bind(this, i)}>
-                <a >{t.label}</a></li>
-        });
-        return (
-            <ul className="tab-nav">
-                {tabs}
-            </ul>
-        )
-    }
+    // displayTabs() {
+    //     const tabs = this.state.tabs.map((t, i) => {
+    //         return <li key={i} className={this.state.tab == i ? 'select' : ''} onClick={this.switchTabs.bind(this, i)}>
+    //             <a >{t.label}</a></li>
+    //     });
+    //     return (
+    //         <ul className="tab-nav">
+    //             {tabs}
+    //         </ul>
+    //     )
+    // }
 
     render() {
         // console.log('this.props >>', this.props)
-        const {category, fields, showMenu, mapFull, fetching} = this.props.main;
+        const {category, fields, showMenu, mapFull, fetching, range_items, range_item, show_range} = this.props.main;
         const {fetching_map, curentMap, info, feature, alias} = this.props.map_reducer;
-        const {toggleMenu, resizeMap, get_submenu} = this.props.Actions;
+        const {toggleMenu, resizeMap, get_submenu, set_Range_item} = this.props.Actions;
         const {get_map_area} = this.props.MapActions;
 
         return (
@@ -61,7 +62,7 @@ class App extends Component {
                         </div>
                         <div className="main__right">
 
-                            <div className="slider" id="slider"/>
+                            <SliderRange range_items={ range_items} range_item={ range_item} set_Range_item={ set_Range_item } show_range={ show_range }/>
 
                             <Popup feature={ feature } alias={ alias }/>
 

@@ -16,7 +16,7 @@ const initialState = {
     alias: null,
     properties: null,
     bar_cahrt_full: false,
-    data_success: false
+    data_success: false,
 };
 
 export default function map(state = initialState, action) {

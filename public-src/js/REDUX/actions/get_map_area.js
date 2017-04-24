@@ -14,7 +14,7 @@ import {
 } from './constant';
 
 
-export function get_map_area(url, rebuild = true, alias) {
+export function get_map_area(url, rebuild = true, alias, range_item) {
     return (dispatch) => {
         dispatch({
             type: GET_MAP_AREA_REQUEST,
@@ -31,13 +31,14 @@ export function get_map_area(url, rebuild = true, alias) {
             .then(checkStatus)
             .then(parseJSON)
             .then(data => {
-                getMap(data[1], rebuild);
+                getMap(data[1], rebuild, range_item);
                 dispatch({
                     type: GET_MAP_AREA_SUCCESS,
                     payload: [data[0]]
                 })
 
-            }).catch(() => {
+            }).catch((err) => {
+                console.log('err >>', err);
                 dispatch({
                     type: GET_MAP_AREA_ERROR
                 })

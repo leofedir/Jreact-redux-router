@@ -18,11 +18,11 @@ class BarChart extends Component {
 
     createChart() {
         const {alias, properties, data_success} = this.props.map_reducer;
+        const {range_item, range_items} = this.props.main;
 
-        if (data_success && properties.__region != undefined) {
+        if (data_success && properties && '__region' in properties) {
 
-
-            bar = null;
+            let curent_year = range_items[range_item]
 
             let district = {};
             let district_arr = [];
@@ -33,7 +33,7 @@ class BarChart extends Component {
 
                 let _item = district[item.koatuu.slice(0, 2)];
 
-                _item.push([item.name_ua, +item.year_13])
+                _item.push([item.name_ua, +item[curent_year]])
 
             });
 
@@ -41,6 +41,7 @@ class BarChart extends Component {
                 if (district.hasOwnProperty(key)) {
                     let obj = {};
                     obj.id = key;
+                    obj.name = alias;
                     obj.data = district[key].sort((a, b) => b[1] - a[1]);
 
 
@@ -51,7 +52,7 @@ class BarChart extends Component {
             let newData = properties.__region.map(item => {
                 let obj = {};
                 obj.name = item.name_ua;
-                obj.y = +item.year_13;
+                obj.y = +item[curent_year];
                 obj.drilldown = item.koatuu.slice(0, 2);
                 return obj
             });
@@ -61,7 +62,7 @@ class BarChart extends Component {
             // Create the chart
             bar = Highcharts.chart('item_bar_chart', {
                 lang: {
-                    drillUpText: 'Назад до {series.name}'
+                    drillUpText: 'Назад'
                 },
                 chart: {
                     type: 'bar'
@@ -72,7 +73,7 @@ class BarChart extends Component {
                     enabled: false
                 },
                 title: {
-                    text: alias
+                    text: alias+', ' + properties.__district["0"].parameter
                 },
                 xAxis: {
                     type: 'category',
@@ -114,6 +115,12 @@ class BarChart extends Component {
                             y: 0,
                             x: 0
                         },
+                        zones: [{
+                            value: 0,
+                            color: '#93E1D8'
+                        }, {
+                            color: '#fccc0e'
+                        }],
                         theme: {
                             fill: 'white',
                             'stroke-width': 1,
@@ -134,8 +141,9 @@ class BarChart extends Component {
                     series: district_arr
                 }
             });
-        } else {
-            bar != null ? bar.destroy() : ''
+        } else if (bar != null && bar != undefined && 'destroy' in bar) {
+            console.log('else >>>', Object.keys(bar))
+            bar.destroy()
         }
 
     }
@@ -164,7 +172,8 @@ class BarChart extends Component {
 
 function mapStateToProps(state) {
     return {
-        map_reducer: state.map_reducer
+        map_reducer: state.map_reducer,
+        main: state.main
     }
 }
 

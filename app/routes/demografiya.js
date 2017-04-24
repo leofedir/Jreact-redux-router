@@ -2,14 +2,26 @@
 const pgdb = require('../libs/pgdb')(),
     GeoJson = require( '../libs/createGeoJson');
 
+let dataChart = {};
+
 module.exports = function (router){
 
+
     router.post('/getmapdata', function(req, res) {
+
+        if (req.body.table in dataChart) {
+            res.json(dataChart[req.body.table] )
+        } else {
             pgdb.query(`select koatuu,name_ua,year_13,year_14,year_15,parameter from ` +  req.body.table)
-                .then((d)=>res.json(d))
+                .then((d)=> {
+                    dataChart[req.body.table] = d
+                    res.json(d)
+                })
                 .catch((e)=>{
                     console.log("Error" , e);
                 })
+        }
+
     });
 
     router.post('/getsubmenu', function(req, res) {
