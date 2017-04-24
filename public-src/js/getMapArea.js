@@ -1,8 +1,9 @@
 import choropleth from './colorRender'
 import {Lmap, ukraine} from "./PageElement/Map";
 
-import { clickOnFeature } from './REDUX/actions/get_map_area'
-import { store } from './index'
+import {set_Range_items} from './REDUX/actions/actions'
+import {clickOnFeature} from './REDUX/actions/get_map_area'
+import {store} from './index'
 
 let choroplethLayer;
 
@@ -15,8 +16,6 @@ export default function getMap(data, rebuild = true) {
         Lmap.removeLayer(choroplethLayer)
     }
 
-    let property;
-
     let filds = data[0].properties;
     let propertys = []
 
@@ -26,38 +25,23 @@ export default function getMap(data, rebuild = true) {
             propertys.push(key)
         }
     }
+    store.dispatch(set_Range_items(propertys));
 
-    // create range slider title
-    let title_slider_range = []
+    let state = store.getState();
 
-    propertys.forEach((item) => {
-        title_slider_range.push(`<p>20${item.substring(5)}</p>`)
-    });
+    let item = state.main.range_item;
+    let items = state.main.range_items;
 
-    let slider = document.getElementById('slider')
-    slider.innerHTML = `<div class="slider_title">${title_slider_range.join('')}</div>
-                                <input id='range' class="slider_range" type="range" min="0" max="${propertys.length - 1}" value="0" id="fader" step="1">`;
+    function handleChange() {
+        let nexItem = store.getState().main.range_item;
+        if (nexItem !== item) {
+            item = nexItem;
+            renderLayer();
+        }
+    }
 
-    let range = document.getElementById('range');
-
-    range.addEventListener('change', function () {
-        property = propertys[this.value];
-
-        renderLayer();
-
-        // if (myItem != 'year_13') {
-        //     mylayer3 = new ArcGISDynamicMapServiceLayer(tot, {
-        //         className: 'ato',
-        //         imageTransparency: false,
-        //         id: "ato"
-        //     });
-        //     map.addLayer(mylayer3)
-        // } else {
-        //     map.removeLayer(map.getLayer('ato'))
-        // }
-    })
-
-    property = propertys[0]
+    let unsubscribe = store.subscribe(handleChange);
+    handleChange();
 
     function renderLayer() {
         if (Lmap.hasLayer(choroplethLayer)) {
@@ -65,7 +49,7 @@ export default function getMap(data, rebuild = true) {
         }
 
         choroplethLayer = L.choropleth(data, {
-            valueProperty: property,
+            valueProperty: items[item],
             scale: ['#ffffb2', '#bd0026'],
             steps: 5,
             mode: 'q',
@@ -95,7 +79,7 @@ export default function getMap(data, rebuild = true) {
 
         limits.forEach(function (limit, i) {
             labels.push('<i style="background:' + colors[i] + '"></i> ' +
-                ((limits[i] !== null) ?  new Intl.NumberFormat().format(limits[i]) : dani) + ((i !== limits.length - 1 && limits[i + 1] !== null) ? ' до ' + new Intl.NumberFormat().format(limits[i + 1]) + '<br>' : (limits[i] !== null) ? '  +<br/>' : '<br/>'))
+                ((limits[i] !== null) ? new Intl.NumberFormat().format(limits[i]) : dani) + ((i !== limits.length - 1 && limits[i + 1] !== null) ? ' до ' + new Intl.NumberFormat().format(limits[i + 1]) + '<br>' : (limits[i] !== null) ? '  +<br/>' : '<br/>'))
         })
 
         div.innerHTML += labels.join('')
