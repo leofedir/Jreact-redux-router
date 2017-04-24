@@ -19,10 +19,7 @@ class BarChart extends Component {
     createChart() {
         const {alias, properties, data_success} = this.props.map_reducer;
 
-        if (data_success && properties.__region != undefined) {
-
-
-            bar = null;
+        if (data_success && properties && '__region' in properties) {
 
             let district = {};
             let district_arr = [];
@@ -135,6 +132,9 @@ class BarChart extends Component {
                     series: district_arr
                 }
             });
+        } else if (bar != null) {
+            bar.destroy()
+            console.log('else >>>')
         }
 
     }
