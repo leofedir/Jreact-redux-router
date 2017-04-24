@@ -4,7 +4,7 @@ export let alias = {
     area_demography_rivenurbanizatsii: 'Рівень урбанізації',
     area_demography_mentowomen: 'Співвідношення чоловіків до жінок',
     area_demography_utrymantsinapratsuuchoho: 'Кількість утриманців на одного працюючого',
-
+    area_demography_zminachiselnostinaselennya: 'Зміна чисельності населення',
     area_sotspol_vyplachenipensii: 'Загальний обсяг виплачених пенсій',
     area_budgets_dohodymistsevogobudget: 'Доходи місцевих бюджетів',
     area_budgets_pdfonadushu: 'ПДФО на душу населення',
@@ -13,5 +13,9 @@ export let alias = {
     area_budgets_rivpodnavnadushu: 'Рівень податкового навантаження на душу населення',
     area_budgets_rivfinzalejnosti: 'Рівень фінансової залежності місцевого бюджету',
     area_budgets_chastkapodatknadhodj: 'Частка податкових надходжень',
-    area_budgets_chastkanepodatknadhodj: 'Частка неподаткових надходжень'
+    area_budgets_chastkanepodatknadhodj: 'Частка неподаткових надходжень',
+    area_demography_serednviknasel: 'Середній вік населення території',
+    area_demography_chastkavikomst60:'Частка осіб віком старше 60 років'
+
+
 }
