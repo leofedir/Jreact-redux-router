@@ -76,12 +76,15 @@
   color: #606060;
   font-size: 17px;
   height: 26px;
-  width: 30%;
+  width: 50%;
   transition: 0.5s;
 }
 .menu__item-text {
   transition: $transition-win;
   white-space: nowrap;
+}
+.test .menu__item {
+  padding: 5px 5px 5px 9px;
 }
 
 .mapFull  .main__map {
