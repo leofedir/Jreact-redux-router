@@ -44,6 +44,7 @@ class App extends Component {
             <div id="wrapper" className={ (showMenu ? '' : 'hide' ) + (mapFull ? ' mapFull' : '')}>
                 <div className="heder">
                     <ButtonMenu toggleMenu={ toggleMenu } showMenu={ showMenu }/>
+                    <a className="logo_link" href="/"><img className="logo" src="./img/logo_OD.svg" alt=""/></a>
                 </div>
                 <div className="content__wrap">
 
