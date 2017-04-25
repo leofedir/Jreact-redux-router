@@ -7,8 +7,6 @@ const higchartsDrilldown = require('highcharts/modules/drilldown.js');
 
 higchartsDrilldown(Highcharts);
 
-let bar = null;
-
 class BarChart extends Component {
 
     toggleChart() {
@@ -60,7 +58,7 @@ class BarChart extends Component {
             newData.sort((a, b) => b.y - a.y);
 
             // Create the chart
-            bar = Highcharts.chart('item_bar_chart', {
+           Highcharts.chart('item_bar_chart', {
                 lang: {
                     drillUpText: 'Назад'
                 },
@@ -141,11 +139,7 @@ class BarChart extends Component {
                     series: district_arr
                 }
             });
-        } else if (bar != null && bar != undefined && 'destroy' in bar) {
-            console.log('else >>>', Object.keys(bar))
-            bar.destroy()
         }
-
     }
 
     componentDidMount() {
