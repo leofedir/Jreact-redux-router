@@ -36,7 +36,7 @@ class App extends Component {
     render() {
         // console.log('this.props >>', this.props)
         const {category, fields, showMenu, mapFull, fetching, range_items, range_item, show_range} = this.props.main;
-        const {fetching_map, curentMap, info, feature, alias} = this.props.map_reducer;
+        const {fetching_map, curentMap, info, feature, alias, claster, feature_claster} = this.props.map_reducer;
         const {toggleMenu, resizeMap, get_submenu, set_Range_item} = this.props.Actions;
         const {get_map_area} = this.props.MapActions;
 
@@ -58,13 +58,14 @@ class App extends Component {
                                 get_map_area={ get_map_area  }
                                 curentMap={ curentMap }
                                 alias={ alias }
+                                claster={ claster }
                             />
                         </div>
                         <div className="main__right">
 
                             <SliderRange range_items={ range_items} range_item={ range_item} set_Range_item={ set_Range_item } show_range={ show_range }/>
 
-                            <Popup feature={ feature } alias={ alias }/>
+                            <Popup feature={ feature } alias={ alias } feature_claster={ feature_claster }/>
 
                             <div className="info">
                                 <div className="item_header">
