@@ -53,16 +53,16 @@ class Popup extends Component {
             fields.forEach(item => {
 
                 if (item.title === 'Назва') {
-                    popapItems.push(<h5 className="name">${ feature_claster[item.key] }</h5>)
+                    popapItems.push(<h5 className="name">{ feature_claster[item.key] }</h5>)
                 } else if (feature_claster[item.key]) {
-                    popapItems.push(<div class="popup_item"><img src={ item.img }/><p>{ feature_claster[item.key] }</p></div>)
+                    popapItems.push(<div className="popup_item"><img src={ item.img }/><p>{ feature_claster[item.key] }</p></div>)
                 }
             });
 
             for (let key in feature_claster) {
                 if (feature_claster.hasOwnProperty(key) && ~key.indexOf('_') && key.slice(0, key.indexOf('_')) == 'chart') {
-                    addChart();
-                    return
+                    console.log('chart >>')
+                    // addChart();
                 }
 
             }
@@ -73,7 +73,7 @@ class Popup extends Component {
                         <div className="map_heder_title"/>
                     </div>
                     <div className="item_content">
-                        <div className="popup_top claster">
+                        <div key={feature_claster.object_id} className="popup_top claster">
                             { popapItems }
                         </div>
                     </div>
