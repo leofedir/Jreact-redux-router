@@ -5,7 +5,12 @@ import {
     CLICK_ON_FEATURE,
     BARCHART_TOGGLE,
     GET_MAP_DATA_SUCCESS,
-    GET_MAP_DATA_REQUEST
+    GET_MAP_DATA_REQUEST,
+    SHOW_CLASTER,
+    GET_CLASTER_REQUEST,
+    GET_CLASTER_SUCCESS,
+    GET_CLASTER_ERROR,
+    CLICK_ON_FEATURE_CLASTER
 } from '../actions/constant'
 
 const initialState = {
@@ -17,6 +22,8 @@ const initialState = {
     properties: null,
     bar_cahrt_full: false,
     data_success: false,
+    claster: false,
+    feature_claster: null
 };
 
 export default function map(state = initialState, action) {
@@ -38,10 +45,25 @@ export default function map(state = initialState, action) {
             return {...state, properties: action.payload, data_success: true};
 
         case BARCHART_TOGGLE:
-            return {...state, bar_cahrt_full: action.payload}
+            return {...state, bar_cahrt_full: action.payload};
 
         case CLICK_ON_FEATURE:
-            return {...state, feature: action.payload}
+            return {...state, feature: action.payload};
+
+        case CLICK_ON_FEATURE_CLASTER:
+            return {...state, feature_claster: action.payload};
+
+        case SHOW_CLASTER:
+            return {...state, claster: action.payload};
+
+        case GET_CLASTER_REQUEST:
+            return {...state, fetching_map: true};
+
+        case GET_CLASTER_SUCCESS:
+            return {...state, fetching_map: false};
+
+        case GET_CLASTER_ERROR:
+            return {...state, fetching_map: false};
 
         default:
             return state;

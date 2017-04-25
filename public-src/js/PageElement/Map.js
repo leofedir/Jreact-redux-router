@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { checkStatus, parseJSON} from '../checkJSON';
+import React, {Component} from 'react';
+import {checkStatus, parseJSON} from '../checkJSON';
 import L from 'leaflet/dist/leaflet-src';
 import esri from 'esri-leaflet/dist/esri-leaflet';
 import SubMenu from "./getSubMenu";
-import { alias } from '../aliasMapName';
+import {alias} from '../aliasMapName';
 
 export let Lmap = null;
 export let ukraine;
 
 let icon = L.icon({
     iconUrl: '/img/marker-icon.svg',
-    iconSize:     [25, 36],
-    iconAnchor:   [12, 33]
+    iconSize: [25, 36],
+    iconAnchor: [12, 33]
 });
 
 class Map extends Component {
@@ -19,7 +19,7 @@ class Map extends Component {
     componentDidMount() {
         this.createMap();
         Lmap.on('zoomend', () => {
-            if (Lmap.getZoom() <= 5 && this.props.curentMap != null && this.props.curentMap.indexOf('region') <= 0 ) {
+            if (Lmap.getZoom() <= 5 && this.props.curentMap != null && this.props.curentMap.indexOf('region') <= 0) {
                 let mapName = this.props.curentMap.slice(0, this.props.curentMap.indexOf('__district'))
                 this.props.get_map_area(mapName + '__region', false, alias[mapName])
 
@@ -78,7 +78,7 @@ class Map extends Component {
         this.props.resizeMap(this.props.mapFull)
     }
 
-    changeBasemap(e){
+    changeBasemap(e) {
         if (Lmap) {
             change(Lmap)
         }
@@ -97,28 +97,28 @@ class Map extends Component {
         const {fetching, fetching_map} = this.props;
 
         return (
-        <div className="block block-top block_map">
-            <div className="item_header">
-                <SubMenu />
-                <i className="fa fa-expand fa-1x ico_map_full ico_hover" onClick={::this.omButtonMapClick}/>
-            </div>
-            <div id="map_wrapper" className="map_wrapper">
-                <div id="loader" className={(fetching ? "show" : '') || (fetching_map ? 'show' : '')} />
-                <i className="fa fa-plus fa-1x zoom_in_icon"  onClick={::this.zoom_in} id="zoom_in"/>
-                <i className="fa fa-minus fa-1x zoom_out_icon" onClick={::this.zoom_out} id="zoom_out"/>
-                <i className="fa fa-dot-circle-o fa-1x geolocate_icon" onClick={::this.geolocate} id="geolocate"/>
-                <div id="map" className="maps__items"/>
-                <div id="basemaps-wrapper">
-                    <p className="basemap_title">Базова карта</p>
-                    <select name="basemaps" id="basemaps" onChange={this.changeBasemap}>
-                        <option value="Topographic">Топографічна</option>
-                        <option value="Streets">Вулиці</option>
-                        <option value="Imagery">Супутникова</option>
-                        <option value="NationalGeographic">National Geographic</option>
-                    </select>
+            <div className="block block-top block_map">
+                <div className="item_header">
+                    <SubMenu />
+                    <i className="fa fa-expand fa-1x ico_map_full ico_hover" onClick={::this.omButtonMapClick}/>
+                </div>
+                <div id="map_wrapper" className="map_wrapper">
+                    <div id="loader" className={(fetching ? "show" : '') || (fetching_map ? 'show' : '')}/>
+                    <i className="fa fa-plus fa-1x zoom_in_icon" onClick={::this.zoom_in} id="zoom_in"/>
+                    <i className="fa fa-minus fa-1x zoom_out_icon" onClick={::this.zoom_out} id="zoom_out"/>
+                    <i className="fa fa-dot-circle-o fa-1x geolocate_icon" onClick={::this.geolocate} id="geolocate"/>
+                    <div id="map" className="maps__items"/>
+                    <div id="basemaps-wrapper">
+                        <p className="basemap_title">Базова карта</p>
+                        <select name="basemaps" id="basemaps" onChange={this.changeBasemap}>
+                            <option value="Topographic">Топографічна</option>
+                            <option value="Streets">Вулиці</option>
+                            <option value="Imagery">Супутникова</option>
+                            <option value="NationalGeographic">National Geographic</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
 
 
         );

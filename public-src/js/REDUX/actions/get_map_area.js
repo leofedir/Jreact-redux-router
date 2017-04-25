@@ -1,5 +1,6 @@
 import {checkStatus, parseJSON} from '../../checkJSON';
-import getMap from '../../getMapArea'
+import getMap from '../../getMapArea';
+import claster from '../../renderClaster/claster'
 
 import {
     GET_MAP_AREA_REQUEST,
@@ -9,7 +10,12 @@ import {
     BARCHART_TOGGLE,
     GET_MAP_DATA_SUCCESS,
     GET_MAP_DATA_ERROR,
-    GET_MAP_DATA_REQUEST
+    GET_MAP_DATA_REQUEST,
+    SHOW_CLASTER,
+    GET_CLASTER_REQUEST,
+    GET_CLASTER_SUCCESS,
+    GET_CLASTER_ERROR,
+    CLICK_ON_FEATURE_CLASTER
 
 } from './constant';
 
@@ -90,3 +96,43 @@ export function barChartToggle(state) {
         payload: !state
     }
 }
+
+export function show_claster(state, mapName) {
+    return (dispatch) => {
+        dispatch({
+            type: GET_CLASTER_REQUEST
+        });
+
+        dispatch({
+            type: SHOW_CLASTER,
+            payload: !state
+        });
+
+        fetch('/claster', {
+            method: 'post',
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: `table=${ mapName }`
+        }).then(checkStatus)
+          .then(parseJSON)
+            .then(data => {
+                claster(data);
+                dispatch({
+                    type: GET_CLASTER_SUCCESS,
+                })
+            }).catch((err) => {
+            console.log('err >>', err);
+            dispatch({
+                type: GET_CLASTER_ERROR
+            })})
+    }
+}
+
+export function clickOnFeatureClaster(feature) {
+    return {
+        type: CLICK_ON_FEATURE_CLASTER,
+        payload: feature
+    }
+}
+
