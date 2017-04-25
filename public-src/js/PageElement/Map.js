@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {checkStatus, parseJSON} from '../checkJSON';
-import L from 'leaflet/dist/leaflet-src';
+import L from 'leaflet';
 import esri from 'esri-leaflet/dist/esri-leaflet';
 import SubMenu from "./getSubMenu";
 import {alias} from '../aliasMapName';
