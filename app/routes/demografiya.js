@@ -30,7 +30,7 @@ module.exports = function (router){
             .then((d)=>{
                 let obj = {};
                 d.forEach(item => {
-                    let name = item.table_name.slice(0, item.table_name.indexOf("__"));
+                    let name = item.table_name.slice(0, 5) === 'point' ? item.table_name : item.table_name.slice(0, item.table_name.indexOf("__"));
                     obj[name] ? obj[name].push(item.table_name.slice(item.table_name.indexOf("__"))) : obj[name] = [item.table_name.slice(item.table_name.indexOf("__"))];
                 });
                 res.json(obj);

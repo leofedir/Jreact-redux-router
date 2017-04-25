@@ -10,20 +10,25 @@ class SubMenu extends Component {
     getMap(e) {
         let mapName = e.target.value;
         let arr = this.props.main.fields[mapName];
-        const { range_item } = this.props.main
-        const { get_map_area, getMapData } = this.props.MapActions;
+        const { range_item } = this.props.main;
+        const { claster } = this.props.map_reducer;
+        const { get_map_area, getMapData, show_claster } = this.props.MapActions;
         const { set_submenu_item } = this.props.Actions;
 
         set_submenu_item(mapName);
 
         let tableData = arr.map(item => mapName + item);
 
-        getMapData(tableData, arr);
+        console.log('mapName >>', mapName)
 
-        if (arr.some(item => item == '__region')) {
-            mapName.indexOf('area') == 0 ? get_map_area(mapName + '__region', true, alias[mapName], range_item) : console.log('mapName >>', alias[mapName])
-        } else if (arr.some(item => item == '__district')) {
-            mapName.indexOf('area') == 0 ? get_map_area(mapName + '__district', true, alias[mapName], range_item) : console.log('mapName >>', alias[mapName])
+        mapName.indexOf('area') === 0 ? getMapData(tableData, arr) : '';
+
+        if (arr.some(item => item === '__region')) {
+            get_map_area(mapName + '__region', true, alias[mapName], range_item)
+        } else if (arr.some(item => item === '__district')) {
+           get_map_area(mapName + '__district', true, alias[mapName], range_item)
+        } else if ( mapName.slice(0, 5) === 'point') {
+            show_claster(claster, mapName)
         }
     }
 
