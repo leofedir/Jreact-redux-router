@@ -2,6 +2,7 @@ const router = require('express').Router(),
       bodyParser = require('body-parser'),
       pgdb = require('../libs/pgdb')(),
       demografiya = require('./demografiya'),
+      claster = require('./claster'),
       GeoJson = require( '../libs/createGeoJson');
 
 router.use(bodyParser.json());
@@ -14,5 +15,6 @@ router.post('/main', function(req, res) {
 });
 
 demografiya(router);
+claster(router)
 
 module.exports = router;
