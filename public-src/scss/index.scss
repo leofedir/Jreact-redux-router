@@ -158,6 +158,7 @@ body {
 }
 .chart_1 {
   flex-basis: 50%;
+  min-width: 45%;
   margin-right: $block-margin;
   box-shadow: $shadow;
 }
@@ -243,7 +244,15 @@ body {
   //  margin-left: -250px;
   //}
 
+  .highcharts-root {
+    max-height: 100% !important;
+    max-width: 100% !important;
+  }
 
+
+  .item_content {
+    height: auto;
+  }
 .aside {
   flex: 0 0 0;
   z-index: 600;
@@ -275,7 +284,7 @@ body {
   .fa-bars.fa-2x {
     font-size: 2em;
     margin: 0;
-    padding: 2px;
+    padding: 5px;
     margin-left: 10px;
   }
   .heder {
