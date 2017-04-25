@@ -6,6 +6,8 @@
 }
 .popup_top {
   border-bottom: 1px solid #747474;
+  font-weight: bold;
+  color: $text-color;
 }
 .popup_top span, .popup_bottom span {
   float: right;
@@ -14,4 +16,25 @@
 }
 .popup_top h4, .popup_bottom h4 {
   color: #747474;
+}
+
+.popup_top .name {
+  text-align: center;
+  font-family: arial;
+}
+.popup_item {
+  display: flex;
+  /*justify-content: space-between;*/
+  align-items: center;
+  padding: 0;
+  line-height: 1;
+}
+.popup_item p {
+  margin: 10px 0;
+  padding: 0;
+}
+
+.popup_item img {
+  width: 20px;
+  margin-right: 10px;
 }
