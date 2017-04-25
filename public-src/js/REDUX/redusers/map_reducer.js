@@ -10,7 +10,8 @@ import {
     GET_CLASTER_REQUEST,
     GET_CLASTER_SUCCESS,
     GET_CLASTER_ERROR,
-    CLICK_ON_FEATURE_CLASTER
+    CLICK_ON_FEATURE_CLASTER,
+    SET_LEGEND_DATA
 } from '../actions/constant'
 
 const initialState = {
@@ -23,7 +24,8 @@ const initialState = {
     bar_cahrt_full: false,
     data_success: false,
     claster: false,
-    feature_claster: null
+    feature_claster: null,
+    legend_data: null
 };
 
 export default function map(state = initialState, action) {
@@ -60,10 +62,13 @@ export default function map(state = initialState, action) {
             return {...state, fetching_map: true};
 
         case GET_CLASTER_SUCCESS:
-            return {...state, fetching_map: false};
+            return {...state, fetching_map: false,info: action.payload};
 
         case GET_CLASTER_ERROR:
             return {...state, fetching_map: false};
+
+        case SET_LEGEND_DATA:
+            return {...state, legend_data: action.payload};
 
         default:
             return state;

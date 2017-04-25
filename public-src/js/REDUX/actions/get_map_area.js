@@ -15,7 +15,8 @@ import {
     GET_CLASTER_REQUEST,
     GET_CLASTER_SUCCESS,
     GET_CLASTER_ERROR,
-    CLICK_ON_FEATURE_CLASTER
+    CLICK_ON_FEATURE_CLASTER,
+    SET_LEGEND_DATA
 
 } from './constant';
 
@@ -118,8 +119,10 @@ export function show_claster(state, mapName) {
           .then(parseJSON)
             .then(data => {
                 claster(data);
+                console.log('data[0] >>', data[0])
                 dispatch({
                     type: GET_CLASTER_SUCCESS,
+                    payload: data[0]
                 })
             }).catch((err) => {
             console.log('err >>', err);
@@ -133,6 +136,13 @@ export function clickOnFeatureClaster(feature) {
     return {
         type: CLICK_ON_FEATURE_CLASTER,
         payload: feature
+    }
+}
+
+export function set_legend_data(data) {
+    return {
+        type: SET_LEGEND_DATA,
+        payload: data
     }
 }
 

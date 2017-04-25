@@ -4,9 +4,8 @@ let store = {};
 
 module.exports = function (router) {
 
-
     router.post('/claster', function (req, res) {
-        console.log('sdfjskldjfds >>');
+
         const table = req.body.table;
         let info = null;
 

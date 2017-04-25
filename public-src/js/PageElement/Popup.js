@@ -8,7 +8,6 @@ class Popup extends Component {
 
     getInfo() {
         const {feature, alias, feature_claster} = this.props;
-        console.log('this.props >>', this.props)
 
         if (feature != null) {
             dataToChart = [];
@@ -46,8 +45,6 @@ class Popup extends Component {
 
             let fields = getFields();
             
-            console.log('fields >>', fields)
-
             let popapItems = [];
 
             fields.forEach((item, i) => {
@@ -91,7 +88,6 @@ class Popup extends Component {
 
     render() {
         const {feature, feature_claster} = this.props;
-        console.log('this.props >>', this.props)
         return (feature != null || feature_claster != null) ? this.getInfo() : this.noInfo()
     }
 }

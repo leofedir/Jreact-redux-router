@@ -9,6 +9,7 @@ import Popup from './PageElement/Popup';
 import Chart from './PageElement/Chart';
 import BarChart from './PageElement/BarChart';
 import SliderRange from './PageElement/sliderRange';
+import Legend from './PageElement/Legend';
 import * as Actions from './REDUX/actions/actions';
 import * as MapActions from './REDUX/actions/get_map_area';
 
@@ -36,7 +37,7 @@ class App extends Component {
     render() {
         // console.log('this.props >>', this.props)
         const {category, fields, showMenu, mapFull, fetching, range_items, range_item, show_range} = this.props.main;
-        const {fetching_map, curentMap, info, feature, alias, claster, feature_claster} = this.props.map_reducer;
+        const {fetching_map, curentMap, info, feature, alias, claster, feature_claster, legend_data} = this.props.map_reducer;
         const {toggleMenu, resizeMap, get_submenu, set_Range_item} = this.props.Actions;
         const {get_map_area} = this.props.MapActions;
 
@@ -64,7 +65,8 @@ class App extends Component {
                         </div>
                         <div className="main__right">
 
-                            <SliderRange range_items={ range_items} range_item={ range_item} set_Range_item={ set_Range_item } show_range={ show_range }/>
+                            <SliderRange range_items={ range_items} range_item={ range_item}
+                                         set_Range_item={ set_Range_item } show_range={ show_range }/>
 
                             <Popup feature={ feature } alias={ alias } feature_claster={ feature_claster }/>
 
@@ -77,15 +79,7 @@ class App extends Component {
                                          dangerouslySetInnerHTML={info ? {__html: info} : {__html: '&nbsp; &nbsp;Україна - держава у Східній Європі. Столиця - м.Київ. Площа - 60 357 712 га. Населення - 44 933 290 особи'}}/>
                                 </div>
                             </div>
-
-                            <div className="legend">
-                                <div className="item_header">
-                                    <div className="map_heder_title">Легенда</div>
-                                </div>
-                                <div className="item_content">
-                                    <div className="item_content" id="legend"/>
-                                </div>
-                            </div>
+                            <Legend legend_data={ legend_data }/>
                         </div>
                         <div className="main__chart">
 

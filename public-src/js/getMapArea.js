@@ -2,7 +2,7 @@ import choropleth from './colorRender'
 import {Lmap, ukraine} from "./PageElement/Map"
 
 import {set_Range_items} from './REDUX/actions/actions'
-import {clickOnFeature} from './REDUX/actions/get_map_area'
+import {clickOnFeature, set_legend_data} from './REDUX/actions/get_map_area'
 import {store} from './index'
 import { markers } from './renderClaster/claster'
 
@@ -71,22 +71,13 @@ export default function getMap(data, rebuild = true) {
             store.dispatch(clickOnFeature(e.target.feature.properties))
         }
 
-        // Add legend (don't forget to add the CSS from index.html)
-        var div = document.getElementById('legend')
-        var limits = choroplethLayer.options.limits
-        var colors = choroplethLayer.options.colors
-        var labels = []
-        div.innerHTML = '';
-        div.innerHTML = `<h5 class="legend__title">Одиниці виміру: <span>${ filds.parameter }</span></h5>`
-        let dani = 'Дані відсутні'
+        let legend_data = {
+            limits: choroplethLayer.options.limits,
+            colors: choroplethLayer.options.colors,
+            parametr: filds.parameter
+        };
 
-        limits.forEach(function (limit, i) {
-            labels.push('<i style="background:' + colors[i] + '"></i> ' +
-                ((limits[i] !== null) ? new Intl.NumberFormat().format(limits[i]) : dani) + ((i !== limits.length - 1 && limits[i + 1] !== null) ? ' до ' + new Intl.NumberFormat().format(limits[i + 1]) + '<br>' : (limits[i] !== null) ? '  +<br/>' : '<br/>'))
-        })
-
-        div.innerHTML += labels.join('')
-        return div
+        store.dispatch(set_legend_data(legend_data));
     }
 
     renderLayer();
