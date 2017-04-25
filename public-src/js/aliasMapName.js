@@ -22,8 +22,8 @@ export let alias = {
     area_demography_chastkavikomst05:'Частка дітей віком від 0 до 5 років',
     area_sotspol_vydatkynannadannyapilg:'Видатки на надання пільг',
     area_sotspol_vydatkynannadannyasubs:'Видатки на надання субсидій',
-    area_sotspol_kilkistpensioner:'Кількість пенсіонерів'
-    // point_derguprav_sudy:'Суди'
+    area_sotspol_kilkistpensioner:'Кількість пенсіонерів',
+    point_derguprav_sudy:'Суди'
 
 
 }
