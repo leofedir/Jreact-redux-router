@@ -23,7 +23,9 @@ export let alias = {
     area_sotspol_vydatkynannadannyapilg:'Видатки на надання пільг',
     area_sotspol_vydatkynannadannyasubs:'Видатки на надання субсидій',
     area_sotspol_kilkistpensioner:'Кількість пенсіонерів',
-    point_derguprav_sudy:'Суди'
+    point_derguprav_sudy:'Суди',
+    point_naukaa_naukovizaklady:'Накові заклади',
+    point_ekologyy_ekolnebezpobj:"Екологічно небезпечні об'єкти"
 
 
 }
