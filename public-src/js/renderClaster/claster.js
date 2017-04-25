@@ -1,6 +1,7 @@
 import {Lmap, ukraine} from "../PageElement/Map";
+import { choroplethLayer } from "../getMapArea";
 import {store} from '../index'
-import L from 'leaflet/dist/leaflet-src';
+import L from 'leaflet';
 import {clickOnFeatureClaster} from '../REDUX/actions/get_map_area'
 
 
@@ -15,13 +16,32 @@ import React from 'react';
 let currentSearcherControl = null;
 let layers = {};
 
+export let markers = null;
+
 export default function claster(data) {
     Lmap.removeLayer(ukraine);
 
-    console.log('data >>', data)
+    choroplethLayer ? Lmap.removeLayer(choroplethLayer) : '';
+    markers ? Lmap.removeLayer(markers) : '';
 
-    let markers = L.markerClusterGroup();
+    console.log('data >>', data);
+
+    let icon = L.icon({
+        iconUrl: '/img/marker-icon.svg',
+        iconSize: [25, 36],
+        iconAnchor: [12, 33]
+    });
+
+    markers = L.markerClusterGroup();
     let geoJsonLayer = L.geoJson(data[1], {
+        // Cluster Options
+        polygonOptions: {
+            color: "#2d84c8"
+        },
+        // Feature Layer Options
+        pointToLayer: function (geojson, latlng) {
+            return L.marker(latlng, {icon: icon});
+        },
         onEachFeature: function (feature, layer) {
             layer.on('click', whenClicked)
         }
@@ -34,9 +54,6 @@ export default function claster(data) {
     markers.addLayer(geoJsonLayer);
     Lmap.addLayer(markers);
     Lmap.fitBounds(markers.getBounds());
-
-
-
 
 
     //     // Lmap = null;
@@ -350,7 +367,7 @@ export default function claster(data) {
     //             updateSearchControl();
     //         }
 
-        // }
+    // }
     // }
     //
     // componentDidMount() {

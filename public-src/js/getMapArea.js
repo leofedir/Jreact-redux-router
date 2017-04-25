@@ -1,14 +1,17 @@
 import choropleth from './colorRender'
-import {Lmap, ukraine} from "./PageElement/Map";
+import {Lmap, ukraine} from "./PageElement/Map"
 
 import {set_Range_items} from './REDUX/actions/actions'
 import {clickOnFeature} from './REDUX/actions/get_map_area'
 import {store} from './index'
+import { markers } from './renderClaster/claster'
 
-let choroplethLayer;
+export let choroplethLayer = null;
 
 export default function getMap(data, rebuild = true) {
     Lmap.removeLayer(ukraine);
+
+    markers ? Lmap.removeLayer(markers) : '';
 
     rebuild ? Lmap.setView([49, 31], 5) : '';
 
