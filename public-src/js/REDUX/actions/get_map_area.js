@@ -16,7 +16,6 @@ import {
     GET_CLASTER_ITEMS_SUCCESS,
     GET_CLASTER_ITEMS_ERROR,
     CLICK_ON_FEATURE_CLASTER,
-    SET_LEGEND_DATA
 
 } from './constant';
 

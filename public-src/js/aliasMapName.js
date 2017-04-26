@@ -26,7 +26,9 @@ export let alias = {
     point_derguprav_sudy:'Суди',
     point_naukaa_naukovizaklady:'Накові заклади',
     point_ekologyy_ekolnebezpobj:"Екологічно небезпечні об'єкти",
-    point_osvitaa_vyschi_licey: 'Ліцеї'
-
+    point_osvitaa_vyschi_licey: 'Ліцеї',
+    point_osvitaa_vyschi_school_1_33: 'школи І-ІІІ',
+    point_osvitaa_vyschi_school_1_3: 'школи І-ІІІ(2)',
+    point_osvitaa_vyschi_academyi: 'Академії'
 
 }
