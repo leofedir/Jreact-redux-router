@@ -3,18 +3,17 @@ import { choroplethLayer } from "../getMapArea";
 import {store} from '../index'
 import L from 'leaflet';
 import {clickOnFeatureClaster} from '../REDUX/actions/get_map_area'
-
-
-import getFields from './setFields';
-import Cluster from 'esri-leaflet-cluster';
-import Geocoding from 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder';
-import 'leaflet.markercluster/dist/leaflet.markercluster-src';
-import * as d3 from 'd3';
 var Highcharts = require('highcharts');
 
-import React from 'react';
-let currentSearcherControl = null;
-let layers = {};
+import 'leaflet.markercluster/dist/leaflet.markercluster-src';
+
+// import getFields from './setFields';
+// import Cluster from 'esri-leaflet-cluster';
+// import Geocoding from 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder';
+// import * as d3 from 'd3';
+// import React from 'react';
+// let currentSearcherControl = null;
+// let layers = {};
 
 export let markers = null;
 

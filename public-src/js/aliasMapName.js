@@ -25,7 +25,8 @@ export let alias = {
     area_sotspol_kilkistpensioner:'Кількість пенсіонерів',
     point_derguprav_sudy:'Суди',
     point_naukaa_naukovizaklady:'Накові заклади',
-    point_ekologyy_ekolnebezpobj:"Екологічно небезпечні об'єкти"
+    point_ekologyy_ekolnebezpobj:"Екологічно небезпечні об'єкти",
+    point_osvitaa_vyschi_licey: 'Ліцеї'
 
 
 }
