@@ -101,9 +101,9 @@ class BarChart extends Component {
                     data: newData,
                     zones: [{
                         value: 0,
-                        color: '#93E1D8'
+                        color: '#e74c3c'
                     }, {
-                        color: '#fccc0e'
+                        color: '#27ae60'
                     }]
                 }],
                 drilldown: {
@@ -115,22 +115,22 @@ class BarChart extends Component {
                         },
                         zones: [{
                             value: 0,
-                            color: '#93E1D8'
+                            color: '#e74c3c'
                         }, {
-                            color: '#fccc0e'
+                            color: '#27ae60'
                         }],
                         theme: {
-                            fill: 'white',
+
                             'stroke-width': 1,
-                            stroke: 'silver',
-                            r: 0,
+                            stroke: 'gray',
+                            r: 6,
                             states: {
                                 hover: {
-                                    fill: '#a4edba'
+                                    fill: 'lightgray'
                                 },
                                 select: {
-                                    stroke: '#039',
-                                    fill: '#a4edba'
+                                    stroke: '#555',
+                                    fill: '#e74c3c'
                                 }
                             }
                         }

@@ -199,7 +199,7 @@ body {
 .highcharts-drilldown-axis-label {
   text-decoration: none !important;
   color: $text-color !important;
-  fill: $text-color !important;
+  fill: #686868 !important;
 }
 
 
@@ -209,9 +209,32 @@ body {
   padding: 9px 0;
 }
 .logo_link {
-    height: 100%;
-    width: auto;
-  }
+  background: rgba(43, 43, 43, 1) url("/img/logo_OD.svg") no-repeat scroll center center / 145px auto;
+  height: 55px;
+  padding: 0 43px;
+  transition: all 0.3s ease 0s;
+  width: 200px;
+}
+
+
+//.logo_link {
+//  background: rgba(255, 0, 0, 0.5) url("/img/logo_OD.svg") no-repeat scroll center center / 32px auto;
+//  height: 37px;
+//  padding: 9px 0;
+//  width: 50px;
+//  transition: $transition-win;
+//}
+
+.hide .logo_link {
+  background: rgba(43, 43, 43, 1) url("/img/logo_min.svg") no-repeat scroll center center / 32px auto;
+  height: 37px;
+  padding: 9px 0;
+  width: 50px;
+}
+
+.fa-bars.fa-1x {
+  padding: 20px 10px;
+}
 
 @media screen and (max-width:1600px)  {
   .map_heder_title .test{
@@ -243,6 +266,22 @@ body {
   //.hide .aside {
   //  margin-left: -250px;
   //}
+
+  .logo_link {
+    background: rgba(43, 43, 43, 1) url("/img/logo_OD.svg") no-repeat scroll center center / 120px auto;
+    height: 40px;
+    padding: 0 43px;
+    transition: all 0.3s ease 0s;
+    width: 200px;
+  }
+  .fa-bars.fa-1x {
+    margin: 0 0 0 1px;
+  }
+
+  .hide .logo_link {
+    background: rgba(43, 43, 43, 1) url("/img/logo_min.svg") no-repeat scroll center center / 25px auto;
+    height: 22px;
+  }
 
   .highcharts-root {
     max-height: 100% !important;

@@ -7,7 +7,7 @@ class ButtonMenu extends Component {
 
     render() {
         return (
-            <i className="fa fa-bars fa-2x menu_ico" onClick={::this.omButtonMenuClick} id="hide_menu"/>
+            <i className="fa fa-bars fa-1x menu_ico" onClick={::this.omButtonMenuClick} id="hide_menu"/>
         )
     }
 }
