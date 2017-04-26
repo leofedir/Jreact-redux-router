@@ -22,7 +22,7 @@ class Legend extends Component {
     }
 
     render() {
-        if (this.props.legend_data == null) return null;
+        if (this.props.legend_data == null ) return null;
 
         return (
             <div className="legend">
