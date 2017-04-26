@@ -12,9 +12,9 @@ import {
     GET_MAP_DATA_ERROR,
     GET_MAP_DATA_REQUEST,
     SHOW_CLASTER,
-    GET_CLASTER_REQUEST,
-    GET_CLASTER_SUCCESS,
-    GET_CLASTER_ERROR,
+    GET_CLASTER_ITEMS_REQUEST,
+    GET_CLASTER_ITEMS_SUCCESS,
+    GET_CLASTER_ITEMS_ERROR,
     CLICK_ON_FEATURE_CLASTER,
     SET_LEGEND_DATA
 
@@ -101,7 +101,7 @@ export function barChartToggle(state) {
 export function show_claster(state, mapName) {
     return (dispatch) => {
         dispatch({
-            type: GET_CLASTER_REQUEST
+            type: GET_CLASTER_ITEMS_REQUEST
         });
 
         dispatch({
@@ -109,7 +109,7 @@ export function show_claster(state, mapName) {
             payload: !state
         });
 
-        fetch('/claster', {
+        fetch('/claster_layers', {
             method: 'post',
             headers: {
                 "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
@@ -118,16 +118,15 @@ export function show_claster(state, mapName) {
         }).then(checkStatus)
           .then(parseJSON)
             .then(data => {
-                claster(data);
-                console.log('data[0] >>', data[0])
+                // claster(data);
                 dispatch({
-                    type: GET_CLASTER_SUCCESS,
-                    payload: data[0]
+                    type: GET_CLASTER_ITEMS_SUCCESS,
+                    payload: data
                 })
             }).catch((err) => {
             console.log('err >>', err);
             dispatch({
-                type: GET_CLASTER_ERROR
+                type: GET_CLASTER_ITEMS_ERROR
             })})
     }
 }
@@ -138,11 +137,3 @@ export function clickOnFeatureClaster(feature) {
         payload: feature
     }
 }
-
-export function set_legend_data(data) {
-    return {
-        type: SET_LEGEND_DATA,
-        payload: data
-    }
-}
-

@@ -31,12 +31,9 @@ module.exports = function (router) {
                 let obj = {};
                 d.forEach(item => {
                     if (item.table_name.slice(0, 5) === 'point') {
-                        console.log('req.body.category >>', table)
                         let name = item.table_name;
-                        let crop_name = name.slice(name.indexOf(table) + table.length + 1)
-                        let grup = crop_name.slice(0, crop_name.indexOf('_'))
-                        console.log('crop_name >>', crop_name)
-                        console.log('grup >>', grup)
+                        let crop_name = name.slice(name.indexOf(table) + table.length + 1);
+                        let grup = crop_name.slice(0, crop_name.indexOf('_'));
                         obj[grup] ? obj[grup].push(crop_name.slice(crop_name.indexOf('_') + 1)) : obj[grup] = [crop_name.slice(crop_name.indexOf('_') + 1)]
 
 
@@ -57,13 +54,4 @@ module.exports = function (router) {
     router.post('/render', function (req, res) {
         GeoJson.queryBase(req.originalUrl, req.body.table, res);
     });
-
-    // router.post('/bezrobitni' , function (req , res) {
-    //     GeoJson.queryBase(req.originalUrl, 'demography_population_region', res);
-    // });
-    //
-    // router.post('/vik_naselenya' , function (req , res) {
-    //     GeoJson.queryBase(req.originalUrl, 'demography_population_distrikt', res);
-    // });
-
-}
+};

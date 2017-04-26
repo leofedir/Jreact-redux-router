@@ -8,7 +8,8 @@ import {
     GET_SUBMENU_ERROR,
     SET_SUBMENU_ITEM,
     SET_RANGE_ITEMS,
-    SET_RANGE_ITEM
+    SET_RANGE_ITEM,
+    SET_LEGEND_DATA
 
 } from './constant';
 
@@ -72,5 +73,12 @@ export function set_Range_item(item) {
     return {
         type: SET_RANGE_ITEM,
         payload: item
+    }
+}
+
+export function set_legend_data(data) {
+    return {
+        type: SET_LEGEND_DATA,
+        payload: data
     }
 }

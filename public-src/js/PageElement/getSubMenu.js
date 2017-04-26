@@ -20,6 +20,7 @@ class SubMenu extends Component {
         let tableData = arr.map(item => mapName + item);
 
         console.log('mapName >>', mapName)
+        console.log('mapName. >>', mapName.indexOf('area'))
 
         mapName.indexOf('area') === 0 ? getMapData(tableData, arr) : '';
 
@@ -27,7 +28,7 @@ class SubMenu extends Component {
             get_map_area(mapName + '__region', true, alias[mapName], range_item)
         } else if (arr.some(item => item === '__district')) {
            get_map_area(mapName + '__district', true, alias[mapName], range_item)
-        } else if ( mapName.slice(0, 5) === 'point') {
+        } else if ( mapName.indexOf('area') < 0) {
             show_claster(claster, mapName)
         }
     }

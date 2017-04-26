@@ -1,8 +1,8 @@
 import choropleth from './colorRender'
 import {Lmap, ukraine} from "./PageElement/Map"
 
-import {set_Range_items} from './REDUX/actions/actions'
-import {clickOnFeature, set_legend_data} from './REDUX/actions/get_map_area'
+import {set_Range_items, set_legend_data} from './REDUX/actions/actions'
+import {clickOnFeature} from './REDUX/actions/get_map_area'
 import {store} from './index'
 import { markers } from './renderClaster/claster'
 

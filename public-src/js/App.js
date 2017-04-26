@@ -36,8 +36,8 @@ class App extends Component {
 
     render() {
         // console.log('this.props >>', this.props)
-        const {category, fields, showMenu, mapFull, fetching, range_items, range_item, show_range} = this.props.main;
-        const {fetching_map, curentMap, info, feature, alias, claster, feature_claster, legend_data} = this.props.map_reducer;
+        const {category, fields, showMenu, mapFull, fetching, range_items, range_item, show_range, legend_data} = this.props.main;
+        const {fetching_map, curentMap, info, feature, alias, claster, feature_claster} = this.props.map_reducer;
         const {toggleMenu, resizeMap, get_submenu, set_Range_item} = this.props.Actions;
         const {get_map_area} = this.props.MapActions;
 
