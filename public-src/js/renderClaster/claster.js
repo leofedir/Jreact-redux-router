@@ -83,25 +83,12 @@ export default function claster(data) {
         layers[i] = grup;
     });
 
-    // let myLayer = L.geoJson(data[1], {
-    //     // Cluster Options
-    //     polygonOptions: {
-    //         color: "#2d84c8"
-    //     },
-    //     id: 12121,
-    //     // Feature Layer Options
-    //     pointToLayer: function (geojson, latlng) {
-    //         return L.marker(latlng, {icon: icon});
-    //     },
-    //     onEachFeature: function (feature, layer) {
-    //         layer.on('click', whenClicked)
-    //     }
-    // });
-
     function whenClicked(e) {
         console.log('e.target >>', e.target)
         store.dispatch(clickOnFeatureClaster(e.target.feature.properties))
     }
+
+    showLayer(0)
     //
     // Lmap.fitBounds(markers.getBounds());
 

@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import {alias} from '../aliasMapName';
-import Toggle from 'react-toggle';
-// import claster from '../renderClaster/claster'
 
 class Legend extends Component {
 
     handleEggsChange(e) {
+        console.log('e.checked >>', e.target.checked)
         let toggle_layer = this.props.toggle_layer;
-        let id = e.target.dataset.layer;
+        let id = e.target.value;
         let checked = e.target.checked ? 'show' : 'hide';
         toggle_layer(id, checked)
     }
@@ -40,25 +39,23 @@ class Legend extends Component {
                 <div className="item_content" id="list_layers">
 
                     {claster_layers.map((item, i) =>
-                        <div key={ i }>
-                            <Toggle
-                                defaultChecked={false}
-                                data-layer={ i }
-                                onChange={::this.handleEggsChange} />
-                            <span>{ alias[item[1].name] ? alias[item[1].name] : item[1].name }</span>
-                            <span>{ `  (${item[1]['count'] })` }</span>
-                            {/*<label>*/}
-                                {/*<input type="checkbox" value="'+ layer.id +'" className="checkbox"/>*/}
-                                {/*<span className="icon"/>*/}
-                                {/*<span className="text">{ alias[item] ? alias[item] : item  }</span>*/}
-                            {/*</label>*/}
-                        </div>
+                        <p key={ i }>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    value={ i }
+                                    defaultChecked={i === 0 }
+                                    onChange={::this.handleEggsChange}
+                                    className="checkbox"/>
+                                <span className="icon"/>
+                                <span className="text">{ alias[item[1].name] ? alias[item[1].name] : item[1].name }</span>
+                                <span>{ `  (${item[1]['count'] })` }</span>
+                            </label>
+                        </p>
                     )}
                 </div>
             )
-
         }
-
         return null
     }
 
