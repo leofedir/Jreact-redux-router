@@ -39,7 +39,7 @@ export let menu = [
         key: 7,
         name: 'Наука',
         icon: '9.svg',
-        url: 'naukaa'
+        url: 'education'
     },
     {
         key: 8,
