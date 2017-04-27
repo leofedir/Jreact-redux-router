@@ -74,9 +74,11 @@ export default function claster(data) {
             // Feature Layer Options
             pointToLayer: function (geojson, latlng) {
                 return L.marker(latlng, {icon: icon});
+            },
+            onEachFeature: function (feature, layer) {
+                layer.on('click', whenClicked)
             }
         });
-        m.on('click', whenClicked);
         grup.addLayer(m)
         layers[i] = grup;
     });
@@ -97,6 +99,7 @@ export default function claster(data) {
     // });
 
     function whenClicked(e) {
+        console.log('e.target >>', e.target)
         store.dispatch(clickOnFeatureClaster(e.target.feature.properties))
     }
     //
