@@ -1,5 +1,6 @@
 import {checkStatus, parseJSON} from '../../checkJSON';
 import getMap from '../../getMapArea';
+import { layersTriger } from '../../renderClaster/claster'
 import claster from '../../renderClaster/claster'
 
 import {
@@ -166,33 +167,10 @@ export function clickOnFeatureClaster(feature) {
     }
 }
 
-export function toggle_layer(layer, visible) {
+export function toggle_layer(id, status) {
     return (dispatch) => {
         dispatch({
             type: TOGGLE_LAYER
         });
-
-        dispatch({
-            type: GET_LAYER_REQUEST
-        });
-
-        fetch('/layer', {
-            method: 'post',
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-            },
-            body: `table=${ layer }`
-        }).then(checkStatus)
-            .then(parseJSON)
-            .then(data => {
-                claster(data, visible);
-                dispatch({
-                    type: GET_LAYER_SUCCESS,
-                    payload: data
-                })
-            }).catch((err) => {
-            console.log('err >>', err);
-            dispatch({
-                type: GET_LAYER_ERROR
-            })})
+        layersTriger(id, status)
 }}

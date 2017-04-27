@@ -1,19 +1,23 @@
 import choropleth from './colorRender'
-import {Lmap, ukraine} from "./PageElement/Map"
+import {Lmap, ukraine} from "./PageElement/Map";
+import esri from 'esri-leaflet/dist/esri-leaflet';
 
 import {set_Range_items, set_legend_data} from './REDUX/actions/actions'
 import {clickOnFeature} from './REDUX/actions/get_map_area'
 import {store} from './index'
-import { markers } from './renderClaster/claster'
 
 export let choroplethLayer = null;
 
 export default function getMap(data, rebuild = true) {
-    Lmap.removeLayer(ukraine);
 
-    markers ? Lmap.removeLayer(markers) : '';
+    if (rebuild) {
+        Lmap.eachLayer(function (layer) {
+            Lmap.removeLayer(layer)
+        });
 
-    rebuild ? Lmap.setView([49, 31], 5) : '';
+        Lmap.setView([49, 31], 5);
+        esri.basemapLayer('Topographic').addTo(Lmap);
+    }
 
     if (Lmap.hasLayer(choroplethLayer)) {
         Lmap.removeLayer(choroplethLayer)

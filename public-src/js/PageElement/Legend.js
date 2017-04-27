@@ -7,9 +7,9 @@ class Legend extends Component {
 
     handleEggsChange(e) {
         let toggle_layer = this.props.toggle_layer;
-        let layer = e.target.dataset.layer;
-        let checked = e.target.checked;
-        toggle_layer(layer, checked)
+        let id = e.target.dataset.layer;
+        let checked = e.target.checked ? 'show' : 'hide';
+        toggle_layer(id, checked)
     }
 
     createItem() {
@@ -36,8 +36,6 @@ class Legend extends Component {
 
             )
         } else if (claster_layers !== null) {
-            console.log('claster_layers >>', claster_layers)
-
             return (
                 <div className="item_content" id="list_layers">
 
@@ -47,7 +45,6 @@ class Legend extends Component {
                                 defaultChecked={false}
                                 data-layer={ i }
                                 onChange={::this.handleEggsChange} />
-                            {console.log('item >>', item[1])}
                             <span>{ alias[item[1].name] ? alias[item[1].name] : item[1].name }</span>
                             <span>{ `  (${item[1]['count'] })` }</span>
                             {/*<label>*/}
