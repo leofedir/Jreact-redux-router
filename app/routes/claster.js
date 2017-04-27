@@ -8,14 +8,11 @@ module.exports = function (router) {
 
         const table = req.body.table;
 
-
-console.log(table)
         if (storeLayers[table]) {
             res.json(storeLayers[table])
         } else {
             pgdb.query(`select table_name from enter.INFORMATION_SCHEMA.TABLES where table_name like $1`, ['%' + table + '%'])
                 .then((data) => {
-                    console.log(data)
                     res.json(storeLayers[table] = data.map(item => item.table_name))
                 })
                 .catch((e) => {
@@ -32,6 +29,7 @@ console.log(table)
             .then((d) => {
                 let obj = {
                     "type": "FeatureCollection",
+                    name: table,
                     "features": d.map(item => {
                         let obj = {}
 
@@ -50,7 +48,7 @@ console.log(table)
                         return obj;
                     })
                 };
-
+                obj.count = obj.features.length;
                 storeLayersData[table] = [info, obj];
             }).then(() => res.json(storeLayersData[table]))
             .catch((e) => {

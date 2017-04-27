@@ -7,9 +7,9 @@ class Legend extends Component {
 
     handleEggsChange(e) {
         let toggle_layer = this.props.toggle_layer;
-        let layer = e.target.dataset.layer;
-        let checked = e.target.checked;
-        toggle_layer(layer, checked)
+        let id = e.target.dataset.layer;
+        let checked = e.target.checked ? 'show' : 'hide';
+        toggle_layer(id, checked)
     }
 
     createItem() {
@@ -43,9 +43,10 @@ class Legend extends Component {
                         <div key={ i }>
                             <Toggle
                                 defaultChecked={false}
-                                data-layer={ item }
+                                data-layer={ i }
                                 onChange={::this.handleEggsChange} />
-                            <span>{ alias[item] ? alias[item] : item  }</span>
+                            <span>{ alias[item[1].name] ? alias[item[1].name] : item[1].name }</span>
+                            <span>{ `  (${item[1]['count'] })` }</span>
                             {/*<label>*/}
                                 {/*<input type="checkbox" value="'+ layer.id +'" className="checkbox"/>*/}
                                 {/*<span className="icon"/>*/}

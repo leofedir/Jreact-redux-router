@@ -8,10 +8,10 @@ import {
     SET_SUBMENU_ITEM,
     SET_RANGE_ITEMS,
     SET_RANGE_ITEM,
-    GET_CLASTER_ITEMS_REQUEST,
-    GET_CLASTER_ITEMS_SUCCESS,
-    GET_CLASTER_ITEMS_ERROR,
-    SET_LEGEND_DATA
+    SET_LEGEND_DATA,
+    GET_CLASTER_REQUEST,
+    GET_CLASTER_SUCCESS,
+    GET_CLASTER_ERROR
 } from '../actions/constant'
 
 const initialState = {
@@ -42,7 +42,7 @@ export default function main(state = initialState, action) {
             return {...state, submenu_item: action.payload};
 
         case GET_SUBMENU_REQUEST:
-            return {...state, fetching: true, legend_data: null};
+            return {...state, fetching: true, legend_data: null, claster_layers: null};
 
         case SET_RANGE_ITEMS:
             return {...state, range_items: action.payload, show_range: true};
@@ -59,13 +59,13 @@ export default function main(state = initialState, action) {
         case SET_LEGEND_DATA:
             return {...state, legend_data: action.payload};
 
-        case GET_CLASTER_ITEMS_REQUEST:
+        case GET_CLASTER_REQUEST:
             return {...state, fetching_map: true, claster_layers: null};
 
-        case GET_CLASTER_ITEMS_SUCCESS:
+        case GET_CLASTER_SUCCESS:
             return {...state, fetching_map: false, claster_layers: action.payload};
 
-        case GET_CLASTER_ITEMS_ERROR:
+        case GET_CLASTER_ERROR:
             return {...state, fetching_map: false};
 
         default:
