@@ -18,12 +18,7 @@ class SubMenu extends Component {
         set_submenu_item(mapName);
 
         let tableData = arr.map(item => mapName + item);
-
-        console.log('mapName >>', mapName)
-        console.log('mapName. >>', mapName.indexOf('area'))
-
         mapName.indexOf('area') === 0 ? getMapData(tableData, arr) : '';
-
         if (arr.some(item => item === '__region')) {
             get_map_area(mapName + '__region', true, alias[mapName], range_item)
         } else if (arr.some(item => item === '__district')) {

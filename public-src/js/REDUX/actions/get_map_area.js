@@ -16,6 +16,10 @@ import {
     GET_CLASTER_ITEMS_SUCCESS,
     GET_CLASTER_ITEMS_ERROR,
     CLICK_ON_FEATURE_CLASTER,
+    TOGGLE_LAYER,
+    GET_LAYER_REQUEST,
+    GET_LAYER_SUCCESS,
+    GET_LAYER_ERROR
 
 } from './constant';
 
@@ -44,10 +48,10 @@ export function get_map_area(url, rebuild = true, alias, range_item) {
                 })
 
             }).catch((err) => {
-                console.log('err >>', err);
-                dispatch({
-                    type: GET_MAP_AREA_ERROR
-                })
+            console.log('err >>', err);
+            dispatch({
+                type: GET_MAP_AREA_ERROR
+            })
         });
     }
 }
@@ -69,16 +73,16 @@ export function getMapData(tableData= null, arr = null){
                 }).then(parseJSON)
             )).then((resp) => {
                 let obj = {};
-                  resp.forEach((item, i) => obj[arr[i]] = item)
-                  dispatch({
-                      type: GET_MAP_DATA_SUCCESS,
-                      payload: obj
-                  })
-                }).catch((err) => {
-                    console.log('err >>', err);
-                    dispatch({
-                        type: GET_MAP_DATA_ERROR
-                    })})
+                resp.forEach((item, i) => obj[arr[i]] = item)
+                dispatch({
+                    type: GET_MAP_DATA_SUCCESS,
+                    payload: obj
+                })
+            }).catch((err) => {
+                console.log('err >>', err);
+                dispatch({
+                    type: GET_MAP_DATA_ERROR
+                })})
         }
     }
 }
@@ -115,7 +119,7 @@ export function show_claster(state, mapName) {
             },
             body: `table=${ mapName }`
         }).then(checkStatus)
-          .then(parseJSON)
+            .then(parseJSON)
             .then(data => {
                 // claster(data);
                 dispatch({
@@ -136,3 +140,34 @@ export function clickOnFeatureClaster(feature) {
         payload: feature
     }
 }
+
+export function toggle_layer(layer, visible) {
+    return (dispatch) => {
+        dispatch({
+            type: TOGGLE_LAYER
+        });
+
+        dispatch({
+            type: GET_LAYER_REQUEST
+        });
+
+        fetch('/layer', {
+            method: 'post',
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: `table=${ layer }`
+        }).then(checkStatus)
+            .then(parseJSON)
+            .then(data => {
+                claster(data, visible);
+                dispatch({
+                    type: GET_LAYER_SUCCESS,
+                    payload: data
+                })
+            }).catch((err) => {
+            console.log('err >>', err);
+            dispatch({
+                type: GET_LAYER_ERROR
+            })})
+}}

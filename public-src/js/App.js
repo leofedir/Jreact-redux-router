@@ -39,7 +39,7 @@ class App extends Component {
         const {category, fields, showMenu, mapFull, fetching, range_items, range_item, show_range, legend_data, claster_layers} = this.props.main;
         const {fetching_map, curentMap, info, feature, alias, claster, feature_claster} = this.props.map_reducer;
         const {toggleMenu, resizeMap, get_submenu, set_Range_item} = this.props.Actions;
-        const {get_map_area} = this.props.MapActions;
+        const {get_map_area, toggle_layer} = this.props.MapActions;
 
         return (
             <div id="wrapper" className={ (showMenu ? '' : 'hide' ) + (mapFull ? ' mapFull' : '')}>
@@ -80,7 +80,7 @@ class App extends Component {
                                          dangerouslySetInnerHTML={info ? {__html: info} : {__html: '&nbsp; &nbsp;Україна - держава у Східній Європі. Столиця - м.Київ. Площа - 60 357 712 га. Населення - 44 933 290 особи'}}/>
                                 </div>
                             </div>
-                            <Legend legend_data={ legend_data } claster_layers={ claster_layers } />
+                            <Legend legend_data={ legend_data } claster_layers={ claster_layers } toggle_layer={ toggle_layer } />
                         </div>
                         <div className="main__chart">
 

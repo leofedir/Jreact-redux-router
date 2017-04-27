@@ -55,6 +55,7 @@ console.log(table)
             }).then(() => res.json(storeLayersData[table]))
             .catch((e) => {
                 console.log("Error", e);
+                res.json(e)
             })
     });
 }

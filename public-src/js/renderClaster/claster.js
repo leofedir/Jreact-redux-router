@@ -18,60 +18,42 @@ import 'leaflet.markercluster/dist/leaflet.markercluster-src';
 
 export let markers;
 
-export default function claster(layer, visible) {
+export default function claster(data, visible) {
     Lmap.removeLayer(ukraine);
 
     choroplethLayer ? Lmap.removeLayer(choroplethLayer) : '';
     markers ? Lmap.removeLayer(markers) : '';
 
-    console.log('data >>', layer, visible);
+    let icon = L.icon({
+        iconUrl: '/img/marker-icon.svg',
+        iconSize: [25, 36],
+        iconAnchor: [12, 33]
+    });
 
-    fetch('/layer', {
-        method: 'post',
-        headers: {
-            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-        },
-        body: `table=${ layer }`
-    }).then(checkStatus)
-        .then(parseJSON)
-        .then(data => {
-            console.log('data >>', data)
+    markers = L.markerClusterGroup();
 
-            let icon = L.icon({
-                iconUrl: '/img/marker-icon.svg',
-                iconSize: [25, 36],
-                iconAnchor: [12, 33]
-            });
+    function whenClicked(e) {
+        store.dispatch(clickOnFeatureClaster(e.target.feature.properties))
+    }
 
-            markers = L.markerClusterGroup();
-
-
-            console.log('layer >>', layer)
-
-            function whenClicked(e) {
-                store.dispatch(clickOnFeatureClaster(e.target.feature.properties))
+    markers.addLayer(
+        L.geoJson(data[1], {
+            // Cluster Options
+            polygonOptions: {
+                color: "#2d84c8"
+            },
+            // Feature Layer Options
+            pointToLayer: function (geojson, latlng) {
+                return L.marker(latlng, {icon: icon});
+            },
+            onEachFeature: function (feature, layer) {
+                layer.on('click', whenClicked)
             }
+        })
+    );
 
-            markers.addLayer(
-                L.geoJson(data[1], {
-                    // Cluster Options
-                    polygonOptions: {
-                        color: "#2d84c8"
-                    },
-                    id: layer,
-                    // Feature Layer Options
-                    pointToLayer: function (geojson, latlng) {
-                        return L.marker(latlng, {icon: icon});
-                    },
-                    onEachFeature: function (feature, layer) {
-                        layer.on('click', whenClicked)
-                    }
-                })
-            );
-
-            Lmap.addLayer(markers);
-            Lmap.fitBounds(markers.getBounds());
-        }).catch((err) => console.log('err >>', err));
+    Lmap.addLayer(markers);
+    Lmap.fitBounds(markers.getBounds());
 
 
     //     // Lmap = null;

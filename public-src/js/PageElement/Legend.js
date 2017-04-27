@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
 import {alias} from '../aliasMapName';
 import Toggle from 'react-toggle';
-import claster from '../renderClaster/claster'
+// import claster from '../renderClaster/claster'
 
 class Legend extends Component {
 
     handleEggsChange(e) {
+        let toggle_layer = this.props.toggle_layer;
         let layer = e.target.dataset.layer;
         let checked = e.target.checked;
-        claster(layer, checked)
+        toggle_layer(layer, checked)
     }
 
     createItem() {
-        const {legend_data, claster_layers} = this.props;
+        const {legend_data, claster_layers, toggle_layer} = this.props;
 
 
         if (legend_data !== null) {
@@ -43,7 +44,7 @@ class Legend extends Component {
                             <Toggle
                                 defaultChecked={false}
                                 data-layer={ item }
-                                onChange={this.handleEggsChange} />
+                                onChange={::this.handleEggsChange} />
                             <span>{ alias[item] ? alias[item] : item  }</span>
                             {/*<label>*/}
                                 {/*<input type="checkbox" value="'+ layer.id +'" className="checkbox"/>*/}
