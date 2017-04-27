@@ -19,7 +19,10 @@ import {
     TOGGLE_LAYER,
     GET_LAYER_REQUEST,
     GET_LAYER_SUCCESS,
-    GET_LAYER_ERROR
+    GET_LAYER_ERROR,
+    GET_CLASTER_REQUEST,
+    GET_CLASTER_SUCCESS,
+    GET_CLASTER_ERROR
 
 } from './constant';
 
@@ -104,7 +107,7 @@ export function barChartToggle(state) {
 export function show_claster(state, mapName) {
     return (dispatch) => {
         dispatch({
-            type: GET_CLASTER_ITEMS_REQUEST
+            type: GET_CLASTER_REQUEST
         });
 
         dispatch({
@@ -122,15 +125,37 @@ export function show_claster(state, mapName) {
             .then(parseJSON)
             .then(data => {
                 // claster(data);
-                dispatch({
-                    type: GET_CLASTER_ITEMS_SUCCESS,
-                    payload: data
-                })
-            }).catch((err) => {
+                if(data !== null) {
+                    Promise.all(data.map((item, i) =>
+                        fetch('/layer', {
+                            method: 'post',
+                            headers: {
+                                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                            },
+                            body: `table=${ item }`
+                        }).then(parseJSON)
+                    )).then((resp) => {
+                        claster(resp)
+                        dispatch({
+                            type: GET_CLASTER_SUCCESS,
+                            payload: resp
+                        });
+
+                    }).catch((err) => {
+                        console.log('err >>', err);
+                        dispatch({
+                            type: GET_CLASTER_ERROR
+                        })})
+                }
+
+            })
+            .catch((err) => {
             console.log('err >>', err);
             dispatch({
                 type: GET_CLASTER_ITEMS_ERROR
-            })})
+            })
+        })
+
     }
 }
 

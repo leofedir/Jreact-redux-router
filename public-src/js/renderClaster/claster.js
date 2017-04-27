@@ -16,13 +16,13 @@ import 'leaflet.markercluster/dist/leaflet.markercluster-src';
 // let currentSearcherControl = null;
 // let layers = {};
 
-export let markers;
+export let markers = L.markerClusterGroup({chunkedLoading: true});
 
-export default function claster(data, visible) {
+export default function claster(data) {
     Lmap.removeLayer(ukraine);
 
     choroplethLayer ? Lmap.removeLayer(choroplethLayer) : '';
-    markers ? Lmap.removeLayer(markers) : '';
+    markers ? markers.clearLayers() : '';
 
     let icon = L.icon({
         iconUrl: '/img/marker-icon.svg',
@@ -30,28 +30,26 @@ export default function claster(data, visible) {
         iconAnchor: [12, 33]
     });
 
-    markers = L.markerClusterGroup();
+    let myLayer = L.geoJson(data[1], {
+        // Cluster Options
+        polygonOptions: {
+            color: "#2d84c8"
+        },
+        id: 12121,
+        // Feature Layer Options
+        pointToLayer: function (geojson, latlng) {
+            return L.marker(latlng, {icon: icon});
+        },
+        onEachFeature: function (feature, layer) {
+            layer.on('click', whenClicked)
+        }
+    });
 
     function whenClicked(e) {
         store.dispatch(clickOnFeatureClaster(e.target.feature.properties))
     }
 
-    markers.addLayer(
-        L.geoJson(data[1], {
-            // Cluster Options
-            polygonOptions: {
-                color: "#2d84c8"
-            },
-            // Feature Layer Options
-            pointToLayer: function (geojson, latlng) {
-                return L.marker(latlng, {icon: icon});
-            },
-            onEachFeature: function (feature, layer) {
-                layer.on('click', whenClicked)
-            }
-        })
-    );
-
+    markers.addLayer(myLayer);
     Lmap.addLayer(markers);
     Lmap.fitBounds(markers.getBounds());
 

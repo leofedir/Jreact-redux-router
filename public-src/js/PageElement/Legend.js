@@ -36,6 +36,8 @@ class Legend extends Component {
 
             )
         } else if (claster_layers !== null) {
+            console.log('claster_layers >>', claster_layers)
+
             return (
                 <div className="item_content" id="list_layers">
 
@@ -43,9 +45,11 @@ class Legend extends Component {
                         <div key={ i }>
                             <Toggle
                                 defaultChecked={false}
-                                data-layer={ item }
+                                data-layer={ i }
                                 onChange={::this.handleEggsChange} />
-                            <span>{ alias[item] ? alias[item] : item  }</span>
+                            {console.log('item >>', item[1])}
+                            <span>{ alias[item[1].name] ? alias[item[1].name] : item[1].name }</span>
+                            <span>{ `  (${item[1]['count'] })` }</span>
                             {/*<label>*/}
                                 {/*<input type="checkbox" value="'+ layer.id +'" className="checkbox"/>*/}
                                 {/*<span className="icon"/>*/}
