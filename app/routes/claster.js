@@ -11,7 +11,7 @@ module.exports = function (router) {
         if (storeLayers[table]) {
             res.json(storeLayers[table])
         } else {
-            pgdb.query(`select table_name from enter.INFORMATION_SCHEMA.TABLES where table_name ilike $1`, ['%' + table + '%'])
+            pgdb.query(`select table_name from enter.INFORMATION_SCHEMA.TABLES where table_name like $1`, ['%' + table + '%'])
                 .then((data) => {
                     res.json(storeLayers[table] = data.map(item => item.table_name))
                 })
@@ -52,6 +52,7 @@ module.exports = function (router) {
             }).then(() => res.json(storeLayersData[table]))
             .catch((e) => {
                 console.log("Error", e);
+                res.json(e)
             })
     });
 }

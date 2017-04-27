@@ -7,7 +7,10 @@ import {
     GET_MAP_DATA_SUCCESS,
     GET_MAP_DATA_REQUEST,
     SHOW_CLASTER,
-    CLICK_ON_FEATURE_CLASTER
+    CLICK_ON_FEATURE_CLASTER,
+    GET_LAYER_REQUEST,
+    GET_LAYER_SUCCESS,
+    GET_LAYER_ERROR
 } from '../actions/constant'
 
 const initialState = {
@@ -52,6 +55,15 @@ export default function map(state = initialState, action) {
 
         case SHOW_CLASTER:
             return {...state, claster: action.payload};
+
+        case GET_LAYER_REQUEST:
+            return {...state, fetching_map: true};
+
+        case GET_LAYER_SUCCESS:
+            return {...state, fetching_map: false};
+
+        case GET_LAYER_ERROR:
+            return {...state, fetching_map: false};
 
         default:
             return state;
