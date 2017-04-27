@@ -52,9 +52,53 @@ export let alias = {
     point_ohorzdorov_zaklohorzd_sanprofzaklad:'Санаторно-профілактичні заклади',
     point_ohorzdorov_zaklohorzd_sanatoryi:'Санаторно-курортні заклади',
     point_ohorzdorov_zaklohorzd_zaklperelevkrov:'Заклади переливання крові',
-    point_osvitaa_vyschi_licey: 'Ліцеї',
-    point_osvitaa_vyschi_school_1_33: 'школи І-ІІІ',
-    point_osvitaa_vyschi_school_1_3: 'школи І-ІІІ(2)',
-    point_osvitaa_vyschi_academyi: 'Академії'
+    point_osvitaa_pshk_pozashkilny:'Позашкільні навчальні заклади',
+    pshk:'Позашкільні навчальні заклади',
+    point_osvitaa_profteh_ptu:'Професійно-технічні навчальні заклади',
+    profteh:'Професійно-технічні навчальні заклади',
+    point_osvitaa_dz_doshkilnyzaklady:'Дошкільні навчальні заклади',
+    dz:'Дошкільні навчальні заклади',
+    point_osvitaa_heducat_coledg:'Коледжі',
+    heducat:'Вищі навчальні заклади',
+    point_osvitaa_heducat_institute:'Інститути',
+    point_osvitaa_heducat_univercity:'Університети',
+    point_osvitaa_heducat_academyi:'Академії',
+    point_osvitaa_heducat_zpo:'Заклади післядипломної освіти',
+    point_energyy_teploenergy_teplopostachalnypidpr:'Теплопостачальні підприємства',
+    teploenergy:'Теплоенергія',
+    point_energyy_altobj_alternatyvenergobj:"Об'єкти альтернативної енергетики",
+    altobj:"Об'єкти альтернативної енергетики",
+    point_energyy_elektroenergy_elektropostachalnicompany:'Електропостачальники',
+    elektroenergy:'Електроенергія',
+    point_energyy_elektroenergy_pidprvyrobnutstvaenergii:'Підприємства з виробництва електроенергії',
+    point_culturee_zakladyfizkultury_zakladyfizkultury:'Заклади фізкультури',
+    zakladyfizkultury:'Заклади фізичної культури та спорту',
+    point_culturee_vydavntamedia_knygarnivydavnystva:'Видавництва та книгарні',
+    vydavntamedia:'Видавництво та медіа',
+    point_culturee_vydavntamedia_drukovanizmi:'Друковані ЗМІ',
+    point_culturee_vydavntamedia_teleradiocompanii:'Телерадіокомпанії',
+    point_culturee_cultzaklady_museum:'Музеї',
+    cultzaklady:'Заклади культури',
+    point_culturee_cultzaklady_theatre:'Театри',
+    point_culturee_cultzaklady_library:'Бібліотеки',
+    point_culturee_cultzaklady_inshizaklady:'Інші заклади культури',
+    point_osvitaa_zosh_school1:'ЗОШ I ступенів',
+    zosh:'Загальноосвітні навчальні заклади',
+    point_osvitaa_zosh_school12:'ЗОШ I-II ступенів',
+    point_osvitaa_zosh_school13:'ЗОШ I-III ступенів',
+    point_osvitaa_zosh_school23:'ЗОШ II-III ступенів',
+    point_osvitaa_zosh_internatschool:'ЗОШ-інтернати',
+    point_osvitaa_zosh_vechirnyschool:'Вечірні школи',
+    point_osvitaa_zosh_spetsializovanyschool:'Спеціалізовані школи',
+    point_osvitaa_zosh_himnasium:'Гімназії',
+    point_osvitaa_zosh_licey:'Ліцеї',
+    point_osvitaa_zosh_colegium:'Колегіуми',
+    point_osvitaa_zosh_spetsialnyschool:'Спеціальні школи'
+
+
+
+
+
+
 
 }
