@@ -95,10 +95,4 @@ export let alias = {
     point_osvitaa_zosh_colegium:'Колегіуми',
     point_osvitaa_zosh_spetsialnyschool:'Спеціальні школи'
 
-
-
-
-
-
-
 }
