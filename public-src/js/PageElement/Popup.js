@@ -52,7 +52,7 @@ class Popup extends Component {
                 if (item.title === 'Назва') {
                     popapItems.push(<h5 key={feature_claster.object_id + (i + '')} className="name">{ feature_claster[item.key] }</h5>)
                 } else if (feature_claster[item.key]) {
-                    popapItems.push(<div key={feature_claster.object_id + (i + '')} className="popup_item"><img src={ item.img }/><p>{ feature_claster[item.key] }</p></div>)
+                    popapItems.push(<div key={feature_claster.object_id + (i + '')} className="popup_item"><i className={ item.class }/><p>{ feature_claster[item.key] }</p></div>)
                 }
             });
 
