@@ -35,3 +35,19 @@
 .legend #list_layers {
   padding-left: 0px;
 }
+.legend > .item_content {
+  padding-left: 7px;
+}
+
+#list_layers.item_content {
+   font-size: 14px;
+   padding: 10px 0;
+ }
+
+#list_layers.item_content .count {
+  font-size: 12px;
+  font-style: italic;
+  font-weight: bold;
+  color: brown;
+
+}

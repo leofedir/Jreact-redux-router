@@ -49,7 +49,7 @@ class Legend extends Component {
                                     className="checkbox"/>
                                 <span className="icon"/>
                                 <span className="text">{ alias[item[1].name] ? alias[item[1].name] : item[1].name }</span>
-                                <span>{ `  (${item[1]['count'] })` }</span>
+                                <span className="count">{ `  (${item[1]['count'] })` }</span>
                             </label>
                         </p>
                     )}
