@@ -12,7 +12,9 @@ import {
     GET_LAYER_SUCCESS,
     GET_LAYER_ERROR,
     GET_CLASTER_SUCCESS,
-    GET_SUBMENU_REQUEST
+    GET_SUBMENU_REQUEST,
+    SET_SUBMENU_ITEM,
+    SET_CLASTER_CHART_DATA
 } from '../actions/constant'
 
 const initialState = {
@@ -25,7 +27,9 @@ const initialState = {
     bar_cahrt_full: false,
     data_success: false,
     claster: false,
-    feature_claster: null
+    feature_claster: null,
+    chart1: null,
+    chart2: null
 };
 
 export default function map(state = initialState, action) {
@@ -72,6 +76,12 @@ export default function map(state = initialState, action) {
 
         case GET_SUBMENU_REQUEST:
             return {...state, info: null, properties: null, data_success: false};
+
+        case SET_SUBMENU_ITEM:
+            return {...state, feature: null};
+
+        case SET_CLASTER_CHART_DATA:
+            return {...state, chart1: action.payload[0], chart2: action.payload[1]};
 
         default:
             return state;

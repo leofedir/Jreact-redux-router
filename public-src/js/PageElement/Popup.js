@@ -9,14 +9,15 @@ class Popup extends Component {
     getInfo() {
         const {feature, alias, feature_claster} = this.props;
 
-        if (feature != null) {
+        if (feature !== null) {
             dataToChart = [];
             year_labels = [];
             let popupInfo = [];
             let i = 0;
             for (let key in feature) {
                 if (feature.hasOwnProperty(key) && key.indexOf('year_') >= 0) {
-                    popupInfo.push(<p key={feature.id + i}>Станом на 20{key.substring(5)}р. <span>{new Intl.NumberFormat().format(feature[key])} {feature.parameter}</span></p>)
+                    popupInfo.push(<p key={feature.id + i}>Станом на 20{key.substring(5)}р.
+                        <span>{new Intl.NumberFormat().format(feature[key])} {feature.parameter}</span></p>)
                     year_labels.push(20 + key.substring(5) + 'р');
                     dataToChart.push(+feature[key]);
                     i++
@@ -41,27 +42,22 @@ class Popup extends Component {
                     </div>
                 </div>
             )
-        } else if (feature_claster != null) {
+        } else if (feature_claster !== null) {
 
             let fields = getFields();
-            
+
             let popapItems = [];
 
             fields.forEach((item, i) => {
 
                 if (item.title === 'Назва') {
-                    popapItems.push(<h5 key={feature_claster.object_id + (i + '')} className="name">{ feature_claster[item.key] }</h5>)
+                    popapItems.push(<h5 key={feature_claster.object_id + (i + '')}
+                                        className="name">{ feature_claster[item.key] }</h5>)
                 } else if (feature_claster[item.key]) {
-                    popapItems.push(<div key={feature_claster.object_id + (i + '')} className="popup_item"><i className={ item.class }/><p>{ feature_claster[item.key] }</p></div>)
+                    popapItems.push(<div key={feature_claster.object_id + (i + '')} className="popup_item"><i
+                        className={ item.class }/><p>{ feature_claster[item.key] }</p></div>)
                 }
             });
-
-            for (let key in feature_claster) {
-                if (feature_claster.hasOwnProperty(key) && ~key.indexOf('_') && key.slice(0, key.indexOf('_')) == 'chart') {
-                    console.log('chart >>')
-                    // addChart();
-                }
-            }
 
             return (
                 <div className="description">
@@ -76,9 +72,8 @@ class Popup extends Component {
                 </div>
             )
         }
-
-
     }
+
 
     noInfo() {
         dataToChart = [];
@@ -88,7 +83,7 @@ class Popup extends Component {
 
     render() {
         const {feature, feature_claster} = this.props;
-        return (feature != null || feature_claster != null) ? this.getInfo() : this.noInfo()
+        return (feature !== null || feature_claster !== null) ? this.getInfo() : this.noInfo()
     }
 }
 

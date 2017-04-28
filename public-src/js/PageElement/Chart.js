@@ -63,8 +63,9 @@ class Chart extends Component {
                 },
                 series: myData
             });
-        } else {
-            chart != null ? chart.destroy() : ''
+        } else if (feature !== null, chart !== null) {
+            chart.destroy();
+            chart = null
         }
     }
 

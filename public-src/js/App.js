@@ -40,7 +40,7 @@ class App extends Component {
         const {category, showMenu, mapFull, fetching, range_items, range_item, show_range, legend_data, claster_layers} = this.props.main;
         const {fetching_map, curentMap, info, feature, alias, claster, feature_claster} = this.props.map_reducer;
         const {toggleMenu, resizeMap, get_submenu, set_Range_item} = this.props.Actions;
-        const {get_map_area, toggle_layer} = this.props.MapActions;
+        const {get_map_area, toggle_layer, set_chart_data} = this.props.MapActions;
 
         return (
             <div id="wrapper" className={ (showMenu ? '' : 'hide' ) + (mapFull ? ' mapFull' : '')}>
@@ -68,9 +68,9 @@ class App extends Component {
                         <div className="main__right">
                             <SliderRange range_items={ range_items} range_item={ range_item}
                                          set_Range_item={ set_Range_item } show_range={ show_range }/>
-                            <Popup feature={ feature } alias={ alias } feature_claster={ feature_claster }/>
-                            <Info info={ info } />
+                            <Popup feature={ feature } alias={ alias } feature_claster={ feature_claster } set_chart_data={ set_chart_data } />
                             <Legend legend_data={ legend_data } claster_layers={ claster_layers } toggle_layer={ toggle_layer } />
+                            <Info info={ info } />
                         </div>
                         <div className="main__chart">
                             <Chart />

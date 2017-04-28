@@ -23,7 +23,8 @@ import {
     GET_LAYER_ERROR,
     GET_CLASTER_REQUEST,
     GET_CLASTER_SUCCESS,
-    GET_CLASTER_ERROR
+    GET_CLASTER_ERROR,
+    SET_CLASTER_CHART_DATA
 
 } from './constant';
 
@@ -137,7 +138,6 @@ export function show_claster(state, mapName) {
                         }).then(parseJSON)
                     )).then((resp) => {
                         claster(resp);
-                        console.log('resp >>', resp)
                         dispatch({
                             type: GET_CLASTER_SUCCESS,
                             payload: resp
@@ -175,3 +175,10 @@ export function toggle_layer(id, status) {
         });
         layersTriger(id, status)
 }}
+
+export function set_chart_data(chart1, chart2) {
+    return {
+        type: SET_CLASTER_CHART_DATA,
+        payload: [chart1, chart2]
+    }
+}
