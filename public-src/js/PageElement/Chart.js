@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as MapActions from '../REDUX/actions/get_map_area';
 
 import {year_labels, dataToChart} from './Popup'
 
@@ -15,6 +17,11 @@ let alias_series = {
 };
 
 class Chart extends Component {
+
+    toggleChart() {
+        const {barChartToggle} = this.props.MapActions;
+        barChartToggle(this.props.map_reducer.bar_cahrt_full);
+    }
 
     Chart() {
         const {feature, alias, chart1} = this.props.map_reducer
@@ -151,10 +158,12 @@ class Chart extends Component {
     }
 
     render() {
+        const {bar_cahrt_full} = this.props.map_reducer;
         return (
-            <div className="chart_1">
+            <div className={bar_cahrt_full ? 'chart_1 barChart_full' : 'chart_1'}>
                 <div className="item_header">
                     <div className="map_heder_title">Тренд</div>
+                    <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>
                 </div>
                 <div className="item_content" id="item_chart"/>
             </div>
@@ -169,7 +178,13 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(Chart);
+function mapDispatchToProps(dispatch) {
+    return {
+        MapActions: bindActionCreators(MapActions, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Chart);
 
 
 
