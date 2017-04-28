@@ -17,7 +17,6 @@
 .popup_top h4, .popup_bottom h4 {
   color: #747474;
 }
-
 .popup_top .name {
   text-align: center;
   font-family: arial;
@@ -34,13 +33,10 @@
   margin: 10px 0;
   padding: 0;
 }
-
-.popup_item img {
-  width: 20px;
+.popup_item i {
+  color: deepskyblue ;
   margin-right: 10px;
 }
-
-
 .popup_top.claster {
   border-bottom: none;
 }
