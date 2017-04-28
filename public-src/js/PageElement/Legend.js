@@ -27,7 +27,7 @@ class Legend extends Component {
                         return (
                             <p key={ i }>
                                 <i style={{background: colors[i]}}/>
-                                {((limits[i] !== null) ? 'від ' + format(limits[i]) : dani) + ((i !== limits.length - 1 && limits[i + 1] !== null) ? ' до ' + format(limits[i + 1]) : (limits[i] !== null) ? '  +' : '')}
+                                {((limits[i] !== null) ? ' ' + format(limits[i]) : dani) + ((i !== limits.length - 1 && limits[i + 1] !== null) ? ' < ' + format(limits[i + 1]) : (limits[i] !== null) ? '  <' : '')}
                             </p>
                         )
                     })}

@@ -93,6 +93,7 @@ export let alias = {
     point_osvitaa_zosh_himnasium:'Гімназії',
     point_osvitaa_zosh_licey:'Ліцеї',
     point_osvitaa_zosh_colegium:'Колегіуми',
-    point_osvitaa_zosh_spetsialnyschool:'Спеціальні школи'
+    point_osvitaa_zosh_spetsialnyschool:'Спеціальні школи',
+    area_ekonomika_rivenbezrobittya:'Рівень безробіття'
 
 }

@@ -11,7 +11,7 @@ module.exports = function (router) {
         if (req.body.table in dataChart) {
             res.json(dataChart[req.body.table])
         } else {
-            pgdb.query(`select koatuu,name_ua,year_13,year_14,year_15,parameter from ` + req.body.table)
+            pgdb.query(`select koatuu,name_ua,year_13,year_14,year_15,year_16,parameter from ` + req.body.table)
                 .then((d) => {
                     dataChart[req.body.table] = d
                     res.json(d)
