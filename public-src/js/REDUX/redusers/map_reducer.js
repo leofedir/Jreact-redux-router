@@ -78,7 +78,7 @@ export default function map(state = initialState, action) {
             return {...state, info: null, properties: null, data_success: false};
 
         case SET_SUBMENU_ITEM:
-            return {...state, feature: null};
+            return {...state, feature: null, chart1: null, chart2: null};
 
         case SET_CLASTER_CHART_DATA:
             return {...state, chart1: action.payload[0], chart2: action.payload[1]};

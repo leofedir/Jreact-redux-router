@@ -98,7 +98,6 @@ export default function claster(data) {
         if (feature_claster != null) {
             for (let key in feature_claster) {
                 if (feature_claster.hasOwnProperty(key)) {
-                    console.log('key >>', key)
                     let name = key.slice(0, key.indexOf('_'));
                     let serias = key.slice(7, key.length - 5);
                     let year = +key.slice(key.length - 4);

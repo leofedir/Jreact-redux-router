@@ -1,16 +1,23 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import { year_labels, dataToChart} from './Popup'
+import {year_labels, dataToChart} from './Popup'
 
 const Highcharts = require('highcharts');
 
 let chart = null;
 
+let alias_series = {
+    teplo: 'Теплопостачання',
+    elektroenergy: 'Електропостачання',
+    water: 'Водопостачання',
+    inshivydatky: 'Інші видатки'
+};
+
 class Chart extends Component {
 
     Chart() {
-        const { feature, alias} = this.props.map_reducer
+        const {feature, alias, chart1} = this.props.map_reducer
 
         if (feature != null) {
 
@@ -66,6 +73,72 @@ class Chart extends Component {
         } else if (feature !== null, chart !== null) {
             chart.destroy();
             chart = null
+        } else if (chart1 !== null) {
+
+            let myData = [];
+            let labels = [];
+            let i = 0;
+
+
+            for (let key in chart1) {
+                if (chart1.hasOwnProperty(key)) {
+
+                    let obj = {
+                        name: alias_series[key] || key,
+                        data: []
+                    };
+
+                    chart1[key].forEach(item => {
+                        obj.data.push(item.value);
+                        i === 0 ? labels.push(`${ item.year }р`) : ''
+                    });
+                    i++;
+                    myData.push(obj)
+                }
+            }
+
+            chart = Highcharts.chart('item_chart', {
+                colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
+                title: {
+                    text: 'Витрати'
+                },
+                exporting: {
+                    buttons: {
+                        exportButton: {
+                            symbol: 'url(http://highcharts.com/demo/gfx/sun.png)',
+                            symbolX: 5,
+                            symbolY: 0
+                        }
+                    }
+                },
+                chart: {
+                    type: 'line',
+                    marginRight: 20
+                },
+                credits: {
+                    text: 'Енциклопедія територій',
+                    href: 'http://enter.co.ua',
+                    enabled: false
+                },
+                yAxis: {
+                    title: {
+                        text: 'грн.'
+                    }
+                },
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                },
+                xAxis: {
+                    crosshair: true,
+                    categories: labels
+                },
+                tooltip: {
+                    shared: true,
+                },
+                series: myData
+            });
         }
     }
 

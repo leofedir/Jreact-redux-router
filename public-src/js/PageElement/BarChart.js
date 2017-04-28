@@ -7,6 +7,12 @@ const higchartsDrilldown = require('highcharts/modules/drilldown.js');
 
 higchartsDrilldown(Highcharts);
 let myChart = null;
+let alias_series = {
+    dohody: 'Бюджет закладу',
+    naodnohouchnya: 'Видатки на одного учня',
+    uchni: 'Загальна кількість учнів',
+    vnesky: 'Батьківські внески'
+};
 
 class BarChart extends Component {
 
@@ -16,7 +22,7 @@ class BarChart extends Component {
     }
 
     createChart() {
-        const {alias, properties, data_success} = this.props.map_reducer;
+        const {alias, properties, data_success, chart2} = this.props.map_reducer;
         const {range_item, range_items} = this.props.main;
 
         if (data_success && properties && '__region' in properties) {
@@ -72,7 +78,7 @@ class BarChart extends Component {
                     enabled: false
                 },
                 title: {
-                    text: alias+', ' + properties.__district["0"].parameter
+                    text: alias + ', ' + properties.__district["0"].parameter
                 },
                 xAxis: {
                     type: 'category',
@@ -140,9 +146,74 @@ class BarChart extends Component {
                     series: district_arr
                 }
             });
-        } else if (!data_success && myChart !== null) {
+        } else if (!data_success && myChart !== null && chart2 === null) {
             myChart.destroy();
             myChart = null
+        } else if (chart2 !== null) {
+            let myData = [];
+            let labels = [];
+            let i = 0;
+
+
+            for (let key in chart2) {
+                if (chart2.hasOwnProperty(key)) {
+
+                    let obj = {
+                        name: alias_series[key] || key,
+                        data: []
+                    };
+
+                    chart2[key].forEach(item => {
+                        obj.data.push(item.value);
+                        i === 0 ? labels.push(`${ item.year }р`) : ''
+                    });
+                    i++;
+                    myData.push(obj)
+                }
+            }
+
+            myChart = Highcharts.chart('item_bar_chart', {
+                colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
+                exporting: {
+                    buttons: {
+                        exportButton: {
+                            symbol: 'url(http://highcharts.com/demo/gfx/sun.png)',
+                            symbolX: 5,
+                            symbolY: 0
+                        }
+                    }
+                },
+                title: {
+                    text: ''
+                },
+                chart: {
+                    type: 'line',
+                    marginRight: 20
+                },
+                credits: {
+                    text: 'Енциклопедія територій',
+                    href: 'http://enter.co.ua',
+                    enabled: false
+                },
+                yAxis: {
+                    title: {
+                        text: 'грн.'
+                    }
+                },
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                },
+                xAxis: {
+                    crosshair: true,
+                    categories: labels
+                },
+                tooltip: {
+                    shared: true,
+                },
+                series: myData
+            });
         }
     }
 
