@@ -24,7 +24,8 @@ import {
     GET_CLASTER_REQUEST,
     GET_CLASTER_SUCCESS,
     GET_CLASTER_ERROR,
-    SET_CLASTER_CHART_DATA
+    SET_CLASTER_CHART_DATA,
+    CHART_TOGGLE
 
 } from './constant';
 
@@ -102,6 +103,13 @@ export function clickOnFeature(feature) {
 export function barChartToggle(state) {
     return {
         type: BARCHART_TOGGLE,
+        payload: !state
+    }
+}
+
+export function ChartToggle(state) {
+    return {
+        type: CHART_TOGGLE,
         payload: !state
     }
 }

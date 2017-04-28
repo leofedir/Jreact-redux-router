@@ -19,8 +19,8 @@ let alias_series = {
 class Chart extends Component {
 
     toggleChart() {
-        const {barChartToggle} = this.props.MapActions;
-        barChartToggle(this.props.map_reducer.bar_cahrt_full);
+        const {ChartToggle} = this.props.MapActions;
+        ChartToggle(this.props.map_reducer.cahrt_full);
     }
 
     Chart() {
@@ -77,7 +77,7 @@ class Chart extends Component {
                 },
                 series: myData
             });
-        } else if (feature !== null, chart !== null) {
+        } else if (feature !== null, chart !== null && chart1 === null) {
             chart.destroy();
             chart = null
         } else if (chart1 !== null) {
@@ -158,9 +158,9 @@ class Chart extends Component {
     }
 
     render() {
-        const {bar_cahrt_full} = this.props.map_reducer;
+        const {cahrt_full} = this.props.map_reducer;
         return (
-            <div className={bar_cahrt_full ? 'chart_1 barChart_full' : 'chart_1'}>
+            <div className={cahrt_full ? 'chart_1 barChart_full' : 'chart_1'}>
                 <div className="item_header">
                     <div className="map_heder_title">Тренд</div>
                     <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>
@@ -168,7 +168,6 @@ class Chart extends Component {
                 <div className="item_content" id="item_chart"/>
             </div>
         )
-
     }
 }
 

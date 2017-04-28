@@ -14,6 +14,10 @@ router.post('/main', function(req, res) {
     GeoJson.queryBase(req.originalUrl, 'borders', res);
 });
 
+router.post('/ato', function(req, res) {
+    GeoJson.queryBase(req.originalUrl, 'ato', res);
+});
+
 demografiya(router);
 claster(router)
 

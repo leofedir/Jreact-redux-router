@@ -48,6 +48,7 @@ export default function claster(data) {
     layers = {};
 
     Lmap.eachLayer(function (layer) {
+        console.log('layer >>', layer)
         Lmap.removeLayer(layer)
     });
 

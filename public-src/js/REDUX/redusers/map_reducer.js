@@ -14,7 +14,8 @@ import {
     GET_CLASTER_SUCCESS,
     GET_SUBMENU_REQUEST,
     SET_SUBMENU_ITEM,
-    SET_CLASTER_CHART_DATA
+    SET_CLASTER_CHART_DATA,
+    CHART_TOGGLE
 } from '../actions/constant'
 
 const initialState = {
@@ -25,6 +26,7 @@ const initialState = {
     alias: null,
     properties: null,
     bar_cahrt_full: false,
+    cahrt_full: false,
     data_success: false,
     claster: false,
     feature_claster: null,
@@ -53,6 +55,9 @@ export default function map(state = initialState, action) {
         case BARCHART_TOGGLE:
             return {...state, bar_cahrt_full: action.payload};
 
+        case CHART_TOGGLE:
+            return {...state, cahrt_full: action.payload};
+
         case CLICK_ON_FEATURE:
             return {...state, feature: action.payload};
 
@@ -75,10 +80,10 @@ export default function map(state = initialState, action) {
             return {...state, info: action.payload[0][0]};
 
         case GET_SUBMENU_REQUEST:
-            return {...state, info: null, properties: null, data_success: false};
+            return {...state, info: null, properties: null, data_success: false, curentMap: null};
 
         case SET_SUBMENU_ITEM:
-            return {...state, feature: null, chart1: null, chart2: null};
+            return {...state, feature: null, chart1: null, chart2: null, curentMap: null};
 
         case SET_CLASTER_CHART_DATA:
             return {...state, chart1: action.payload[0], chart2: action.payload[1]};

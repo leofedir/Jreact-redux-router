@@ -1,12 +1,14 @@
 import choropleth from './colorRender'
 import {Lmap, ukraine} from "./PageElement/Map";
 import esri from 'esri-leaflet/dist/esri-leaflet';
+import {checkStatus, parseJSON} from './checkJSON';
 
 import {set_Range_items, set_legend_data} from './REDUX/actions/actions'
 import {clickOnFeature} from './REDUX/actions/get_map_area'
 import {store} from './index'
 
 export let choroplethLayer = null;
+export let ato = null;
 
 export default function getMap(data, rebuild = true) {
 
@@ -39,11 +41,45 @@ export default function getMap(data, rebuild = true) {
     let item = state.main.range_item;
     let items = state.main.range_items;
 
+    function getAto(item) {
+        console.log('get >>', item)
+        if (item > 0 ) {
+            ato !== null ? Lmap.removeLayer(ato) : '';
+            fetch('/ato', {
+                method: 'post',
+                headers: {
+                    "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                body: ''
+            })
+                .then(checkStatus)
+                .then(parseJSON)
+                .then(data => {
+                    let myStyle = {
+                        "color": "#747474",
+                        "weight": 2,
+                        "fillOpacity": 1,
+                        'className': 'ato'
+                    };
+
+                    ato = L.geoJSON(data[1], {
+                        style: myStyle
+                    });
+                    Lmap.addLayer(ato)
+                });
+        } else if (item == 0) {
+            Lmap.removeLayer(ato);
+            ato = null;
+            console.log('remove >>', item)
+        }
+    }
+
     function handleChange() {
         let nexItem = store.getState().main.range_item;
         if (nexItem !== item) {
             item = nexItem;
-            renderLayer();
+            getAto(item);
+            renderLayer()
         }
     }
 
@@ -69,7 +105,7 @@ export default function getMap(data, rebuild = true) {
             onEachFeature: function (feature, layer) {
                 layer.on('click', whenClicked)
             }
-        }).addTo(Lmap)
+        }).addTo(Lmap);
 
         function whenClicked(e) {
             store.dispatch(clickOnFeature(e.target.feature.properties))
