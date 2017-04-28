@@ -10,7 +10,9 @@ import {
     CLICK_ON_FEATURE_CLASTER,
     GET_LAYER_REQUEST,
     GET_LAYER_SUCCESS,
-    GET_LAYER_ERROR
+    GET_LAYER_ERROR,
+    GET_CLASTER_SUCCESS,
+    GET_SUBMENU_REQUEST
 } from '../actions/constant'
 
 const initialState = {
@@ -64,6 +66,12 @@ export default function map(state = initialState, action) {
 
         case GET_LAYER_ERROR:
             return {...state, fetching_map: false};
+
+        case GET_CLASTER_SUCCESS:
+            return {...state, info: action.payload[0][0]};
+
+        case GET_SUBMENU_REQUEST:
+            return {...state, info: null, properties: null, data_success: false};
 
         default:
             return state;

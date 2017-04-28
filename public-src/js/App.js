@@ -10,6 +10,7 @@ import Chart from './PageElement/Chart';
 import BarChart from './PageElement/BarChart';
 import SliderRange from './PageElement/sliderRange';
 import Legend from './PageElement/Legend';
+import Info from './PageElement/info';
 import * as Actions from './REDUX/actions/actions';
 import * as MapActions from './REDUX/actions/get_map_area';
 
@@ -36,7 +37,7 @@ class App extends Component {
 
     render() {
         // console.log('this.props >>', this.props)
-        const {category, fields, showMenu, mapFull, fetching, range_items, range_item, show_range, legend_data, claster_layers} = this.props.main;
+        const {category, showMenu, mapFull, fetching, range_items, range_item, show_range, legend_data, claster_layers} = this.props.main;
         const {fetching_map, curentMap, info, feature, alias, claster, feature_claster} = this.props.map_reducer;
         const {toggleMenu, resizeMap, get_submenu, set_Range_item} = this.props.Actions;
         const {get_map_area, toggle_layer} = this.props.MapActions;
@@ -65,27 +66,14 @@ class App extends Component {
                             />
                         </div>
                         <div className="main__right">
-
                             <SliderRange range_items={ range_items} range_item={ range_item}
                                          set_Range_item={ set_Range_item } show_range={ show_range }/>
-
                             <Popup feature={ feature } alias={ alias } feature_claster={ feature_claster }/>
-
-                            <div className="info">
-                                <div className="item_header">
-                                    <div className="map_heder_title">Довідка</div>
-                                </div>
-                                <div className="item_content">
-                                    <div id="info"
-                                         dangerouslySetInnerHTML={info ? {__html: info} : {__html: '&nbsp; &nbsp;Україна - держава у Східній Європі. Столиця - м.Київ. Площа - 60 357 712 га. Населення - 44 933 290 особи'}}/>
-                                </div>
-                            </div>
+                            <Info info={ info } />
                             <Legend legend_data={ legend_data } claster_layers={ claster_layers } toggle_layer={ toggle_layer } />
                         </div>
                         <div className="main__chart">
-
                             <Chart />
-
                             <BarChart />
                         </div>
                     </div>

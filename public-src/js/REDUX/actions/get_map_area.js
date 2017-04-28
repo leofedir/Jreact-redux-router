@@ -136,7 +136,8 @@ export function show_claster(state, mapName) {
                             body: `table=${ item }`
                         }).then(parseJSON)
                     )).then((resp) => {
-                        claster(resp)
+                        claster(resp);
+                        console.log('resp >>', resp)
                         dispatch({
                             type: GET_CLASTER_SUCCESS,
                             payload: resp

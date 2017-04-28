@@ -6,6 +6,7 @@ const Highcharts = require('highcharts');
 const higchartsDrilldown = require('highcharts/modules/drilldown.js');
 
 higchartsDrilldown(Highcharts);
+let myChart = null;
 
 class BarChart extends Component {
 
@@ -58,7 +59,7 @@ class BarChart extends Component {
             newData.sort((a, b) => b.y - a.y);
 
             // Create the chart
-           Highcharts.chart('item_bar_chart', {
+            myChart = Highcharts.chart('item_bar_chart', {
                 lang: {
                     drillUpText: 'Назад'
                 },
@@ -139,6 +140,9 @@ class BarChart extends Component {
                     series: district_arr
                 }
             });
+        } else if (!data_success && myChart !== null) {
+            myChart.destroy();
+            myChart = null
         }
     }
 

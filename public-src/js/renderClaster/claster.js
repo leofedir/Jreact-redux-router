@@ -62,8 +62,6 @@ export default function claster(data) {
         iconAnchor: [12, 33]
     });
 
-
-
     data.forEach(function (layer, i) {
         let grup = L.markerClusterGroup({chunkedLoading: true})
         let m = L.geoJson(layer[1], {
