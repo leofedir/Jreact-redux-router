@@ -42,7 +42,6 @@ export default function getMap(data, rebuild = true) {
     let items = state.main.range_items;
 
     function getAto(item) {
-        console.log('get >>', item)
         if (item > 0 ) {
             ato !== null ? Lmap.removeLayer(ato) : '';
             fetch('/ato', {
@@ -121,5 +120,6 @@ export default function getMap(data, rebuild = true) {
     }
 
     renderLayer();
+    getAto(item);
 
 }
