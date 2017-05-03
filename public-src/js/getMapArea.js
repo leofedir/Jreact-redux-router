@@ -9,6 +9,7 @@ import {store} from './index'
 
 export let choroplethLayer = null;
 export let ato = null;
+let atoData = null;
 
 export default function getMap(data, rebuild = true) {
 
@@ -41,32 +42,46 @@ export default function getMap(data, rebuild = true) {
     let item = state.main.range_item;
     let items = state.main.range_items;
 
-    function getAto(item) {
-        if (item > 0 ) {
-            ato !== null ? Lmap.removeLayer(ato) : '';
-            fetch('/ato', {
-                method: 'post',
-                headers: {
-                    "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-                },
-                body: ''
-            })
-                .then(checkStatus)
-                .then(parseJSON)
-                .then(data => {
-                    let myStyle = {
-                        "color": "#747474",
-                        "weight": 2,
-                        "fillOpacity": 1,
-                        'className': 'ato'
-                    };
+    function fetchAto () {
+        fetch('/ato', {
+            method: 'post',
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: ''
+        })
+            .then(checkStatus)
+            .then(parseJSON)
+            .then(data => {
+                let myStyle = {
+                    "color": "#747474",
+                    "weight": 2,
+                    "fillOpacity": 1,
+                    'className': 'ato'
+                };
 
-                    ato = L.geoJSON(data[1], {
-                        style: myStyle
-                    });
-                    Lmap.addLayer(ato)
+                atoData = data
+
+                ato = L.geoJSON(data[1], {
+                    style: myStyle
                 });
-        } else if (item == 0) {
+                Lmap.addLayer(ato)
+            });
+    }
+
+    function getAto(item) {
+        if (item > 0 && ato !== null ) {
+            console.log('ato >>', ato)
+            console.log('item >>', item)
+            console.log('hasLayer >>', Lmap.hasLayer(ato))
+            Lmap.removeLayer(ato);
+            console.log('hasLayer >>', Lmap.hasLayer(ato))
+            Lmap.addLayer(ato)
+            console.log('hasLayer >>', ato.getLayers())
+        } else if (item > 0 && ato === null) {
+            console.log('fetch >>')
+            fetchAto()
+        } else if (item === 0 && ato !== null ) {
             Lmap.removeLayer(ato);
             ato = null;
             console.log('remove >>', item)
