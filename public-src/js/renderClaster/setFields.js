@@ -6,6 +6,14 @@ export default function getFields(){
             'order' : 1
         },
         {
+            'title' : 'Індекс',
+            'key' : 'index',
+            'order' : 8,
+            // 'img': '/img/popup/position.svg',
+            "class": 'fa fa-info-circle fa fa-1x'
+
+        },
+        {
             'title' : 'Адреса',
             'key' : 'adress',
             'order' : 2,
@@ -49,5 +57,6 @@ export default function getFields(){
             "class": 'fa-map-marker fa fa-1x'
 
         }
+
     ]
 }
