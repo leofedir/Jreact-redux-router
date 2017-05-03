@@ -7,6 +7,7 @@ const higchartsDrilldown = require('highcharts/modules/drilldown.js');
 
 higchartsDrilldown(Highcharts);
 let myChart = null;
+let data_light = null
 let alias_series = {
     dohody: 'Бюджет закладу',
     naodnohouchnya: 'Видатки на одного учня',
@@ -21,14 +22,14 @@ class BarChart extends Component {
         barChartToggle(this.props.map_reducer.bar_cahrt_full);
     }
 
-    createChart() {
+    createChart(full = null) {
         console.log('this.props >>', this.props)
-        const {alias, properties, data_success, chart2} = this.props.map_reducer;
+        const {alias, properties, data_success, chart2, bar_cahrt_full} = this.props.map_reducer;
         const {range_item, range_items} = this.props.main;
 
         if (data_success && properties && '__region' in properties) {
 
-            let curent_year = range_items[range_item]
+            let curent_year = range_items[range_item] || '';
 
             let district = {};
             let district_arr = [];
@@ -64,6 +65,8 @@ class BarChart extends Component {
             });
 
             newData.sort((a, b) => b.y - a.y);
+            data_light = newData.slice(0, 5)
+
 
             // Create the chart
             myChart = Highcharts.chart('item_bar_chart', {
@@ -72,6 +75,11 @@ class BarChart extends Component {
                 },
                 chart: {
                     type: 'bar'
+                    // events: {
+                    //     redraw: function (e) {
+                    //         bar_cahrt_full ? this.series[0].update({data: newData}) : '';
+                    //     }
+                    // }
                 },
                 credits: {
                     text: 'Енциклопедія територій',
@@ -79,7 +87,7 @@ class BarChart extends Component {
                     enabled: false
                 },
                 title: {
-                    text: alias + ', ' + properties.__district["0"].parameter + ', 20' + curent_year ?  curent_year.substring(5) + 'р.' : ''
+                    text: alias + ', ' + properties.__district["0"].parameter + ', 20' + curent_year.substring(5) + 'р.'
                 },
                 xAxis: {
                     type: 'category',
@@ -98,7 +106,7 @@ class BarChart extends Component {
                     series: {
                         borderWidth: 0,
                         dataLabels: {
-                            enabled: false
+                            enabled: bar_cahrt_full
                         }
                     }
                 },
@@ -106,7 +114,7 @@ class BarChart extends Component {
                 series: [{
                     name: alias,
                     // colorByPoint: true,
-                    data: newData,
+                    data: full ? newData : data_light,
                     zones: [{
                         value: 0,
                         color: '#e74c3c'
@@ -218,12 +226,10 @@ class BarChart extends Component {
         }
     }
 
-    componentDidMount() {
-        this.createChart()
-    }
+    componentDidMount() {}
 
     componentDidUpdate() {
-        this.createChart()
+        this.createChart(this.props.map_reducer.bar_cahrt_full)
     }
 
     render() {
