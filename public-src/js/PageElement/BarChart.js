@@ -7,7 +7,8 @@ const higchartsDrilldown = require('highcharts/modules/drilldown.js');
 
 higchartsDrilldown(Highcharts);
 let myChart = null;
-let data_light = null
+let data_light = null;
+let dataStore = {};
 let alias_series = {
     dohody: 'Бюджет закладу',
     naodnohouchnya: 'Видатки на одного учня',
@@ -23,13 +24,12 @@ class BarChart extends Component {
     }
 
     createChart(full = null) {
-        console.log('this.props >>', this.props)
+
         const {alias, properties, data_success, chart2, bar_cahrt_full} = this.props.map_reducer;
-        const {range_item, range_items} = this.props.main;
+        const {range_item, range_items, submenu_item} = this.props.main;
+        let curent_year = range_items[range_item] || 'year_13';
 
         if (data_success && properties && '__region' in properties) {
-
-            let curent_year = range_items[range_item] || '';
 
             let district = {};
             let district_arr = [];
@@ -156,18 +156,17 @@ class BarChart extends Component {
                 }
             });
         } else if (data_success && properties && '__district' in properties){
-            let curent_year = range_items[range_item] || '';
 
-            let newData = properties.__district.map(item => {
-                let obj = {};
-                obj.name = item.name_ua;
-                obj.y = +item[curent_year];
-                return obj
-            });
-            newData.sort((a, b) => b.y - a.y);
-            data_light = newData.slice(0, 5);
-            console.log('newData >>', newData.length)
-
+            if (!dataStore[submenu_item + curent_year]) {
+                console.log('sort >>')
+                dataStore[submenu_item + curent_year] = properties.__district.map(item => {
+                    let obj = {};
+                    obj.name = item.name_ua;
+                    obj.y = +item[curent_year];
+                    return obj
+                });
+                dataStore[submenu_item + curent_year].sort((a, b) => b.y - a.y);
+            }
 
             // Create the chart
             myChart = Highcharts.chart('item_bar_chart', {
@@ -176,7 +175,7 @@ class BarChart extends Component {
                 },
                 chart: {
                     type: 'bar',
-                    height: full ? newData.length * 25 : null,
+                    height: full ? dataStore[submenu_item + curent_year].length * 25 : null,
                     // events: {
                     //     redraw: function (e) {
                     //         bar_cahrt_full ? this.series[0].update({data: newData}) : '';
@@ -216,7 +215,7 @@ class BarChart extends Component {
                 series: [{
                     name: alias,
                     // colorByPoint: true,
-                    data: full ? newData : data_light,
+                    data: full ? dataStore[submenu_item + curent_year] : dataStore[submenu_item + curent_year].slice(0, 5),
                     zones: [{
                         value: 0,
                         color: '#e74c3c'
