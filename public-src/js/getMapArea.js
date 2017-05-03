@@ -12,6 +12,12 @@ export let ato = null;
 let atoData = null;
 
 export default function getMap(data, rebuild = true) {
+    let myStyle = {
+        "color": "#747474",
+        "weight": 2,
+        "fillOpacity": 1,
+        'className': 'ato'
+    };
 
     if (rebuild) {
         Lmap.eachLayer(function (layer) {
@@ -53,14 +59,7 @@ export default function getMap(data, rebuild = true) {
             .then(checkStatus)
             .then(parseJSON)
             .then(data => {
-                let myStyle = {
-                    "color": "#747474",
-                    "weight": 2,
-                    "fillOpacity": 1,
-                    'className': 'ato'
-                };
-
-                atoData = data
+                atoData = data[1];
 
                 ato = L.geoJSON(data[1], {
                     style: myStyle
@@ -70,21 +69,21 @@ export default function getMap(data, rebuild = true) {
     }
 
     function getAto(item) {
-        if (item > 0 && ato !== null ) {
-            console.log('ato >>', ato)
-            console.log('item >>', item)
-            console.log('hasLayer >>', Lmap.hasLayer(ato))
-            Lmap.removeLayer(ato);
-            console.log('hasLayer >>', Lmap.hasLayer(ato))
-            Lmap.addLayer(ato)
-            console.log('hasLayer >>', ato.getLayers())
-        } else if (item > 0 && ato === null) {
-            console.log('fetch >>')
+        if (item > 0 && atoData !== null) {
+            ato ? ato.clearLayers() && Lmap.removeLayer(ato) : ''
+            ato = L.geoJSON(atoData, {
+                style: myStyle
+            });
+            setTimeout(() => {
+                Lmap.addLayer(ato)
+            }, 400)
+
+        } else if (item > 0 && atoData === null) {
             fetchAto()
-        } else if (item === 0 && ato !== null ) {
+        } else if (item == 0 && ato !== null) {
+            ato.clearLayers();
             Lmap.removeLayer(ato);
             ato = null;
-            console.log('remove >>', item)
         }
     }
 
