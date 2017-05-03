@@ -3,6 +3,8 @@ const app = express();
 const Server  = require("http").Server;
 const server = Server(app);
 const config = require('./config');
+const EventEmitter = require('events');
+
 
 
 
@@ -25,6 +27,7 @@ app.use(methodOverride());
 //move to config
 server.listen(config.server.port);
 console.log('ok');
+EventEmitter.defaultMaxListeners = 20;
 
 const routes = require('./app/routes');
 

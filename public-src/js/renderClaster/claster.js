@@ -82,6 +82,8 @@ export default function claster(data) {
         layers[i] = grup;
     });
 
+
+
     function whenClicked(e) {
         let feature = e.target.feature.properties;
         store.dispatch(clickOnFeatureClaster(feature))

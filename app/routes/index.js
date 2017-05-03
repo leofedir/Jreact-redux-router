@@ -20,5 +20,4 @@ router.post('/ato', function(req, res) {
 
 demografiya(router);
 claster(router)
-
 module.exports = router;
