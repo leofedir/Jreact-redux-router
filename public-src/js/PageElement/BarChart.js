@@ -22,6 +22,7 @@ class BarChart extends Component {
     }
 
     createChart() {
+        console.log('this.props >>', this.props)
         const {alias, properties, data_success, chart2} = this.props.map_reducer;
         const {range_item, range_items} = this.props.main;
 
@@ -78,7 +79,7 @@ class BarChart extends Component {
                     enabled: false
                 },
                 title: {
-                    text: alias + ', ' + properties.__district["0"].parameter
+                    text: alias + ', ' + properties.__district["0"].parameter + ', 20' + curent_year ?  curent_year.substring(5) + 'р.' : ''
                 },
                 xAxis: {
                     type: 'category',
