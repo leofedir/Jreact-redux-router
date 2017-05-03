@@ -155,7 +155,78 @@ class BarChart extends Component {
                     series: district_arr
                 }
             });
-        } else if (!data_success && myChart !== null && chart2 === null) {
+        } else if (data_success && properties && '__district' in properties){
+            let curent_year = range_items[range_item] || '';
+
+            let newData = properties.__district.map(item => {
+                let obj = {};
+                obj.name = item.name_ua;
+                obj.y = +item[curent_year];
+                return obj
+            });
+            newData.sort((a, b) => b.y - a.y);
+            data_light = newData.slice(0, 5);
+            console.log('newData >>', newData.length)
+
+
+            // Create the chart
+            myChart = Highcharts.chart('item_bar_chart', {
+                lang: {
+                    drillUpText: 'Назад'
+                },
+                chart: {
+                    type: 'bar',
+                    height: full ? newData.length * 25 : null,
+                    // events: {
+                    //     redraw: function (e) {
+                    //         bar_cahrt_full ? this.series[0].update({data: newData}) : '';
+                    //     }
+                    // }
+                },
+                credits: {
+                    text: 'Енциклопедія територій',
+                    href: 'http://enter.co.ua',
+                    enabled: false
+                },
+                title: {
+                    text: alias + ', ' + properties.__district["0"].parameter + ', 20' + curent_year.substring(5) + 'р.'
+                },
+                xAxis: {
+                    type: 'category',
+                },
+
+                legend: {
+                    enabled: false
+                },
+                yAxis: {
+                    title: {
+                        enabled: false
+                    }
+
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: bar_cahrt_full
+                        }
+                    }
+                },
+
+                series: [{
+                    name: alias,
+                    // colorByPoint: true,
+                    data: full ? newData : data_light,
+                    zones: [{
+                        value: 0,
+                        color: '#e74c3c'
+                    }, {
+                        color: '#27ae60'
+                    }]
+                }],
+            });
+
+        }else if (!data_success && myChart !== null && chart2 === null) {
             myChart.destroy();
             myChart = null
         } else if (chart2 !== null) {
