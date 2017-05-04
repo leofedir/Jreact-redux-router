@@ -149,7 +149,7 @@ body {
   transition: $transition-win;
 }
 .main__chart {
-  height: 280px;
+  height: 380px;
   margin: 0 $block-margin $block-margin $block-margin;
   width: calc(100% - #{$main__right} - (3 * #{$block-margin}));
   float: left;
@@ -234,6 +234,10 @@ body {
 
 .fa-bars.fa-1x {
   padding: 20px 10px;
+}
+
+.map_title {
+  font-weight: bold;
 }
 
 @media screen and (max-width:1600px)  {
