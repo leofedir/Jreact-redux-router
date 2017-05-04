@@ -30,6 +30,7 @@ class BarChart extends Component {
         let curent_year = range_items[range_item] || 'year_13';
 
         if (data_success && properties && '__region' in properties) {
+// TODO optimize
 
             let district = {};
             let district_arr = [];
@@ -75,11 +76,6 @@ class BarChart extends Component {
                 },
                 chart: {
                     type: 'bar'
-                    // events: {
-                    //     redraw: function (e) {
-                    //         bar_cahrt_full ? this.series[0].update({data: newData}) : '';
-                    //     }
-                    // }
                 },
                 credits: {
                     text: 'Енциклопедія територій',

@@ -48,8 +48,10 @@ pgdb.prototype.query = function(sql , data){
         }
     });
 
-    this.pgpool.on('error', function (err, client) {
-        console.error('idle client error', err.message, err.stack)
-    });
+    // TODO Den
+    //
+    // this.pgpool.on('error', function (err, client) {
+    //     console.error('idle client error', err.message, err.stack)
+    // });
     return deferred.promise;
 }

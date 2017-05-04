@@ -45,10 +45,18 @@ function hideLayer(id) {
 
 
 export default function claster(data) {
+    if (0 in layers) {
+       for (let key in layers) {
+           if (layers.hasOwnProperty(key)) {
+               layers[key].off('click', whenClicked);
+           }
+       }
+    }
+
+
     layers = {};
 
     Lmap.eachLayer(function (layer) {
-        console.log('layer >>', layer)
         Lmap.removeLayer(layer)
     });
 
@@ -74,18 +82,15 @@ export default function claster(data) {
             pointToLayer: function (geojson, latlng) {
                 return L.marker(latlng, {icon: icon});
             },
-            onEachFeature: function (feature, layer) {
-                layer.on('click', whenClicked)
-            }
         });
-        grup.addLayer(m)
+        grup.addLayer(m);
+        grup.on('click', whenClicked);
         layers[i] = grup;
     });
 
-
-
     function whenClicked(e) {
-        let feature = e.target.feature.properties;
+        console.log('e.target >>', e.layer)
+        let feature = e.layer.feature.properties;
         store.dispatch(clickOnFeatureClaster(feature))
 
         if (Object.keys(feature).some(item =>item.indexOf('chart'))) {
