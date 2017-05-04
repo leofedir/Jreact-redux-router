@@ -6,8 +6,9 @@ import {menu} from './menu_src'
 class Menu extends Component {
 
     onItemClick(e) {
-        let url = e.currentTarget.dataset.url
-        this.props.get_submenu(url)
+        let title = e.currentTarget.title;
+        let url = e.currentTarget.dataset.url;
+        this.props.get_submenu(url, title)
     }
 
     getItem(items) {

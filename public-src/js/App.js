@@ -11,6 +11,7 @@ import BarChart from './PageElement/BarChart';
 import SliderRange from './PageElement/sliderRange';
 import Legend from './PageElement/Legend';
 import Info from './PageElement/info';
+import MapTitle from './PageElement/MapTitle';
 import * as Actions from './REDUX/actions/actions';
 import * as MapActions from './REDUX/actions/get_map_area';
 
@@ -37,7 +38,7 @@ class App extends Component {
 
     render() {
         // console.log('this.props >>', this.props)
-        const {category, showMenu, mapFull, fetching, range_items, range_item, show_range, legend_data, claster_layers} = this.props.main;
+        const {category, showMenu, mapFull, fetching, range_items, range_item, show_range, legend_data, claster_layers, title_map} = this.props.main;
         const {fetching_map, curentMap, info, feature, alias, claster, feature_claster} = this.props.map_reducer;
         const {toggleMenu, resizeMap, get_submenu, set_Range_item} = this.props.Actions;
         const {get_map_area, toggle_layer, set_chart_data} = this.props.MapActions;
@@ -48,6 +49,7 @@ class App extends Component {
 
                     <a className="logo_link" href="/"/>
                     <ButtonMenu toggleMenu={ toggleMenu } showMenu={ showMenu }/>
+                    <MapTitle title_map={ title_map }/>
                 </div>
                 <div className="content__wrap">
 

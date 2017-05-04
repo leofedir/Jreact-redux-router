@@ -25,7 +25,8 @@ const initialState = {
     range_item: 0,
     show_range: false,
     legend_data: null,
-    claster_layers: null
+    claster_layers: null,
+    title_map: ''
 };
 
 export default function main(state = initialState, action) {
@@ -42,7 +43,7 @@ export default function main(state = initialState, action) {
             return {...state, submenu_item: action.payload, legend_data: null, claster_layers: null};
 
         case GET_SUBMENU_REQUEST:
-            return {...state, fetching: true, legend_data: null, claster_layers: null};
+            return {...state, fetching: true, legend_data: null, claster_layers: null, title_map: action.payload};
 
         case SET_RANGE_ITEMS:
             return {...state, range_items: action.payload, show_range: true};

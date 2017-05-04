@@ -27,10 +27,11 @@ export function resizeMap(curent) {
     }
 }
 
-export function get_submenu(url) {
+export function get_submenu(url, title) {
     return (dispatch) => {
         dispatch({
-            type: GET_SUBMENU_REQUEST
+            type: GET_SUBMENU_REQUEST,
+            payload: title
         })
 
         fetch('getsubmenu', {
