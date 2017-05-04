@@ -30,7 +30,6 @@ class BarChart extends Component {
         let curent_year = range_items[range_item] || 'year_13';
 
         if (data_success && properties && '__region' in properties) {
-// TODO optimize
 
             let district = {};
             let district_arr = [];
@@ -51,21 +50,29 @@ class BarChart extends Component {
                     obj.id = key;
                     obj.name = alias;
                     obj.data = district[key].sort((a, b) => b[1] - a[1]);
-
+                    obj.negativeColor = '#e74c3c';
+                    obj.color = '#27ae60';
+                    obj.maxPointWidth = 25;
 
                     district_arr.push(obj);
                 }
             }
+            console.log('district_arr >>', district_arr)
+
+
+            // sort data to enable labels
+            properties.__region.sort((a, b) => b[curent_year] - a[curent_year]);
+            let i = 1;
 
             let newData = properties.__region.map(item => {
                 let obj = {};
-                obj.name = item.name_ua;
+                obj.name = item.name_ua + `  (${ i })`;
                 obj.y = +item[curent_year];
                 obj.drilldown = item.koatuu.slice(0, 2);
+                i++;
                 return obj
             });
 
-            newData.sort((a, b) => b.y - a.y);
             data_light = newData.slice(0, 5)
 
 
@@ -101,6 +108,7 @@ class BarChart extends Component {
                 plotOptions: {
                     series: {
                         borderWidth: 0,
+                        minPointLength: 3,
                         dataLabels: {
                             enabled: bar_cahrt_full
                         }
@@ -109,14 +117,12 @@ class BarChart extends Component {
 
                 series: [{
                     name: alias,
+                    maxPointWidth: 25,
                     // colorByPoint: true,
                     data: full ? newData : data_light,
-                    zones: [{
-                        value: 0,
-                        color: '#e74c3c'
-                    }, {
-                        color: '#27ae60'
-                    }]
+                    negativeColor: '#e74c3c',
+                    color: '#27ae60',
+
                 }],
                 drilldown: {
                     drillUpButton: {
@@ -151,7 +157,7 @@ class BarChart extends Component {
                     series: district_arr
                 }
             });
-        } else if (data_success && properties && '__district' in properties){
+        } else if (data_success && properties && '__district' in properties) {
 
             if (!dataStore[submenu_item + curent_year]) {
                 console.log('sort >>')
@@ -221,7 +227,7 @@ class BarChart extends Component {
                 }],
             });
 
-        }else if (!data_success && myChart !== null && chart2 === null) {
+        } else if (!data_success && myChart !== null && chart2 === null) {
             myChart.destroy();
             myChart = null
         } else if (chart2 !== null) {
@@ -292,7 +298,8 @@ class BarChart extends Component {
         }
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+    }
 
     componentDidUpdate() {
         this.createChart(this.props.map_reducer.bar_cahrt_full)
