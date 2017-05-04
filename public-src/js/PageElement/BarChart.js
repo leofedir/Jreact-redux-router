@@ -7,7 +7,6 @@ const higchartsDrilldown = require('highcharts/modules/drilldown.js');
 
 higchartsDrilldown(Highcharts);
 let myChart = null;
-let data_light = null;
 let dataStore = {};
 let alias_series = {
     dohody: 'Бюджет закладу',
@@ -34,47 +33,60 @@ class BarChart extends Component {
             let district = {};
             let district_arr = [];
 
-            properties.__district.forEach(item => {
+            if (!dataStore[submenu_item + curent_year + '__district']) {
+                dataStore[submenu_item + curent_year + '__district'] = [];
+                properties.__district.forEach(item => {
 
-                district[item.koatuu.slice(0, 2)] ? '' : district[item.koatuu.slice(0, 2)] = [];
+                    district[item.koatuu.slice(0, 2)] ? '' : district[item.koatuu.slice(0, 2)] = [];
 
-                let _item = district[item.koatuu.slice(0, 2)];
+                    let _item = district[item.koatuu.slice(0, 2)];
 
-                _item.push([item.name_ua, +item[curent_year]])
+                    _item.push([item.name_ua, +item[curent_year]])
 
-            });
+                });
 
-            for (let key in district) {
-                if (district.hasOwnProperty(key)) {
-                    let obj = {};
-                    obj.id = key;
-                    obj.name = alias;
-                    obj.data = district[key].sort((a, b) => b[1] - a[1]);
-                    obj.negativeColor = '#e74c3c';
-                    obj.color = '#27ae60';
-                    obj.maxPointWidth = 25;
+                for (let key in district) {
+                    if (district.hasOwnProperty(key)) {
+                        district[key].sort((a, b) => b[1] - a[1]);
+                        district[key] = district[key].map((item, i) => {
+                            item[0] = item[0] + `  (${ i + 1 })`
+                            return item
+                        })
+                    }
+                }
 
-                    district_arr.push(obj);
+                for (let key in district) {
+                    if (district.hasOwnProperty(key)) {
+                        let obj = {};
+                        obj.id = key;
+                        obj.name = alias;
+                        obj.data = district[key];
+                        obj.negativeColor = '#e74c3c';
+                        obj.color = '#27ae60';
+                        obj.maxPointWidth = 25;
+
+                        dataStore[submenu_item + curent_year + '__district'].push(obj);
+                    }
                 }
             }
-            console.log('district_arr >>', district_arr)
 
 
-            // sort data to enable labels
-            properties.__region.sort((a, b) => b[curent_year] - a[curent_year]);
-            let i = 1;
+            if (!dataStore[submenu_item + curent_year]) {
+                // sort data to enable labels
+                properties.__region.sort((a, b) => b[curent_year] - a[curent_year]);
+                let i = 1;
 
-            let newData = properties.__region.map(item => {
-                let obj = {};
-                obj.name = item.name_ua + `  (${ i })`;
-                obj.y = +item[curent_year];
-                obj.drilldown = item.koatuu.slice(0, 2);
-                i++;
-                return obj
-            });
+                dataStore[submenu_item + curent_year] = properties.__region.map(item => {
+                    let obj = {};
+                    obj.name = item.name_ua + `  (${ i })`;
+                    obj.y = +item[curent_year];
+                    obj.drilldown = item.koatuu.slice(0, 2);
+                    i++;
+                    return obj
+                });
+            }
 
-            data_light = newData.slice(0, 5)
-
+            console.log('dataStore >>', dataStore)
 
             // Create the chart
             myChart = Highcharts.chart('item_bar_chart', {
@@ -119,7 +131,7 @@ class BarChart extends Component {
                     name: alias,
                     maxPointWidth: 25,
                     // colorByPoint: true,
-                    data: full ? newData : data_light,
+                    data: full ? dataStore[submenu_item + curent_year] : dataStore[submenu_item + curent_year].slice(0, 5),
                     negativeColor: '#e74c3c',
                     color: '#27ae60',
 
@@ -154,20 +166,23 @@ class BarChart extends Component {
                         }
 
                     },
-                    series: district_arr
+                    series: dataStore[submenu_item + curent_year + '__district']
                 }
             });
         } else if (data_success && properties && '__district' in properties) {
 
             if (!dataStore[submenu_item + curent_year]) {
-                console.log('sort >>')
+
+                properties.__district.sort((a, b) => b[curent_year] - a[curent_year]);
+                let i = 1;
+
                 dataStore[submenu_item + curent_year] = properties.__district.map(item => {
                     let obj = {};
-                    obj.name = item.name_ua;
+                    obj.name = item.name_ua + `  (${ i })`;
                     obj.y = +item[curent_year];
+                    i++
                     return obj
                 });
-                dataStore[submenu_item + curent_year].sort((a, b) => b.y - a.y);
             }
 
             // Create the chart
