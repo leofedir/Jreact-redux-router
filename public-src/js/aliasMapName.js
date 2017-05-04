@@ -94,6 +94,11 @@ export let alias = {
     point_osvitaa_zosh_licey:'Ліцеї',
     point_osvitaa_zosh_colegium:'Колегіуми',
     point_osvitaa_zosh_spetsialnyschool:'Спеціальні школи',
-    area_ekonomika_rivenbezrobittya:'Рівень безробіття'
+    area_ekonomika_rivenbezrobittya:'Рівень безробіття',
+    area_ekonomika_kilkistbezrobitnyh:'Кількість безробітних',
+    area_budgets_chastkadohodvidoperatsiyzkapitalom:'Частка доходів від операцій з капіталом',
+    area_sotspol_sumvydatkynasotszahyst:'Загальна сума видатків на соціальний захист',
+    area_sotspol_vydatkynasotszahystnadushu:'Видатки на соціальний захист в розрахунку на душу населення',
+    area_sotspol_pytomavagavydatkivnasotszahyst:'Питома вага видатків на соціальний захист'
 
 }
