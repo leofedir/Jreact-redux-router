@@ -79,7 +79,7 @@ export default function map(state = initialState, action) {
             return {...state, fetching_map: false};
 
         case GET_CLASTER_SUCCESS:
-            return {...state, info: action.payload[0][0]};
+            return {...state, info: action.payload["0"]["0"]};
 
         case GET_SUBMENU_REQUEST:
             return {...state, info: null, properties: null, data_success: false, curentMap: null};

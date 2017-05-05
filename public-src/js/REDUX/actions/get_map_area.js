@@ -1,6 +1,6 @@
 import {checkStatus, parseJSON} from '../../checkJSON';
 import getMap from '../../getMapArea';
-import { layersTriger } from '../../renderClaster/claster'
+import {layersTriger} from '../../renderClaster/claster'
 import claster from '../../renderClaster/claster'
 
 import {
@@ -13,14 +13,8 @@ import {
     GET_MAP_DATA_ERROR,
     GET_MAP_DATA_REQUEST,
     SHOW_CLASTER,
-    GET_CLASTER_ITEMS_REQUEST,
-    GET_CLASTER_ITEMS_SUCCESS,
-    GET_CLASTER_ITEMS_ERROR,
     CLICK_ON_FEATURE_CLASTER,
     TOGGLE_LAYER,
-    GET_LAYER_REQUEST,
-    GET_LAYER_SUCCESS,
-    GET_LAYER_ERROR,
     GET_CLASTER_REQUEST,
     GET_CLASTER_SUCCESS,
     GET_CLASTER_ERROR,
@@ -63,13 +57,13 @@ export function get_map_area(url, rebuild = true, alias, range_item) {
     }
 }
 
-export function getMapData(tableData= null, arr = null){
+export function getMapData(tableData = null, arr = null) {
     return (dispatch) => {
         dispatch({
             type: GET_MAP_DATA_REQUEST
         });
 
-        if(arr !== null && tableData !== null) {
+        if (arr !== null && tableData !== null) {
             Promise.all(tableData.map((item, i) =>
                 fetch('/getmapdata', {
                     method: 'post',
@@ -89,7 +83,8 @@ export function getMapData(tableData= null, arr = null){
                 console.log('err >>', err);
                 dispatch({
                     type: GET_MAP_DATA_ERROR
-                })})
+                })
+            })
         }
     }
 }
@@ -132,41 +127,22 @@ export function show_claster(state, mapName) {
                 "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
             },
             body: `table=${ mapName }`
-        }).then(checkStatus)
+        })
+            .then(checkStatus)
             .then(parseJSON)
             .then(data => {
-                // claster(data);
-                if(data !== null) {
-                    Promise.all(data.map((item, i) =>
-                        fetch('/layer', {
-                            method: 'post',
-                            headers: {
-                                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-                            },
-                            body: `table=${ item }`
-                        }).then(parseJSON)
-                    )).then((resp) => {
-                        claster(resp);
-                        dispatch({
-                            type: GET_CLASTER_SUCCESS,
-                            payload: resp
-                        });
-
-                    }).catch((err) => {
-                        console.log('err >>', err);
-                        dispatch({
-                            type: GET_CLASTER_ERROR
-                        })})
-                }
-
+                claster(data.data);
+                dispatch({
+                    type: GET_CLASTER_SUCCESS,
+                    payload: data.data
+                });
             })
             .catch((err) => {
-            console.log('err >>', err);
-            dispatch({
-                type: GET_CLASTER_ITEMS_ERROR
+                console.log('err >>', err);
+                dispatch({
+                    type: GET_CLASTER_ERROR
+                })
             })
-        })
-
     }
 }
 
@@ -183,7 +159,8 @@ export function toggle_layer(id, status) {
             type: TOGGLE_LAYER
         });
         layersTriger(id, status)
-}}
+    }
+}
 
 export function set_chart_data(chart1, chart2) {
     return {

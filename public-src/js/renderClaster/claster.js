@@ -72,7 +72,7 @@ export default function claster(data) {
     });
 
     data.forEach(function (layer, i) {
-        let grup = L.markerClusterGroup({chunkedLoading: true})
+        let grup = L.markerClusterGroup({chunkedLoading: true});
         let m = L.geoJson(layer[1], {
             // Cluster Options
             polygonOptions: {
@@ -89,12 +89,10 @@ export default function claster(data) {
     });
 
     function whenClicked(e) {
-        console.log('e.target >>', e.layer)
         let feature = e.layer.feature.properties;
-        store.dispatch(clickOnFeatureClaster(feature))
+        store.dispatch(clickOnFeatureClaster(feature));
 
         if (Object.keys(feature).some(item =>item.indexOf('chart'))) {
-            console.log('ok >>')
             chartData(feature)
         }
     }
@@ -103,7 +101,7 @@ export default function claster(data) {
         let chart1 = {};
         let chart2 = {};
 
-        if (feature_claster != null) {
+        if (feature_claster !== null) {
             for (let key in feature_claster) {
                 if (feature_claster.hasOwnProperty(key)) {
                     let name = key.slice(0, key.indexOf('_'));

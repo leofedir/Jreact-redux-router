@@ -13,8 +13,6 @@ class Legend extends Component {
 
     handleChangeAll(e) {
         this.props.checkAll(this.props.isCheckAll)
-
-        console.log('e >>', e)
     }
 
     createItem() {
