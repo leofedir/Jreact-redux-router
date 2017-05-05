@@ -18,19 +18,25 @@ class Map extends Component {
 
     componentDidMount() {
         this.createMap();
-        Lmap.on('zoomend', () => {
-            if (Lmap.getZoom() <= 5 && this.props.curentMap != null && this.props.curentMap.indexOf('region') <= 0) {
-                let mapName = this.props.curentMap.slice(0, this.props.curentMap.indexOf('__district'))
-                this.props.get_map_area(mapName + '__region', false, alias[mapName])
+    }
 
-            } else if (Lmap.getZoom() >= 7 && this.props.curentMap != null && this.props.curentMap.indexOf('region') >= 0) {
-                let mapName = this.props.curentMap.slice(0, this.props.curentMap.indexOf('__region'))
-                this.props.get_map_area(mapName + '__district', false, alias[mapName])
-            }
-        })
+    zoomFunction() {
+        const { curentMap, fields, submenu_item } = this.props;
+        const mapSet = fields[submenu_item]
+
+        if (Lmap.getZoom() <= 5 && curentMap !== null && curentMap.indexOf('region') <= 0 && mapSet.some(a => ~a.indexOf('__region'))) {
+            this.props.get_map_area(submenu_item + '__region', false, alias[curentMap])
+
+        } else if (Lmap.getZoom() >= 7 && curentMap !== null && curentMap.indexOf('region') >= 0 && mapSet.some(a => ~a.indexOf('__district'))) {
+            this.props.get_map_area(submenu_item + '__district', false, alias[curentMap])
+        }
     }
 
     componentWillUpdate() {
+        // Lmap.off('zoomend', ::this.zoomFunction())
+        Lmap.off('zoomend', ::this.zoomFunction)
+        Lmap.on('zoomend', ::this.zoomFunction)
+
         setTimeout(() => Lmap.invalidateSize(), 200);
     }
 

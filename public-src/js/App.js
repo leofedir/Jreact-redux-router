@@ -38,10 +38,10 @@ class App extends Component {
 
     render() {
         // console.log('this.props >>', this.props)
-        const {category, showMenu, mapFull, fetching, range_items, range_item, show_range, legend_data, claster_layers, title_map} = this.props.main;
-        const {fetching_map, curentMap, info, feature, alias, claster, feature_claster} = this.props.map_reducer;
+        const {category, showMenu, mapFull, fetching, range_items, range_item, show_range, legend_data, claster_layers, title_map, fields, submenu_item} = this.props.main;
+        const {fetching_map, curentMap, info, feature, alias, claster, feature_claster, isCheckAll} = this.props.map_reducer;
         const {toggleMenu, resizeMap, get_submenu, set_Range_item} = this.props.Actions;
-        const {get_map_area, toggle_layer, set_chart_data} = this.props.MapActions;
+        const {get_map_area, toggle_layer, set_chart_data, checkAll} = this.props.MapActions;
 
         return (
             <div id="wrapper" className={ (showMenu ? '' : 'hide' ) + (mapFull ? ' mapFull' : '')}>
@@ -65,13 +65,20 @@ class App extends Component {
                                 curentMap={ curentMap }
                                 alias={ alias }
                                 claster={ claster }
+                                fields={ fields }
+                                submenu_item={ submenu_item }
                             />
                         </div>
                         <div className="main__right">
                             <SliderRange range_items={ range_items} range_item={ range_item}
                                          set_Range_item={ set_Range_item } show_range={ show_range }/>
                             <Popup feature={ feature } alias={ alias } feature_claster={ feature_claster } set_chart_data={ set_chart_data } />
-                            <Legend legend_data={ legend_data } claster_layers={ claster_layers } toggle_layer={ toggle_layer } />
+                            <Legend
+                                legend_data={ legend_data }
+                                claster_layers={ claster_layers }
+                                toggle_layer={ toggle_layer }
+                                checkAll={ checkAll}
+                                isCheckAll={ isCheckAll } />
                             <Info info={ info } />
                         </div>
                         <div className="main__chart">

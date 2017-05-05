@@ -25,7 +25,8 @@ import {
     GET_CLASTER_SUCCESS,
     GET_CLASTER_ERROR,
     SET_CLASTER_CHART_DATA,
-    CHART_TOGGLE
+    CHART_TOGGLE,
+    CHECK_ALL_LAYERS
 
 } from './constant';
 
@@ -188,5 +189,12 @@ export function set_chart_data(chart1, chart2) {
     return {
         type: SET_CLASTER_CHART_DATA,
         payload: [chart1, chart2]
+    }
+}
+
+export function checkAll(state) {
+    return {
+        type: CHECK_ALL_LAYERS,
+        payload: !state
     }
 }

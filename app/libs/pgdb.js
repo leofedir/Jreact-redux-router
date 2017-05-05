@@ -1,6 +1,7 @@
-const pg      = require('pg'),
+const pg    = require('pg'),
     when    = require('when'),
     config  = require('../../config');
+let pgdbsc = null;
 
 module.exports = function(db){
 
@@ -13,14 +14,15 @@ module.exports = function(db){
 };
 
 function pgdb(){
-    if(!this.pgpool){
-        this.pgpool = new pg.Pool(config.db);
+    if(pgdbsc == null){
+        pgdbsc = new pg.Pool(config.db);
+        // this.pgpool = pgdbsc;
     }
 };
 
 pgdb.prototype.query = function(sql , data){
     var deferred = when.defer();
-    this.pgpool.connect(function(err, client, done) {
+    pgdbsc.connect(function(err, client, done) {
         if(err) {
             return deferred.reject(err);
         }
@@ -50,8 +52,15 @@ pgdb.prototype.query = function(sql , data){
 
     // TODO Den
     //
-    // this.pgpool.on('error', function (err, client) {
-    //     console.error('idle client error', err.message, err.stack)
+    pgdbsc.on('error', function (err, client) {
+        console.error('idle client error', err.message, err.stack)
+    });
+
+    // pgdbsc.on('connect', (client) => {
+    //     // client.count = count++;
+    //     console.log("Client poll connected >> ");
     // });
+
     return deferred.promise;
+
 }

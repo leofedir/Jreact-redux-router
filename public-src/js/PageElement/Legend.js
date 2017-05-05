@@ -3,17 +3,22 @@ import {alias} from '../aliasMapName';
 
 class Legend extends Component {
 
-    handleEggsChange(e) {
-        console.log('e.checked >>', e.target.checked)
+    handleChange(e) {
+        console.log('e.target.checked >>', e.target.checked)
         let toggle_layer = this.props.toggle_layer;
         let id = e.target.value;
         let checked = e.target.checked ? 'show' : 'hide';
         toggle_layer(id, checked)
     }
 
-    createItem() {
-        const {legend_data, claster_layers, toggle_layer} = this.props;
+    handleChangeAll(e) {
+        this.props.checkAll(this.props.isCheckAll)
 
+        console.log('e >>', e)
+    }
+
+    createItem() {
+        const {legend_data, claster_layers, isCheckAll} = this.props;
 
         if (legend_data !== null) {
             const {limits, colors} = legend_data;
@@ -37,27 +42,61 @@ class Legend extends Component {
         } else if (claster_layers !== null) {
             return (
                 <div className="item_content" id="list_layers">
+                    <p>
+                        <label>
+                            <input
+                                type="checkbox"
+                                value='all'
+                                defaultChecked={false}
+                                onChange={::this.handleChangeAll}
+                                className="checkbox"/>
+                            <span className="icon"/>
+                            <span className="text">Всі</span>
+                        </label>
+                    </p>
 
-                    {claster_layers.map((item, i) =>
-                        <p key={ i }>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    value={ i }
-                                    defaultChecked={i === 0 }
-                                    onChange={::this.handleEggsChange}
-                                    className="checkbox"/>
-                                <span className="icon"/>
-                                <span className="text">{ alias[item[1].name] ? alias[item[1].name] : item[1].name }</span>
-                                <span className="count">{ `  (${item[1]['count'] })` }</span>
-                            </label>
-                        </p>
+                    {claster_layers.map((item, i) => {
+                            if (i === 0) {
+                                return (
+                                    <p key={ i }>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            value={ i }
+                                            defaultChecked={true}
+                                            onChange={::this.handleChange}
+                                            className="checkbox"/>
+                                        <span className="icon"/>
+                                        <span
+                                            className="text">{ alias[item[1].name] ? alias[item[1].name] : item[1].name }</span>
+                                        <span className="count">{ `  (${item[1]['count'] })` }</span>
+                                    </label>
+                                </p>
+                                )
+                            } else return (
+                                <p key={ i }>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            value={ i }
+                                            checked={ isCheckAll }
+                                            onChange={::this.handleChange}
+                                            className="checkbox"/>
+                                        <span className="icon"/>
+                                        <span
+                                            className="text">{ alias[item[1].name] ? alias[item[1].name] : item[1].name }</span>
+                                        <span className="count">{ `  (${item[1]['count'] })` }</span>
+                                    </label>
+                                </p>
+                            )
+                        }
                     )}
                 </div>
             )
         }
         return null
     }
+
 
     render() {
         const {legend_data, claster_layers} = this.props;
