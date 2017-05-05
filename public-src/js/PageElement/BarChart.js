@@ -33,7 +33,8 @@ class BarChart extends Component {
             let district = {};
             let district_arr = [];
 
-            if (!dataStore[submenu_item + curent_year + '__district']) {
+            if (!dataStore[submenu_item + curent_year + '__district'] && '__district' in properties) {
+
                 dataStore[submenu_item + curent_year + '__district'] = [];
                 properties.__district.forEach(item => {
 
@@ -71,12 +72,12 @@ class BarChart extends Component {
             }
 
 
-            if (!dataStore[submenu_item + curent_year]) {
+            if (!dataStore[submenu_item + curent_year + '__region']) {
                 // sort data to enable labels
                 properties.__region.sort((a, b) => b[curent_year] - a[curent_year]);
                 let i = 1;
 
-                dataStore[submenu_item + curent_year] = properties.__region.map(item => {
+                dataStore[submenu_item + curent_year + '__region'] = properties.__region.map(item => {
                     let obj = {};
                     obj.name = item.name_ua + `  (${ i })`;
                     obj.y = +item[curent_year];
@@ -85,8 +86,6 @@ class BarChart extends Component {
                     return obj
                 });
             }
-
-            console.log('dataStore >>', dataStore)
 
             // Create the chart
             myChart = Highcharts.chart('item_bar_chart', {
@@ -102,7 +101,7 @@ class BarChart extends Component {
                     enabled: false
                 },
                 title: {
-                    text: alias + ', ' + properties.__district["0"].parameter + ', 20' + curent_year.substring(5) + 'р.'
+                    text: alias + ', ' + properties.__region["0"].parameter + ', 20' + curent_year.substring(5) + 'р.'
                 },
                 xAxis: {
                     type: 'category',
@@ -131,7 +130,7 @@ class BarChart extends Component {
                     name: alias,
                     maxPointWidth: 25,
                     // colorByPoint: true,
-                    data: full ? dataStore[submenu_item + curent_year] : dataStore[submenu_item + curent_year].slice(0, 5),
+                    data: full ? dataStore[submenu_item + curent_year + '__region'] : dataStore[submenu_item + curent_year + '__region'].slice(0, 5),
                     negativeColor: '#e74c3c',
                     color: '#27ae60',
 
@@ -166,7 +165,7 @@ class BarChart extends Component {
                         }
 
                     },
-                    series: dataStore[submenu_item + curent_year + '__district']
+                    series: dataStore[submenu_item + curent_year + '__district'] || []
                 }
             });
         } else if (data_success && properties && '__district' in properties) {
@@ -193,11 +192,6 @@ class BarChart extends Component {
                 chart: {
                     type: 'bar',
                     height: full ? dataStore[submenu_item + curent_year].length * 25 : null,
-                    // events: {
-                    //     redraw: function (e) {
-                    //         bar_cahrt_full ? this.series[0].update({data: newData}) : '';
-                    //     }
-                    // }
                 },
                 credits: {
                     text: 'Енциклопедія територій',

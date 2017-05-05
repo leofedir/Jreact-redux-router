@@ -17,7 +17,6 @@ function pgdb(){
     if(pgdbsc == null){
         pgdbsc = new pg.Pool(config.db);
         // this.pgpool = pgdbsc;
-        console.log("Create Pool connection !!!!" );
     }
 };
 
