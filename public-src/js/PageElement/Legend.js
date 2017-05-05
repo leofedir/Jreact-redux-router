@@ -71,7 +71,7 @@ class Legend extends Component {
                                         <input
                                             id={i}
                                             type="checkbox"
-                                            checked={ check[i] }
+                                            defaultChecked={ check[i] }
                                             onChange={::this.handleChange}
                                             className="checkbox"/>
                                         <span className="icon"/>

@@ -14,10 +14,13 @@ let icon = L.icon({
     iconAnchor: [12, 33]
 });
 
+let cordinateContainer;
+
 class Map extends Component {
 
     componentDidMount() {
         this.createMap();
+        cordinateContainer = document.getElementById('coordinate')
     }
 
     zoomFunction() {
@@ -56,6 +59,12 @@ class Map extends Component {
         Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 5);
 
         esri.basemapLayer('Topographic').addTo(Lmap);
+
+        function onMouseMove(e) {
+            cordinateContainer.innerHTML = e.latlng.lat.toFixed(3) + "° пн. ш, " + e.latlng.lng.toFixed(3) + "° сх. д."
+            // console.log(e.latlng.lat + ", " + e.latlng.lng);
+        }
+        Lmap.on('mousemove', onMouseMove);
 
         fetch(this.props.category, {
             method: 'post',
@@ -116,6 +125,7 @@ class Map extends Component {
                     <i className="fa fa-plus fa-1x zoom_in_icon" onClick={::this.zoom_in} id="zoom_in"/>
                     <i className="fa fa-minus fa-1x zoom_out_icon" onClick={::this.zoom_out} id="zoom_out"/>
                     <i className="fa fa-dot-circle-o fa-1x geolocate_icon" onClick={::this.geolocate} id="geolocate"/>
+                    <p id="coordinate"/>
                     <div id="map" className="maps__items"/>
                     <div id="basemaps-wrapper">
                         <p className="basemap_title">Базова карта</p>

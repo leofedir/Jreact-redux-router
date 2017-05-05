@@ -4,8 +4,8 @@ import {store} from '../index'
 import L from 'leaflet';
 import esri from 'esri-leaflet/dist/esri-leaflet';
 import {clickOnFeatureClaster, set_chart_data} from '../REDUX/actions/get_map_area'
-var Highcharts = require('highcharts');
-import {checkStatus, parseJSON} from '../checkJSON';
+// let Highcharts = require('highcharts');
+// import {checkStatus, parseJSON} from '../checkJSON';
 
 import 'leaflet.markercluster/dist/leaflet.markercluster-src';
 
