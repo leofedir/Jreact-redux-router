@@ -20,7 +20,9 @@ import {
     GET_CLASTER_ERROR,
     SET_CLASTER_CHART_DATA,
     CHART_TOGGLE,
-    CHECK_ALL_LAYERS
+    CHECK_ALL_LAYERS,
+    TOGGLE_CHECK,
+    SET_INITIAL_CHECK
 
 } from './constant';
 
@@ -136,6 +138,15 @@ export function show_claster(state, mapName) {
                     type: GET_CLASTER_SUCCESS,
                     payload: data.data
                 });
+                let arr = [];
+
+                data.data.forEach((item, i) => i === 0 ? arr.push(true) : arr.push(false));
+
+                dispatch({
+                    type: SET_INITIAL_CHECK,
+                    payload: arr
+                });
+
             })
             .catch((err) => {
                 console.log('err >>', err);
@@ -173,5 +184,12 @@ export function checkAll(state) {
     return {
         type: CHECK_ALL_LAYERS,
         payload: !state
+    }
+}
+
+export function toggle_check(arr) {
+    return {
+        type: TOGGLE_CHECK,
+        payload: arr
     }
 }

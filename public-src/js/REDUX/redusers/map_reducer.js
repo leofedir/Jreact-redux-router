@@ -16,7 +16,9 @@ import {
     SET_SUBMENU_ITEM,
     SET_CLASTER_CHART_DATA,
     CHART_TOGGLE,
-    CHECK_ALL_LAYERS
+    CHECK_ALL_LAYERS,
+    TOGGLE_CHECK,
+    SET_INITIAL_CHECK
 } from '../actions/constant'
 
 const initialState = {
@@ -33,7 +35,8 @@ const initialState = {
     feature_claster: null,
     chart1: null,
     chart2: null,
-    isCheckAll: false
+    isCheckAll: false,
+    check: []
 };
 
 export default function map(state = initialState, action) {
@@ -92,6 +95,12 @@ export default function map(state = initialState, action) {
 
         case CHECK_ALL_LAYERS:
             return {...state, isCheckAll: action.payload};
+
+        case SET_INITIAL_CHECK:
+            return {...state, check: action.payload};
+
+        case TOGGLE_CHECK:
+            return {...state, check: action.payload};
 
         default:
             return state;

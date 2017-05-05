@@ -4,19 +4,31 @@ import {alias} from '../aliasMapName';
 class Legend extends Component {
 
     handleChange(e) {
-        console.log('e.target.checked >>', e.target.checked)
-        let toggle_layer = this.props.toggle_layer;
-        let id = e.target.value;
+        console.log('e.target. >>', e.target)
+        const { check, toggle_layer, toggle_check } = this.props
+        let id = e.target.id;
         let checked = e.target.checked ? 'show' : 'hide';
-        toggle_layer(id, checked)
+        toggle_layer(id, checked);
+        check[id] = !check[id];
+        toggle_check(check);
+        return null;
     }
 
     handleChangeAll(e) {
-        this.props.checkAll(this.props.isCheckAll)
+        console.log('e.target.checked >>', e.target.checked)
+        const { check, toggle_layer, toggle_check } = this.props;
+        let checked = e.target.checked ? 'show' : 'hide';
+        let myCheck = check.map((item, i) => {
+            toggle_layer(i, checked);
+            return e.target.checked
+        });
+        toggle_check(myCheck);
     }
 
     createItem() {
-        const {legend_data, claster_layers, isCheckAll} = this.props;
+        const {legend_data, claster_layers, isCheckAll, check} = this.props;
+
+        console.log('check >>', check)
 
         if (legend_data !== null) {
             const {limits, colors} = legend_data;
@@ -52,37 +64,18 @@ class Legend extends Component {
                             <span className="text">Обрати все</span>
                         </label>
                     </p>
-
                     {claster_layers.map((item, i) => {
-                            if (i === 0) {
-                                return (
-                                    <p key={ i }>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            value={ i }
-                                            defaultChecked={true}
-                                            onChange={::this.handleChange}
-                                            className="checkbox"/>
-                                        <span className="icon"/>
-                                        <span
-                                            className="text">{ alias[item[1].name] ? alias[item[1].name] : item[1].name }</span>
-                                        <span className="count">{ `  (${item[1]['count'] })` }</span>
-                                    </label>
-                                </p>
-                                )
-                            } else return (
+                            return (
                                 <p key={ i }>
                                     <label>
                                         <input
+                                            id={i}
                                             type="checkbox"
-                                            value={ i }
-                                            checked={ isCheckAll }
+                                            checked={ check[i] }
                                             onChange={::this.handleChange}
                                             className="checkbox"/>
                                         <span className="icon"/>
-                                        <span
-                                            className="text">{ alias[item[1].name] ? alias[item[1].name] : item[1].name }</span>
+                                        <span className="text">{ alias[item[1].name] ? alias[item[1].name] : item[1].name }</span>
                                         <span className="count">{ `  (${item[1]['count'] })` }</span>
                                     </label>
                                 </p>
@@ -94,7 +87,6 @@ class Legend extends Component {
         }
         return null
     }
-
 
     render() {
         const {legend_data, claster_layers} = this.props;
