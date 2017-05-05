@@ -13,6 +13,7 @@ module.exports = function (router) {
                 .then((data) => {
                     storeLayers[table] = {};
                     storeLayers[table].list = data.map(item => item.table_name).sort();
+                    storeLayers[table].count = 0;
                     // storeLayers[table].list.forEach(item => getDataLayers(item))
 
                     Promise.all(storeLayers[table].list.map( item =>
@@ -38,12 +39,13 @@ module.exports = function (router) {
                                                 }
                                             }
                                         }
-                                        obj.geometry = JSON.parse(item.geojson)
+                                        obj.geometry = JSON.parse(item.geojson);
 
                                         return obj;
                                     })
                                 };
                                 obj.count = obj.features.length;
+                                storeLayers[table].count += obj.features.length;
                                 storeLayers[table].data.push([info, obj])
                             })
                         })

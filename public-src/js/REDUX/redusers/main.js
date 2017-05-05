@@ -64,7 +64,7 @@ export default function main(state = initialState, action) {
             return {...state, fetching: true, claster_layers: null};
 
         case GET_CLASTER_SUCCESS:
-            return {...state, fetching: false, claster_layers: action.payload};
+            return {...state, fetching: false, claster_layers: action.payload.data};
 
         case GET_CLASTER_ERROR:
             return {...state, fetching: false};

@@ -26,13 +26,12 @@ class Legend extends Component {
     }
 
     createItem() {
-        const {legend_data, claster_layers, isCheckAll, check} = this.props;
-
-        console.log('check >>', check)
+        const {legend_data, claster_layers, check, clasterCount} = this.props;
+        const format = new Intl.NumberFormat().format;
 
         if (legend_data !== null) {
             const {limits, colors} = legend_data;
-            const format = new Intl.NumberFormat().format;
+
             let dani = 'Дані відсутні';
             return (
                 <div className="item_content" id="legend">
@@ -62,6 +61,7 @@ class Legend extends Component {
                                 className="checkbox"/>
                             <span className="icon"/>
                             <span className="text">Обрати все</span>
+                            <span className="count">{ `  (${ format(clasterCount) })` }</span>
                         </label>
                     </p>
                     {claster_layers.map((item, i) => {
@@ -76,7 +76,7 @@ class Legend extends Component {
                                             className="checkbox"/>
                                         <span className="icon"/>
                                         <span className="text">{ alias[item[1].name] ? alias[item[1].name] : item[1].name }</span>
-                                        <span className="count">{ `  (${item[1]['count'] })` }</span>
+                                        <span className="count">{ `  (${ format(item[1]['count']) })` }</span>
                                     </label>
                                 </p>
                             )

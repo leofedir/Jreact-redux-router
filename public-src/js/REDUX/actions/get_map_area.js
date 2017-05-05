@@ -20,7 +20,6 @@ import {
     GET_CLASTER_ERROR,
     SET_CLASTER_CHART_DATA,
     CHART_TOGGLE,
-    CHECK_ALL_LAYERS,
     TOGGLE_CHECK,
     SET_INITIAL_CHECK
 
@@ -136,10 +135,10 @@ export function show_claster(state, mapName) {
                 claster(data.data);
                 dispatch({
                     type: GET_CLASTER_SUCCESS,
-                    payload: data.data
+                    payload: data
                 });
-                let arr = [];
 
+                let arr = [];
                 data.data.forEach((item, i) => i === 0 ? arr.push(true) : arr.push(false));
 
                 dispatch({
@@ -177,13 +176,6 @@ export function set_chart_data(chart1, chart2) {
     return {
         type: SET_CLASTER_CHART_DATA,
         payload: [chart1, chart2]
-    }
-}
-
-export function checkAll(state) {
-    return {
-        type: CHECK_ALL_LAYERS,
-        payload: !state
     }
 }
 
