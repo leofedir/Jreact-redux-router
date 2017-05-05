@@ -49,7 +49,7 @@ class Legend extends Component {
                                 onChange={::this.handleChangeAll}
                                 className="checkbox"/>
                             <span className="icon"/>
-                            <span className="text">Всі</span>
+                            <span className="text">Обрати все</span>
                         </label>
                     </p>
 

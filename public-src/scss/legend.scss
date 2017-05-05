@@ -49,5 +49,18 @@
   //font-style: italic;
   font-weight: bold;
   color: black;
+}
+#list_layers > p:nth-child(1) {
+  margin-left: 5px;
+}
+#list_layers > p {
+  margin-left: 31px;
+}
+#list_layers label {
+  line-height: 20px;
+  padding: 4px 0 8px;
+}
 
+#list_layers label span.text {
+  line-height: 22px;
 }
