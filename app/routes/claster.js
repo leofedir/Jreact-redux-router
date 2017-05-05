@@ -25,6 +25,8 @@ module.exports = function (router) {
         const table = req.body.table;
         let info = null;
 
+        console.log("Responce >>" , table);
+
         pgdb.query(`select * from ${ table } where geojson is not null`)
             .then((d) => {
                 let obj = {

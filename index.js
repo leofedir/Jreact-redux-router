@@ -27,7 +27,7 @@ app.use(methodOverride());
 //move to config
 server.listen(config.server.port);
 console.log('ok');
-EventEmitter.defaultMaxListeners = 20;
+EventEmitter.defaultMaxListeners = config.db.max + 10;
 
 const routes = require('./app/routes');
 

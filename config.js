@@ -10,5 +10,6 @@ module.exports = {
         port: 5432,
         max: 10,
         idleTimeoutMillis: 3000,
+        application_name: 'gisportal'
     }
 };
