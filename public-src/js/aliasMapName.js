@@ -99,6 +99,12 @@ export let alias = {
     area_budgets_chastkadohodvidoperatsiyzkapitalom:'Частка доходів від операцій з капіталом',
     area_sotspol_sumvydatkynasotszahyst:'Загальна сума видатків на соціальний захист',
     area_sotspol_vydatkynasotszahystnadushu:'Видатки на соціальний захист в розрахунку на душу населення',
-    area_sotspol_pytomavagavydatkivnasotszahyst:'Питома вага видатків на соціальний захист'
+    area_sotspol_pytomavagavydatkivnasotszahyst:'Питома вага видатків на соціальний захист',
+    area_ekonomika_capitalinvest:'Капітальні інвестиції',
+    area_ekonomika_vrp:'ВРП у фактичних цінах',
+    area_ekonomika_vrpnadushu:'ВРП на душу населення',
+    area_ekonomika_ekonomaktyvnnaselennya:'Економічно активне населення',
+    area_budgets_kapitalvidbudget:'Капіталовкладення у відсотках від загальних витрат бюджету',
+    area_budgets_rentazalisresurs:'Рента за використання лісових ресурсів на 1 га земель лісогосподарського призначення'
 
 }

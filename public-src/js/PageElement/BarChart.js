@@ -325,7 +325,7 @@ class BarChart extends Component {
         return (
             <div className={bar_cahrt_full ? 'chart_2 barChart_full' : 'chart_2'}>
                 <div className="item_header">
-                    <div className="map_heder_title">{chart2 ? 'Тренд' : 'Діаграма'}</div>
+                    <div className="map_heder_title">{chart2 ? 'Тренд' : 'Діаграма-рейтинг (ТОП-5)'}</div>
                     <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>
                 </div>
                 <div className="item_content" id="item_bar_chart"/>
