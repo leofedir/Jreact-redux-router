@@ -105,6 +105,9 @@ export let alias = {
     area_ekonomika_vrpnadushu:'ВРП на душу населення',
     area_ekonomika_ekonomaktyvnnaselennya:'Економічно активне населення',
     area_budgets_kapitalvidbudget:'Капіталовкладення у відсотках від загальних витрат бюджету',
-    area_budgets_rentazalisresurs:'Рента за використання лісових ресурсів на 1 га земель лісогосподарського призначення'
+    area_budgets_rentazalisresurs:'Рента за використання лісових ресурсів на 1 га земель лісогосподарського призначення',
+    area_zemres_chastkasgzemel:'Частка сільськогосподарських земель',
+    area_zemres_chastkspai:'Частка розпайованих земель сільськогосподарського призначення',
+    area_zemres_avgareapai:'Середня площа земельної ділянки-паю'
 
 }
