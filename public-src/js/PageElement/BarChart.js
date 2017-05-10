@@ -9,10 +9,16 @@ higchartsDrilldown(Highcharts);
 let myChart = null;
 let dataStore = {};
 let alias_series = {
-    dohody: 'Бюджет закладу',
-    naodnohouchnya: 'Видатки на одного учня',
-    uchni: 'Загальна кількість учнів',
-    vnesky: 'Батьківські внески'
+
+    naodnohouchnya: 'Загальні видатки в розрахунку на одного учня',
+    // uchni: 'Загальна кількість учнів',
+    zarplnarahuvnaodnogo:'Видатки на оплату праці в розрахунку на одного учня',
+    tepolonaodnogo:'Видатки на теплопостачання в розрахунку на одного учня',
+    elektroenergynaodnogo:'Видатки на електроенергію в розрахунку на одного учня',
+    waternaodnogo:'Видатки на водопостачання в розрахунку на одного учня'
+
+
+
 };
 
 class BarChart extends Component {
@@ -264,6 +270,7 @@ class BarChart extends Component {
 
             myChart = Highcharts.chart('item_bar_chart', {
                 colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
+
                 exporting: {
                     buttons: {
                         exportButton: {
@@ -274,7 +281,7 @@ class BarChart extends Component {
                     }
                 },
                 title: {
-                    text: ''
+                    text: 'Витрати  шкільного бюджету в розрахунку на одного учня'
                 },
                 chart: {
                     type: 'line',

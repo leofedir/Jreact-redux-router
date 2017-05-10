@@ -10,10 +10,13 @@ const Highcharts = require('highcharts');
 let chart = null;
 
 let alias_series = {
-    teplo: 'Теплопостачання',
-    elektroenergy: 'Електропостачання',
-    water: 'Водопостачання',
-    inshivydatky: 'Інші видатки'
+    budget:'Бюджет закладу',
+    zarplnarahuv:'Заробітна плата з нарахуваннями',
+    teplo: 'Видатки на теплопостачання',
+    elektroenergy: 'Видатки на електропостачання',
+    water: 'Видатки на водопостачання',
+    inshivydatky: 'Інші видатки',
+    vnesky: 'Батьківські внески'
 };
 
 class Chart extends Component {
@@ -107,7 +110,7 @@ class Chart extends Component {
             chart = Highcharts.chart('item_chart', {
                 colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
                 title: {
-                    text: 'Витрати'
+                    text: 'Загальні витрати та доходи шкільного бюджету'
                 },
                 exporting: {
                     buttons: {

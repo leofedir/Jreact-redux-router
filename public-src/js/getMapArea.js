@@ -13,10 +13,11 @@ let atoData = null;
 
 export default function getMap(data, rebuild = true) {
     let myStyle = {
-        "color": "#747474",
+        "color": "#A9A9A9",
         "weight": 2,
         "fillOpacity": 1,
         'className': 'ato'
+
     };
 
     if (rebuild) {

@@ -32,7 +32,7 @@ class Popup extends Component {
                     <div className="item_content">
                         <div className="popup_top">
                             <p>Код КОАТУУ <span>{feature.koatuu}</span></p>
-                            <p>Населення <span>{new Intl.NumberFormat().format(feature.population)} осіб</span></p>
+                            <p>Населення (1.01.2017р.) <span>{new Intl.NumberFormat().format(feature.population)} осіб</span></p>
                             <p>Площа території <span>{new Intl.NumberFormat().format(feature.area)} га</span></p>
                         </div>
                         <div className="popup_bottom">
