@@ -13,16 +13,8 @@ class Legend extends Component {
     }
 
     handleChangeAll(e) {
-        console.log('e.target.checked >>', e.target.checked)
-        const {check, toggle_layer, toggle_check, check_all, checkAll} = this.props;
-        check_all(checkAll)
-
-        let myCheck = check.map((item, i) => {
-            toggle_layer(i, !checkAll);
-            return !checkAll
-        });
-        toggle_check(myCheck);
-
+        const {check_all, checkAll, check} = this.props;
+        check_all(checkAll, check)
     }
 
     createItem() {

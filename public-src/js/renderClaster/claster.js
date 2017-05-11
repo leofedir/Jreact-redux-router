@@ -22,19 +22,16 @@ export function removeClaster() {
 }
 
 export function layersTriger(id, status) {
-    console.log('status >>', status, id)
-    status ? showLayer(id) : hideLayer(id);
+    status ? showLayer(id) : hideLayer(id)
 }
 
 function showLayer(id) {
-    console.log('show >>')
     Lmap.addLayer(layers[id]);
     // addProvider(layers[id].options.url, id)
     // updateSearchControl();
 }
 
 function hideLayer(id) {
-    console.log('hidw >>')
     Lmap.removeLayer(layers[id]);
     // removeProvider(id)
     // updateSearchControl();

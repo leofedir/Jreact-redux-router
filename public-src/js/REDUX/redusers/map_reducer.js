@@ -18,7 +18,8 @@ import {
     CHART_TOGGLE,
     TOGGLE_CHECK,
     SET_INITIAL_CHECK,
-    CHECK_ALL
+    CHECK_ALL,
+    CHECK_ALL_ICON
 } from '../actions/constant'
 
 const initialState = {
@@ -100,8 +101,11 @@ export default function map(state = initialState, action) {
         case TOGGLE_CHECK:
             return {...state, check: action.payload};
 
-        case CHECK_ALL:
+        case CHECK_ALL_ICON:
             return {...state, checkAll: action.payload};
+
+        case CHECK_ALL:
+            return {...state, check: action.payload};
 
         default:
             return state;

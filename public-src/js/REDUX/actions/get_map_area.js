@@ -22,7 +22,8 @@ import {
     CHART_TOGGLE,
     TOGGLE_CHECK,
     SET_INITIAL_CHECK,
-    CHECK_ALL
+    CHECK_ALL,
+    CHECK_ALL_ICON
 
 } from './constant';
 
@@ -187,9 +188,23 @@ export function toggle_check(arr) {
     }
 }
 
-export function check_all(state) {
-    return {
-        type: CHECK_ALL,
-        payload: !state
+export function check_all(state, check) {
+
+    let myCheck = check.map((item, i) => {
+        layersTriger(i, !item);
+        return !item
+    });
+    toggle_check(myCheck);
+
+    return (dispatch) => {
+        dispatch({
+            type: CHECK_ALL,
+            payload: myCheck
+        });
+        dispatch({
+            type: CHECK_ALL_ICON,
+            payload: !state
+        });
+
     }
 }
