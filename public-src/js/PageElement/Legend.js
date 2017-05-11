@@ -46,7 +46,7 @@ class Legend extends Component {
                     <p onClick={::this.handleChangeAll}>
                         <i className={!checkAll ? 'fa fa-eye-slash' : "fa fa-eye" } aria-hidden="true"/>
                         <span className="icon"/>
-                        <span className="text">Обрати все</span>
+                        <span className="text">Обрати все </span>
                         <span className="count">{ `  (${ format(clasterCount) })` }</span>
                     </p>
                     {claster_layers.map((item, i) => {
@@ -55,10 +55,12 @@ class Legend extends Component {
                                    onClick={::this.handleChange}
                                    id={i}>
                                     <i className={ !check[i] ? 'fa-2x fa fa-eye-slash' : "fa-2x fa fa-eye" } aria-hidden="true"/>
+                                    <span>
                                     <span className="icon"/>
                                     <span
                                         className="text">{ alias[item[1].name] ? alias[item[1].name] : item[1].name }</span>
                                     <span className="count">{ `  (${ format(item[1]['count']) })` }</span>
+                                    </span>
                                 </p>
                             )
                         }
