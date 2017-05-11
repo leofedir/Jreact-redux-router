@@ -127,6 +127,8 @@ export default function claster(data) {
             }
         }
     }
+
+    showLayer(0)
     //
     // Lmap.fitBounds(markers.getBounds());
 

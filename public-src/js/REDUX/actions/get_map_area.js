@@ -141,7 +141,7 @@ export function show_claster(state, mapName) {
                 });
 
                 let arr = [];
-                data.data.forEach((item, i) => arr.push(false));
+                data.data.forEach((item, i) => arr.push(i === 0));
 
                 dispatch({
                     type: SET_INITIAL_CHECK,
@@ -191,8 +191,8 @@ export function toggle_check(arr) {
 export function check_all(state, check) {
 
     let myCheck = check.map((item, i) => {
-        layersTriger(i, !item);
-        return !item
+        layersTriger(i, !state);
+        return !state
     });
     toggle_check(myCheck);
 

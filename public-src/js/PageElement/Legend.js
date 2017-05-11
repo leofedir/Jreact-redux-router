@@ -49,11 +49,6 @@ class Legend extends Component {
                         <span className="count">{ `  (${ format(clasterCount) })` }</span>
                     </p>
                     {claster_layers.map((item, i) => {
-                        if (i === 0 && !check[i]) {
-                            check[i] = !check[i];
-                            toggle_check(check);
-                            toggle_layer(i, check[i]);
-                        }
                             return (
                                 <p key={ i }
                                    onClick={::this.handleChange}

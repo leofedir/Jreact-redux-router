@@ -96,7 +96,6 @@ class BarChart extends Component {
                     obj.y = +item[curent_year];
                     obj.drilldown = item.koatuu.slice(0, 2);
                     i++;
-                    console.log('obj >>', obj)
                     return obj
                 });
             } else if ('__region' in properties === false) {
@@ -184,77 +183,7 @@ class BarChart extends Component {
                     series: dataStore[submenu_item + curent_year + '__district'] || []
                 }
             });
-        }
-        // else if (data_success && properties && '__district' in properties) {
-        //
-        //     if (!dataStore[submenu_item + curent_year]) {
-        //
-        //         properties.__district.sort((a, b) => b[curent_year] - a[curent_year]);
-        //         let i = 1;
-        //
-        //         dataStore[submenu_item + curent_year] = properties.__district.map(item => {
-        //             let obj = {};
-        //             obj.name = item.name_ua + `  (${ i })`;
-        //             obj.y = +item[curent_year];
-        //             i++
-        //             return obj
-        //         });
-        //     }
-        //
-        //     // Create the chart
-        //     myChart = Highcharts.chart('item_bar_chart', {
-        //         lang: {
-        //             drillUpText: 'Назад'
-        //         },
-        //         chart: {
-        //             type: 'bar',
-        //             height: full ? dataStore[submenu_item + curent_year].length * 25 : null,
-        //         },
-        //         credits: {
-        //             text: 'Енциклопедія територій',
-        //             href: 'http://enter.co.ua',
-        //             enabled: false
-        //         },
-        //         title: {
-        //             text: alias + ', ' + properties.__district["0"].parameter + ', 20' + curent_year.substring(5) + 'р.'
-        //         },
-        //         xAxis: {
-        //             type: 'category',
-        //         },
-        //
-        //         legend: {
-        //             enabled: false
-        //         },
-        //         yAxis: {
-        //             title: {
-        //                 enabled: false
-        //             }
-        //
-        //         },
-        //         plotOptions: {
-        //             series: {
-        //                 borderWidth: 0,
-        //                 dataLabels: {
-        //                     enabled: bar_cahrt_full
-        //                 }
-        //             }
-        //         },
-        //
-        //         series: [{
-        //             name: alias,
-        //             // colorByPoint: true,
-        //             data: full ? dataStore[submenu_item + curent_year] : dataStore[submenu_item + curent_year].slice(0, 5),
-        //             zones: [{
-        //                 value: 0,
-        //                 color: '#e74c3c'
-        //             }, {
-        //                 color: '#27ae60'
-        //             }]
-        //         }],
-        //     });
-        //
-        // }
-        else if (!data_success && myChart !== null && chart2 === null) {
+        } else if (!data_success && myChart !== null && chart2 === null) {
             myChart.destroy();
             myChart = null
         } else if (chart2 !== null) {
@@ -340,6 +269,7 @@ class BarChart extends Component {
                 <div className="item_header">
                     <div className="map_heder_title">{chart2 ? 'Тренд' : 'Діаграма-рейтинг (ТОП-5)'}</div>
                     <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>
+
                 </div>
                 <div className="item_content" id="item_bar_chart"/>
             </div>
