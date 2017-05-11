@@ -13,7 +13,7 @@ module.exports = function (router) {
         } else {
             pgdb.query(`select koatuu,name_ua,year_13,year_14,year_15,year_16,parameter from ` + req.body.table)
                 .then((d) => {
-                    dataChart[req.body.table] = d
+                    dataChart[req.body.table] = d;
                     res.json(d)
                 })
                 .catch((e) => {
@@ -30,18 +30,16 @@ module.exports = function (router) {
             .then((d) => {
                 let obj = {};
                 d.forEach(item => {
-                    if (item.table_name.slice(0, 5) === 'point') {
+                    if (item.table_name.startsWith('point')) {
                         let name = item.table_name;
                         let crop_name = name.slice(name.indexOf(table) + table.length + 1);
                         let grup = crop_name.slice(0, crop_name.indexOf('_'));
                         obj[grup] ? obj[grup].push(crop_name.slice(crop_name.indexOf('_') + 1)) : obj[grup] = [crop_name.slice(crop_name.indexOf('_') + 1)]
 
-                    } else if (item.table_name.slice(0, 4) === 'area') {
+                    } else if (item.table_name.startsWith('area')) {
                         let name = item.table_name.slice(0, item.table_name.indexOf("__"));
                         obj[name] ? obj[name].push(item.table_name.slice(item.table_name.indexOf("__"))) : obj[name] = [item.table_name.slice(item.table_name.indexOf("__"))];
                     }
-
-
                 });
                 res.json(obj);
             })
