@@ -23,7 +23,8 @@ import {
     TOGGLE_CHECK,
     SET_INITIAL_CHECK,
     CHECK_ALL,
-    CHECK_ALL_ICON
+    CHECK_ALL_ICON,
+    TOGGLE_DATA
 
 } from './constant';
 
@@ -185,6 +186,13 @@ export function toggle_check(arr) {
     return {
         type: TOGGLE_CHECK,
         payload: arr
+    }
+}
+
+export function toggle_data(state) {
+    return {
+        type: TOGGLE_DATA,
+        payload: !state
     }
 }
 

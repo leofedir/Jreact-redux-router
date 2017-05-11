@@ -19,7 +19,8 @@ import {
     TOGGLE_CHECK,
     SET_INITIAL_CHECK,
     CHECK_ALL,
-    CHECK_ALL_ICON
+    CHECK_ALL_ICON,
+    TOGGLE_DATA
 } from '../actions/constant'
 
 const initialState = {
@@ -38,7 +39,8 @@ const initialState = {
     chart2: null,
     check: [],
     checkAll: false,
-    clasterCount: 0
+    clasterCount: 0,
+    dataChartRegion: true
 };
 
 export default function map(state = initialState, action) {
@@ -106,6 +108,9 @@ export default function map(state = initialState, action) {
 
         case CHECK_ALL:
             return {...state, check: action.payload};
+
+        case TOGGLE_DATA:
+            return {...state, dataChartRegion: action.payload};
 
         default:
             return state;

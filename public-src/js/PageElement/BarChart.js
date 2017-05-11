@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as MapActions from '../REDUX/actions/get_map_area';
-import { region } from './region_null'
+import {region} from './region_null'
 const Highcharts = require('highcharts');
 const higchartsDrilldown = require('highcharts/modules/drilldown.js');
 
@@ -30,13 +30,13 @@ class BarChart extends Component {
 
     createChart(full = null) {
         // save props
-        const {alias, properties, data_success, chart2, bar_cahrt_full} = this.props.map_reducer;
+        const {alias, properties, data_success, chart2, bar_cahrt_full, dataChartRegion} = this.props.map_reducer;
         const {range_item, range_items, submenu_item} = this.props.main;
         let curent_year = range_items[range_item] || 'year_13';
         let parametr;
 
         //check to hav region in props
-        if (data_success && properties) {
+        if (data_success && properties && dataChartRegion) {
 
             if ('__district' in properties) {
                 parametr = properties.__district[0].parameter
@@ -183,7 +183,77 @@ class BarChart extends Component {
                     series: dataStore[submenu_item + curent_year + '__district'] || []
                 }
             });
-        } else if (!data_success && myChart !== null && chart2 === null) {
+        }
+        else if (data_success && properties && '__district' in properties && !dataChartRegion) {
+
+            if (!dataStore[submenu_item + curent_year]) {
+
+                properties.__district.sort((a, b) => b[curent_year] - a[curent_year]);
+                let i = 1;
+
+                dataStore[submenu_item + curent_year] = properties.__district.map(item => {
+                    let obj = {};
+                    obj.name = item.name_ua + `  (${ i })`;
+                    obj.y = +item[curent_year];
+                    i++
+                    return obj
+                });
+            }
+
+            // Create the chart
+            myChart = Highcharts.chart('item_bar_chart', {
+                lang: {
+                    drillUpText: 'Назад'
+                },
+                chart: {
+                    type: 'bar',
+                    height: full ? dataStore[submenu_item + curent_year].length * 25 : null,
+                },
+                credits: {
+                    text: 'Енциклопедія територій',
+                    href: 'http://enter.co.ua',
+                    enabled: false
+                },
+                title: {
+                    text: alias + ', ' + properties.__district["0"].parameter + ', 20' + curent_year.substring(5) + 'р.'
+                },
+                xAxis: {
+                    type: 'category',
+                },
+
+                legend: {
+                    enabled: false
+                },
+                yAxis: {
+                    title: {
+                        enabled: false
+                    }
+
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: bar_cahrt_full
+                        }
+                    }
+                },
+
+                series: [{
+                    name: alias,
+                    // colorByPoint: true,
+                    data: full ? dataStore[submenu_item + curent_year] : dataStore[submenu_item + curent_year].slice(0, 5),
+                    zones: [{
+                        value: 0,
+                        color: '#e74c3c'
+                    }, {
+                        color: '#27ae60'
+                    }]
+                }],
+            });
+
+        }
+        else if (!data_success && myChart !== null && chart2 === null) {
             myChart.destroy();
             myChart = null
         } else if (chart2 !== null) {
@@ -262,16 +332,25 @@ class BarChart extends Component {
         this.createChart(this.props.map_reducer.bar_cahrt_full)
     }
 
+    toggleChartData() {
+        this.props.MapActions.toggle_data(this.props.map_reducer.dataChartRegion)
+    }
+
     render() {
-        const {bar_cahrt_full, chart2} = this.props.map_reducer;
+        const {bar_cahrt_full, chart2, dataChartRegion} = this.props.map_reducer;
         return (
             <div className={bar_cahrt_full ? 'chart_2 barChart_full' : 'chart_2'}>
                 <div className="item_header">
                     <div className="map_heder_title">{chart2 ? 'Тренд' : 'Діаграма-рейтинг (ТОП-5)'}</div>
                     <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>
-
                 </div>
-                <div className="item_content" id="item_bar_chart"/>
+                <div className="item_content">
+                    <div>Області
+                        {chart2 ? '' : <i className={ !dataChartRegion ? "fa fa-toggle-on" : 'fa fa-toggle-on fa-flip-horizontal' }
+                                          onClick={ ::this.toggleChartData } />} Райони
+                    </div>
+                    <div id="item_bar_chart"/>
+                </div>
             </div>
         )
     }

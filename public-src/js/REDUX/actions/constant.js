@@ -30,3 +30,4 @@ export const SET_INITIAL_CHECK = 'SET_INITIAL_CHECK';
 export const TOGGLE_CHECK = 'TOGGLE_CHECK';
 export const CHECK_ALL = 'CHECK_ALL';
 export const CHECK_ALL_ICON = 'CHECK_ALL_ICON';
+export const TOGGLE_DATA = 'TOGGLE_DATA';
