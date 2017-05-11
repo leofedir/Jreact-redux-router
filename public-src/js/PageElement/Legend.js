@@ -4,29 +4,29 @@ import {alias} from '../aliasMapName';
 class Legend extends Component {
 
     handleChange(e) {
-        console.log('e.target. >>', e.target)
-        const { check, toggle_layer, toggle_check } = this.props
-        let id = e.target.id;
-        let checked = e.target.checked ? 'show' : 'hide';
-        toggle_layer(id, checked);
+        const {check, toggle_layer, toggle_check} = this.props;
+        let id = e.currentTarget.id;
         check[id] = !check[id];
         toggle_check(check);
+        toggle_layer(id, check[id]);
         return null;
     }
 
     handleChangeAll(e) {
         console.log('e.target.checked >>', e.target.checked)
-        const { check, toggle_layer, toggle_check } = this.props;
-        let checked = e.target.checked ? 'show' : 'hide';
+        const {check, toggle_layer, toggle_check, check_all, checkAll} = this.props;
+        check_all(checkAll)
+
         let myCheck = check.map((item, i) => {
-            toggle_layer(i, checked);
-            return e.target.checked
+            toggle_layer(i, !checkAll);
+            return !checkAll
         });
         toggle_check(myCheck);
+
     }
 
     createItem() {
-        const {legend_data, claster_layers, check, clasterCount} = this.props;
+        const {legend_data, claster_layers, check, clasterCount, checkAll} = this.props;
         const format = new Intl.NumberFormat().format;
 
         if (legend_data !== null) {
@@ -51,33 +51,22 @@ class Legend extends Component {
         } else if (claster_layers !== null) {
             return (
                 <div className="item_content" id="list_layers">
-                    <p>
-                        <label>
-                            <input
-                                type="checkbox"
-                                value='all'
-                                defaultChecked={false}
-                                onChange={::this.handleChangeAll}
-                                className="checkbox"/>
-                            <span className="icon"/>
-                            <span className="text">Обрати все</span>
-                            <span className="count">{ `  (${ format(clasterCount) })` }</span>
-                        </label>
+                    <p onClick={::this.handleChangeAll}>
+                        <i className={!checkAll ? 'fa fa-eye-slash' : "fa fa-eye" } aria-hidden="true"/>
+                        <span className="icon"/>
+                        <span className="text">Обрати все</span>
+                        <span className="count">{ `  (${ format(clasterCount) })` }</span>
                     </p>
                     {claster_layers.map((item, i) => {
                             return (
-                                <p key={ i }>
-                                    <label>
-                                        <input
-                                            id={i}
-                                            type="checkbox"
-                                            defaultChecked={ check[i] }
-                                            onChange={::this.handleChange}
-                                            className="checkbox"/>
-                                        <span className="icon"/>
-                                        <span className="text">{ alias[item[1].name] ? alias[item[1].name] : item[1].name }</span>
-                                        <span className="count">{ `  (${ format(item[1]['count']) })` }</span>
-                                    </label>
+                                <p key={ i }
+                                   onClick={::this.handleChange}
+                                   id={i}>
+                                    <i className={ !check[i] ? 'fa-2x fa fa-eye-slash' : "fa-2x fa fa-eye" } aria-hidden="true"/>
+                                    <span className="icon"/>
+                                    <span
+                                        className="text">{ alias[item[1].name] ? alias[item[1].name] : item[1].name }</span>
+                                    <span className="count">{ `  (${ format(item[1]['count']) })` }</span>
                                 </p>
                             )
                         }

@@ -21,7 +21,8 @@ import {
     SET_CLASTER_CHART_DATA,
     CHART_TOGGLE,
     TOGGLE_CHECK,
-    SET_INITIAL_CHECK
+    SET_INITIAL_CHECK,
+    CHECK_ALL
 
 } from './constant';
 
@@ -139,7 +140,7 @@ export function show_claster(state, mapName) {
                 });
 
                 let arr = [];
-                data.data.forEach((item, i) => i === 0 ? arr.push(true) : arr.push(false));
+                data.data.forEach((item, i) => arr.push(false));
 
                 dispatch({
                     type: SET_INITIAL_CHECK,
@@ -183,5 +184,12 @@ export function toggle_check(arr) {
     return {
         type: TOGGLE_CHECK,
         payload: arr
+    }
+}
+
+export function check_all(state) {
+    return {
+        type: CHECK_ALL,
+        payload: !state
     }
 }

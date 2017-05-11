@@ -22,21 +22,19 @@ export function removeClaster() {
 }
 
 export function layersTriger(id, status) {
-    switch (status) {
-        case 'show':
-            return showLayer(id);
-        case 'hide':
-            return hideLayer(id);
-    }
+    console.log('status >>', status, id)
+    status ? showLayer(id) : hideLayer(id);
 }
 
 function showLayer(id) {
+    console.log('show >>')
     Lmap.addLayer(layers[id]);
     // addProvider(layers[id].options.url, id)
     // updateSearchControl();
 }
 
 function hideLayer(id) {
+    console.log('hidw >>')
     Lmap.removeLayer(layers[id]);
     // removeProvider(id)
     // updateSearchControl();
@@ -132,8 +130,6 @@ export default function claster(data) {
             }
         }
     }
-
-    showLayer(0)
     //
     // Lmap.fitBounds(markers.getBounds());
 

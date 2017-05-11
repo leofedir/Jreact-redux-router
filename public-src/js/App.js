@@ -39,9 +39,9 @@ class App extends Component {
     render() {
         // console.log('this.props >>', this.props)
         const {category, showMenu, mapFull, fetching, range_items, range_item, show_range, legend_data, claster_layers, title_map, fields, submenu_item} = this.props.main;
-        const {fetching_map, curentMap, info, feature, alias, claster, feature_claster, isCheckAll, check, clasterCount} = this.props.map_reducer;
+        const {fetching_map, curentMap, info, feature, alias, claster, feature_claster, isCheckAll, check, clasterCount, checkAll} = this.props.map_reducer;
         const {toggleMenu, resizeMap, get_submenu, set_Range_item} = this.props.Actions;
-        const {get_map_area, toggle_layer, set_chart_data, toggle_check} = this.props.MapActions;
+        const {get_map_area, toggle_layer, set_chart_data, toggle_check, check_all} = this.props.MapActions;
 
         return (
             <div id="wrapper" className={ (showMenu ? '' : 'hide' ) + (mapFull ? ' mapFull' : '')}>
@@ -81,6 +81,8 @@ class App extends Component {
                                 check={ check }
                                 toggle_check={ toggle_check }
                                 clasterCount={ clasterCount }
+                                check_all={ check_all }
+                                checkAll={ checkAll }
                             />
                             <Info info={ info } />
                         </div>
