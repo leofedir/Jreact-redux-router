@@ -18,7 +18,7 @@ class Legend extends Component {
     }
 
     createItem() {
-        const {legend_data, claster_layers, check, clasterCount, checkAll} = this.props;
+        const {legend_data, claster_layers, check, clasterCount, checkAll, toggle_check, toggle_layer} = this.props;
         const format = new Intl.NumberFormat().format;
 
         if (legend_data !== null) {
@@ -38,7 +38,6 @@ class Legend extends Component {
                         )
                     })}
                 </div>
-
             )
         } else if (claster_layers !== null) {
             return (
@@ -50,6 +49,11 @@ class Legend extends Component {
                         <span className="count">{ `  (${ format(clasterCount) })` }</span>
                     </p>
                     {claster_layers.map((item, i) => {
+                        if (i === 0 && !check[i]) {
+                            check[i] = !check[i];
+                            toggle_check(check);
+                            toggle_layer(i, check[i]);
+                        }
                             return (
                                 <p key={ i }
                                    onClick={::this.handleChange}

@@ -24,11 +24,10 @@ module.exports = function (router) {
                             let info = null;
                             resp.forEach((d, i) => {
                                 let obj = {
-                                    "type": "FeatureCollection",
+                                    type: "FeatureCollection",
                                     name: storeLayers[table].list[i],
-                                    "features": d.map(item => {
-                                        let obj = {}
-
+                                    features: d.map(item => {
+                                        let obj = {};
                                         obj.type = "Feature";
                                         obj.properties = {};
                                         for (let key in item) {
