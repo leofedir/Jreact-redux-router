@@ -18,7 +18,7 @@ class Legend extends Component {
     }
 
     createItem() {
-        const {legend_data, claster_layers, check, clasterCount, checkAll, toggle_check, toggle_layer} = this.props;
+        const {legend_data, claster_layers, check, clasterCount, checkAll} = this.props;
         const format = new Intl.NumberFormat().format;
 
         if (legend_data !== null) {
@@ -45,7 +45,7 @@ class Legend extends Component {
                     <p onClick={::this.handleChangeAll}>
                         <i className={!checkAll ? 'fa fa-eye-slash' : "fa fa-eye" } aria-hidden="true"/>
                         <span className="icon"/>
-                        <span className="text">Обрати все </span>
+                        <span className="text">Обрати всі </span>
                         <span className="count">{ `  (${ format(clasterCount) })` }</span>
                     </p>
                     {claster_layers.map((item, i) => {

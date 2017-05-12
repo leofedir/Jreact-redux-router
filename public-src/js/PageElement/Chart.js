@@ -171,12 +171,15 @@ class Chart extends Component {
 
             console.log('myData >>', myData)
             chart = Highcharts.chart('item_chart', {
-
+                lang: {
+                    resetZoom: 'Назад'
+                },
                 chart: {
                     type: 'bubble',
                     plotBorderWidth: 1,
                     zoomType: 'xy'
                 },
+
                 credits: {
                     text: 'Енциклопедія територій',
                     href: 'http://enter.co.ua',
