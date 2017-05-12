@@ -108,6 +108,9 @@ export let alias = {
     area_budgets_rentazalisresurs:'Рента за використання лісових ресурсів на 1 га земель лісогосподарського призначення',
     area_zemres_chastkasgzemel:'Частка сільськогосподарських земель',
     area_zemres_chastkspai:'Частка розпайованих земель сільськогосподарського призначення',
-    area_zemres_avgareapai:'Середня площа земельної ділянки-паю'
+    area_zemres_avgareapai:'Середня площа земельної ділянки-паю',
+    area_osvitaa_vydatkynadushunas:'Видатки з місцевого бюджету на освіту в розрахунку на душу населення',
+    area_osvitaa_pytomavahavydatkiv:'Питома вага видатків на освіту у складі видатків бюджету',
+    area_osvitaa_vydatkynashkolyara:'Видатки з місцевого бюджету на школи в розрахунку на 1 дитину шкільного віку'
 
 }
