@@ -17,6 +17,7 @@ module.exports = {
             res.json(store[table])
         } else {
             let query = `SELECT * FROM ${ table }`;
+            let query2 = `SELECT * FROM bubble_chart`;
             let info = null;
             pgdb.query(query)
                 .then((d)=>{
@@ -35,9 +36,14 @@ module.exports = {
                         }
                         obj.geometry = JSON.parse(item.geojson)
                         return obj;
-                    })
+                    });
                     store[table] = [info, newData];
-                }).then(() => {
+                })
+                .then(() => {
+                    pgdb.query(query2)
+                        .then(d => store[table].push(d) )
+                })
+                .then(() => {
                 res.json(store[table])
             })
                 .catch((e)=>{

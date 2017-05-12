@@ -16,7 +16,6 @@ import {
 
 const initialState = {
     showMenu: true,
-    category: 'main',
     fields: null,
     mapFull: false,
     fetching: false,

@@ -24,7 +24,8 @@ import {
     SET_INITIAL_CHECK,
     CHECK_ALL,
     CHECK_ALL_ICON,
-    TOGGLE_DATA
+    TOGGLE_DATA,
+    SET_DATA_BUBBLE
 
 } from './constant';
 
@@ -193,6 +194,13 @@ export function toggle_data(state) {
     return {
         type: TOGGLE_DATA,
         payload: !state
+    }
+}
+
+export function set_data_bubble(data) {
+    return {
+        type: SET_DATA_BUBBLE,
+        payload: data
     }
 }
 

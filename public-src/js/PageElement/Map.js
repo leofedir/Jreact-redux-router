@@ -56,6 +56,7 @@ class Map extends Component {
     }
 
     createMap() {
+        const { set_data_bubble } = this.props
         Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 5);
 
         esri.basemapLayer('Topographic').addTo(Lmap);
@@ -66,7 +67,7 @@ class Map extends Component {
         }
         Lmap.on('mousemove', onMouseMove);
 
-        fetch(this.props.category, {
+        fetch('main', {
             method: 'post',
             headers: {
                 "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
@@ -81,6 +82,8 @@ class Map extends Component {
                     "weight": 2,
                     "opacity": .9
                 };
+
+                set_data_bubble(data[2]);
 
                 ukraine = L.geoJSON(data[1], {
                     style: myStyle

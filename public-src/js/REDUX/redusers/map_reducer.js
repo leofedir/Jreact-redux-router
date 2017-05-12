@@ -20,7 +20,8 @@ import {
     SET_INITIAL_CHECK,
     CHECK_ALL,
     CHECK_ALL_ICON,
-    TOGGLE_DATA
+    TOGGLE_DATA,
+    SET_DATA_BUBBLE
 } from '../actions/constant'
 
 const initialState = {
@@ -40,7 +41,8 @@ const initialState = {
     check: [],
     checkAll: false,
     clasterCount: 0,
-    dataChartRegion: true
+    dataChartRegion: true,
+    data_bubble: null
 };
 
 export default function map(state = initialState, action) {
@@ -92,7 +94,7 @@ export default function map(state = initialState, action) {
             return {...state, info: null, properties: null, data_success: false, curentMap: null};
 
         case SET_SUBMENU_ITEM:
-            return {...state, feature: null, chart1: null, chart2: null, curentMap: null, feature_claster: null};
+            return {...state, feature: null, chart1: null, chart2: null, curentMap: null, feature_claster: null, data_bubble: null};
 
         case SET_CLASTER_CHART_DATA:
             return {...state, chart1: action.payload[0], chart2: action.payload[1]};
@@ -111,6 +113,9 @@ export default function map(state = initialState, action) {
 
         case TOGGLE_DATA:
             return {...state, dataChartRegion: action.payload};
+
+        case SET_DATA_BUBBLE:
+            return {...state, data_bubble: action.payload};
 
         default:
             return state;
