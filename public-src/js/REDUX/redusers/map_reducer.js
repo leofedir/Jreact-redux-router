@@ -12,7 +12,7 @@ import {
     GET_LAYER_SUCCESS,
     GET_LAYER_ERROR,
     GET_CLASTER_SUCCESS,
-    GET_SUBMENU_REQUEST,
+    GET_SUBMENU_SUCCESS,
     SET_SUBMENU_ITEM,
     SET_CLASTER_CHART_DATA,
     CHART_TOGGLE,
@@ -90,7 +90,7 @@ export default function map(state = initialState, action) {
         case GET_CLASTER_SUCCESS:
             return {...state, info: action.payload.data[0][0], clasterCount: action.payload.count, check: []};
 
-        case GET_SUBMENU_REQUEST:
+        case GET_SUBMENU_SUCCESS:
             return {...state, info: null, properties: null, data_success: false, curentMap: null};
 
         case SET_SUBMENU_ITEM:

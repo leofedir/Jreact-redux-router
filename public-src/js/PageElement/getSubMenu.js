@@ -6,9 +6,11 @@ import * as Actions from '../REDUX/actions/actions';
 
 import { alias } from '../aliasMapName';
 
+let itemMenu = null;
+
 class SubMenu extends Component {
-    getMap(e) {
-        let mapName = e.target.value;
+    getMap(e, firstMap) {
+        let mapName = e !== null ? e.target.value : firstMap;
         let arr = this.props.main.fields[mapName];
         const { range_item } = this.props.main;
         const { claster } = this.props.map_reducer;
@@ -18,12 +20,12 @@ class SubMenu extends Component {
         set_submenu_item(mapName);
 
         let tableData = arr.map(item => mapName + item);
-        mapName.indexOf('area') === 0 ? getMapData(tableData, arr) : '';
+        mapName.startsWith('area') ? getMapData(tableData, arr) : '';
         if (arr.some(item => item === '__region')) {
             get_map_area(mapName + '__region', true, alias[mapName], range_item)
         } else if (arr.some(item => item === '__district')) {
            get_map_area(mapName + '__district', true, alias[mapName], range_item)
-        } else if ( mapName.indexOf('area') < 0) {
+        } else if ( !mapName.startsWith('area')) {
             show_claster(claster, mapName)
         }
     }
@@ -31,14 +33,24 @@ class SubMenu extends Component {
     getItem(){
         return (
             <select value={ this.props.main.submenu_item } className="test" onChange={::this.getMap}>
-                <option value=""/>
                 {Object.keys(this.props.main.fields).map((item, i) => {
+                    i === 0 ? itemMenu = item : '';
                     return <option  className="menu__item" key={i} value={item}>
                         {alias[item] ? alias[item] : item}
                     </option>
                 })}
             </select>
         )
+    }
+
+    componentDidUpdate() {
+        const {submenu_item} = this.props.main;
+
+        if (submenu_item == '' && itemMenu !== null) {
+            this.getMap(null, itemMenu)
+            console.log('firs5555tItem >>', itemMenu)
+        }
+
     }
 
     render() {

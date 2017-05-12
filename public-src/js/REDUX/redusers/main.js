@@ -42,7 +42,7 @@ export default function main(state = initialState, action) {
             return {...state, submenu_item: action.payload, legend_data: null, claster_layers: null};
 
         case GET_SUBMENU_REQUEST:
-            return {...state, fetching: true, legend_data: null, claster_layers: null, title_map: action.payload};
+            return {...state,  claster_layers: null, title_map: action.payload};
 
         case SET_RANGE_ITEMS:
             return {...state, range_items: action.payload, show_range: true};
@@ -51,7 +51,7 @@ export default function main(state = initialState, action) {
             return {...state, range_item: action.payload};
 
         case GET_SUBMENU_SUCCESS:
-            return { ...state, fields: action.payload, fetching: false, submenu_item: '', range_items: '', show_range: false};
+            return { ...state, fields: action.payload.data, submenu_item: '', range_items: '', show_range: false, legend_data: null, claster_layers: null, title_map: action.payload.title};
 
         case GET_SUBMENU_ERROR:
             return {...state, fields: null, fetching: false};
