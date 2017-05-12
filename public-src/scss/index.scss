@@ -240,6 +240,22 @@ body {
   font-weight: bold;
 }
 
+
+#item_bar_chart {
+  height: calc(100% - 30px);
+}
+
+.region_toggle {
+  height: 30px;
+  margin: 0 15px 0 0;
+  text-align: right;
+}
+
+.region_toggle i {
+  margin: 0 4px;
+  cursor: pointer;
+}
+
 @media screen and (max-width:1600px)  {
   .map_heder_title .test{
     width: 50%;

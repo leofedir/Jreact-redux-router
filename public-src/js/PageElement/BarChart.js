@@ -345,9 +345,9 @@ class BarChart extends Component {
                     <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>
                 </div>
                 <div className="item_content">
-                    <div>Області
+                    <div className="region_toggle">Області
                         {chart2 ? '' : <i className={ !dataChartRegion ? "fa fa-toggle-on" : 'fa fa-toggle-on fa-flip-horizontal' }
-                                          onClick={ ::this.toggleChartData } />} Райони
+                                          onClick={ ::this.toggleChartData } />}Райони
                     </div>
                     <div id="item_bar_chart"/>
                 </div>
