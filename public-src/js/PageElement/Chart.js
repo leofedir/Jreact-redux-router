@@ -169,7 +169,6 @@ class Chart extends Component {
 
             myData.sort((a,b) => b.z - a.z);
 
-            console.log('myData >>', myData)
             chart = Highcharts.chart('item_chart', {
                 lang: {
                     resetZoom: 'Назад'

@@ -24,6 +24,12 @@ class Map extends Component {
     }
 
     zoomFunction() {
+
+
+        if (Lmap.hasLayer(ukraine)) {
+            return
+        }
+
         const { curentMap, fields, submenu_item } = this.props;
         const mapSet = fields[submenu_item]
 
