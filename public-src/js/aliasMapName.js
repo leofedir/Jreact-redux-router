@@ -111,6 +111,9 @@ export let alias = {
     area_zemres_avgareapai:'Середня площа земельної ділянки-паю',
     area_osvitaa_vydatkynadushunas:'Видатки з місцевого бюджету на освіту в розрахунку на душу населення',
     area_osvitaa_pytomavahavydatkiv:'Питома вага видатків на освіту у складі видатків бюджету',
-    area_osvitaa_vydatkynashkolyara:'Видатки з місцевого бюджету на школи в розрахунку на 1 дитину шкільного віку'
-
+    area_osvitaa_vydatkynashkolyara:'Видатки з місцевого бюджету на школи в розрахунку на 1 дитину шкільного віку',
+    area_ohorzdorov_vydatkynadushu:"Видатки місцевого бюджету на охорону здоров'я в розрахунку на душу населення",
+    area_ohorzdorov_pytomavahavydatkiv:"Питома вага видатків на охорону здоров'я у складі видатків бюджету",
+    area_ohorzdorov_vydatky:"Видатки місцевого бюджету на охорону здоров'я",
+    area_osvitaa_vydatky:'Видатки місцевого бюджету на освіту'
 }
