@@ -11,7 +11,7 @@ class Info extends Component {
                 </div>
                 <div className="item_content">
                     <div id="info"
-                         dangerouslySetInnerHTML={info ? {__html: info} : {__html: '&nbsp; &nbsp;Україна - держава у Східній Європі. <p>&nbsp; &nbsp;Площа території - 60 357 712 га.<p>&nbsp; &nbsp;Населення - 44 933 290 особи. <p>&nbsp; &nbsp;Столиця - м.Київ<p>&nbsp; &nbsp;(50°27′ пн. ш., 30°30′ сх. д.).<p>&nbsp; &nbsp;Державна валюта - гривня, ₴.'}}/>
+                         dangerouslySetInnerHTML={info ? {__html: info} : {__html: '&nbsp; &nbsp;Україна - держава у Східній Європі. <p>&nbsp; &nbsp;Площа території - 60 357 712 га.<p>&nbsp; &nbsp;Населення - 44 933 290 особи. <p>&nbsp; &nbsp;Столиця - м.Київ<p>&nbsp; &nbsp;Державна валюта - гривня, ₴.<p><hr>Україна в світових рейтингах (2016 р.):<p>&nbsp; &nbsp;&nbsp; ●&nbsp;31 місце за чисельністю населення;<p>&nbsp; &nbsp;&nbsp; ●&nbsp;46 місце за площею території;<p>&nbsp; &nbsp;&nbsp; ●&nbsp;84 місце за ІЛР;<p>&nbsp; &nbsp;&nbsp; ●&nbsp;105 місце за ВВП на особу; <p>&nbsp; &nbsp;&nbsp; ●&nbsp;122 місце за тривалістю життя;   <p>&nbsp; &nbsp;&nbsp; ●&nbsp;132 за індексом щастя населення.'}}/>
                 </div>
             </div>
         )
