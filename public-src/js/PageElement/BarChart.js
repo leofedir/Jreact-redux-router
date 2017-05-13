@@ -347,8 +347,8 @@ class BarChart extends Component {
                     </div>
                 </div>
                 <div className="item_content">
-                    <div className="region_toggle" style={properties == null && !data_success ? {display: 'none'} : {display: 'block'}} onClick={ ::this.toggleChartData } >Області
-                        {chart2 ? '' : <i className={ !dataChartRegion ? "fa fa-toggle-on" : 'fa fa-toggle-on fa-flip-horizontal' }/>}Райони
+                    <div className="region_toggle" style={properties == null && !data_success ? {display: 'none'} : {display: 'block'}} onClick={ ::this.toggleChartData } ><div className="region_toggle_item">Області
+                        {chart2 ? '' : <i className={ !dataChartRegion ? "fa fa-toggle-on" : 'fa fa-toggle-on fa-flip-horizontal' }/>}Райони </div>
                     </div>
                     <div id="item_bar_chart"/>
                 </div>
