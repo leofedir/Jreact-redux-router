@@ -3,13 +3,14 @@ import { checkStatus, parseJSON} from '../../checkJSON';
 import {
     TOGGLE_MENU,
     FULL_MAP,
-    GET_SUBMENU_REQUEST,
+    FINISH_LOAD,
     GET_SUBMENU_SUCCESS,
     GET_SUBMENU_ERROR,
     SET_SUBMENU_ITEM,
     SET_RANGE_ITEMS,
     SET_RANGE_ITEM,
-    SET_LEGEND_DATA
+    SET_LEGEND_DATA,
+    START_LOAD
 
 } from './constant';
 

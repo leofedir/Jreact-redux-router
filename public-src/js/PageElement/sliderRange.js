@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 
 class SliderRange extends Component {
-    omButtonMenuClick(e) {
-        this.props.toggleMenu(this.props.showMenu)
-    }
-
     changeItem(e) {
         this.props.set_Range_item(e.target.value);
     }

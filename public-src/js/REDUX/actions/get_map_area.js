@@ -25,12 +25,13 @@ import {
     CHECK_ALL,
     CHECK_ALL_ICON,
     TOGGLE_DATA,
-    SET_DATA_BUBBLE
+    SET_DATA_BUBBLE,
+    FINISH_LOAD
 
 } from './constant';
 
 
-export function get_map_area(url, rebuild = true, alias, range_item) {
+export function get_map_area(url, rebuild = true, alias, isRegion) {
     return (dispatch) => {
         dispatch({
             type: GET_MAP_AREA_REQUEST,
@@ -47,7 +48,7 @@ export function get_map_area(url, rebuild = true, alias, range_item) {
             .then(checkStatus)
             .then(parseJSON)
             .then(data => {
-                getMap(data[1], rebuild, range_item);
+                getMap(data[1], rebuild, isRegion);
                 dispatch({
                     type: GET_MAP_AREA_SUCCESS,
                     payload: [data[0]]
@@ -69,27 +70,30 @@ export function getMapData(tableData = null, arr = null) {
         });
 
         if (arr !== null && tableData !== null) {
-            Promise.all(tableData.map((item, i) =>
-                fetch('/getmapdata', {
-                    method: 'post',
-                    headers: {
-                        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-                    },
-                    body: `table=${ item }`
-                }).then(parseJSON)
-            )).then((resp) => {
-                let obj = {};
-                resp.forEach((item, i) => obj[arr[i]] = item)
-                dispatch({
-                    type: GET_MAP_DATA_SUCCESS,
-                    payload: obj
-                })
-            }).catch((err) => {
-                console.log('err >>', err);
-                dispatch({
-                    type: GET_MAP_DATA_ERROR
-                })
+
+            fetch('/getmapdata', {
+                method: 'post',
+                headers: {
+                    "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                body: `table=${ tableData }&arr=${arr}`
             })
+                .then(parseJSON)
+                .then((data) => {
+                    dispatch({
+                        type: GET_MAP_DATA_SUCCESS,
+                        payload: data
+                    })
+                    dispatch({
+                        type: FINISH_LOAD,
+                    })
+                })
+                .catch((err) => {
+                    console.log('err >>', err);
+                    dispatch({
+                        type: GET_MAP_DATA_ERROR
+                    })
+                })
         }
     }
 }

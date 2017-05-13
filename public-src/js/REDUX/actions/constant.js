@@ -32,3 +32,5 @@ export const CHECK_ALL = 'CHECK_ALL';
 export const CHECK_ALL_ICON = 'CHECK_ALL_ICON';
 export const TOGGLE_DATA = 'TOGGLE_DATA';
 export const SET_DATA_BUBBLE = 'SET_DATA_BUBBLE';
+export const FINISH_LOAD = 'FINISH_LOAD';
+export const START_LOAD = 'START_LOAD';

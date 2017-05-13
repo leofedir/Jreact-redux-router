@@ -10,8 +10,15 @@ import {store} from './index'
 export let choroplethLayer = null;
 export let ato = null;
 let atoData = null;
+let unsubscribe = null;
 
-export default function getMap(data, rebuild = true) {
+export default function getMap(data, rebuild = true, isRegion) {
+
+if(unsubscribe !== null) {
+    console.log('4444 >>', 4444)
+    unsubscribe();
+    unsubscribe = null
+}
     let myStyle = {
         "color": "#A9A9A9",
         "weight": 2,
@@ -45,9 +52,8 @@ export default function getMap(data, rebuild = true) {
     store.dispatch(set_Range_items(propertys));
 
     let state = store.getState();
-
-    let item = state.main.range_item;
-    let items = state.main.range_items;
+    let {range_item, range_items, } = state.main;
+    let {geometry_district, geometry_region, } = state.map_reducer;
 
     function fetchAto () {
         fetch('/ato', {
@@ -61,14 +67,12 @@ export default function getMap(data, rebuild = true) {
             .then(parseJSON)
             .then(data => {
                 atoData = data[1];
-
                 ato = L.geoJSON(data[1], {
                     style: myStyle
                 });
                 Lmap.addLayer(ato)
             });
     }
-
     function getAto(item) {
         if (item > 0 && atoData !== null) {
             ato ? ato.clearLayers() && Lmap.removeLayer(ato) : ''
@@ -79,9 +83,9 @@ export default function getMap(data, rebuild = true) {
                 Lmap.addLayer(ato)
             }, 400)
 
-        } else if (item > 0 && atoData === null) {
+        } else if (range_item > 0 && atoData === null) {
             fetchAto()
-        } else if (item == 0 && ato !== null) {
+        } else if (range_item == 0 && ato !== null) {
             ato.clearLayers();
             Lmap.removeLayer(ato);
             ato = null;
@@ -90,23 +94,32 @@ export default function getMap(data, rebuild = true) {
 
     function handleChange() {
         let nexItem = store.getState().main.range_item;
-        if (nexItem !== item) {
-            item = nexItem;
-            getAto(item);
+
+        if (nexItem != range_item) {
+            console.log('sdf >>', 2222)
+            range_item = nexItem;
+            getAto(range_item);
             renderLayer()
         }
+        return
     }
+    console.log('sdf >>', 3333)
 
-    let unsubscribe = store.subscribe(handleChange);
-    handleChange();
+    unsubscribe = store.subscribe(handleChange);
+    // handleChange();
+
 
     function renderLayer() {
+        // store.dispatch(startLoad());
         if (Lmap.hasLayer(choroplethLayer)) {
             Lmap.removeLayer(choroplethLayer)
         }
+        isRegion ?
+            data.forEach((item, i) => item.geometry = JSON.parse(geometry_region.filter(a => a.id == item.id)[0].geojson)) :
+            data.forEach((item, i) => item.geometry = JSON.parse(geometry_district.filter(a => a.id == item.id)[0].geojson));
 
         choroplethLayer = L.choropleth(data, {
-            valueProperty: items[item],
+            valueProperty: range_items[range_item],
             scale: ['#ffffb2', '#bd0026'],
             steps: 5,
             mode: 'q',
@@ -132,9 +145,12 @@ export default function getMap(data, rebuild = true) {
         };
 
         store.dispatch(set_legend_data(legend_data));
+        // setTimeout(()=>{
+        //     store.dispatch(finishLoad());
+        // },100)
     }
 
     renderLayer();
-    getAto(item);
+    getAto(range_item);
 
 }

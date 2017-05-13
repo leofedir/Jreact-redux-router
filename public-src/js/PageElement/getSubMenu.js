@@ -22,9 +22,9 @@ class SubMenu extends Component {
         let tableData = arr.map(item => mapName + item);
         mapName.startsWith('area') ? getMapData(tableData, arr) : '';
         if (arr.some(item => item === '__region')) {
-            get_map_area(mapName + '__region', true, alias[mapName], range_item)
+            get_map_area(mapName + '__region', true, alias[mapName], true)
         } else if (arr.some(item => item === '__district')) {
-           get_map_area(mapName + '__district', true, alias[mapName], range_item)
+           get_map_area(mapName + '__district', true, alias[mapName], false)
         } else if ( !mapName.startsWith('area')) {
             show_claster(claster, mapName)
         }

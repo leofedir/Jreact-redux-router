@@ -27,7 +27,6 @@ import {
 const initialState = {
     curentMap: null,
     info: null,
-    fetching_map: false,
     feature: null,
     alias: null,
     properties: null,
@@ -42,23 +41,25 @@ const initialState = {
     checkAll: false,
     clasterCount: 0,
     dataChartRegion: true,
-    data_bubble: null
+    data_bubble: null,
+    geometry_region: null,
+    geometry_district: null
 };
 
 export default function map(state = initialState, action) {
     switch (action.type) {
 
         case GET_MAP_AREA_REQUEST:
-            return {...state, fetching_map: true, curentMap: action.payload[0], alias: action.payload[1]};
+            return {...state, curentMap: action.payload[0], alias: action.payload[1]};
 
         case GET_MAP_AREA_SUCCESS:
-            return {...state, fetching_map: false, info: action.payload[0], feature: null}
+            return {...state, info: action.payload[0], feature: null}
 
-        case GET_MAP_AREA_ERROR:
-            return {...state, fetching_map: false};
+        // case GET_MAP_AREA_ERROR:
+        //     return {...state};
 
         case GET_MAP_DATA_REQUEST:
-            return {...state, data_success: false};
+            return {...state, data_success: false, };
 
         case GET_MAP_DATA_SUCCESS:
             return {...state, properties: action.payload, data_success: true};
@@ -103,7 +104,7 @@ export default function map(state = initialState, action) {
             return {...state, check: action.payload};
 
         case TOGGLE_CHECK:
-            return {...state, check: action.payload};
+            return {...state, check: action.payload, chart1: null, chart2: null};
 
         case CHECK_ALL_ICON:
             return {...state, checkAll: action.payload};
@@ -115,7 +116,7 @@ export default function map(state = initialState, action) {
             return {...state, dataChartRegion: action.payload};
 
         case SET_DATA_BUBBLE:
-            return {...state, data_bubble: action.payload};
+            return {...state, data_bubble: action.payload[4], geometry_region: action.payload[2], geometry_district: action.payload[3]};
 
         default:
             return state;

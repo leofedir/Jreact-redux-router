@@ -34,10 +34,10 @@ class Map extends Component {
         const mapSet = fields[submenu_item]
 
         if (Lmap.getZoom() <= 5 && curentMap !== null && curentMap.indexOf('region') <= 0 && mapSet.some(a => ~a.indexOf('__region'))) {
-            this.props.get_map_area(submenu_item + '__region', false, alias[submenu_item])
+            this.props.get_map_area(submenu_item + '__region', false, alias[submenu_item], true)
 
         } else if (Lmap.getZoom() >= 7 && curentMap !== null && curentMap.indexOf('region') >= 0 && mapSet.some(a => ~a.indexOf('__district'))) {
-            this.props.get_map_area(submenu_item + '__district', false, alias[submenu_item])
+            this.props.get_map_area(submenu_item + '__district', false, alias[submenu_item], false)
         }
     }
 
@@ -89,7 +89,7 @@ class Map extends Component {
                     "opacity": .9
                 };
 
-                set_data_bubble(data[2]);
+                set_data_bubble(data);
 
                 ukraine = L.geoJSON(data[1], {
                     style: myStyle

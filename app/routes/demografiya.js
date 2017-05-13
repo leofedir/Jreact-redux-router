@@ -5,22 +5,22 @@ let dataChart = {};
 
 module.exports = function (router) {
 
-
     router.post('/getmapdata', function (req, res) {
+        let { table, arr} = req.body;
 
+        table = table.split(',');
+        arr = arr.split(',');
         if (req.body.table in dataChart) {
-            res.json(dataChart[req.body.table])
+            res.json(dataChart[table[0]])
         } else {
-            pgdb.query(`select koatuu,name_ua,year_13,year_14,year_15,year_16,parameter from ` + req.body.table)
-                .then((d) => {
-                    dataChart[req.body.table] = d;
-                    res.json(d)
+            Promise.all(table.map( item =>pgdb.query(`select koatuu,name_ua,year_13,year_14,year_15,year_16,parameter from ` + item)))
+                .then(data => {
+                    let obj = {};
+                    data.forEach((item, i) => obj[arr[i]] = item);
+                    dataChart[table[0]] = obj;
                 })
-                .catch((e) => {
-                    console.log("Error", e);
-                })
+                .then(()=> res.json(dataChart[table[0]]))
         }
-
     });
 
     router.post('/getsubmenu', function (req, res) {

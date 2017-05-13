@@ -11,13 +11,18 @@ import {
     SET_LEGEND_DATA,
     GET_CLASTER_REQUEST,
     GET_CLASTER_SUCCESS,
-    GET_CLASTER_ERROR
+    GET_CLASTER_ERROR,
+    START_LOAD,
+    FINISH_LOAD,
+    GET_MAP_DATA_SUCCESS,
+    GET_MAP_DATA_REQUEST
+
 } from '../actions/constant'
 
 const initialState = {
     showMenu: true,
     fields: null,
-    mapFull: false,
+    mapFull: true,
     fetching: false,
     submenu_item: '',
     range_items: '',
@@ -48,7 +53,7 @@ export default function main(state = initialState, action) {
             return {...state, range_items: action.payload, show_range: true};
 
         case SET_RANGE_ITEM:
-            return {...state, range_item: action.payload};
+            return {...state, range_item: action.payload, fetching: true};
 
         case GET_SUBMENU_SUCCESS:
             return { ...state, fields: action.payload.data, submenu_item: '', range_items: '', show_range: false, legend_data: null, claster_layers: null, title_map: action.payload.title};
@@ -57,7 +62,7 @@ export default function main(state = initialState, action) {
             return {...state, fields: null, fetching: false};
 
         case SET_LEGEND_DATA:
-            return {...state, legend_data: action.payload};
+            return {...state, legend_data: action.payload, fetching: false};
 
         case GET_CLASTER_REQUEST:
             return {...state, fetching: true, claster_layers: null};
@@ -66,6 +71,12 @@ export default function main(state = initialState, action) {
             return {...state, fetching: false, claster_layers: action.payload.data};
 
         case GET_CLASTER_ERROR:
+            return {...state, fetching: false};
+
+        case GET_MAP_DATA_REQUEST:
+            return {...state, fetching: true };
+
+        case GET_MAP_DATA_SUCCESS:
             return {...state, fetching: false};
 
         default:
