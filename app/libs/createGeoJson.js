@@ -30,10 +30,6 @@ module.exports = {
                 })
                 .then(() => {
                     let fullQuery = `SELECT ${fields} FROM ${ table }`;
-                    let query3 = [
-                        `SELECT geojson,id FROM area_demography_chastkavikomst617__region`,
-                        `SELECT geojson,id FROM area_demography_chastkavikomst617__district`,
-                        `SELECT * FROM bubble_chart`];
                     let info = null;
                     pgdb.query(table == 'borders' || table == 'ato' ? query : fullQuery)
                         .then((d) => {
@@ -57,15 +53,7 @@ module.exports = {
 
                                 return obj;
                             });
-
                             store[table] = [info, newData];
-                        })
-                        .then(() => {
-                            if (table == 'borders') {
-                                Promise.all(query3.map(item => pgdb.query(item)))
-                                    .then(d => d.forEach(item => store[table].push(item)))
-                            }
-
                         })
                         .then(() => {
                             res.json(store[table])

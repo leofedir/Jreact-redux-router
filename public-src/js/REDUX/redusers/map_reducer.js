@@ -1,7 +1,6 @@
 import {
     GET_MAP_AREA_REQUEST,
     GET_MAP_AREA_SUCCESS,
-    GET_MAP_AREA_ERROR,
     CLICK_ON_FEATURE,
     BARCHART_TOGGLE,
     GET_MAP_DATA_SUCCESS,
@@ -54,9 +53,6 @@ export default function map(state = initialState, action) {
 
         case GET_MAP_AREA_SUCCESS:
             return {...state, info: action.payload[0], feature: null}
-
-        // case GET_MAP_AREA_ERROR:
-        //     return {...state};
 
         case GET_MAP_DATA_REQUEST:
             return {...state, data_success: false, };
@@ -116,7 +112,7 @@ export default function map(state = initialState, action) {
             return {...state, dataChartRegion: action.payload};
 
         case SET_DATA_BUBBLE:
-            return {...state, data_bubble: action.payload[4], geometry_region: action.payload[2], geometry_district: action.payload[3]};
+            return {...state, data_bubble: action.payload[2], geometry_region: action.payload[0], geometry_district: action.payload[1]};
 
         default:
             return state;

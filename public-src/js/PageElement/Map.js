@@ -88,14 +88,25 @@ class Map extends Component {
                     "weight": 2,
                     "opacity": .9
                 };
-
-                set_data_bubble(data);
-
                 ukraine = L.geoJSON(data[1], {
                     style: myStyle
                 });
                 Lmap.addLayer(ukraine)
             });
+
+        fetch('geojson', {
+            method: 'post',
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: 'table=geojson'
+        })
+            .then(checkStatus)
+            .then(parseJSON)
+            .then(data => {
+                set_data_bubble(data);
+            })
+
     }
 
     omButtonMapClick() {
