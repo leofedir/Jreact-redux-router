@@ -15,7 +15,8 @@ import {
     START_LOAD,
     FINISH_LOAD,
     GET_MAP_DATA_SUCCESS,
-    GET_MAP_DATA_REQUEST
+    GET_MAP_DATA_REQUEST,
+    GET_MAP_AREA_SUCCESS
 
 } from '../actions/constant'
 
@@ -77,6 +78,9 @@ export default function main(state = initialState, action) {
             return {...state, fetching: true };
 
         case GET_MAP_DATA_SUCCESS:
+            return {...state, fetching: false};
+
+        case GET_MAP_AREA_SUCCESS:
             return {...state, fetching: false};
 
         default:

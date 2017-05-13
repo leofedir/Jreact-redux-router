@@ -8,8 +8,9 @@ module.exports = {
         password: 'd12e143n972',
         host: '89.184.82.32',
         port: 5432,
-        max: 10,
-        idleTimeoutMillis: 3000,
+        max: 20, //set pool max size to 20
+        min: 10, //set min pool size to 4
+        idleTimeoutMillis: 30000 ,//close idle clients after 1 second
         application_name: 'gisportal'
     }
 };

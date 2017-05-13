@@ -48,13 +48,13 @@ pgdb.prototype.query = function(sql , data){
                 //output: 1
             });
         }
-    });
+    })
 
     // TODO Den
     //
-    pgdbsc.on('error', function (err, client) {
-        console.error('idle client error', err.message, err.stack)
-    });
+    // pgdbsc.on('error', function (err, client) {
+    //     console.error('idle client error', err.message, err.stack)
+    // });
 
     // pgdbsc.on('connect', (client) => {
     //     // client.count = count++;
