@@ -205,7 +205,7 @@ export function toggle_data(state) {
 export function toggle_curency(state) {
     return {
         type: TOGGLE_CURENCY,
-        payload: !state
+        payload: state
     }
 }
 
