@@ -16,7 +16,8 @@ import {
     FINISH_LOAD,
     GET_MAP_DATA_SUCCESS,
     GET_MAP_DATA_REQUEST,
-    GET_MAP_AREA_SUCCESS
+    GET_MAP_AREA_SUCCESS,
+    SET_DATA_DISTRICT
 
 } from '../actions/constant'
 
@@ -24,7 +25,7 @@ const initialState = {
     showMenu: true,
     fields: null,
     mapFull: true,
-    fetching: false,
+    fetching: true,
     submenu_item: '',
     range_items: '',
     range_item: 0,
@@ -81,6 +82,9 @@ export default function main(state = initialState, action) {
             return {...state, fetching: false};
 
         case GET_MAP_AREA_SUCCESS:
+            return {...state, fetching: false};
+
+        case SET_DATA_DISTRICT:
             return {...state, fetching: false};
 
         default:
