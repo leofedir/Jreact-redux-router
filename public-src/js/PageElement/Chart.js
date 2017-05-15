@@ -245,12 +245,13 @@ class Chart extends Component {
         this.Chart()
     }
 
-    toggleChartData() {
-        this.props.MapActions.toggle_curency(this.props.map_reducer.dataChartUsd)
+    toggleChartData(e) {
+        let status = +e.target.dataset.usd;
+        this.props.MapActions.toggle_curency(!!status)
     }
 
     render() {
-        const {cahrt_full, data_bubble, dataChartUsd, feature} = this.props.map_reducer;
+        const {cahrt_full, data_bubble, dataChartUsd, feature, feature_claster} = this.props.map_reducer;
         const showToggle = dataToChartUsd.length > 0;
         return (
             <div className={cahrt_full ? 'chart_1 barChart_full' : 'chart_1'}>
@@ -259,15 +260,15 @@ class Chart extends Component {
                     <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>
                 </div>
                 <div className="item_content">
-                    <div className="noData" style={!!feature ? {display: 'none'} : {display: 'flex'}}>
+                    <div className="noData" style={!!feature || !!feature_claster ? {display: 'none'} : {display: 'flex'}}>
                         <p>
                             Оберіть територію на мапі
                         </p>
                     </div>
-                    <div className="region_toggle" style={!showToggle ? {display: 'none'} : {display: 'block'}} onClick={ ::this.toggleChartData } >
+                    <div className="region_toggle" style={!showToggle ? {display: 'none'} : {display: 'block'}} >
                         <div className="region_toggle_item">
-                            <p className={ dataChartUsd ? 'toggle' : 'toggle active'}>UAH</p>
-                            <p className={ !dataChartUsd ? 'toggle' : 'toggle active'}>USD</p>
+                            <p data-usd ='0' className={ dataChartUsd ? 'toggle' : 'toggle active'} onClick={ ::this.toggleChartData }>UAH</p>
+                            <p data-usd ='1' className={ !dataChartUsd ? 'toggle' : 'toggle active'} onClick={ ::this.toggleChartData }>USD</p>
                         </div>
                     </div>
                     <div id="item_chart"/>
