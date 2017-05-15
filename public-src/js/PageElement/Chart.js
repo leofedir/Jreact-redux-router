@@ -251,7 +251,7 @@ class Chart extends Component {
     }
 
     render() {
-        const {cahrt_full, data_bubble, dataChartUsd, feature} = this.props.map_reducer;
+        const {cahrt_full, data_bubble, dataChartUsd, feature, feature_claster} = this.props.map_reducer;
         const showToggle = dataToChartUsd.length > 0;
         return (
             <div className={cahrt_full ? 'chart_1 barChart_full' : 'chart_1'}>
@@ -260,7 +260,7 @@ class Chart extends Component {
                     <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>
                 </div>
                 <div className="item_content">
-                    <div className="noData" style={!!feature ? {display: 'none'} : {display: 'flex'}}>
+                    <div className="noData" style={!!feature || !!feature_claster ? {display: 'none'} : {display: 'flex'}}>
                         <p>
                             Оберіть територію на мапі
                         </p>
