@@ -34,3 +34,4 @@ export const TOGGLE_DATA = 'TOGGLE_DATA';
 export const SET_DATA_BUBBLE = 'SET_DATA_BUBBLE';
 export const FINISH_LOAD = 'FINISH_LOAD';
 export const START_LOAD = 'START_LOAD';
+export const TOGGLE_CURENCY = 'TOGGLE_CURENCY';

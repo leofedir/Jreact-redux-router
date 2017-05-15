@@ -26,7 +26,8 @@ import {
     CHECK_ALL_ICON,
     TOGGLE_DATA,
     SET_DATA_BUBBLE,
-    FINISH_LOAD
+    FINISH_LOAD,
+    TOGGLE_CURENCY
 
 } from './constant';
 
@@ -197,6 +198,13 @@ export function toggle_check(arr) {
 export function toggle_data(state) {
     return {
         type: TOGGLE_DATA,
+        payload: !state
+    }
+}
+
+export function toggle_curency(state) {
+    return {
+        type: TOGGLE_CURENCY,
         payload: !state
     }
 }

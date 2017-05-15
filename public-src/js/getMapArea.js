@@ -81,7 +81,7 @@ if(unsubscribe !== null) {
             });
             setTimeout(() => {
                 Lmap.addLayer(ato)
-            }, 400)
+            }, 500)
 
         } else if (range_item > 0 && atoData === null) {
             fetchAto()

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as MapActions from '../REDUX/actions/get_map_area';
 
-import {year_labels, dataToChart} from './Popup'
+import {year_labels, dataToChart, dataToChartUsd} from './Popup'
 
 const Highcharts = require('highcharts');
 require('highcharts/highcharts-more.js')(Highcharts);
@@ -29,7 +29,7 @@ class Chart extends Component {
     }
 
     Chart() {
-        const {feature, alias, chart1, data_bubble, cahrt_full} = this.props.map_reducer;
+        const {feature, alias, chart1, data_bubble, cahrt_full, dataChartUsd} = this.props.map_reducer;
         const format = new Intl.NumberFormat().format;
 
         if (feature != null) {
@@ -37,7 +37,7 @@ class Chart extends Component {
             let myData = [
                 {
                     name: alias,
-                    data: dataToChart
+                    data: dataChartUsd ? dataToChartUsd : dataToChart
                 }
             ];
 
@@ -66,7 +66,7 @@ class Chart extends Component {
                 },
                 yAxis: {
                     title: {
-                        text: feature.parameter
+                        text: dataChartUsd ? 'долар' : feature.parameter
                     }
                 },
                 legend: {
@@ -152,88 +152,89 @@ class Chart extends Component {
                 },
                 series: myData
             });
-        } else if (data_bubble !== null) {
-
-            let myData = data_bubble.map(item => {
-                let mySet = {};
-
-                mySet.country = item.name_ua;
-                mySet.name = item.alias;
-                mySet.y = +item.area;
-                mySet.x = +item.population_year_16;
-                mySet.z = +item.budget_year_16;
-
-                return mySet;
-
-            });
-
-            myData.sort((a,b) => b.z - a.z);
-
-            chart = Highcharts.chart('item_chart', {
-                lang: {
-                    resetZoom: 'Назад'
-                },
-                chart: {
-                    type: 'bubble',
-                    plotBorderWidth: 1,
-                    zoomType: 'xy'
-                },
-
-                credits: {
-                    text: 'Енциклопедія територій',
-                    href: 'http://enter.co.ua',
-                    enabled: false
-                },
-                legend: {
-                    enabled: false
-                },
-
-                title: {
-                    text: 'Доходи місцевих бюджетів, населення та площа територій, 2016 р.'
-                },
-                xAxis: {
-                    gridLineWidth: 1,
-                    title: {
-                        text: 'Населення, осіб'
-                    }
-                },
-
-                yAxis: {
-                    startOnTick: false,
-                    endOnTick: false,
-                    title: {
-                        text: 'Площа, га'
-                    },
-                    maxPadding: 0.2
-                },
-
-                tooltip: {
-                    useHTML: true,
-                    headerFormat: '<table>',
-                    pointFormat: '<tr><th colspan="2"><h3>{point.country}</h3></th></tr>' +
-                    '<tr><th>Населення:</th><td>{point.x} осіб</td></tr>' +
-                    '<tr><th>Площа:</th><td>{point.y} га</td></tr>' +
-                    '<tr><th>Доходи:</th><td>{point.z} грн.</td></tr>',
-                    footerFormat: '</table>',
-                    followPointer: true
-                },
-
-                plotOptions: {
-                    series: {
-                        dataLabels: {
-                            enabled: true,
-                            format: '{point.name}',
-                            style: cahrt_full ? {"fontSize": "15px"} : {"fontSize": "11px"}
-                        }
-                    }
-                },
-
-                series: [{
-                    data: cahrt_full ? myData : myData.slice(0, 5)
-                }]
-
-            });
         }
+        // else if (data_bubble !== null) {
+        //
+        //     let myData = data_bubble.map(item => {
+        //         let mySet = {};
+        //
+        //         mySet.country = item.name_ua;
+        //         mySet.name = item.alias;
+        //         mySet.y = +item.area;
+        //         mySet.x = +item.population_year_16;
+        //         mySet.z = +item.budget_year_16;
+        //
+        //         return mySet;
+        //
+        //     });
+        //
+        //     myData.sort((a,b) => b.z - a.z);
+        //
+        //     chart = Highcharts.chart('item_chart', {
+        //         lang: {
+        //             resetZoom: 'Назад'
+        //         },
+        //         chart: {
+        //             type: 'bubble',
+        //             plotBorderWidth: 1,
+        //             zoomType: 'xy'
+        //         },
+        //
+        //         credits: {
+        //             text: 'Енциклопедія територій',
+        //             href: 'http://enter.co.ua',
+        //             enabled: false
+        //         },
+        //         legend: {
+        //             enabled: false
+        //         },
+        //
+        //         title: {
+        //             text: 'Доходи місцевих бюджетів, населення та площа територій, 2016 р.'
+        //         },
+        //         xAxis: {
+        //             gridLineWidth: 1,
+        //             title: {
+        //                 text: 'Населення, осіб'
+        //             }
+        //         },
+        //
+        //         yAxis: {
+        //             startOnTick: false,
+        //             endOnTick: false,
+        //             title: {
+        //                 text: 'Площа, га'
+        //             },
+        //             maxPadding: 0.2
+        //         },
+        //
+        //         tooltip: {
+        //             useHTML: true,
+        //             headerFormat: '<table>',
+        //             pointFormat: '<tr><th colspan="2"><h3>{point.country}</h3></th></tr>' +
+        //             '<tr><th>Населення:</th><td>{point.x} осіб</td></tr>' +
+        //             '<tr><th>Площа:</th><td>{point.y} га</td></tr>' +
+        //             '<tr><th>Доходи:</th><td>{point.z} грн.</td></tr>',
+        //             footerFormat: '</table>',
+        //             followPointer: true
+        //         },
+        //
+        //         plotOptions: {
+        //             series: {
+        //                 dataLabels: {
+        //                     enabled: true,
+        //                     format: '{point.name}',
+        //                     style: cahrt_full ? {"fontSize": "15px"} : {"fontSize": "11px"}
+        //                 }
+        //             }
+        //         },
+        //
+        //         series: [{
+        //             data: cahrt_full ? myData : myData.slice(0, 5)
+        //         }]
+        //
+        //     });
+        // }
     }
 
     componentDidMount() {
@@ -244,15 +245,33 @@ class Chart extends Component {
         this.Chart()
     }
 
+    toggleChartData() {
+        this.props.MapActions.toggle_curency(this.props.map_reducer.dataChartUsd)
+    }
+
     render() {
-        const {cahrt_full, data_bubble} = this.props.map_reducer;
+        const {cahrt_full, data_bubble, dataChartUsd, feature} = this.props.map_reducer;
+        const showToggle = dataToChartUsd.length > 0;
         return (
             <div className={cahrt_full ? 'chart_1 barChart_full' : 'chart_1'}>
                 <div className="item_header">
                     <div className="map_heder_title">{data_bubble ? '' : 'Тренд'}</div>
                     <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>
                 </div>
-                <div className="item_content" id="item_chart"/>
+                <div className="item_content">
+                    <div className="noData" style={!!feature ? {display: 'none'} : {display: 'flex'}}>
+                        <p>
+                            Оберіть територію на мапі
+                        </p>
+                    </div>
+                    <div className="region_toggle" style={!showToggle ? {display: 'none'} : {display: 'block'}} onClick={ ::this.toggleChartData } >
+                        <div className="region_toggle_item">
+                            <p className={ dataChartUsd ? 'toggle' : 'toggle active'}>UAH</p>
+                            <p className={ !dataChartUsd ? 'toggle' : 'toggle active'}>USD</p>
+                        </div>
+                    </div>
+                    <div id="item_chart"/>
+                </div>
             </div>
         )
     }

@@ -45,7 +45,7 @@ export default function main(state = initialState, action) {
                 showMenu: false};
 
         case SET_SUBMENU_ITEM:
-            return {...state, submenu_item: action.payload, legend_data: null, claster_layers: null};
+            return {...state, submenu_item: action.payload, legend_data: null, claster_layers: null, mapFull: false};
 
         case GET_SUBMENU_REQUEST:
             return {...state,  claster_layers: null, title_map: action.payload};

@@ -3,6 +3,7 @@ import getFields from '../renderClaster/setFields';
 
 export let year_labels = [];
 export let dataToChart = [];
+export let dataToChartUsd = [];
 
 class Popup extends Component {
 
@@ -11,16 +12,19 @@ class Popup extends Component {
 
         if (feature !== null) {
             dataToChart = [];
+            dataToChartUsd = [];
             year_labels = [];
             let popupInfo = [];
             let i = 0;
             for (let key in feature) {
-                if (feature.hasOwnProperty(key) && key.indexOf('year_') >= 0) {
+                if (feature.hasOwnProperty(key) && key.indexOf('year_') >= 0 && key.indexOf('usdyear') < 0) {
                     popupInfo.push(<p key={feature.id + i}>Станом на 20{key.substring(5)}р.
                         <span>{new Intl.NumberFormat().format(feature[key])} {feature.parameter}</span></p>)
                     year_labels.push(20 + key.substring(5) + 'р');
                     dataToChart.push(+feature[key]);
                     i++
+                } else if(key.indexOf('usdyear') >= 0) {
+                    dataToChartUsd.push(+feature[key])
                 }
 
             }
