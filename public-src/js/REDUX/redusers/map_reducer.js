@@ -21,7 +21,9 @@ import {
     CHECK_ALL_ICON,
     TOGGLE_DATA,
     SET_DATA_BUBBLE,
-    TOGGLE_CURENCY
+    TOGGLE_CURENCY,
+    SET_DATA_DISTRICT,
+    SET_DATA_REGION
 } from '../actions/constant'
 
 const initialState = {
@@ -44,7 +46,9 @@ const initialState = {
     data_bubble: null,
     geometry_region: null,
     geometry_district: null,
-    dataChartUsd: false
+    dataChartUsd: false,
+    isGeometry_region: false,
+    isGeometry_district: false
 };
 
 export default function map(state = initialState, action) {
@@ -116,8 +120,14 @@ export default function map(state = initialState, action) {
         case TOGGLE_CURENCY:
             return {...state, dataChartUsd: action.payload};
 
+        case SET_DATA_DISTRICT:
+            return {...state, geometry_district: action.payload, isGeometry_district: true};
+
+        case SET_DATA_REGION:
+            return {...state, geometry_region: action.payload, isGeometry_region: true};
+
         case SET_DATA_BUBBLE:
-            return {...state, data_bubble: action.payload[2], geometry_region: action.payload[0], geometry_district: action.payload[1]};
+            return {...state, data_bubble: action.payload[2]};
 
         default:
             return state;

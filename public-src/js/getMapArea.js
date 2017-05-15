@@ -53,7 +53,7 @@ if(unsubscribe !== null) {
 
     let state = store.getState();
     let {range_item, range_items, } = state.main;
-    let {geometry_district, geometry_region, } = state.map_reducer;
+    let {geometry_district, geometry_region, isGeometry_region, isGeometry_district} = state.map_reducer;
 
     function fetchAto () {
         fetch('/ato', {
@@ -103,7 +103,6 @@ if(unsubscribe !== null) {
         }
         return
     }
-    console.log('sdf >>', 3333)
 
     unsubscribe = store.subscribe(handleChange);
     // handleChange();
@@ -114,6 +113,10 @@ if(unsubscribe !== null) {
         if (Lmap.hasLayer(choroplethLayer)) {
             Lmap.removeLayer(choroplethLayer)
         }
+
+
+
+        // join geometry
         isRegion ?
             data.forEach((item, i) => item.geometry = JSON.parse(geometry_region.filter(a => a.id == item.id)[0].geojson)) :
             data.forEach((item, i) => item.geometry = JSON.parse(geometry_district.filter(a => a.id == item.id)[0].geojson));
@@ -148,6 +151,10 @@ if(unsubscribe !== null) {
         // setTimeout(()=>{
         //     store.dispatch(finishLoad());
         // },100)
+    }
+
+    while (!isGeometry_district && !isGeometry_region) {
+        setTimeout(() => {},1000)
     }
 
     renderLayer();

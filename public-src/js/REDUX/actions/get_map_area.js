@@ -27,7 +27,10 @@ import {
     TOGGLE_DATA,
     SET_DATA_BUBBLE,
     FINISH_LOAD,
-    TOGGLE_CURENCY
+    TOGGLE_CURENCY,
+    SET_DATA_DISTRICT,
+    SET_DATA_REGION
+
 
 } from './constant';
 
@@ -212,6 +215,20 @@ export function toggle_curency(state) {
 export function set_data_bubble(data) {
     return {
         type: SET_DATA_BUBBLE,
+        payload: data
+    }
+}
+
+export function set_data_region(data) {
+    return {
+        type: SET_DATA_REGION,
+        payload: data
+    }
+}
+
+export function set_data_district(data) {
+    return {
+        type: SET_DATA_DISTRICT,
         payload: data
     }
 }

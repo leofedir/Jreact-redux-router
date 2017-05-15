@@ -35,3 +35,5 @@ export const SET_DATA_BUBBLE = 'SET_DATA_BUBBLE';
 export const FINISH_LOAD = 'FINISH_LOAD';
 export const START_LOAD = 'START_LOAD';
 export const TOGGLE_CURENCY = 'TOGGLE_CURENCY';
+export const SET_DATA_DISTRICT = 'SET_DATA_DISTRICT';
+export const SET_DATA_REGION = 'SET_DATA_REGION';

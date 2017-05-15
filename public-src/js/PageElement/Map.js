@@ -62,7 +62,7 @@ class Map extends Component {
     }
 
     createMap() {
-        const { set_data_bubble } = this.props
+        const { set_data_region, set_data_district } = this.props
         Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 6);
 
         esri.basemapLayer('Topographic').addTo(Lmap);
@@ -92,19 +92,34 @@ class Map extends Component {
                     style: myStyle
                 });
                 Lmap.addLayer(ukraine)
-            });
-
-        fetch('geojson', {
-            method: 'post',
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-            },
-            body: 'table=geojson'
-        })
-            .then(checkStatus)
-            .then(parseJSON)
-            .then(data => {
-                set_data_bubble(data);
+            })
+            .then(() => {
+                fetch('region', {
+                    method: 'post',
+                    headers: {
+                        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                    },
+                    body: 'table=geojson'
+                })
+                    .then(checkStatus)
+                    .then(parseJSON)
+                    .then(data => {
+                        set_data_region(data);
+                    })
+            })
+            .then(()=> {
+                fetch('district', {
+                    method: 'post',
+                    headers: {
+                        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                    },
+                    body: 'table=geojson'
+                })
+                    .then(checkStatus)
+                    .then(parseJSON)
+                    .then(data => {
+                        set_data_district(data);
+                    })
             })
 
     }

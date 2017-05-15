@@ -1,14 +1,12 @@
 const router = require('express').Router(),
-      bodyParser = require('body-parser'),
-      pgdb = require('../libs/pgdb')(),
-      demografiya = require('./demografiya'),
-      claster = require('./claster'),
-      GeoJson = require( '../libs/createGeoJson');
+    bodyParser = require('body-parser'),
+    pgdb = require('../libs/pgdb')(),
+    demografiya = require('./demografiya'),
+    claster = require('./claster'),
+    GeoJson = require('../libs/createGeoJson');
 
-let geometry = null;
+let geometry = {};
 let query3 = [
-    `SELECT geojson,id FROM area_demography_chastkavikomst617__region`,
-    `SELECT geojson,id FROM area_demography_chastkavikomst617__district`,
     `SELECT * FROM bubble_chart`];
 
 router.use(bodyParser.json());
@@ -16,24 +14,32 @@ router.use(bodyParser.urlencoded({
     extended: true
 }));
 
-router.post('/main', function(req, res) {
+router.post('/main', function (req, res) {
     GeoJson.queryBase(req.originalUrl, 'borders', res);
 });
 
-router.post('/ato', function(req, res) {
+router.post('/ato', function (req, res) {
     GeoJson.queryBase(req.originalUrl, 'ato', res);
 });
 
-router.post('/geojson', function(req, res) {
-    if(geometry === null) {
-        geometry = [];
-        Promise.all(query3.map(item => pgdb.query(item)))
-            .then(d => d.forEach(item => geometry.push(item)))
-            .then(() => res.json(geometry))
+router.post('/region', function (req, res) {
+    if ('region' in geometry) {
+        res.json(geometry.region)
     } else {
-        res.json(geometry)
+        pgdb.query(`SELECT geojson,id FROM area_demography_chastkavikomst617__region`)
+            .then(d => geometry.region = d)
+            .then(() => res.json(geometry.region))
     }
+});
 
+router.post('/district', function (req, res) {
+    if ('district' in geometry) {
+        res.json(geometry.district)
+    } else {
+        pgdb.query(`SELECT geojson,id FROM area_demography_chastkavikomst617__district`)
+            .then(d => geometry.district = d)
+            .then(() => res.json(geometry.district))
+    }
 });
 
 demografiya(router);
