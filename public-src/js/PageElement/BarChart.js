@@ -154,8 +154,8 @@ class BarChart extends Component {
                     drillUpButton: {
                         relativeTo: 'spacingBox',
                         position: {
-                            y: 0,
-                            x: 0
+                            y: -10,
+                            x: -10
                         },
                         zones: [{
                             value: 0,
@@ -166,8 +166,8 @@ class BarChart extends Component {
                         theme: {
 
                             'stroke-width': 1,
-                            stroke: 'gray',
-                            r: 6,
+                            stroke: 'rgba(205, 205, 205, .9)',
+                            r: 3,
                             states: {
                                 hover: {
                                     fill: 'lightgray'
