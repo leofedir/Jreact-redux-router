@@ -26,7 +26,7 @@ router.post('/region', function (req, res) {
     if ('region' in geometry) {
         res.json(geometry.region)
     } else {
-        pgdb.query(`SELECT geojson,id FROM area_demography_chastkavikomst617__region`)
+        pgdb.query(`SELECT * FROM geom_region`)
             .then(d => geometry.region = d)
             .then(() => res.json(geometry.region))
     }
@@ -36,7 +36,7 @@ router.post('/district', function (req, res) {
     if ('district' in geometry) {
         res.json(geometry.district)
     } else {
-        pgdb.query(`SELECT geojson,id FROM area_demography_chastkavikomst617__district`)
+        pgdb.query(`SELECT * FROM geom_district`)
             .then(d => geometry.district = d)
             .then(() => res.json(geometry.district))
     }

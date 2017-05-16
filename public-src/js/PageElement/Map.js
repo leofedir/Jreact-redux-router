@@ -34,9 +34,8 @@ class Map extends Component {
         if (Lmap.hasLayer(ukraine)) {
             return
         }
-
-        const { curentMap, submenu_item } = this.props.map_reducer;
-        const { fields } = this.props.main;
+        const { curentMap } = this.props.map_reducer;
+        const { fields, submenu_item } = this.props.main;
         const { get_map_area } = this.props.MapActions;
         const mapSet = fields[submenu_item];
 

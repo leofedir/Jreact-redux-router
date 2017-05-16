@@ -337,11 +337,11 @@ class BarChart extends Component {
     }
 
     render() {
-        const {bar_cahrt_full, chart2, dataChartRegion, data_success, data_bubble, properties} = this.props.map_reducer;
+        const {bar_cahrt_full, chart2, dataChartRegion, data_success, properties} = this.props.map_reducer;
         return (
             <div className={bar_cahrt_full ? 'chart_2 barChart_full' : 'chart_2'}>
                 <div className="item_header">
-                    <div className="map_heder_title">{data_bubble ? "" : chart2 ? 'Тренд' : 'Діаграма-рейтинг (ТОП-5)'}</div>
+                    <div className="map_heder_title">{chart2 || !properties ? 'Тренд' : 'Діаграма-рейтинг (ТОП-5)'}</div>
                     <div onClick={ ::this.toggleChart }>
                         <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" />
                     </div>

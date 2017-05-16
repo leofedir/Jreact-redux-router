@@ -79,7 +79,7 @@ class Legend extends Component {
     }
 
     render() {
-        const {legend_data, claster_layers} = this.props;
+        const {legend_data, claster_layers} = this.props.main;
         if (legend_data === null && claster_layers === null) return null;
 
         return (
