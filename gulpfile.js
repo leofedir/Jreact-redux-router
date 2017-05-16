@@ -2,13 +2,11 @@ const gulp = require('gulp');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
 const rename     = require('gulp-rename');
-const es = require('event-stream');
-const glob = require('glob');
 const sass = require('gulp-sass');
 const uglify = require('gulp-uglify');
 const buffer = require('vinyl-buffer');
 const sourcemaps = require('gulp-sourcemaps');
-const livereload = require('gulp-livereload');
+const browserSync = require('browser-sync').create();
 
 const paths = {
     js : {
@@ -31,7 +29,8 @@ gulp.task('js', function() {
         .pipe(buffer())
         .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('public/js'));
+        .pipe(gulp.dest('public/js'))
+        .pipe(browserSync.stream());
 });
 
 gulp.task('scss', function () {
@@ -40,13 +39,18 @@ gulp.task('scss', function () {
         .pipe(sass().on('error', sass.logError))
         .pipe(sourcemaps.write())
         .pipe(rename({suffix: '.min'})) //добавим суффикс .min к имени выходного файла
-        .pipe(gulp.dest(paths.scss.dist));
+        .pipe(gulp.dest(paths.scss.dist))
+        .pipe(browserSync.stream());
 });
 
 gulp.task('watch', function(){
-    livereload.listen();
+    browserSync.init({
+        proxy: "http://localhost:8000/"
+    });
+
     gulp.watch('./public-src/js/**/*.js', ['js']);
     gulp.watch('./public-src/**/*.scss', ['scss']);
+    gulp.watch("./public/js/index.js/").on('change', browserSync.reload);
 });
 
 gulp.task('imagemin', function() {

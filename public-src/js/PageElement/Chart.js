@@ -153,6 +153,8 @@ class Chart extends Component {
                 series: myData
             });
         }
+
+
         // else if (data_bubble !== null) {
         //
         //     let myData = data_bubble.map(item => {
@@ -273,7 +275,7 @@ class Chart extends Component {
                     </div>
                     <div className="region_toggle" style={chart2 === null ? {display: 'none'} : {display: 'block'}} >
                         <div className="region_toggle_item">
-                            <p data-usd ='0' className={ dataChartUsd ? 'toggle' : 'toggle active'} onClick={ this.toggleChartData }>Загальні</p>
+                            <p data-usd ='0' className={ dataChartUsd ? 'toggle' : 'toggle active'} onClick={ ::this.toggleChartData }>Загальні</p>
                             <p data-usd ='1' className={ !dataChartUsd ? 'toggle' : 'toggle active'} onClick={ ::this.toggleChartData }>На 1 учня</p>
                         </div>
                     </div>
