@@ -153,8 +153,6 @@ class Chart extends Component {
                 series: myData
             });
         }
-
-
         // else if (data_bubble !== null) {
         //
         //     let myData = data_bubble.map(item => {
