@@ -8,6 +8,7 @@ const sass = require('gulp-sass');
 const uglify = require('gulp-uglify');
 const buffer = require('vinyl-buffer');
 const sourcemaps = require('gulp-sourcemaps');
+const gls = require('gulp-live-server');
 
 const paths = {
     js : {
@@ -17,8 +18,9 @@ const paths = {
     scss : {
         src : './public-src/scss/index.scss',
         dist : './public/css'
-    }
-}
+    },
+    outputReact : "./public/js"
+};
 
 gulp.task('js', function() {
     browserify({ entries: './public-src/js/index.js', debug: true })
@@ -31,29 +33,6 @@ gulp.task('js', function() {
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('public/js'));
 });
-
-// gulp.task('js_old', function(done) {
-//     glob(paths.js.src, function(err, files) {
-//         if(err) done(err);
-//         const tasks = files.map(function (entry) {
-//             return browserify({entries: [entry]})
-//                 .transform('babelify', { presets: ["react", "es2015", "stage-0"]})
-//                 .bundle()
-//                 .on('error' , (e) => { console.log("error  >> " , e)})
-//                 .pipe(source(entry))
-//                 .pipe(rename(function (path) {
-//                     path.dirname = path.dirname.replace('public-src', '');
-//                     path.extname = ".bundle.js"
-//                 }))
-//                 .pipe(buffer())
-//                 .pipe(sourcemaps.init({loadMaps: true}))
-//                 // .pipe(uglify())
-//                 .pipe(sourcemaps.write())
-//                 .pipe(gulp.dest(paths.js.dist));
-//         });
-//         es.merge(tasks).on('end', done);
-//     });
-// });
 
 gulp.task('scss', function () {
     return gulp.src(paths.scss.src) //Выберем наш основной файл стилей
@@ -84,6 +63,15 @@ gulp.task('html', function() {
         .pipe(gulp.dest('public/'));
 });
 
+gulp.task("set",['js', 'scss', 'html', 'watch'], function() {
+    let  server = gls.new('./index.js');
+    server.start();
+    gulp.watch(["./public-src/**/*"], function(file) {
+        server.start.bind(server)();
+        server.notify.bind(server)(file);
+    });
+});
+
 gulp.task('build', ['js', 'scss', 'html', 'imagemin', 'font']);
 
-gulp.task('default', ['js', 'scss', 'html', 'watch']);
+gulp.task('default', ['set']);
