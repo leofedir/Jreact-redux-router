@@ -56,8 +56,7 @@ export function get_map_area(url, rebuild = true, alias, isRegion) {
                 dispatch({
                     type: GET_MAP_AREA_SUCCESS,
                     payload: [data[0]]
-                })
-
+                });
             }).catch((err) => {
             console.log('err >>', err);
             dispatch({
@@ -87,9 +86,6 @@ export function getMapData(tableData = null, arr = null) {
                     dispatch({
                         type: GET_MAP_DATA_SUCCESS,
                         payload: data
-                    })
-                    dispatch({
-                        type: FINISH_LOAD,
                     })
                 })
                 .catch((err) => {
@@ -127,11 +123,6 @@ export function show_claster(state, mapName) {
     return (dispatch) => {
         dispatch({
             type: GET_CLASTER_REQUEST
-        });
-
-        dispatch({
-            type: SHOW_CLASTER,
-            payload: !state
         });
 
         fetch('/claster_layers', {

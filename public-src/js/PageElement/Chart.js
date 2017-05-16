@@ -250,9 +250,14 @@ class Chart extends Component {
         this.props.MapActions.toggle_curency(!!status)
     }
 
+    toggleChartUser(e) {
+        console.log('e >>', e)
+    }
+
     render() {
         const {cahrt_full, data_bubble, dataChartUsd, feature, claster, curentMap, chart1, chart2} = this.props.map_reducer;
-        const showToggle = dataToChartUsd.length > 0;
+        const showToggleUsd = dataToChartUsd.length > 0;
+
         return (
             <div className={cahrt_full ? 'chart_1 barChart_full' : 'chart_1'}>
                 <div className="item_header">
@@ -260,12 +265,12 @@ class Chart extends Component {
                     <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>
                 </div>
                 <div className="item_content">
-                    <div className="noData" style={!!feature || !!claster || curentMap === null? {display: 'none'} : {display: 'flex'}}>
+                    <div className="noData" style={!!feature || !claster || curentMap === null? {display: 'none'} : {display: 'flex'}}>
                         <p>
                             Оберіть територію на мапі
                         </p>
                     </div>
-                    <div className="region_toggle" style={!showToggle || claster ? {display: 'none'} : {display: 'block'}} >
+                    <div className="region_toggle" style={showToggleUsd && !claster ? {display: 'block'} : {display: 'none'}} >
                         <div className="region_toggle_item">
                             <p data-usd ='0' className={ dataChartUsd ? 'toggle' : 'toggle active'} onClick={ ::this.toggleChartData }>UAH</p>
                             <p data-usd ='1' className={ !dataChartUsd ? 'toggle' : 'toggle active'} onClick={ ::this.toggleChartData }>USD</p>
@@ -273,8 +278,8 @@ class Chart extends Component {
                     </div>
                     <div className="region_toggle" style={chart2 === null ? {display: 'none'} : {display: 'block'}} >
                         <div className="region_toggle_item">
-                            <p data-usd ='0' className={ dataChartUsd ? 'toggle' : 'toggle active'} onClick={ ::this.toggleChartData }>Загальні</p>
-                            <p data-usd ='1' className={ !dataChartUsd ? 'toggle' : 'toggle active'} onClick={ ::this.toggleChartData }>На 1 учня</p>
+                            <p data-user ='0' className={ dataChartUsd ? 'toggle' : 'toggle active'} onClick={ ::this.toggleChartUser }>Загальні</p>
+                            <p data-user ='1' className={ !dataChartUsd ? 'toggle' : 'toggle active'} onClick={ ::this.toggleChartUser }>На 1 учня</p>
                         </div>
                     </div>
                     <div id="item_chart"/>

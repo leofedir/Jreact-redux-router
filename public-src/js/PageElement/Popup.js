@@ -9,11 +9,12 @@ class Popup extends Component {
 
     getInfo() {
         const {feature, alias, feature_claster} = this.props;
+        dataToChart = [];
+        dataToChartUsd = [];
+        year_labels = [];
 
         if (feature !== null) {
-            dataToChart = [];
-            dataToChartUsd = [];
-            year_labels = [];
+
             let popupInfo = [];
             let i = 0;
             for (let key in feature) {

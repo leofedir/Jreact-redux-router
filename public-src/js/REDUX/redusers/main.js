@@ -12,8 +12,6 @@ import {
     GET_CLASTER_REQUEST,
     GET_CLASTER_SUCCESS,
     GET_CLASTER_ERROR,
-    START_LOAD,
-    FINISH_LOAD,
     GET_MAP_DATA_SUCCESS,
     GET_MAP_DATA_REQUEST,
     GET_MAP_AREA_SUCCESS,
@@ -46,7 +44,7 @@ export default function main(state = initialState, action) {
                 showMenu: false};
 
         case SET_SUBMENU_ITEM:
-            return {...state, submenu_item: action.payload, legend_data: null, claster_layers: null, mapFull: false, show_range: false};
+            return {...state, submenu_item: action.payload, legend_data: null, claster_layers: null, mapFull: false, show_range: false, fetching: true};
 
         case GET_SUBMENU_REQUEST:
             return {...state,  claster_layers: null, title_map: action.payload};
@@ -73,12 +71,6 @@ export default function main(state = initialState, action) {
             return {...state, fetching: false, claster_layers: action.payload.data};
 
         case GET_CLASTER_ERROR:
-            return {...state, fetching: false};
-
-        case GET_MAP_DATA_REQUEST:
-            return {...state, fetching: true };
-
-        case GET_MAP_DATA_SUCCESS:
             return {...state, fetching: false};
 
         case GET_MAP_AREA_SUCCESS:

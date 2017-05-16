@@ -48,7 +48,6 @@ class SubMenu extends Component {
 
         if (submenu_item == '' && itemMenu !== null) {
             this.getMap(null, itemMenu)
-            console.log('firs5555tItem >>', itemMenu)
         }
 
     }

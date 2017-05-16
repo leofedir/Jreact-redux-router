@@ -148,13 +148,6 @@ if(unsubscribe !== null) {
         };
 
         store.dispatch(set_legend_data(legend_data));
-        // setTimeout(()=>{
-        //     store.dispatch(finishLoad());
-        // },100)
-    }
-
-    while (!isGeometry_district && !isGeometry_region) {
-        setTimeout(() => {},1000)
     }
 
     renderLayer();
