@@ -251,7 +251,7 @@ class Chart extends Component {
     }
 
     render() {
-        const {cahrt_full, data_bubble, dataChartUsd, feature, claster, curentMap} = this.props.map_reducer;
+        const {cahrt_full, data_bubble, dataChartUsd, feature, claster, curentMap, chart1, chart2} = this.props.map_reducer;
         const showToggle = dataToChartUsd.length > 0;
         return (
             <div className={cahrt_full ? 'chart_1 barChart_full' : 'chart_1'}>
@@ -269,6 +269,12 @@ class Chart extends Component {
                         <div className="region_toggle_item">
                             <p data-usd ='0' className={ dataChartUsd ? 'toggle' : 'toggle active'} onClick={ ::this.toggleChartData }>UAH</p>
                             <p data-usd ='1' className={ !dataChartUsd ? 'toggle' : 'toggle active'} onClick={ ::this.toggleChartData }>USD</p>
+                        </div>
+                    </div>
+                    <div className="region_toggle" style={chart2 === null ? {display: 'none'} : {display: 'block'}} >
+                        <div className="region_toggle_item">
+                            <p data-usd ='0' className={ dataChartUsd ? 'toggle' : 'toggle active'} onClick={ this.toggleChartData }>Загальні</p>
+                            <p data-usd ='1' className={ !dataChartUsd ? 'toggle' : 'toggle active'} onClick={ ::this.toggleChartData }>На 1 учня</p>
                         </div>
                     </div>
                     <div id="item_chart"/>

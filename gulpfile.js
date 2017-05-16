@@ -8,7 +8,7 @@ const sass = require('gulp-sass');
 const uglify = require('gulp-uglify');
 const buffer = require('vinyl-buffer');
 const sourcemaps = require('gulp-sourcemaps');
-const gls = require('gulp-live-server');
+const livereload = require('gulp-livereload');
 
 const paths = {
     js : {
@@ -44,6 +44,7 @@ gulp.task('scss', function () {
 });
 
 gulp.task('watch', function(){
+    livereload.listen();
     gulp.watch('./public-src/js/**/*.js', ['js']);
     gulp.watch('./public-src/**/*.scss', ['scss']);
 });
@@ -63,15 +64,6 @@ gulp.task('html', function() {
         .pipe(gulp.dest('public/'));
 });
 
-gulp.task("set",['js', 'scss', 'html', 'watch'], function() {
-    let  server = gls.new('./index.js');
-    server.start();
-    gulp.watch(["./public-src/**/*"], function(file) {
-        server.start.bind(server)();
-        server.notify.bind(server)(file);
-    });
-});
-
 gulp.task('build', ['js', 'scss', 'html', 'imagemin', 'font']);
 
-gulp.task('default', ['set']);
+gulp.task('default', ['js', 'scss', 'html', 'watch']);
