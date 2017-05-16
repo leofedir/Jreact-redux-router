@@ -1,10 +1,16 @@
 import React, {Component} from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import * as Actions from '../REDUX/actions/actions';
+import * as MapActions from '../REDUX/actions/get_map_area';
+
 import {alias} from '../aliasMapName';
 
 class Legend extends Component {
 
     handleChange(e) {
-        const {check, toggle_layer, toggle_check} = this.props;
+        const {check} = this.props.map_reducer;
+        const {toggle_layer, toggle_check} = this.props.MapActions;
         let id = e.currentTarget.id;
         check[id] = !check[id];
         toggle_check(check);
@@ -13,12 +19,14 @@ class Legend extends Component {
     }
 
     handleChangeAll(e) {
-        const {check_all, checkAll, check} = this.props;
+        const {checkAll, check} = this.props.map_reducer;
+        const {check_all} = this.props.MapActions;
         check_all(checkAll, check)
     }
 
     createItem() {
-        const {legend_data, claster_layers, check, clasterCount, checkAll} = this.props;
+        const {check, clasterCount, checkAll} = this.props.map_reducer;
+        const {legend_data, claster_layers,} = this.props.main;
         const format = new Intl.NumberFormat().format;
 
         if (legend_data !== null) {
@@ -87,7 +95,21 @@ class Legend extends Component {
     }
 }
 
-export default Legend
+function mapStateToProps(state) {
+    return {
+        main: state.main,
+        map_reducer: state.map_reducer
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        Actions: bindActionCreators(Actions, dispatch),
+        MapActions: bindActionCreators(MapActions, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Legend);
 
 
 

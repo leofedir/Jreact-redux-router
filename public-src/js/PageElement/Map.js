@@ -1,4 +1,9 @@
 import React, {Component} from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import * as Actions from '../REDUX/actions/actions';
+import * as MapActions from '../REDUX/actions/get_map_area';
+
 import {checkStatus, parseJSON} from '../checkJSON';
 import L from 'leaflet';
 import esri from 'esri-leaflet/dist/esri-leaflet';
@@ -30,14 +35,16 @@ class Map extends Component {
             return
         }
 
-        const { curentMap, fields, submenu_item } = this.props;
-        const mapSet = fields[submenu_item]
+        const { curentMap, submenu_item } = this.props.map_reducer;
+        const { fields } = this.props.main;
+        const { get_map_area } = this.props.MapActions;
+        const mapSet = fields[submenu_item];
 
         if (Lmap.getZoom() <= 5 && curentMap !== null && curentMap.indexOf('region') <= 0 && mapSet.some(a => ~a.indexOf('__region'))) {
-            this.props.get_map_area(submenu_item + '__region', false, alias[submenu_item], true)
+            get_map_area(submenu_item + '__region', false, alias[submenu_item], true)
 
         } else if (Lmap.getZoom() >= 7 && curentMap !== null && curentMap.indexOf('region') >= 0 && mapSet.some(a => ~a.indexOf('__district'))) {
-            this.props.get_map_area(submenu_item + '__district', false, alias[submenu_item], false)
+            get_map_area(submenu_item + '__district', false, alias[submenu_item], false)
         }
     }
 
@@ -62,7 +69,7 @@ class Map extends Component {
     }
 
     createMap() {
-        const { set_data_region, set_data_district } = this.props
+        const { set_data_region, set_data_district } = this.props.MapActions;
         Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 6);
 
         esri.basemapLayer('Topographic').addTo(Lmap);
@@ -125,7 +132,7 @@ class Map extends Component {
     }
 
     omButtonMapClick() {
-        this.props.resizeMap(this.props.mapFull)
+        this.props.Actions.resizeMap(this.props.main.mapFull)
     }
 
     changeBasemap(e) {
@@ -144,7 +151,7 @@ class Map extends Component {
     }
 
     render() {
-        const {fetching, fetching_map} = this.props;
+        const {fetching} = this.props.main;
 
         return (
             <div className="block block-top block_map">
@@ -153,7 +160,7 @@ class Map extends Component {
                     <i className="fa fa-expand fa-1x ico_map_full ico_hover" onClick={::this.omButtonMapClick}/>
                 </div>
                 <div id="map_wrapper" className="map_wrapper">
-                    <div id="loader" className={(fetching ? "show" : '') || (fetching_map ? 'show' : '')}/>
+                    <div id="loader" className={fetching ? "show" : ''}/>
                     <i className="fa fa-plus fa-1x zoom_in_icon" onClick={::this.zoom_in} id="zoom_in"/>
                     <i className="fa fa-minus fa-1x zoom_out_icon" onClick={::this.zoom_out} id="zoom_out"/>
                     <i className="fa fa-dot-circle-o fa-1x geolocate_icon" onClick={::this.geolocate} id="geolocate"/>
@@ -180,4 +187,18 @@ class Map extends Component {
     }
 }
 
-export default Map;
+function mapStateToProps(state) {
+    return {
+        main: state.main,
+        map_reducer: state.map_reducer
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        Actions: bindActionCreators(Actions, dispatch),
+        MapActions: bindActionCreators(MapActions, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);
