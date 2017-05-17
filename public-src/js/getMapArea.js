@@ -137,7 +137,12 @@ if(unsubscribe !== null) {
 
         function whenClicked(e) {
             const latlng = e.target._bounds._northEast;
-            Lmap.panTo(latlng)
+            
+            if(isRegion) {
+                setTimeout(() => Lmap.flyTo(latlng, 6), 1500);
+            } else {
+                Lmap.flyTo(latlng);
+            }
             store.dispatch(clickOnFeature(e.target.feature.properties))
         }
 
