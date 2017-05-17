@@ -50,8 +50,8 @@ class Map extends Component {
 
     componentWillUpdate() {
         // Lmap.off('zoomend', ::this.zoomFunction())
-        Lmap.off('zoomend', ::this.zoomFunction)
-        Lmap.on('zoomend', ::this.zoomFunction)
+        Lmap.off('zoomend', ::this.zoomFunction);
+        Lmap.on('zoomend', ::this.zoomFunction);
 
         setTimeout(() => Lmap.invalidateSize(), 200);
     }

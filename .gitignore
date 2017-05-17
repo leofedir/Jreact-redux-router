@@ -3,4 +3,3 @@ node_modules/
 public/
 *.log
 *.iml
-!/public-src/js/renderClaster/claster.js
