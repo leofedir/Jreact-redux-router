@@ -29,7 +29,8 @@ import {
     FINISH_LOAD,
     TOGGLE_CURENCY,
     SET_DATA_DISTRICT,
-    SET_DATA_REGION
+    SET_DATA_REGION,
+    TOGGLE_CHART_TO_STUDENT
 
 
 } from './constant';
@@ -221,6 +222,13 @@ export function set_data_district(data) {
     return {
         type: SET_DATA_DISTRICT,
         payload: data
+    }
+}
+
+export function toggleChartToStudent(state) {
+    return {
+        type: TOGGLE_CHART_TO_STUDENT,
+        payload: !state
     }
 }
 

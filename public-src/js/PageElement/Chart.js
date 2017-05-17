@@ -18,18 +18,34 @@ let alias_series = {
     elektroenergy: 'Видатки на електропостачання',
     water: 'Видатки на водопостачання',
     inshivydatky: 'Інші видатки',
-    vnesky: 'Батьківські внески'
+    vnesky: 'Батьківські внески',
+    naodnohouchnya: 'Загальні видатки в розрахунку на одного учня',
+    zarplnarahuvnaodnogo: 'Видатки на оплату праці в розрахунку на одного учня',
+    tepolonaodnogo: 'Видатки на теплопостачання в розрахунку на одного учня',
+    elektroenergynaodnogo: 'Видатки на електроенергію в розрахунку на одного учня',
+    waternaodnogo: 'Видатки на водопостачання в розрахунку на одного учня'
 };
 
 class Chart extends Component {
 
     toggleChart() {
-        const {ChartToggle} = this.props.MapActions;
-        ChartToggle(this.props.map_reducer.cahrt_full);
+        this.props.MapActions.ChartToggle(this.props.map_reducer.cahrt_full);
+    }
+
+    toggleChartData(e) {
+        let status = +e.target.dataset.usd;
+        this.props.MapActions.toggle_curency(!!status)
+    }
+
+    toggleToStudent(e) {
+        let status = +e.target.dataset.user;
+
+        this.props.MapActions.toggleChartToStudent(!!status)
+
     }
 
     Chart() {
-        const {feature, alias, chart1, data_bubble, cahrt_full, dataChartUsd} = this.props.map_reducer;
+        const {feature, alias, chart1, chart2, dataChartUsd, for1Student} = this.props.map_reducer;
         const format = new Intl.NumberFormat().format;
 
         if (feature != null) {
@@ -87,6 +103,30 @@ class Chart extends Component {
             chart.destroy();
             chart = null
         } else if (chart1 !== null) {
+            let myData2 = [];
+            let labels2 = [];
+
+            if (chart2 !== null) {
+
+                    let i = 0;
+
+                    for (let key in chart2) {
+                        if (chart2.hasOwnProperty(key)) {
+
+                            let obj = {
+                                name: alias_series[key] || key,
+                                data: []
+                            };
+
+                            chart2[key].forEach(item => {
+                                obj.data.push(item.value);
+                                i === 0 ? labels2.push(`${ item.year }р`) : ''
+                            });
+                            i++;
+                            myData2.push(obj)
+                        }
+                    }
+            }
 
             let myData = [];
             let labels = [];
@@ -113,7 +153,7 @@ class Chart extends Component {
             chart = Highcharts.chart('item_chart', {
                 colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
                 title: {
-                    text: 'Загальні витрати та доходи шкільного бюджету'
+                    text: for1Student ? 'Витрати  шкільного бюджету в розрахунку на одного учня' : 'Загальні витрати та доходи шкільного бюджету'
                 },
                 exporting: {
                     buttons: {
@@ -145,12 +185,12 @@ class Chart extends Component {
                 },
                 xAxis: {
                     crosshair: true,
-                    categories: labels
+                    categories: for1Student ? labels2 : labels
                 },
                 tooltip: {
                     shared: true,
                 },
-                series: myData
+                series: for1Student ? myData2 : myData
             });
         }
         // else if (data_bubble !== null) {
@@ -245,17 +285,8 @@ class Chart extends Component {
         this.Chart()
     }
 
-    toggleChartData(e) {
-        let status = +e.target.dataset.usd;
-        this.props.MapActions.toggle_curency(!!status)
-    }
-
-    toggleChartUser(e) {
-        console.log('e >>', e)
-    }
-
     render() {
-        const {cahrt_full, data_bubble, dataChartUsd, feature, claster, curentMap, chart1, chart2} = this.props.map_reducer;
+        const {cahrt_full, data_bubble, dataChartUsd, feature, claster, curentMap, for1Student, chart2} = this.props.map_reducer;
         const showToggleUsd = dataToChartUsd.length > 0;
 
         return (
@@ -265,21 +296,27 @@ class Chart extends Component {
                     <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>
                 </div>
                 <div className="item_content">
-                    <div className="noData" style={!!feature || !claster || curentMap === null? {display: 'none'} : {display: 'flex'}}>
+                    <div className="noData"
+                         style={(feature !== null && !claster || curentMap === null) ? {display: 'none'} : {display: 'flex'}}>
                         <p>
                             Оберіть територію на мапі
                         </p>
                     </div>
-                    <div className="region_toggle" style={showToggleUsd && !claster ? {display: 'block'} : {display: 'none'}} >
+                    <div className="region_toggle"
+                         style={showToggleUsd && !claster ? {display: 'block'} : {display: 'none'}}>
                         <div className="region_toggle_item">
-                            <p data-usd ='0' className={ dataChartUsd ? 'toggle' : 'toggle active'} onClick={ ::this.toggleChartData }>UAH</p>
-                            <p data-usd ='1' className={ !dataChartUsd ? 'toggle' : 'toggle active'} onClick={ ::this.toggleChartData }>USD</p>
+                            <p data-usd='0' className={ dataChartUsd ? 'toggle' : 'toggle active'}
+                               onClick={ ::this.toggleChartData }>UAH</p>
+                            <p data-usd='1' className={ !dataChartUsd ? 'toggle' : 'toggle active'}
+                               onClick={ ::this.toggleChartData }>USD</p>
                         </div>
                     </div>
-                    <div className="region_toggle" style={chart2 === null ? {display: 'none'} : {display: 'block'}} >
+                    <div className="region_toggle" style={chart2 === null ? {display: 'none'} : {display: 'block'}}>
                         <div className="region_toggle_item">
-                            <p data-user ='0' className={ dataChartUsd ? 'toggle' : 'toggle active'} onClick={ ::this.toggleChartUser }>Загальні</p>
-                            <p data-user ='1' className={ !dataChartUsd ? 'toggle' : 'toggle active'} onClick={ ::this.toggleChartUser }>На 1 учня</p>
+                            <p data-user='1' className={ for1Student ? 'toggle' : 'toggle active'}
+                               onClick={ ::this.toggleToStudent }>Загальні</p>
+                            <p data-user='0' className={ !for1Student ? 'toggle' : 'toggle active'}
+                               onClick={ ::this.toggleToStudent }>На 1 учня</p>
                         </div>
                     </div>
                     <div id="item_chart"/>

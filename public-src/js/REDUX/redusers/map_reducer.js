@@ -23,7 +23,8 @@ import {
     SET_DATA_BUBBLE,
     TOGGLE_CURENCY,
     SET_DATA_DISTRICT,
-    SET_DATA_REGION
+    SET_DATA_REGION,
+    TOGGLE_CHART_TO_STUDENT
 } from '../actions/constant'
 
 const initialState = {
@@ -48,7 +49,8 @@ const initialState = {
     geometry_district: null,
     dataChartUsd: false,
     isGeometry_region: false,
-    isGeometry_district: false
+    isGeometry_district: false,
+    for1Student: false
 };
 
 export default function map(state = initialState, action) {
@@ -128,6 +130,9 @@ export default function map(state = initialState, action) {
 
         case SET_DATA_BUBBLE:
             return {...state, data_bubble: action.payload[2]};
+
+        case TOGGLE_CHART_TO_STUDENT:
+            return {...state, for1Student: action.payload};
 
         default:
             return state;
