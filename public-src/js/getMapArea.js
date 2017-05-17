@@ -136,6 +136,8 @@ if(unsubscribe !== null) {
         }).addTo(Lmap);
 
         function whenClicked(e) {
+            const latlng = e.target._bounds._northEast;
+            Lmap.panTo(latlng)
             store.dispatch(clickOnFeature(e.target.feature.properties))
         }
 
