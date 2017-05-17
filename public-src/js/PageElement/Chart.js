@@ -99,7 +99,7 @@ class Chart extends Component {
                 },
                 series: myData
             });
-        } else if (feature !== null, chart !== null && chart1 === null && data_bubble === null) {
+        } else if (feature !== null, chart !== null && chart1 === null) {
             chart.destroy();
             chart = null
         } else if (chart1 !== null) {
@@ -286,13 +286,13 @@ class Chart extends Component {
     }
 
     render() {
-        const {cahrt_full, data_bubble, dataChartUsd, feature, claster, curentMap, for1Student, chart2} = this.props.map_reducer;
+        const {cahrt_full, dataChartUsd, feature, claster, curentMap, for1Student, chart2} = this.props.map_reducer;
         const showToggleUsd = dataToChartUsd.length > 0;
 
         return (
             <div className={cahrt_full ? 'chart_1 barChart_full' : 'chart_1'}>
                 <div className="item_header">
-                    <div className="map_heder_title">{data_bubble ? '' : 'Тренд'}</div>
+                    <div className="map_heder_title">Тренд</div>
                     <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>
                 </div>
                 <div className="item_content">

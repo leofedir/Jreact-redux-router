@@ -12,6 +12,7 @@ import {alias} from '../aliasMapName';
 
 export let Lmap = null;
 export let ukraine;
+export const coordinate = {};
 
 let icon = L.icon({
     iconUrl: '/img/marker-icon.svg',
@@ -68,7 +69,7 @@ class Map extends Component {
     }
 
     createMap() {
-        const { set_data_region, set_data_district } = this.props.MapActions;
+        const { set_data_district } = this.props.MapActions;
         Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 6);
 
         esri.basemapLayer('Topographic').addTo(Lmap);
@@ -110,7 +111,7 @@ class Map extends Component {
                     .then(checkStatus)
                     .then(parseJSON)
                     .then(data => {
-                        set_data_region(data);
+                        coordinate.region = data
                     })
             })
             .then(()=> {
@@ -124,7 +125,8 @@ class Map extends Component {
                     .then(checkStatus)
                     .then(parseJSON)
                     .then(data => {
-                        set_data_district(data);
+                        coordinate.district = data
+                        set_data_district();
                     })
             })
 

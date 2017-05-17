@@ -10,13 +10,7 @@ higchartsDrilldown(Highcharts);
 let myChart = null;
 let dataStore = {};
 // let alias_series = {
-//     budget: 'Бюджет закладу',
-//     zarplnarahuv: 'Заробітна плата з нарахуваннями',
-//     teplo: 'Видатки на теплопостачання',
-//     elektroenergy: 'Видатки на електропостачання',
-//     water: 'Видатки на водопостачання',
-//     inshivydatky: 'Інші видатки',
-//     vnesky: 'Батьківські внески'
+
 // };
 
 class BarChart extends Component {
@@ -236,7 +230,6 @@ class BarChart extends Component {
                         }
                     }
                 },
-
                 series: [{
                     name: alias,
                     // colorByPoint: true,
@@ -255,72 +248,6 @@ class BarChart extends Component {
             myChart.destroy();
             myChart = null
         }
-        // else if (chart2 !== null) {
-        //     let myData = [];
-        //     let labels = [];
-        //     let i = 0;
-        //
-        //     for (let key in chart2) {
-        //         if (chart2.hasOwnProperty(key)) {
-        //
-        //             let obj = {
-        //                 name: alias_series[key] || key,
-        //                 data: []
-        //             };
-        //
-        //             chart2[key].forEach(item => {
-        //                 obj.data.push(item.value);
-        //                 i === 0 ? labels.push(`${ item.year }р`) : ''
-        //             });
-        //             i++;
-        //             myData.push(obj)
-        //         }
-        //     }
-        //
-        //     myChart = Highcharts.chart('item_bar_chart', {
-        //         colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
-        //
-        //         exporting: {
-        //             buttons: {
-        //                 exportButton: {
-        //                     symbol: 'url(http://highcharts.com/demo/gfx/sun.png)',
-        //                     symbolX: 5,
-        //                     symbolY: 0
-        //                 }
-        //             }
-        //         },
-        //         title: {
-        //             text: 'Витрати  шкільного бюджету в розрахунку на одного учня'
-        //         },
-        //         chart: {
-        //             type: 'line',
-        //             marginRight: 20
-        //         },
-        //         credits: {
-        //             text: 'Енциклопедія територій',
-        //             href: 'http://enter.co.ua',
-        //             enabled: false
-        //         },
-        //         yAxis: {
-        //             title: {
-        //                 text: 'грн.'
-        //             }
-        //         },
-        //         legend: {
-        //             layout: 'horizontal',
-        //             align: 'center',
-        //             verticalAlign: 'bottom'
-        //         },
-        //         xAxis: {
-        //             crosshair: true,
-        //             categories: labels
-        //         },
-        //         tooltip: {
-        //             shared: true,
-        //         },
-        //         series: myData
-        //     });
-        // }
     }
 
     componentDidMount() {

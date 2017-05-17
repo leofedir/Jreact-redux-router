@@ -5,7 +5,8 @@ import {checkStatus, parseJSON} from './checkJSON';
 
 import {set_Range_items, set_legend_data} from './REDUX/actions/actions'
 import {clickOnFeature} from './REDUX/actions/get_map_area'
-import {store} from './index'
+import {store} from './index';
+import { coordinate } from './PageElement/Map'
 
 export let choroplethLayer = null;
 export let ato = null;
@@ -15,7 +16,6 @@ let unsubscribe = null;
 export default function getMap(data, rebuild = true, isRegion) {
 
 if(unsubscribe !== null) {
-    console.log('4444 >>', 4444)
     unsubscribe();
     unsubscribe = null
 }
@@ -53,7 +53,6 @@ if(unsubscribe !== null) {
 
     let state = store.getState();
     let {range_item, range_items, } = state.main;
-    let {geometry_district, geometry_region, isGeometry_region, isGeometry_district} = state.map_reducer;
 
     function fetchAto () {
         fetch('/ato', {
@@ -114,12 +113,10 @@ if(unsubscribe !== null) {
             Lmap.removeLayer(choroplethLayer)
         }
 
-
-
         // join geometry
         isRegion ?
-            data.forEach((item, i) => item.geometry = JSON.parse(geometry_region.filter(a => a.id == item.id)[0].geojson)) :
-            data.forEach((item, i) => item.geometry = JSON.parse(geometry_district.filter(a => a.id == item.id)[0].geojson));
+            data.forEach((item, i) => item.geometry = JSON.parse(coordinate.region[i].geojson)) :
+            data.forEach((item, i) => item.geometry = JSON.parse(coordinate.district[i].geojson));
 
         choroplethLayer = L.choropleth(data, {
             valueProperty: range_items[range_item],

@@ -27,7 +27,7 @@ router.post('/region', function (req, res) {
         res.json(geometry.region)
     } else {
         pgdb.query(`SELECT * FROM geom_region`)
-            .then(d => geometry.region = d)
+            .then(d => geometry.region = d.sort((a, b) => b.id - a.id))
             .then(() => res.json(geometry.region))
     }
 });
@@ -37,7 +37,7 @@ router.post('/district', function (req, res) {
         res.json(geometry.district)
     } else {
         pgdb.query(`SELECT * FROM geom_district`)
-            .then(d => geometry.district = d)
+            .then(d => geometry.district = d.sort((a, b) => b.id - a.id))
             .then(() => res.json(geometry.district))
     }
 });

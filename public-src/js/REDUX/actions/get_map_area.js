@@ -211,17 +211,9 @@ export function set_data_bubble(data) {
     }
 }
 
-export function set_data_region(data) {
-    return {
-        type: SET_DATA_REGION,
-        payload: data
-    }
-}
-
-export function set_data_district(data) {
+export function set_data_district() {
     return {
         type: SET_DATA_DISTRICT,
-        payload: data
     }
 }
 
