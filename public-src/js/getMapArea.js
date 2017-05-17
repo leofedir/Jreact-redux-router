@@ -115,8 +115,9 @@ if(unsubscribe !== null) {
 
         // join geometry
         isRegion ?
-            data.forEach((item, i) => item.geometry = JSON.parse(coordinate.region[i].geojson)) :
-            data.forEach((item, i) => item.geometry = JSON.parse(coordinate.district[i].geojson));
+            data.forEach((item, i) => item.geometry = coordinate.region[i]) :
+            data.forEach((item, i) => item.geometry = coordinate.district[i]);
+
 
         choroplethLayer = L.choropleth(data, {
             valueProperty: range_items[range_item],

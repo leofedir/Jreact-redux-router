@@ -53,7 +53,8 @@ module.exports = {
 
                                 return obj;
                             });
-                            store[table] = [info, newData.sort((a, b) => b.id - a.id)];
+                            newData.sort((a, b) => b.id - a.id)
+                            store[table] = [info, newData];
                         })
                         .then(() => {
                             res.json(store[table])

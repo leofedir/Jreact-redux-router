@@ -14,23 +14,26 @@ module.exports = function(db){
 };
 
 function pgdb(){
-    if(pgdbsc == null){
+    if(pgdbsc === null){
         pgdbsc = new pg.Pool(config.db);
         // this.pgpool = pgdbsc;
     }
 };
 
+// function myError(err, client) {
+//     console.error('idle client error', err.message, err.stack)
+// }
+
 pgdb.prototype.query = function(sql , data){
-    var deferred = when.defer();
+
+    let deferred = when.defer();
     pgdbsc.connect(function(err, client, done) {
         if(err) {
             return deferred.reject(err);
         }
         if(typeof data != 'undefined' && data.length > 0){
             client.query(sql, data, function(err, result) {
-                //call `done()` to release the client back to the pool
                 done();
-
                 if(err) {
                     return deferred.reject(err);
                 }
@@ -38,23 +41,19 @@ pgdb.prototype.query = function(sql , data){
             });
         }else{
             client.query(sql, function(err, result) {
-                //call `done()` to release the client back to the pool
                 done();
-
                 if(err) {
                     return deferred.reject(err);
                 }
                 deferred.resolve( result.rows );
-                //output: 1
             });
         }
     })
 
     // TODO Den
     //
-    pgdbsc.on('error', function (err, client) {
-        console.error('idle client error', err.message, err.stack)
-    });
+    // pgdbsc.on('error', myError);
+
 
     // pgdbsc.on('connect', (client) => {
     //     // client.count = count++;

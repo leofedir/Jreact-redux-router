@@ -111,7 +111,7 @@ class Map extends Component {
                     .then(checkStatus)
                     .then(parseJSON)
                     .then(data => {
-                        coordinate.region = data
+                        coordinate.region = data.map(item => JSON.parse(item))
                     })
             })
             .then(()=> {
@@ -125,7 +125,7 @@ class Map extends Component {
                     .then(checkStatus)
                     .then(parseJSON)
                     .then(data => {
-                        coordinate.district = data
+                        coordinate.district = data.map(item => JSON.parse(item));
                         set_data_district();
                     })
             })
