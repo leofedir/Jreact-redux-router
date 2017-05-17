@@ -124,6 +124,7 @@ if(unsubscribe !== null) {
             scale: ['#ffffb2', '#bd0026'],
             steps: 5,
             mode: 'q',
+            smoothFactor: 0,
             style: {
                 color: '#a12f19',
                 weight: 0.2,
@@ -136,12 +137,17 @@ if(unsubscribe !== null) {
         }).addTo(Lmap);
 
         function whenClicked(e) {
-            const latlng = e.target._bounds._northEast;
+            const latlng = e.target.getBounds();
             
             if(isRegion) {
-                setTimeout(() => Lmap.flyTo(latlng, 6), 1500);
+                Lmap.fitBounds(latlng, {
+                    maxZoom: 6,
+                    padding: [10, 10]
+                })
             } else {
-                Lmap.flyTo(latlng);
+                Lmap.fitBounds(latlng, {
+                    padding: [10, 10]
+                })
             }
             store.dispatch(clickOnFeature(e.target.feature.properties))
         }
