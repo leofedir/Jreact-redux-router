@@ -12,7 +12,6 @@ class SubMenu extends Component {
     getMap(e, firstMap) {
         let mapName = e !== null ? e.target.value : firstMap;
         let arr = this.props.main.fields[mapName];
-        const { range_item } = this.props.main;
         const { claster } = this.props.map_reducer;
         const { get_map_area, getMapData, show_claster } = this.props.MapActions;
         const { set_submenu_item } = this.props.Actions;

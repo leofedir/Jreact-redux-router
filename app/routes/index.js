@@ -9,7 +9,10 @@ const router = require('express').Router(),
 let geometry = {};
 let query3 = [
     `SELECT * FROM bubble_chart`];
-router.use(compression())
+
+router.use(compression({
+    level: 4
+}))
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({
     extended: true
@@ -32,7 +35,10 @@ router.post('/region', function (req, res) {
                 d.sort((a, b) => b.id - a.id);
                 geometry.region = d.map(i => i.geojson)
             })
-            .then(() => res.json(geometry.region))
+            .then(() => {
+                res.json(geometry.region)
+                res.flush()
+            })
     }
 });
 
@@ -45,7 +51,10 @@ router.post('/district', function (req, res) {
                 d.sort((a, b) => b.id - a.id);
                 geometry.district = d.map(i => i.geojson)
             })
-            .then(() => res.json(geometry.district))
+            .then(() => {
+                res.json(geometry.district)
+                res.flush()
+            })
     }
 });
 
