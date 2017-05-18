@@ -113,10 +113,22 @@ if(unsubscribe !== null) {
             Lmap.removeLayer(choroplethLayer)
         }
 
+        function joinGeometry(cordinate){
+            let i;
+            let len = data.length;
+
+            for (i = 0; i < len; i++) {
+                data[i].geometry = cordinate[i]
+            }
+
+        }
         // join geometry
-        isRegion ?
-            data.forEach((item, i) => item.geometry = coordinate.region[i]) :
-            data.forEach((item, i) => item.geometry = coordinate.district[i]);
+        isRegion ? joinGeometry(coordinate.region) : joinGeometry(coordinate.district)
+
+        const eventsMap = {
+            click: whenClicked,
+            mouseover : onMouseOver
+        };
 
 
         choroplethLayer = L.choropleth(data, {
@@ -132,23 +144,20 @@ if(unsubscribe !== null) {
 
             },
             onEachFeature: function (feature, layer) {
-                layer.on('click', whenClicked)
+                layer.on(eventsMap)
             }
         }).addTo(Lmap);
 
+        function onMouseOver(e) {
+            let item =  e.target;
+            item.bindTooltip(item.feature.properties.name_ua).openTooltip()
+        }
+
         function whenClicked(e) {
-            const latlng = e.target.getBounds();
+            const bounds = e.target.getBounds();
             
-            if(isRegion) {
-                Lmap.fitBounds(latlng, {
-                    maxZoom: 6,
-                    padding: [10, 10]
-                })
-            } else {
-                Lmap.fitBounds(latlng, {
-                    padding: [10, 10]
-                })
-            }
+            isRegion ? Lmap.fitBounds(bounds, {maxZoom: 6, padding: [10, 10]}) : Lmap.fitBounds(bounds, {padding: [10, 10]})
+
             store.dispatch(clickOnFeature(e.target.feature.properties))
         }
 

@@ -35,9 +35,9 @@ class Map extends Component {
         if (Lmap.hasLayer(ukraine)) {
             return
         }
-        const { curentMap } = this.props.map_reducer;
-        const { fields, submenu_item } = this.props.main;
-        const { get_map_area } = this.props.MapActions;
+        const {curentMap} = this.props.map_reducer;
+        const {fields, submenu_item} = this.props.main;
+        const {get_map_area} = this.props.MapActions;
         const mapSet = fields[submenu_item];
 
         if (Lmap.getZoom() <= 5 && curentMap !== null && curentMap.indexOf('region') <= 0 && mapSet.some(a => ~a.indexOf('__region'))) {
@@ -69,16 +69,50 @@ class Map extends Component {
     }
 
     createMap() {
-        const { set_data_district } = this.props.MapActions;
+        const mapEvents = {
+            mousemove: onMouseMove
+            // click: onMouseClick
+        }
+        const {set_data_district} = this.props.MapActions;
         Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 6);
 
         esri.basemapLayer('Topographic').addTo(Lmap);
+
+
+        function onMouseClick(e) {
+//
+            console.log('e.target >>', e.latlng)
+            // console.log('dsfdsfsd >>', Lmap.project(e.latlng))
+//             console.log('sdfdsf >>', Lmap.project(e.latlng))
+        let body = {
+            x:6529871.8200639,
+            y:3403557.0097936,
+            zoom:9
+        }
+
+        let nnnn = `x=${body.x}&y=${body.y}&zoom=${body.zoom}&actLayers%5B%5D=kadastr`
+
+        fetch('http://map.land.gov.ua/kadastrova-karta/getobjectinfo', {
+            method: 'post',
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: nnnn
+
+        })
+            .then(checkStatus)
+            .then(parseJSON)
+            .then(d => {
+                console.log('d >>', d)
+            })
+        }
 
         function onMouseMove(e) {
             cordinateContainer.innerHTML = e.latlng.lat.toFixed(3) + "° пн. ш, " + e.latlng.lng.toFixed(3) + "° сх. д."
             // console.log(e.latlng.lat + ", " + e.latlng.lng);
         }
-        Lmap.on('mousemove', onMouseMove);
+
+        Lmap.on(mapEvents);
 
         fetch('main', {
             method: 'post',
@@ -98,37 +132,34 @@ class Map extends Component {
                 ukraine = L.geoJSON(data[1], {
                     style: myStyle
                 });
-                Lmap.addLayer(ukraine)
+                // Lmap.addLayer(ukraine)
+            });
+
+
+        // L.tileLayer.wms('http://map.land.gov.ua/geowebcache/service/wms?tiled=true').addTo(Lmap);
+
+        fetch('region', {
+            method: 'post',
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: 'table=geojson'
+        })
+            .then(checkStatus)
+            .then(parseJSON)
+            .then(data => {
+                coordinate.region = data.region.map(item => JSON.parse(item));
+
+                coordinate.district = data.district.map(item => JSON.parse(item));
+                set_data_district();
             })
-            .then(() => {
-                fetch('region', {
-                    method: 'post',
-                    headers: {
-                        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-                    },
-                    body: 'table=geojson'
-                })
-                    .then(checkStatus)
-                    .then(parseJSON)
-                    .then(data => {
-                        coordinate.region = data.map(item => JSON.parse(item))
-                    })
-            })
-            .then(()=> {
-                fetch('district', {
-                    method: 'post',
-                    headers: {
-                        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-                    },
-                    body: 'table=geojson'
-                })
-                    .then(checkStatus)
-                    .then(parseJSON)
-                    .then(data => {
-                        coordinate.district = data.map(item => JSON.parse(item));
-                        set_data_district();
-                    })
-            })
+        let kadastr = L.tileLayer.wms("http://212.26.144.110/geowebcache/service/wms", {
+            layers: 'kadastr',
+            format: 'image/png',
+            uppercase: true,
+            detectRetina: true,
+            attribution: "GISPORTAL 2017"
+        }).addTo(Lmap);
 
     }
 

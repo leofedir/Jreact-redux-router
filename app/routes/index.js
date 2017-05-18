@@ -4,11 +4,16 @@ const router = require('express').Router(),
     demografiya = require('./demografiya'),
     claster = require('./claster'),
     GeoJson = require('../libs/createGeoJson'),
-    compression = require('compression');
+    compression = require('compression'),
+    curl = require('urllib');
 
 let geometry = {};
 let query3 = [
     `SELECT * FROM bubble_chart`];
+const geometryQuery = [
+    `SELECT * FROM geom_region`,
+    `SELECT * FROM geom_district`
+]
 
 router.use(compression({
     level: 4
@@ -28,31 +33,21 @@ router.post('/ato', function (req, res) {
 
 router.post('/region', function (req, res) {
     if ('region' in geometry) {
-        res.json(geometry.region)
+        res.json(geometry)
     } else {
-        pgdb.query(`SELECT * FROM geom_region`)
+        Promise.all(geometryQuery.map(item =>
+            pgdb.query(item)
+        ))
             .then(d => {
-                d.sort((a, b) => b.id - a.id);
-                geometry.region = d.map(i => i.geojson)
+                let _d = d.map(item => {
+                    item.sort((a, b) => b.id - a.id);
+                    return  item.map(i => i.geojson)
+                });
+                geometry.region = _d[0];
+                geometry.district = _d[1]
             })
             .then(() => {
-                res.json(geometry.region)
-                res.flush()
-            })
-    }
-});
-
-router.post('/district', function (req, res) {
-    if ('district' in geometry) {
-        res.json(geometry.district)
-    } else {
-        pgdb.query(`SELECT * FROM geom_district`)
-            .then(d => {
-                d.sort((a, b) => b.id - a.id);
-                geometry.district = d.map(i => i.geojson)
-            })
-            .then(() => {
-                res.json(geometry.district)
+                res.json(geometry)
                 res.flush()
             })
     }
