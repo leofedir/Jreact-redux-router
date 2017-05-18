@@ -93,11 +93,11 @@ class BarChart extends Component {
             } else if ('__region' in properties === false) {
                 dataStore[submenu_item + curent_year + '__region'] = region
             }
-
+            
             // Create the chart
             myChart = Highcharts.chart('item_bar_chart', {
                 lang: {
-                    drillUpText: 'Назад'
+                    drillUpText: '\uf0a8'
                 },
                 chart: {
                     type: 'bar'
@@ -146,7 +146,7 @@ class BarChart extends Component {
                     drillUpButton: {
                         relativeTo: 'spacingBox',
                         position: {
-                            y: -10,
+                            y: 0,
                             x: -10
                         },
                         zones: [{
@@ -156,20 +156,21 @@ class BarChart extends Component {
                             color: '#27ae60'
                         }],
                         theme: {
-
-                            'stroke-width': 1,
-                            stroke: 'rgba(205, 205, 205, .9)',
-                            r: 3,
+                            fill: 'rgba(0, 0, 0, 0)',
+                            'stroke-width': 0,
+                            r: 0,
+                            onmousedown: 'rgba(223, 83, 83, 0.6)',
                             states: {
                                 hover: {
-                                    fill: 'lightgray'
                                 },
                                 select: {
-                                    stroke: '#555',
-                                    fill: '#e74c3c'
+                
                                 }
-                            }
-                        }
+                            },
+                            'font-family': 'FontAwesome',
+                            'font-size': '24px',
+                            height: '1px'
+                        },
 
                     },
                     series: dataStore[submenu_item + curent_year + '__district'] || []
@@ -187,7 +188,7 @@ class BarChart extends Component {
                     let obj = {};
                     obj.name = item.name_ua + `  (${ i })`;
                     obj.y = +item[curent_year];
-                    i++
+                    i++;
                     return obj
                 });
             }
@@ -195,7 +196,7 @@ class BarChart extends Component {
             // Create the chart
             myChart = Highcharts.chart('item_bar_chart', {
                 lang: {
-                    drillUpText: 'Назад'
+                    drillUpText: '\uf0a8'
                 },
                 chart: {
                     type: 'bar',
@@ -241,6 +242,22 @@ class BarChart extends Component {
                         color: '#27ae60'
                     }]
                 }],
+                theme: {
+                    fill: 'rgba(0, 0, 0, 0)',
+                    'stroke-width': 0,
+                    r: 0,
+                    onmousedown: 'rgba(223, 83, 83, 0.6)',
+                    states: {
+                        hover: {
+                        },
+                        select: {
+                
+                        }
+                    },
+                    'font-family': 'FontAwesome',
+                    'font-size': '24px',
+                    height: '1px'
+                },
             });
 
         }
