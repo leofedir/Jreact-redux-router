@@ -4,8 +4,7 @@ const router = require('express').Router(),
     demografiya = require('./demografiya'),
     claster = require('./claster'),
     GeoJson = require('../libs/createGeoJson'),
-    compression = require('compression'),
-    curl = require('urllib');
+    compression = require('compression');
 
 let geometry = {};
 let query3 = [

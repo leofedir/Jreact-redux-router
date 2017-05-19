@@ -70,8 +70,8 @@ class Map extends Component {
 
     createMap() {
         const mapEvents = {
-            mousemove: onMouseMove
-            // click: onMouseClick
+            mousemove: onMouseMove,
+            click: onMouseClick
         }
         const {set_data_district} = this.props.MapActions;
         Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 6);
@@ -80,7 +80,7 @@ class Map extends Component {
 
 
         function onMouseClick(e) {
-//
+         let coord = e.latlng
             console.log('e.target >>', e.latlng)
             // console.log('dsfdsfsd >>', Lmap.project(e.latlng))
 //             console.log('sdfdsf >>', Lmap.project(e.latlng))
@@ -90,16 +90,11 @@ class Map extends Component {
             zoom:9
         }
 
+        let newQuery = `x=${coord.lat}&y=${coord.lng}&z=13`
+
         let nnnn = `x=${body.x}&y=${body.y}&zoom=${body.zoom}&actLayers%5B%5D=kadastr`
 
-        fetch('http://map.land.gov.ua/kadastrova-karta/getobjectinfo', {
-            method: 'post',
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-            },
-            body: nnnn
-
-        })
+        fetch('http://gisfile.com/layer/cadmap/search?x=31.805934906005856&y=48.334343174592014&z=13')
             .then(checkStatus)
             .then(parseJSON)
             .then(d => {
