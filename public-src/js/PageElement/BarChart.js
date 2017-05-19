@@ -147,31 +147,16 @@ class BarChart extends Component {
                         relativeTo: 'spacingBox',
                         position: {
                             y: 0,
-                            x: -10
+                            x: -40
                         },
-                        zones: [{
-                            value: 0,
-                            color: '#e74c3c'
-                        }, {
-                            color: '#27ae60'
-                        }],
                         theme: {
-                            fill: 'rgba(0, 0, 0, 0)',
+                            height: -16,
+                            width: -16,
                             'stroke-width': 0,
                             r: 0,
-                            onmousedown: 'rgba(223, 83, 83, 0.6)',
-                            states: {
-                                hover: {
-                                },
-                                select: {
-                
-                                }
-                            },
                             'font-family': 'FontAwesome',
                             'font-size': '24px',
-                            height: '1px'
                         },
-
                     },
                     series: dataStore[submenu_item + curent_year + '__district'] || []
                 }
