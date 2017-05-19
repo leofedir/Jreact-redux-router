@@ -21,6 +21,9 @@ let icon = L.icon({
 });
 
 let cordinateContainer;
+let kadastr;
+let layer;
+
 
 class Map extends Component {
 
@@ -31,11 +34,12 @@ class Map extends Component {
 
     zoomFunction() {
 
+        const {curentMap} = this.props.map_reducer;
 
-        if (Lmap.hasLayer(ukraine)) {
+        if (Lmap.hasLayer(ukraine) || curentMap === null ) {
             return
         }
-        const {curentMap} = this.props.map_reducer;
+
         const {fields, submenu_item} = this.props.main;
         const {get_map_area} = this.props.MapActions;
         const mapSet = fields[submenu_item];
@@ -69,51 +73,22 @@ class Map extends Component {
     }
 
     createMap() {
-        const mapEvents = {
-            mousemove: onMouseMove,
-            click: onMouseClick
-        }
+
         const {set_data_district} = this.props.MapActions;
         Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 6);
 
         esri.basemapLayer('Topographic').addTo(Lmap);
 
 
-        function onMouseClick(e) {
-         let coord = e.latlng
-            console.log('e.target >>', e.latlng)
-            // console.log('dsfdsfsd >>', Lmap.project(e.latlng))
-//             console.log('sdfdsf >>', Lmap.project(e.latlng))
-        let body = {
-            x:6529871.8200639,
-            y:3403557.0097936,
-            zoom:9
-        }
-
-        let newQuery = `x=${coord.lat}&y=${coord.lng}&z=13`
-
-        let nnnn = `x=${body.x}&y=${body.y}&zoom=${body.zoom}&actLayers%5B%5D=kadastr`
-
-        fetch('http://gisfile.com/layer/cadmap/search?x=31.805934906005856&y=48.334343174592014&z=13')
-            .then(checkStatus)
-            .then(parseJSON)
-            .then(d => {
-                console.log('d >>', d)
-            })
-        }
-
         function onMouseMove(e) {
             cordinateContainer.innerHTML = e.latlng.lat.toFixed(3) + "° пн. ш, " + e.latlng.lng.toFixed(3) + "° сх. д."
-            // console.log(e.latlng.lat + ", " + e.latlng.lng);
         }
 
-        Lmap.on(mapEvents);
+        // add event to map actions
+        Lmap.on('mousemove', onMouseMove);
 
         fetch('main', {
             method: 'post',
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-            },
             body: ''
         })
             .then(checkStatus)
@@ -127,17 +102,11 @@ class Map extends Component {
                 ukraine = L.geoJSON(data[1], {
                     style: myStyle
                 });
-                // Lmap.addLayer(ukraine)
+                Lmap.addLayer(ukraine)
             });
-
-
-        // L.tileLayer.wms('http://map.land.gov.ua/geowebcache/service/wms?tiled=true').addTo(Lmap);
 
         fetch('region', {
             method: 'post',
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-            },
             body: 'table=geojson'
         })
             .then(checkStatus)
@@ -147,14 +116,18 @@ class Map extends Component {
 
                 coordinate.district = data.district.map(item => JSON.parse(item));
                 set_data_district();
-            })
-        let kadastr = L.tileLayer.wms("http://212.26.144.110/geowebcache/service/wms", {
+            });
+
+        kadastr = L.tileLayer.wms("http://212.26.144.110/geowebcache/service/wms", {
             layers: 'kadastr',
             format: 'image/png',
+            crs: L.CRS.EPSG900913,
             uppercase: true,
             detectRetina: true,
-            attribution: "GISPORTAL 2017"
-        }).addTo(Lmap);
+            maxZoom: 18,
+            attribution: '<a href="http://dzk.gov.ua" target="_blank">ЦДЗК</a>'
+        });
+
 
     }
 
@@ -162,19 +135,50 @@ class Map extends Component {
         this.props.Actions.resizeMap(this.props.main.mapFull)
     }
 
-    changeBasemap(e) {
-        if (Lmap) {
-            change(Lmap)
-        }
-        let layer;
+    onMouseClick(e) {
+        let coord = e.latlng
+        let zoom = Lmap.getZoom();
+        let nyCoordinat = kadastr.options.crs.project(coord)
 
-        function change(myMap) {
-            if (layer) {
-                myMap.removeLayer(layer);
-            }
-            layer = esri.basemapLayer(e.target.value);
-            myMap.addLayer(layer);
+        let query = `x=${  nyCoordinat.y }&y=${ nyCoordinat.x }&zoom=${ zoom }&actLayers%5B%5D=kadastr`
+
+        fetch(`http://map.land.gov.ua/kadastrova-karta/getobjectinfo?${query}`)
+            .then(checkStatus)
+            .then(parseJSON)
+            .then(d => {
+                Lmap.openPopup(d.obl + d.rajonunion + d.ikk + d.dilanka, coord, {
+                    maxWidth: 500
+                })
+            })
+            .catch(e => console.error('e >>', e))
+
+    }
+
+    changeBasemap(e) {
+
+        Lmap.listens('click') ? Lmap.off('click', this.onMouseClick) : '';
+
+        let map = e.target.value;
+
+        if (layer) {
+            Lmap.removeLayer(layer);
         }
+
+        if (map == 'kadastr' && this.props.map_reducer.curentMap === null ) {
+            Lmap.hasLayer(ukraine) ? Lmap.removeLayer(ukraine) : '';
+            layer = L.layerGroup()
+                .addLayer(esri.basemapLayer('Topographic'));
+
+            setTimeout(() => {layer.addLayer(kadastr)}, 100)
+
+            Lmap.addLayer(layer);
+            Lmap.on('click', this.onMouseClick)
+        } else {
+            layer = esri.basemapLayer(map);
+            Lmap.addLayer(layer);
+        }
+
+
     }
 
     render() {
@@ -195,8 +199,9 @@ class Map extends Component {
                     <div id="map" className="maps__items"/>
                     <div id="basemaps-wrapper">
                         <p className="basemap_title">Базова карта</p>
-                        <select name="basemaps" id="basemaps" onChange={this.changeBasemap}>
+                        <select name="basemaps" id="basemaps" onChange={::this.changeBasemap}>
                             <option value="Topographic">Топографічна</option>
+                            <option value="kadastr">Кадастрова карта</option>
                             <option value="Streets">Вулиці</option>
                             <option value="Imagery">Супутникова</option>
                             <option value="NationalGeographic">National Geographic</option>
