@@ -157,13 +157,9 @@ body {
   justify-content: space-between;
 }
 .chart_1 {
-  flex-basis: 49%;
-  box-shadow: $shadow;
-}
-
-.chart_2 {
-  margin-left: 10px;
-  flex-basis: 49%;
+  flex-basis: 50%;
+  min-width: 45%;
+  margin-right: $block-margin;
   box-shadow: $shadow;
 }
 
@@ -172,6 +168,15 @@ body {
   box-shadow: $shadow;
 }
 
+.chart_2 .highcharts-container  {
+  max-width: 95%;
+}
+
+.chart_2 {
+  min-width: 45%;
+  flex-basis:50%;
+  box-shadow: $shadow;
+}
 .main__right {
   width: $main__right;
   float: right;
