@@ -156,15 +156,19 @@ body {
   flex-wrap: nowrap;
   justify-content: space-between;
 }
-.chart_1,
-.chart_3{
+.chart_1 {
   flex-basis: 50%;
   min-width: 45%;
   margin-right: $block-margin;
   box-shadow: $shadow;
 }
 
-.highcharts-container  {
+.chart_3 {
+  flex-basis: 100%;
+  box-shadow: $shadow;
+}
+
+.chart_2 .highcharts-container  {
   max-width: 95%;
 }
 
