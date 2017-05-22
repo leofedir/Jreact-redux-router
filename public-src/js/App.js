@@ -14,6 +14,7 @@ import SliderRange from './PageElement/sliderRange';
 import Legend from './PageElement/Legend';
 import Info from './PageElement/info';
 import MapTitle from './PageElement/MapTitle';
+import BubbleChart from './PageElement/BubbleChart';
 
 
 let wrapper = document.getElementById('wrapper')
@@ -52,6 +53,9 @@ class App extends Component {
                         <div className="main__chart">
                             <Chart />
                             <BarChart />
+                        </div>
+                        <div className="main__chart">
+                            <BubbleChart />
                         </div>
                     </div>
                     <div className="aside">

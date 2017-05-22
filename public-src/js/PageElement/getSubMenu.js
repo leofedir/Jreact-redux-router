@@ -13,10 +13,15 @@ class SubMenu extends Component {
         let mapName = e !== null ? e.target.value : firstMap;
         let arr = this.props.main.fields[mapName];
         const { claster } = this.props.map_reducer;
-        const { get_map_area, getMapData, show_claster } = this.props.MapActions;
+        const {submenu_item} = this.props.main
+        const { get_map_area, getMapData, show_claster, set_data_bubble } = this.props.MapActions;
         const { set_submenu_item } = this.props.Actions;
 
         set_submenu_item(mapName);
+
+        if (mapName == 'area_budgets_dohodymistsevogobudget') {
+            set_data_bubble()
+        }
 
         let tableData = arr.map(item => mapName + item);
         mapName.startsWith('area') ? getMapData(tableData, arr) : '';

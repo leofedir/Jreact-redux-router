@@ -6,7 +6,6 @@ import * as MapActions from '../REDUX/actions/get_map_area';
 import {year_labels, dataToChart, dataToChartUsd} from './Popup'
 
 const Highcharts = require('highcharts');
-require('highcharts/highcharts-more.js')(Highcharts);
 
 
 let chart = null;
@@ -29,7 +28,7 @@ let alias_series = {
 class Chart extends Component {
 
     toggleChart() {
-        this.props.MapActions.ChartToggle(this.props.map_reducer.cahrt_full);
+        this.props.MapActions.ChartToggle(this.props.map_reducer.chart_full);
     }
 
     toggleChartData(e) {
@@ -193,88 +192,6 @@ class Chart extends Component {
                 series: for1Student ? myData2 : myData
             });
         }
-        // else if (data_bubble !== null) {
-        //
-        //     let myData = data_bubble.map(item => {
-        //         let mySet = {};
-        //
-        //         mySet.country = item.name_ua;
-        //         mySet.name = item.alias;
-        //         mySet.y = +item.area;
-        //         mySet.x = +item.population_year_16;
-        //         mySet.z = +item.budget_year_16;
-        //
-        //         return mySet;
-        //
-        //     });
-        //
-        //     myData.sort((a,b) => b.z - a.z);
-        //
-        //     chart = Highcharts.chart('item_chart', {
-        //         lang: {
-        //             resetZoom: 'Назад'
-        //         },
-        //         chart: {
-        //             type: 'bubble',
-        //             plotBorderWidth: 1,
-        //             zoomType: 'xy'
-        //         },
-        //
-        //         credits: {
-        //             text: 'Енциклопедія територій',
-        //             href: 'http://enter.co.ua',
-        //             enabled: false
-        //         },
-        //         legend: {
-        //             enabled: false
-        //         },
-        //
-        //         title: {
-        //             text: 'Доходи місцевих бюджетів, населення та площа територій, 2016 р.'
-        //         },
-        //         xAxis: {
-        //             gridLineWidth: 1,
-        //             title: {
-        //                 text: 'Населення, осіб'
-        //             }
-        //         },
-        //
-        //         yAxis: {
-        //             startOnTick: false,
-        //             endOnTick: false,
-        //             title: {
-        //                 text: 'Площа, га'
-        //             },
-        //             maxPadding: 0.2
-        //         },
-        //
-        //         tooltip: {
-        //             useHTML: true,
-        //             headerFormat: '<table>',
-        //             pointFormat: '<tr><th colspan="2"><h3>{point.country}</h3></th></tr>' +
-        //             '<tr><th>Населення:</th><td>{point.x} осіб</td></tr>' +
-        //             '<tr><th>Площа:</th><td>{point.y} га</td></tr>' +
-        //             '<tr><th>Доходи:</th><td>{point.z} грн.</td></tr>',
-        //             footerFormat: '</table>',
-        //             followPointer: true
-        //         },
-        //
-        //         plotOptions: {
-        //             series: {
-        //                 dataLabels: {
-        //                     enabled: true,
-        //                     format: '{point.name}',
-        //                     style: cahrt_full ? {"fontSize": "15px"} : {"fontSize": "11px"}
-        //                 }
-        //             }
-        //         },
-        //
-        //         series: [{
-        //             data: cahrt_full ? myData : myData.slice(0, 5)
-        //         }]
-        //
-        //     });
-        // }
     }
 
     componentDidMount() {
@@ -286,11 +203,11 @@ class Chart extends Component {
     }
 
     render() {
-        const {cahrt_full, dataChartUsd, feature, claster, curentMap, for1Student, chart2} = this.props.map_reducer;
+        const {chart_full, dataChartUsd, feature, claster, curentMap, for1Student, chart2} = this.props.map_reducer;
         const showToggleUsd = dataToChartUsd.length > 0;
 
         return (
-            <div className={cahrt_full ? 'chart_1 barChart_full' : 'chart_1'}>
+            <div className={chart_full ? 'chart_1 barChart_full' : 'chart_1'}>
                 <div className="item_header">
                     <div className="map_heder_title">Тренд</div>
                     <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>

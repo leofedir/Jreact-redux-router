@@ -30,7 +30,8 @@ import {
     TOGGLE_CURENCY,
     SET_DATA_DISTRICT,
     SET_DATA_REGION,
-    TOGGLE_CHART_TO_STUDENT
+    TOGGLE_CHART_TO_STUDENT,
+    BUBBLE_CHART_TOGGLE
 
 
 } from './constant';
@@ -120,6 +121,13 @@ export function ChartToggle(state) {
     }
 }
 
+export function BubbleChartToggle(state) {
+    return {
+        type: BUBBLE_CHART_TOGGLE,
+        payload: !state
+    }
+}
+
 export function show_claster(state, mapName) {
     return (dispatch) => {
         dispatch({
@@ -204,10 +212,25 @@ export function toggle_curency(state) {
     }
 }
 
-export function set_data_bubble(data) {
-    return {
-        type: SET_DATA_BUBBLE,
-        payload: data
+export function set_data_bubble() {
+    return (dispatch) => {
+        fetch('/data_bubble', {
+            method: 'post',
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            }
+        })
+            .then(checkStatus)
+            .then(parseJSON)
+            .then(data => {
+                dispatch({
+                    type: SET_DATA_BUBBLE,
+                    payload: data
+                });
+            })
+            .catch((err) => {
+                console.log('err >>', err);
+            })
     }
 }
 
