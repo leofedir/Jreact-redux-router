@@ -124,7 +124,7 @@ class Map extends Component {
             crs: L.CRS.EPSG900913,
             uppercase: true,
             detectRetina: true,
-            maxZoom: 18,
+            maxZoom: 30,
             attribution: '<a href="http://dzk.gov.ua" target="_blank">ЦДЗК</a>'
         });
 
@@ -167,7 +167,7 @@ class Map extends Component {
         if (map == 'kadastr' && this.props.map_reducer.curentMap === null ) {
             Lmap.hasLayer(ukraine) ? Lmap.removeLayer(ukraine) : '';
             layer = L.layerGroup()
-                .addLayer(esri.basemapLayer('Topographic'));
+                .addLayer(esri.basemapLayer('Imagery'));
 
             setTimeout(() => {layer.addLayer(kadastr)}, 100)
 

@@ -133,12 +133,12 @@ if(unsubscribe !== null) {
 
         choroplethLayer = L.choropleth(data, {
             valueProperty: range_items[range_item],
-            scale: ['#ffffb2', '#bd0026'],
+            scale: ['#edf8e9', '#006d2c'],
             steps: 5,
             mode: 'q',
             smoothFactor: 0,
             style: {
-                color: '#a12f19',
+                color: '#003b16',
                 weight: 0.2,
                 fillOpacity: 0.85
 
@@ -156,7 +156,7 @@ if(unsubscribe !== null) {
         function whenClicked(e) {
             const bounds = e.target.getBounds();
             
-            isRegion ? Lmap.fitBounds(bounds, {maxZoom: 6, padding: [10, 10]}) : Lmap.fitBounds(bounds, {padding: [10, 10]})
+            isRegion ? Lmap.fitBounds(bounds, {maxZoom: 6, padding: [10, 10]}) : Lmap.fitBounds(bounds, {maxZoom: 8,padding: [10, 10]})
 
             store.dispatch(clickOnFeature(e.target.feature.properties))
         }
