@@ -20,7 +20,7 @@ import {
 } from '../actions/constant'
 
 const initialState = {
-    showMenu: true,
+    showMenu: false,
     fields: null,
     mapFull: true,
     fetching: true,

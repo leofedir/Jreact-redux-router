@@ -124,7 +124,7 @@ class Map extends Component {
             crs: L.CRS.EPSG900913,
             uppercase: true,
             detectRetina: true,
-            maxZoom: 30,
+            maxZoom: 21,
             attribution: '<a href="http://dzk.gov.ua" target="_blank">ЦДЗК</a>'
         });
 
