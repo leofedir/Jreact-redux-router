@@ -39,9 +39,7 @@ export default function main(state = initialState, action) {
             return {...state, showMenu: action.payload};
 
         case FULL_MAP:
-            return {...state,
-                mapFull: action.payload,
-                showMenu: false};
+            return {...state, mapFull: action.payload, showMenu: false};
 
         case SET_SUBMENU_ITEM:
             return {...state, submenu_item: action.payload, legend_data: null, claster_layers: null, mapFull: false, show_range: false, fetching: true};

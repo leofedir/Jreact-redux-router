@@ -22,7 +22,8 @@ import {
     TOGGLE_DATA,
     SET_DATA_BUBBLE,
     TOGGLE_CURENCY,
-    TOGGLE_CHART_TO_STUDENT
+    TOGGLE_CHART_TO_STUDENT,
+    BUBBLE_CHART_TOGGLE
 } from '../actions/constant'
 
 const initialState = {
@@ -31,8 +32,9 @@ const initialState = {
     feature: null,
     alias: null,
     properties: null,
-    bar_cahrt_full: false,
-    cahrt_full: false,
+    bar_chart_full: false,
+    chart_full: false,
+    bubble_chart_full: false,
     data_success: false,
     claster: false,
     feature_claster: null,
@@ -63,10 +65,13 @@ export default function map(state = initialState, action) {
             return {...state, properties: action.payload, data_success: true};
 
         case BARCHART_TOGGLE:
-            return {...state, bar_cahrt_full: action.payload};
+            return {...state, bar_chart_full: action.payload};
 
         case CHART_TOGGLE:
-            return {...state, cahrt_full: action.payload};
+            return {...state, chart_full: action.payload};
+
+        case BUBBLE_CHART_TOGGLE:
+            return {...state, bubble_chart_full: action.payload};
 
         case CLICK_ON_FEATURE:
             return {...state, feature: action.payload};
@@ -93,7 +98,16 @@ export default function map(state = initialState, action) {
             return {...state, info: null, properties: null, curentMap: null};
 
         case SET_SUBMENU_ITEM:
-            return {...state, feature: null, claster: false, properties: null, chart1: null, data_success: false, chart2: null, curentMap: null, feature_claster: null, data_bubble: null};
+            return {...state,
+                feature: null,
+                claster: false,
+                properties: null,
+                chart1: null,
+                data_success: false,
+                chart2: null,
+                curentMap: null,
+                feature_claster: null,
+                data_bubble: null};
 
         case SET_CLASTER_CHART_DATA:
             return {...state, chart1: action.payload[0], chart2: action.payload[1]};
@@ -117,7 +131,7 @@ export default function map(state = initialState, action) {
             return {...state, dataChartUsd: action.payload};
 
         case SET_DATA_BUBBLE:
-            return {...state, data_bubble: action.payload[2]};
+            return {...state, data_bubble: action.payload};
 
         case TOGGLE_CHART_TO_STUDENT:
             return {...state, for1Student: action.payload};

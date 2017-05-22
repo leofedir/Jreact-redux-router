@@ -17,7 +17,7 @@ class BarChart extends Component {
 
     toggleChart() {
         const {barChartToggle} = this.props.MapActions;
-        barChartToggle(this.props.map_reducer.bar_cahrt_full);
+        barChartToggle(this.props.map_reducer.bar_chart_full);
     }
 
     createChart(full = null) {
@@ -146,7 +146,7 @@ class BarChart extends Component {
                     drillUpButton: {
                         relativeTo: 'spacingBox',
                         position: {
-                            y: 0,
+                            y: -4,
                             x: -40
                         },
                         theme: {
@@ -226,23 +226,23 @@ class BarChart extends Component {
                     }, {
                         color: '#27ae60'
                     }]
-                }],
-                theme: {
-                    fill: 'rgba(0, 0, 0, 0)',
-                    'stroke-width': 0,
-                    r: 0,
-                    onmousedown: 'rgba(223, 83, 83, 0.6)',
-                    states: {
-                        hover: {
-                        },
-                        select: {
-                
-                        }
-                    },
-                    'font-family': 'FontAwesome',
-                    'font-size': '24px',
-                    height: '1px'
-                },
+                }]
+                // theme: {
+                //     // fill: 'rgba(0, 0, 0, 0)',
+                //     // 'stroke-width': 0,
+                //     // r: 0,
+                //     // onmousedown: 'rgba(223, 83, 83, 0.6)',
+                //     states: {
+                //         hover: {
+                //         },
+                //         select: {
+                //
+                //         }
+                //     },
+                //     'font-family': 'FontAwesome',
+                //     'font-size': '24px',
+                //     height: '1px'
+                // },
             });
 
         }
@@ -256,7 +256,7 @@ class BarChart extends Component {
     }
 
     componentDidUpdate() {
-        this.createChart(this.props.map_reducer.bar_cahrt_full)
+        this.createChart(this.props.map_reducer.bar_chart_full)
     }
 
     toggleChartData() {
@@ -264,9 +264,9 @@ class BarChart extends Component {
     }
 
     render() {
-        const {bar_cahrt_full, chart2, dataChartRegion, data_success, properties} = this.props.map_reducer;
+        const {bar_chart_full, chart2, dataChartRegion, data_success, properties} = this.props.map_reducer;
         return (
-            <div className={bar_cahrt_full ? 'chart_2 barChart_full' : 'chart_2'}>
+            <div className={bar_chart_full ? 'chart_2 barChart_full' : 'chart_2'}>
                 <div className="item_header">
                     <div className="map_heder_title">{chart2 || !properties ? 'Тренд' : 'Діаграма-рейтинг (ТОП-5)'}</div>
                     <div onClick={ ::this.toggleChart }>
