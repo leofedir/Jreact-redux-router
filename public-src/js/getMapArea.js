@@ -95,7 +95,6 @@ if(unsubscribe !== null) {
         let nexItem = store.getState().main.range_item;
 
         if (nexItem != range_item) {
-            console.log('sdf >>', 2222)
             range_item = nexItem;
             getAto(range_item);
             renderLayer()

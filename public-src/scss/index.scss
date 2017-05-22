@@ -148,30 +148,30 @@ body {
   transition: $transition-win;
 }
 .main__chart {
+  box-sizing: border-box;
   height: 380px;
   margin: 0 $block-margin $block-margin $block-margin;
   width: calc(100% - #{$main__right} - (3 * #{$block-margin}));
-  float: left;
   display: flex;
   flex-wrap: nowrap;
+  justify-content: space-between;
 }
-.chart_1,
-.chart_3{
-  flex-basis: 50%;
-  min-width: 45%;
-  margin-right: $block-margin;
+.chart_1 {
+  flex-basis: 49%;
+  box-shadow: $shadow;
+}
+
+.chart_2 {
+  margin-left: 10px;
+  flex-basis: 49%;
   box-shadow: $shadow;
 }
 
 .chart_3 {
-
-}
-
-.chart_2 {
-  min-width: 45%;
-  flex-basis:50%;
+  flex-basis: 100%;
   box-shadow: $shadow;
 }
+
 .main__right {
   width: $main__right;
   float: right;
@@ -193,7 +193,7 @@ body {
   box-shadow: $shadow;
 }
 .barChart_full {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 9999;
@@ -247,7 +247,8 @@ body {
 
 
 #item_bar_chart,
-#item_chart {
+#item_chart,
+#bubble_chart {
   height: calc(100% - 30px);
 }
 

@@ -6,7 +6,7 @@ import * as MapActions from '../REDUX/actions/get_map_area';
 const Highcharts = require('highcharts');
 require('highcharts/highcharts-more.js')(Highcharts);
 
-let chart = null;
+let Bchart = null;
 
 class BubbleChart extends Component {
 
@@ -23,18 +23,13 @@ class BubbleChart extends Component {
 
         if (data_bubble !== null) {
 
-
-
-            chart = Highcharts.chart('bubble_chart', {
+            Bchart = Highcharts.chart('bubble_chart', {
                 chart: {
                     type: 'bubble',
                     plotBorderWidth: 1,
                     zoomType: 'xy'
                 },
-
                 credits: {
-                    text: 'Енциклопедія територій',
-                    href: 'http://enter.co.ua',
                     enabled: false
                 },
                 legend: {
@@ -86,9 +81,9 @@ class BubbleChart extends Component {
                 }]
 
             });
-        } else if (data_bubble === null && chart !== null) {
-            chart.destroy();
-            chart = null
+        } else if (data_bubble === null && Bchart !== null) {
+            Bchart.destroy();
+            Bchart = null
         }
     }
 

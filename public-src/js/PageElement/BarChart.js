@@ -99,13 +99,11 @@ class BarChart extends Component {
                 lang: {
                     drillUpText: '\uf0a8'
                 },
+                credits: {
+                    enabled: false
+                },
                 chart: {
                     type: 'bar'
-                },
-                credits: {
-                    text: 'Енциклопедія територій',
-                    href: 'http://enter.co.ua',
-                    enabled: false
                 },
                 title: {
                     text: alias + ', ' + parametr + ', 20' + curent_year.substring(5) + 'р.'
@@ -113,7 +111,6 @@ class BarChart extends Component {
                 xAxis: {
                     type: 'category',
                 },
-
                 legend: {
                     enabled: false
                 },
@@ -121,7 +118,6 @@ class BarChart extends Component {
                     title: {
                         enabled: false
                     }
-
                 },
                 plotOptions: {
                     series: {
@@ -132,15 +128,12 @@ class BarChart extends Component {
                         }
                     }
                 },
-
                 series: [{
                     name: alias,
                     maxPointWidth: 25,
-                    // colorByPoint: true,
                     data: full ? dataStore[submenu_item + curent_year + '__region'] : dataStore[submenu_item + curent_year + '__region'].slice(0, 5),
                     negativeColor: '#e74c3c',
-                    color: '#27ae60',
-
+                    color: '#27ae60'
                 }],
                 drilldown: {
                     drillUpButton: {
@@ -198,7 +191,6 @@ class BarChart extends Component {
                 xAxis: {
                     type: 'category',
                 },
-
                 legend: {
                     enabled: false
                 },
@@ -206,7 +198,6 @@ class BarChart extends Component {
                     title: {
                         enabled: false
                     }
-
                 },
                 plotOptions: {
                     series: {
@@ -218,7 +209,6 @@ class BarChart extends Component {
                 },
                 series: [{
                     name: alias,
-                    // colorByPoint: true,
                     data: full ? dataStore[submenu_item + curent_year] : dataStore[submenu_item + curent_year].slice(0, 5),
                     zones: [{
                         value: 0,
@@ -227,22 +217,6 @@ class BarChart extends Component {
                         color: '#27ae60'
                     }]
                 }]
-                // theme: {
-                //     // fill: 'rgba(0, 0, 0, 0)',
-                //     // 'stroke-width': 0,
-                //     // r: 0,
-                //     // onmousedown: 'rgba(223, 83, 83, 0.6)',
-                //     states: {
-                //         hover: {
-                //         },
-                //         select: {
-                //
-                //         }
-                //     },
-                //     'font-family': 'FontAwesome',
-                //     'font-size': '24px',
-                //     height: '1px'
-                // },
             });
 
         }
@@ -252,8 +226,7 @@ class BarChart extends Component {
         }
     }
 
-    componentDidMount() {
-    }
+    componentDidMount() {}
 
     componentDidUpdate() {
         this.createChart(this.props.map_reducer.bar_chart_full)
