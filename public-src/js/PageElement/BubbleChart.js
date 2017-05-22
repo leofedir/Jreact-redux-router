@@ -19,9 +19,12 @@ class BubbleChart extends Component {
     }
 
     bubbleChart() {
+
         const {data_bubble, bubble_chart_full} = this.props.map_reducer;
 
         if (data_bubble !== null) {
+            const {range_item, range_items} = this.props.main;
+            const year = '20' + range_items[range_item].slice(5)
 
             Bchart = Highcharts.chart('bubble_chart', {
                 chart: {
@@ -37,7 +40,7 @@ class BubbleChart extends Component {
                 },
 
                 title: {
-                    text: 'Доходи місцевих бюджетів, населення та площа територій, 2016 р.'
+                    text: `Доходи місцевих бюджетів, населення та площа територій, ${year} р.`
                 },
                 xAxis: {
                     gridLineWidth: 1,
@@ -113,7 +116,8 @@ class BubbleChart extends Component {
 
 function mapStateToProps(state) {
     return {
-        map_reducer: state.map_reducer
+        map_reducer: state.map_reducer,
+        main: state.main
     }
 }
 

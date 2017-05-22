@@ -156,22 +156,23 @@ body {
   flex-wrap: nowrap;
   justify-content: space-between;
 }
-.chart_1 {
-  flex-basis: 49%;
+.chart_1,
+.chart_3{
+  flex-basis: 50%;
+  min-width: 45%;
+  margin-right: $block-margin;
   box-shadow: $shadow;
+}
+
+.highcharts-container  {
+  max-width: 95%;
 }
 
 .chart_2 {
-  margin-left: 10px;
-  flex-basis: 49%;
+  min-width: 45%;
+  flex-basis:50%;
   box-shadow: $shadow;
 }
-
-.chart_3 {
-  flex-basis: 100%;
-  box-shadow: $shadow;
-}
-
 .main__right {
   width: $main__right;
   float: right;

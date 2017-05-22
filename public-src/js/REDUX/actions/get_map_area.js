@@ -212,13 +212,14 @@ export function toggle_curency(state) {
     }
 }
 
-export function set_data_bubble() {
+export function set_data_bubble(year) {
     return (dispatch) => {
         fetch('/data_bubble', {
             method: 'post',
             headers: {
                 "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-            }
+            },
+            body: `year=${year}`
         })
             .then(checkStatus)
             .then(parseJSON)

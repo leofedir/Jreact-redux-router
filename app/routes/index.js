@@ -7,7 +7,7 @@ const router = require('express').Router(),
     compression = require('compression');
 
 let geometry = {};
-let data_buble = null;
+let data_buble = {};
 const geometryQuery = [
     `SELECT * FROM geom_region`,
     `SELECT * FROM geom_district`
@@ -26,8 +26,9 @@ router.post('/main', function (req, res) {
 });
 
 router.post('/data_bubble', function (req, res) {
-    if (data_buble !== null) {
-        res.json(data_buble);
+    const year = req.body.year
+    if (data_buble[year] in data_buble) {
+        res.json(data_buble[year]);
     } else {
         pgdb.query(`SELECT * FROM bubble_chart`)
             .then((d) => {
@@ -38,14 +39,14 @@ router.post('/data_bubble', function (req, res) {
                     mySet.country = item.name_ua;
                     mySet.name = item.alias;
                     mySet.y = +item.area;
-                    mySet.x = +item.population_year_16;
-                    mySet.z = +item.budget_year_16;
+                    mySet.x = +item['population_' + year];
+                    mySet.z = +item['budget_' + year];
                     return mySet;
                 });
 
-                data_buble = myData.sort((a, b) => b.z - a.z);
+                data_buble[year] = myData.sort((a, b) => b.z - a.z);
 
-                res.json(data_buble);
+                res.json(data_buble[year]);
             })
     }
 
