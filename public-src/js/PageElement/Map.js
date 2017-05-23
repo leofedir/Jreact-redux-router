@@ -30,7 +30,7 @@ let cadastral = null
         let templateString = `<ul>`;
             for (let i in dataObject) {
                 console.log(dataObject[i])
-                templateString += `<li style="display: flex;align-items: center;justify-content: space-between; margin: 0 20px"><p>${i}:</p><span style="font-weight: bold;color: #555555;">${dataObject[i]}</span></li>`
+                templateString += `<li style="display: flex;align-items: center;justify-content: space-between; margin: 0 20px"><p style="font-weight: bold;color: #555555;">${i}:</p><span>${dataObject[i]}</span></li>`
             }
             templateString += `</ul>`;
         
