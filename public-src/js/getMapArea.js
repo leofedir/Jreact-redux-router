@@ -122,15 +122,12 @@ export default function getMap(data, rebuild = true, isRegion) {
         isRegion ? joinGeometry(coordinate.region) : joinGeometry(coordinate.district)
 
         const eventsMap = {
-
             click: whenClicked,
             mouseover: onMouseOver
         };
         
         let randLayer = getRandomColorLayer();
-        choroplethLayer = L.choropleth(data, {
-            randLayer
-        }).addTo(Lmap);
+        choroplethLayer = L.choropleth(data, randLayer).addTo(Lmap);
         
         function getRandomColorLayer() {
             const arrWithLayers = [
@@ -183,7 +180,6 @@ export default function getMap(data, rebuild = true, isRegion) {
             
             let randIndex = Math.floor(Math.random() * 3);
             
-            console.log(arrWithLayers[randIndex])
             return arrWithLayers[randIndex]
         }
         function onMouseOver(e) {

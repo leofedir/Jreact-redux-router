@@ -26,10 +26,8 @@ let layer;
 let cadastral = null
 
     function tmpl(dataObject) {
-        console.log(dataObject)
         let templateString = `<ul>`;
             for (let i in dataObject) {
-                console.log(dataObject[i])
                 templateString += `<li style="display: flex;align-items: center;justify-content: space-between; margin: 0 20px"><p style="font-weight: bold;color: #555555;">${i}:</p><span>${dataObject[i]}</span></li>`
             }
             templateString += `</ul>`;
@@ -59,9 +57,7 @@ let cadastral = null
     
     //get html data from chunk of code
     const regex = /(<([^>]+)>)/ig
-    console.log(curObject)
     let result = curObject.replace(regex, "|");
-    console.log(result)
     //string to array
     let newItem = result.split("|")
     newItem = newItem.filter((word) => word !== '');
@@ -206,7 +202,6 @@ class Map extends Component {
             .then(parseJSON)
             .then(d => {
                 if(!d.hasOwnProperty("pusto")) {
-                    console.log(d);
                     cadastral = parserHTMLtoObject(d);
                     let cadastral_template = tmpl(cadastral);
             
