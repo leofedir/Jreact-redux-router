@@ -126,27 +126,15 @@ export default function getMap(data, rebuild = true, isRegion) {
             click: whenClicked,
             mouseover: onMouseOver
         };
-
+        
+        let randLayer = getRandomColorLayer();
         choroplethLayer = L.choropleth(data, {
-            valueProperty: range_items[range_item],
-            scale: ['#edf8e9', '#006d2c'],
-            steps: 5,
-            mode: 'q',
-            smoothFactor: 0,
-            style: {
-                color: '#003b16',
-                weight: 0.2,
-                fillOpacity: 0.85
-
-            },
-            onEachFeature: function (feature, layer) {
-                layer.on(eventsMap)
-            }
+            randLayer
         }).addTo(Lmap);
         
         function getRandomColorLayer() {
             const arrWithLayers = [
-                blue = {
+                {
                     valueProperty: range_items[range_item],
                     scale: ['#bdc9e1', '#045a8c'],
                     steps: 5,
@@ -157,9 +145,12 @@ export default function getMap(data, rebuild = true, isRegion) {
                         weight: 0.2,
                         fillOpacity: 0.85
                     },
+                    onEachFeature: function (feature, layer) {
+                        layer.on(eventsMap)
+                    }
                 },
-                green = {
-                    alueProperty: range_items[range_item],
+                {
+                    valueProperty: range_items[range_item],
                     scale: ['#edf8e9', '#006d2c'],
                     steps: 5,
                     mode: 'q',
@@ -168,9 +159,32 @@ export default function getMap(data, rebuild = true, isRegion) {
                         color: '#003b16',
                         weight: 0.2,
                         fillOpacity: 0.85
+                    },
+                    onEachFeature: function (feature, layer) {
+                        layer.on(eventsMap)
+                    }
+                },
+                {
+                    valueProperty: range_items[range_item],
+                    scale: ['#ffffb2', '#bd0026'],
+                    steps: 5,
+                    mode: 'q',
+                    style: {
+                        color: '#a12f19',
+                        weight: 0.2,
+                        fillOpacity: 0.85
+        
+                    },
+                    onEachFeature: function (feature, layer) {
+                        layer.on(eventsMap)
                     }
                 }
             ]
+            
+            let randIndex = Math.floor(Math.random() * 3);
+            
+            console.log(arrWithLayers[randIndex])
+            return arrWithLayers[randIndex]
         }
         function onMouseOver(e) {
             let item = e.target;
