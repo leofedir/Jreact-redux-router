@@ -125,6 +125,7 @@ if(unsubscribe !== null) {
         isRegion ? joinGeometry(coordinate.region) : joinGeometry(coordinate.district)
 
         const eventsMap = {
+
             click: whenClicked,
             mouseover : onMouseOver
         };
@@ -147,6 +148,9 @@ if(unsubscribe !== null) {
             }
         }).addTo(Lmap);
 
+
+
+
         function onMouseOver(e) {
             let item =  e.target;
             item.bindTooltip(item.feature.properties.name_ua).openTooltip()
@@ -154,10 +158,19 @@ if(unsubscribe !== null) {
 
         function whenClicked(e) {
             const bounds = e.target.getBounds();
-            
+            var layer = e.target;
+            layer.setStyle({
+                weight: 3
+                // color: '#7FFF00'
+
+
+
+            });
             isRegion ? Lmap.fitBounds(bounds, {maxZoom: 6, padding: [10, 10]}) : Lmap.fitBounds(bounds, {maxZoom: 8,padding: [10, 10]})
 
             store.dispatch(clickOnFeature(e.target.feature.properties))
+
+
         }
 
         let legend_data = {
