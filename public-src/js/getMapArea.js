@@ -6,7 +6,7 @@ import {checkStatus, parseJSON} from './checkJSON';
 import {set_Range_items, set_legend_data} from './REDUX/actions/actions'
 import {clickOnFeature} from './REDUX/actions/get_map_area'
 import {store} from './index';
-import { coordinate } from './PageElement/Map'
+import {coordinate} from './PageElement/Map'
 
 export let choroplethLayer = null;
 export let ato = null;
@@ -14,11 +14,12 @@ let atoData = null;
 let unsubscribe = null;
 
 export default function getMap(data, rebuild = true, isRegion) {
+    let layer = null;
 
-if(unsubscribe !== null) {
-    unsubscribe();
-    unsubscribe = null
-}
+    if (unsubscribe !== null) {
+        unsubscribe();
+        unsubscribe = null
+    }
     let myStyle = {
         "color": "#A9A9A9",
         "weight": 2,
@@ -52,15 +53,11 @@ if(unsubscribe !== null) {
     store.dispatch(set_Range_items(propertys));
 
     let state = store.getState();
-    let {range_item, range_items, } = state.main;
+    let {range_item, range_items,} = state.main;
 
-    function fetchAto () {
+    function fetchAto() {
         fetch('/ato', {
-            method: 'post',
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-            },
-            body: ''
+            method: 'post'
         })
             .then(checkStatus)
             .then(parseJSON)
@@ -72,6 +69,7 @@ if(unsubscribe !== null) {
                 Lmap.addLayer(ato)
             });
     }
+
     function getAto(item) {
         if (item > 0 && atoData !== null) {
             ato ? ato.clearLayers() && Lmap.removeLayer(ato) : ''
@@ -103,8 +101,6 @@ if(unsubscribe !== null) {
     }
 
     unsubscribe = store.subscribe(handleChange);
-    // handleChange();
-
 
     function renderLayer() {
         // store.dispatch(startLoad());
@@ -112,7 +108,7 @@ if(unsubscribe !== null) {
             Lmap.removeLayer(choroplethLayer)
         }
 
-        function joinGeometry(cordinate){
+        function joinGeometry(cordinate) {
             let i;
             let len = data.length;
 
@@ -121,15 +117,15 @@ if(unsubscribe !== null) {
             }
 
         }
+
         // join geometry
         isRegion ? joinGeometry(coordinate.region) : joinGeometry(coordinate.district)
 
         const eventsMap = {
 
             click: whenClicked,
-            mouseover : onMouseOver
+            mouseover: onMouseOver
         };
-
 
         choroplethLayer = L.choropleth(data, {
             valueProperty: range_items[range_item],
@@ -148,28 +144,37 @@ if(unsubscribe !== null) {
             }
         }).addTo(Lmap);
 
-
-
-
         function onMouseOver(e) {
-            let item =  e.target;
-            item.bindTooltip(item.feature.properties.name_ua).openTooltip()
+            let item = e.target;
+            item.bindTooltip(item.feature.properties.name_ua, {
+                direction: 'top',
+                sticky: true
+            }).openTooltip()
         }
 
         function whenClicked(e) {
             const bounds = e.target.getBounds();
-            var layer = e.target;
+
+            if (layer === null) {
+                layer = e.target;
+            } else if (layer !== null && layer.feature.properties.name_ua != e.target.feature.properties.name_ua) {
+                choroplethLayer.resetStyle(layer);
+                layer = e.target;
+            }
+
+            console.log('layer >>', layer.feature.properties.name_ua)
+
             layer.setStyle({
                 weight: 3
-                // color: '#7FFF00'
-
-
-
             });
-            isRegion ? Lmap.fitBounds(bounds, {maxZoom: 6, padding: [10, 10]}) : Lmap.fitBounds(bounds, {maxZoom: 8,padding: [10, 10]})
+
+
+            isRegion ? Lmap.fitBounds(bounds, {maxZoom: 6, padding: [10, 10]}) : Lmap.fitBounds(bounds, {
+                maxZoom: 8,
+                padding: [10, 10]
+            })
 
             store.dispatch(clickOnFeature(e.target.feature.properties))
-
 
         }
 

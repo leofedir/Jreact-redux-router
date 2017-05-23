@@ -76,9 +76,7 @@ class Map extends Component {
 
         const {set_data_district} = this.props.MapActions;
         Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 6);
-
         esri.basemapLayer('Topographic').addTo(Lmap);
-
 
         function onMouseMove(e) {
             cordinateContainer.innerHTML = e.latlng.lat.toFixed(3) + "° пн. ш, " + e.latlng.lng.toFixed(3) + "° сх. д."
@@ -127,8 +125,6 @@ class Map extends Component {
             maxZoom: 21,
             attribution: '<a href="http://dzk.gov.ua" target="_blank">ЦДЗК</a>'
         });
-
-
     }
 
     omButtonMapClick() {
@@ -151,7 +147,6 @@ class Map extends Component {
                 })
             })
             .catch(e => console.error('e >>', e))
-
     }
 
     changeBasemap(e) {
@@ -177,8 +172,6 @@ class Map extends Component {
             layer = esri.basemapLayer(map);
             Lmap.addLayer(layer);
         }
-
-
     }
 
     render() {
