@@ -142,9 +142,15 @@ class Map extends Component {
             .then(checkStatus)
             .then(parseJSON)
             .then(d => {
-                Lmap.openPopup(d.obl + d.rajonunion + d.ikk + d.dilanka, coord, {
-                    maxWidth: 500
-                })
+                if(!d.hasOwnProperty("pusto")) {
+                    console.log(d);
+                    cadastral = parserHTMLtoObject(d);
+                    let cadastral_template = tmpl(cadastral);
+            
+                    Lmap.openPopup(cadastral_template, coord, {
+                        maxWidth: 500
+                    });
+                }
             })
             .catch(e => console.error('e >>', e))
     }
