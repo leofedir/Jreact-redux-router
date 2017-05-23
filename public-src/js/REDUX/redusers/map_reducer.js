@@ -40,6 +40,7 @@ const initialState = {
     feature_claster: null,
     chart1: null,
     chart2: null,
+    chart3: null,
     check: [],
     checkAll: false,
     clasterCount: 0,
@@ -103,14 +104,16 @@ export default function map(state = initialState, action) {
                 claster: false,
                 properties: null,
                 chart1: null,
-                data_success: false,
                 chart2: null,
+                chart3: null,
+                data_success: false,
                 curentMap: null,
                 feature_claster: null,
                 data_bubble: null};
 
         case SET_CLASTER_CHART_DATA:
-            return {...state, chart1: action.payload[0], chart2: action.payload[1]};
+            let [chart1, chart2, chart3] = action.payload;
+            return {...state, chart1, chart2, chart3};
 
         case SET_INITIAL_CHECK:
             return {...state, check: action.payload};
