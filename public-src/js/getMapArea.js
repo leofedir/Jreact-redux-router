@@ -143,7 +143,35 @@ export default function getMap(data, rebuild = true, isRegion) {
                 layer.on(eventsMap)
             }
         }).addTo(Lmap);
-
+        
+        function getRandomColorLayer() {
+            const arrWithLayers = [
+                blue = {
+                    valueProperty: range_items[range_item],
+                    scale: ['#bdc9e1', '#045a8c'],
+                    steps: 5,
+                    mode: 'q',
+                    smoothFactor: 0,
+                    style: {
+                        color: '#033a59',
+                        weight: 0.2,
+                        fillOpacity: 0.85
+                    },
+                },
+                green = {
+                    alueProperty: range_items[range_item],
+                    scale: ['#edf8e9', '#006d2c'],
+                    steps: 5,
+                    mode: 'q',
+                    smoothFactor: 0,
+                    style: {
+                        color: '#003b16',
+                        weight: 0.2,
+                        fillOpacity: 0.85
+                    }
+                }
+            ]
+        }
         function onMouseOver(e) {
             let item = e.target;
             item.bindTooltip(item.feature.properties.name_ua, {
