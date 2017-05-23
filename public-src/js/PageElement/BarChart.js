@@ -22,7 +22,7 @@ class BarChart extends Component {
 
     createChart(full = null) {
         // save props
-        const {alias, properties, data_success, chart2, bar_cahrt_full, dataChartRegion} = this.props.map_reducer;
+        const {alias, properties, data_success, chart3, bar_cahrt_full, dataChartRegion} = this.props.map_reducer;
         const {range_item, range_items, submenu_item} = this.props.main;
         let curent_year = range_items[range_item] || 'year_13';
         let parametr;
@@ -93,7 +93,7 @@ class BarChart extends Component {
             } else if ('__region' in properties === false) {
                 dataStore[submenu_item + curent_year + '__region'] = region
             }
-            
+
             // Create the chart
             myChart = Highcharts.chart('item_bar_chart', {
                 lang: {
@@ -220,13 +220,153 @@ class BarChart extends Component {
             });
 
         }
-        else if (!data_success && myChart !== null && chart2 === null) {
+        else if (chart3 !== null) {
+
+
+            // $('#container').bind('mousemove touchmove touchstart', function (e) {
+            //     var chart,
+            //         point,
+            //         i,
+            //         event;
+            //
+            //     for (i = 0; i < Highcharts.charts.length; i = i + 1) {
+            //         chart = Highcharts.charts[i];
+            //         event = chart.pointer.normalize(e.originalEvent); // Find coordinates within the chart
+            //         point = chart.series[0].searchPoint(event, true); // Get the hovered point
+            //
+            //         if (point) {
+            //             point.highlight(e);
+            //         }
+            //     }
+            // });
+            /**
+             * Override the reset function, we don't need to hide the tooltips and crosshairs.
+             */
+            Highcharts.Pointer.prototype.reset = function () {
+                return undefined;
+            };
+
+            /**
+             * Highlight a point by showing tooltip, setting hover state and draw crosshair
+             */
+            Highcharts.Point.prototype.highlight = function (event) {
+                this.onMouseOver(); // Show the hover marker
+                this.series.chart.tooltip.refresh(this); // Show the tooltip
+                this.series.chart.xAxis[0].drawCrosshair(event, this); // Show the crosshair
+            };
+
+            /**
+             * Synchronize zooming through the setExtremes event handler.
+             */
+            function syncExtremes(e) {
+                var thisChart = this.chart;
+
+                if (e.trigger !== 'syncExtremes') { // Prevent feedback loop
+                    Highcharts.each(Highcharts.charts, function (chart) {
+                        if (chart !== thisChart) {
+                            if (chart.xAxis[0].setExtremes) { // It is null while updating
+                                chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {trigger: 'syncExtremes'});
+                            }
+                        }
+                    });
+                }
+            }
+
+            let chartData = [];
+            let chartType = ['line', 'area', 'area']
+
+
+            for (let key in chart3) {
+
+                if (chart3.hasOwnProperty(key)) {
+                    let obj = {
+                        name: key,
+                        data: []
+                    };
+                    chart3[key].forEach(item => {
+                        obj.data.push(item.value)
+                    })
+
+                    chartData.push(obj)
+                }
+            }
+
+            let {chart0, chart1, chart2} = this.refs;
+
+
+            chartData.forEach((dataset, i) => {
+
+                    ['chart' + i].highcharts({
+                        chart: {
+                            marginLeft: 40, // Keep all charts left aligned
+                            spacingTop: 20,
+                            spacingBottom: 20
+                        },
+                        title: {
+                            text: dataset.name,
+                            align: 'left',
+                            margin: 0,
+                            x: 30
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        legend: {
+                            enabled: false
+                        },
+                        xAxis: {
+                            crosshair: true,
+                            events: {
+                                setExtremes: syncExtremes
+                            },
+                            labels: {
+                                format: '{value} km'
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: null
+                            }
+                        },
+                        tooltip: {
+                            positioner: function () {
+                                return {
+                                    x: this.chart.chartWidth - this.label.width, // right aligned
+                                    y: -1 // align to title
+                                };
+                            },
+                            borderWidth: 0,
+                            backgroundColor: 'none',
+                            pointFormat: '{point.y}',
+                            headerFormat: '',
+                            shadow: false,
+                            style: {
+                                fontSize: '18px'
+                            },
+                            valueDecimals: dataset.valueDecimals
+                        },
+                        series: [{
+                            data: dataset.data,
+                            name: dataset.name,
+                            type: chartType[i],
+                            color: Highcharts.getOptions().colors[i],
+                            fillOpacity: 0.3
+                            // tooltip: {
+                            //     valueSuffix: ' ' + dataset.unit
+                            // }
+                        }]
+                    });
+                }
+            )
+        }
+        else if (!data_success && myChart !== null && chart3 === null) {
             myChart.destroy();
             myChart = null
         }
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+    }
 
     componentDidUpdate() {
         this.createChart(this.props.map_reducer.bar_chart_full)
@@ -237,20 +377,30 @@ class BarChart extends Component {
     }
 
     render() {
-        const {bar_chart_full, chart2, dataChartRegion, data_success, properties} = this.props.map_reducer;
+        const {bar_chart_full, chart3, dataChartRegion, data_success, properties} = this.props.map_reducer;
         return (
             <div className={bar_chart_full ? 'chart_2 barChart_full' : 'chart_2'}>
                 <div className="item_header">
-                    <div className="map_heder_title">{chart2 || !properties ? 'Тренд' : 'Діаграма-рейтинг (ТОП-5)'}</div>
+                    <div
+                        className="map_heder_title">{chart3 || !properties ? 'Тренд' : 'Діаграма-рейтинг (ТОП-5)'}</div>
                     <div onClick={ ::this.toggleChart }>
-                        <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" />
+                        <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"/>
                     </div>
                 </div>
                 <div className="item_content">
-                    <div className="region_toggle" style={properties === null && !data_success ? {display: 'none'} : {display: 'block'}} onClick={::this.toggleChartData} ><div className="region_toggle_item">Області
-                        {chart2 ? '' : <i className={ !dataChartRegion ? "fa fa-toggle-on" : 'fa fa-toggle-on fa-flip-horizontal' }/>}Райони </div>
+                    <div className="region_toggle"
+                         style={properties === null && !data_success ? {display: 'none'} : {display: 'block'}}
+                         onClick={::this.toggleChartData}>
+                        <div className="region_toggle_item">Області
+                            {chart3 ? '' :
+                                <i className={ !dataChartRegion ? "fa fa-toggle-on" : 'fa fa-toggle-on fa-flip-horizontal' }/>}Райони
+                        </div>
                     </div>
-                    <div id="item_bar_chart"/>
+                    <div id="item_bar_chart">
+                        <div ref="chart0"/>
+                        <div ref="chart1"/>
+                        <div ref="chart2"/>
+                    </div>
                 </div>
             </div>
         )

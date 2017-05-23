@@ -5,9 +5,6 @@ const server = Server(app);
 const config = require('./config');
 const EventEmitter = require('events');
 
-
-
-
 const path = require('path');
 
 const bodyParser = require('body-parser');
@@ -17,7 +14,6 @@ app.use(function (req, res, next) {
     res.removeHeader("X-Powered-By");
     next();
 });
-
 
 app.use(express.static(path.join(__dirname, './public')));
 

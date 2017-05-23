@@ -184,10 +184,11 @@ export function toggle_layer(id, status) {
     }
 }
 
-export function set_chart_data(chart1, chart2) {
+export function set_chart_data(chart1, chart2, chart3) {
+    console.log('chart1, chart2, chart3 >>', chart1, chart2, chart3)
     return {
         type: SET_CLASTER_CHART_DATA,
-        payload: [chart1, chart2]
+        payload: [chart1, chart2, chart3]
     }
 }
 

@@ -162,20 +162,16 @@ export default function getMap(data, rebuild = true, isRegion) {
                 layer = e.target;
             }
 
-            console.log('layer >>', layer.feature.properties.name_ua)
-
             layer.setStyle({
                 weight: 3
             });
 
-
             isRegion ? Lmap.fitBounds(bounds, {maxZoom: 6, padding: [10, 10]}) : Lmap.fitBounds(bounds, {
                 maxZoom: 8,
                 padding: [10, 10]
-            })
+            });
 
             store.dispatch(clickOnFeature(e.target.feature.properties))
-
         }
 
         let legend_data = {

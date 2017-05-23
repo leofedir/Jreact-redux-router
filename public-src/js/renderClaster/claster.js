@@ -38,14 +38,13 @@ function hideLayer(id) {
 }
 
 
-
 export default function claster(data) {
     if (0 in layers) {
-       for (let key in layers) {
-           if (layers.hasOwnProperty(key)) {
-               layers[key].off('click', whenClicked);
-           }
-       }
+        for (let key in layers) {
+            if (layers.hasOwnProperty(key)) {
+                layers[key].off('click', whenClicked);
+            }
+        }
     }
 
 
@@ -87,7 +86,7 @@ export default function claster(data) {
         let feature = e.layer.feature.properties;
         store.dispatch(clickOnFeatureClaster(feature));
 
-        if (Object.keys(feature).some(item =>item.indexOf('chart'))) {
+        if (Object.keys(feature).some(item => item.indexOf('chart'))) {
             chartData(feature)
         }
     }
@@ -95,6 +94,7 @@ export default function claster(data) {
     function chartData(feature_claster) {
         let chart1 = {};
         let chart2 = {};
+        let chart3 = {};
 
         if (feature_claster !== null) {
             for (let key in feature_claster) {
@@ -104,11 +104,14 @@ export default function claster(data) {
                     let year = +key.slice(key.length - 4);
                     let value = +feature_claster[key];
 
-                    if (name === 'chart1') {
+                    if (name == 'chart1') {
                         chart1[serias] ? chart1[serias].push({year, value}) : chart1[serias] = [{year, value}];
-                        // addChart();
-                    } else if (name === 'chart2') {
+                    }
+                    else if (name == 'chart2') {
                         chart2[serias] ? chart2[serias].push({year, value}) : chart2[serias] = [{year, value}];
+                    }
+                    else if (name == 'chart3' || name =='kilkistuchniv') {
+                        chart3[serias] ? chart3[serias].push({year, value}) : chart3[serias] = [{year, value}];
                     }
                 }
             }
@@ -120,11 +123,13 @@ export default function claster(data) {
                     }
                 }
             }
-            if (Object.keys(chart1).length > 0 || Object.keys(chart2).length > 0) {
-                sort_data(chart1);
-                sort_data(chart2);
-                store.dispatch(set_chart_data(chart1, chart2))
-            }
+
+            sort_data(chart1);
+            sort_data(chart2);
+            sort_data(chart3);
+
+            store.dispatch(set_chart_data(chart1, chart2, chart3))
+
         }
     }
 
