@@ -25,25 +25,26 @@ let kadastr;
 let layer;
 let cadastral = null
 
-function tmpl(dataObject) {
-    let templateString = `<ul>`;
-    for (let i in dataObject) {
-        templateString += `<li><p>${i}<span style="padding-left: 10px">${dataObject[i]}</span></p></li>`
+    function tmpl(dataObject) {
+        console.log(dataObject)
+        let templateString = `<ul>`;
+            for (let i in dataObject) {
+                console.log(dataObject[i])
+                templateString += `<li style="display: flex;align-items: center;justify-content: space-between; margin: 0 20px"><p>${i}:</p><span style="font-weight: bold;color: #555555;">${dataObject[i]}</span></li>`
+            }
+            templateString += `</ul>`;
+        
+        return templateString
     }
-    templateString += `</ul>`;
-    
-    return templateString
-}
 
 //parse html object and return javascript object
-function parserHTMLtoObject(obj) {
-    let curObject = {}
-    
-    //get current place by zoom
-    if(obj.hasOwnProperty("obl")) {
-        curObject = obj.obl
+    function parserHTMLtoObject(obj) {
+        let curObject = {}
         
-        if(obj.hasOwnProperty("rajonunion")) {
+        //get current place by zoom
+        if(obj.hasOwnProperty("obl")) {
+            curObject = obj.obl
+            if(obj.hasOwnProperty("rajonunion")) {
             curObject = obj.rajonunion
             
             if(obj.hasOwnProperty("ikk")){
@@ -59,10 +60,10 @@ function parserHTMLtoObject(obj) {
     //get html data from chunk of code
     const regex = /(<([^>]+)>)/ig
     console.log(curObject)
-    let result = curObject.replace(regex, ",");
-    
+    let result = curObject.replace(regex, "|");
+    console.log(result)
     //string to array
-    let newItem = result.split(",")
+    let newItem = result.split("|")
     newItem = newItem.filter((word) => word !== '');
     
     //remove ':' symbols from array
@@ -210,7 +211,8 @@ class Map extends Component {
                     let cadastral_template = tmpl(cadastral);
             
                     Lmap.openPopup(cadastral_template, coord, {
-                        maxWidth: 500
+                        maxWidth: 550,
+                        minWidth: 250,
                     });
                 }
             })
