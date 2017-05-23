@@ -23,7 +23,69 @@ let icon = L.icon({
 let cordinateContainer;
 let kadastr;
 let layer;
+let cadastral = null
 
+function tmpl(dataObject) {
+    let templateString = `<ul>`;
+    for (let i in dataObject) {
+        templateString += `<li><p>${i}<span style="padding-left: 10px">${dataObject[i]}</span></p></li>`
+    }
+    templateString += `</ul>`;
+    
+    return templateString
+}
+
+//parse html object and return javascript object
+function parserHTMLtoObject(obj) {
+    let curObject = {}
+    
+    //get current place by zoom
+    if(obj.hasOwnProperty("obl")) {
+        curObject = obj.obl
+        
+        if(obj.hasOwnProperty("rajonunion")) {
+            curObject = obj.rajonunion
+            
+            if(obj.hasOwnProperty("ikk")){
+                curObject = obj.ikk
+                
+                if(obj.hasOwnProperty("dilanka")) {
+                    curObject = obj.dilanka
+                }
+            }
+        }
+    }
+    
+    //get html data from chunk of code
+    const regex = /(<([^>]+)>)/ig
+    console.log(curObject)
+    let result = curObject.replace(regex, ",");
+    
+    //string to array
+    let newItem = result.split(",")
+    newItem = newItem.filter((word) => word !== '');
+    
+    //remove ':' symbols from array
+    newItem = newItem.map((word) => {
+        if (word.endsWith(':') )
+            return word.slice(0, word.length-1);
+        else
+            return word
+    })
+    
+    //array to key: value
+    let dataObject = {}
+    for(let j = 0; j < newItem.length; j++) {
+        if(j > 6 ) {
+            continue;
+        }
+        
+        dataObject[newItem[j]] = newItem[j+1]
+        j++;
+    }
+    
+    return dataObject
+}
 
 class Map extends Component {
 
