@@ -47,10 +47,11 @@
 
 .leaflet-popup-content {
   margin: 0;
+  line-height: 1.2;
 }
 
 .leaflet-popup-content p {
-  margin: 6px 0;
+  margin: 2px 0;
 }
 
 .cadastral_li_item {
@@ -64,6 +65,7 @@
   color: #555555;
   align-self: baseline;
   width: 35%;
+  line-height: 1.4;
 }
 
 .cadastral_li_item span {

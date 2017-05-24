@@ -207,7 +207,7 @@ class Map extends Component {
             
                     Lmap.openPopup(cadastral_template, coord, {
                         maxWidth: 300,
-                        minWidth: 150,
+                        minWidth: 200,
                     });
                 }
             })
