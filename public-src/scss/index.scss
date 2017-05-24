@@ -169,14 +169,20 @@ body {
 }
 
 .chart_2 .highcharts-container  {
-  max-width: 95%;
+  //max-width: 95%;
 }
 
 .chart_2 {
   min-width: 45%;
   flex-basis:50%;
   box-shadow: $shadow;
+  overflow: hidden;
+
+  &.barChart_full {
+    overflow: auto;
+  }
 }
+
 .main__right {
   width: $main__right;
   float: right;
@@ -198,12 +204,16 @@ body {
   box-shadow: $shadow;
 }
 .barChart_full {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   z-index: 9999;
   width: 100%;
   height: 100%;
+
+  .multiChart {
+    height: 33vh !important;
+  }
 }
 
 .highcharts-drilldown-axis-label {
@@ -251,10 +261,14 @@ body {
 }
 
 
-#item_bar_chart,
+.item_bar_chart,
 #item_chart,
 #bubble_chart {
   height: calc(100% - 30px);
+}
+
+.multiChart {
+  height: calc(100% + 40px);
 }
 
 .region_toggle {
