@@ -58,10 +58,18 @@ let cadastral = null
     //get html data from chunk of code
     const regex = /(<([^>]+)>)/ig
     let result = curObject.replace(regex, "|");
+        
     //string to array
     let newItem = result.split("|")
     newItem = newItem.filter((word) => word !== '');
     
+    //if Key: null remove this key
+    for(let i = 0; i < newItem.length; i++) {
+        
+        if ((i+1 !== newItem.length) && (newItem[i].endsWith(':') && newItem[i+1].endsWith(':')) ) {
+            newItem.splice(i, 1)
+        }
+    }
     //remove ':' symbols from array
     newItem = newItem.map((word) => {
         if (word.endsWith(':') )
@@ -70,14 +78,26 @@ let cadastral = null
             return word
     })
     
-    //array to key: value
+    
     let dataObject = {}
+    //check only important data
+    const goodKeys = [
+        "Район",
+        "Зона",
+        "Квартал",
+        "КОАТУУ",
+        "Область",
+        "Кадастровий номер",
+        "Тип власності",
+        "Цільове призначення",
+        "Площа"
+    ];
+    
+    //array to key: value
     for(let j = 0; j < newItem.length; j++) {
-        if(j > 6 ) {
-            continue;
+        if (goodKeys.includes(newItem[j]) ) {
+            dataObject[newItem[j]] = newItem[j+1]
         }
-        
-        dataObject[newItem[j]] = newItem[j+1]
         j++;
     }
     
