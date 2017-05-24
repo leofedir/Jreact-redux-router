@@ -100,9 +100,31 @@ export default function getMap(data, rebuild = true, isRegion) {
         }
         return
     }
+    
+    function getRandomColorLayer() {
+        const arrWithColor = [
+            {
+                scale: ['#bdc9e1', '#045a8c'],
+                color: '#033a59'
+            },
+            {
+                scale: ['#edf8e9', '#006d2c'],
+                color: '#003b16',
+            },
+            {
+                scale: ['#ffffb2', '#bd0026'],
+                color: '#a12f19',
+            }
+        ];
+        
+        let randIndex = Math.floor(Math.random() * 3);
+        
+        return arrWithColor[randIndex]
+    }
 
     unsubscribe = store.subscribe(handleChange);
-
+    randColor = rebuild ? getRandomColorLayer() : randColor;
+    
     function renderLayer() {
         // store.dispatch(startLoad());
         if (Lmap.hasLayer(choroplethLayer)) {
@@ -127,7 +149,6 @@ export default function getMap(data, rebuild = true, isRegion) {
             mouseover: onMouseOver
         };
         
-        randColor = rebuild ? getRandomColorLayer() : randColor;
         const layerObject = {
             valueProperty: range_items[range_item],
             scale: randColor.scale,
@@ -145,26 +166,7 @@ export default function getMap(data, rebuild = true, isRegion) {
         };
         choroplethLayer = L.choropleth(data, layerObject).addTo(Lmap);
         
-        function getRandomColorLayer() {
-            const arrWithColor = [
-                {
-                    scale: ['#bdc9e1', '#045a8c'],
-                    color: '#033a59'
-                },
-                {
-                    scale: ['#edf8e9', '#006d2c'],
-                    color: '#003b16',
-                },
-                {
-                    scale: ['#ffffb2', '#bd0026'],
-                    color: '#a12f19',
-                }
-            ];
-            
-            let randIndex = Math.floor(Math.random() * 3);
-            
-            return arrWithColor[randIndex]
-        }
+        
         function onMouseOver(e) {
             let item = e.target;
             item.bindTooltip(item.feature.properties.name_ua, {
