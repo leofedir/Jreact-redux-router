@@ -12,6 +12,7 @@ export let choroplethLayer = null;
 export let ato = null;
 let atoData = null;
 let unsubscribe = null;
+let randLayer = {};
 
 export default function getMap(data, rebuild = true, isRegion) {
     let layer = null;
@@ -126,13 +127,16 @@ export default function getMap(data, rebuild = true, isRegion) {
             mouseover: onMouseOver
         };
         
-        let randLayer = getRandomColorLayer();
-        choroplethLayer = L.choropleth(data, randLayer).addTo(Lmap);
+        randLayer = rebuild ? getRandomColorLayer() : randLayer;
+        const layerObject = Object.assign({}, {valueProperty: range_items[range_item]}, randLayer, {onEachFeature: function (feature, layer) {
+            layer.on(eventsMap)
+        }});
+
+        choroplethLayer = L.choropleth(data, layerObject).addTo(Lmap);
         
         function getRandomColorLayer() {
             const arrWithLayers = [
                 {
-                    valueProperty: range_items[range_item],
                     scale: ['#bdc9e1', '#045a8c'],
                     steps: 5,
                     mode: 'q',
@@ -141,13 +145,9 @@ export default function getMap(data, rebuild = true, isRegion) {
                         color: '#033a59',
                         weight: 0.2,
                         fillOpacity: 0.85
-                    },
-                    onEachFeature: function (feature, layer) {
-                        layer.on(eventsMap)
                     }
                 },
                 {
-                    valueProperty: range_items[range_item],
                     scale: ['#edf8e9', '#006d2c'],
                     steps: 5,
                     mode: 'q',
@@ -156,13 +156,9 @@ export default function getMap(data, rebuild = true, isRegion) {
                         color: '#003b16',
                         weight: 0.2,
                         fillOpacity: 0.85
-                    },
-                    onEachFeature: function (feature, layer) {
-                        layer.on(eventsMap)
                     }
                 },
                 {
-                    valueProperty: range_items[range_item],
                     scale: ['#ffffb2', '#bd0026'],
                     steps: 5,
                     mode: 'q',
@@ -171,9 +167,6 @@ export default function getMap(data, rebuild = true, isRegion) {
                         weight: 0.2,
                         fillOpacity: 0.85
         
-                    },
-                    onEachFeature: function (feature, layer) {
-                        layer.on(eventsMap)
                     }
                 }
             ]
