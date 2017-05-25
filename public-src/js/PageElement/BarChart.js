@@ -6,6 +6,12 @@ import {region} from './region_null'
 const Highcharts = require('highcharts');
 const higchartsDrilldown = require('highcharts/modules/drilldown.js');
 
+const aliasMultiChart = {
+    holodnavoda: 'Обсяг споживання холодної води, кб.м',
+    haryachavoda: 'Обсяг споживання гарячої води, кб.м',
+    uchniv: 'Кількість учнів'
+}
+
 higchartsDrilldown(Highcharts);
 let myChart = null;
 let dataStore = {};
@@ -13,7 +19,6 @@ let dataStore = {};
 
 // };
 Highcharts.Point.prototype.highlight = function (event) {
-    console.log('this >>', this)
     this.onMouseOver(); // Show the hover marker
     // this.series.chart.tooltip.refresh(this); // Show the tooltip
     this.series.chart.xAxis[0].drawCrosshair(event, this); // Show the crosshair
@@ -261,9 +266,7 @@ class BarChart extends Component {
             if (Highcharts.charts[i] !== undefined) {
                 chart = Highcharts.charts[i];
                 event = chart.pointer.normalize(e.nativeEvent); // Find coordinates within the chart
-                console.log('event', event)
                 point = chart.series[0].searchPoint(event, true); // Get the hovered point
-                console.log('point >>', point)
                 if (point) {
                     point.highlight(e.nativeEvent);
                 }
@@ -282,6 +285,8 @@ class BarChart extends Component {
 
         let chartData = [];
         let chartType = ['line', 'area', 'area']
+        let units = ['кб.м', 'кб.м', 'осіб']
+        let year_labels = ['2014 р', '2015 р', '2016 р']
 
 
         for (let key in chart3) {
@@ -312,7 +317,7 @@ class BarChart extends Component {
                         renderTo: 'chart' + i
                     },
                     title: {
-                        text: dataset.name,
+                        text: aliasMultiChart[dataset.name],
                         align: 'left',
                         margin: 0,
                         x: 30
@@ -325,12 +330,10 @@ class BarChart extends Component {
                     },
                     xAxis: {
                         crosshair: true,
-                        // events: {
-                        //     setExtremes: syncExtremes
-                        // },
-                        labels: {
-                            format: '{value} km'
-                        }
+                        events: {
+                            setExtremes: syncExtremes
+                        },
+                        categories: year_labels
                     },
                     yAxis: {
                         title: {
@@ -359,10 +362,10 @@ class BarChart extends Component {
                         name: dataset.name,
                         type: chartType[i],
                         color: Highcharts.getOptions().colors[i],
-                        fillOpacity: 0.3
-                        // tooltip: {
-                        //     valueSuffix: ' ' + dataset.unit
-                        // }
+                        fillOpacity: 0.3,
+                        tooltip: {
+                            valueSuffix: ' ' + units[i]
+                        }
                     }]
                 })
 
