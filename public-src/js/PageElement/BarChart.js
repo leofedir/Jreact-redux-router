@@ -12,6 +12,30 @@ let dataStore = {};
 // let alias_series = {
 
 // };
+Highcharts.Point.prototype.highlight = function (event) {
+    console.log('this >>', this)
+    this.onMouseOver(); // Show the hover marker
+    // this.series.chart.tooltip.refresh(this); // Show the tooltip
+    this.series.chart.xAxis[0].drawCrosshair(event, this); // Show the crosshair
+};
+
+Highcharts.Pointer.prototype.reset = function () {
+    return undefined;
+};
+
+function syncExtremes(e) {
+    var thisChart = this.chart;
+
+    if (e.trigger !== 'syncExtremes') { // Prevent feedback loop
+        Highcharts.each(Highcharts.charts, function (chart) {
+            if (chart !== thisChart) {
+                if (chart.xAxis[0].setExtremes) { // It is null while updating
+                    chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, { trigger: 'syncExtremes' });
+                }
+            }
+        });
+    }
+}
 
 class BarChart extends Component {
 
@@ -227,71 +251,30 @@ class BarChart extends Component {
     }
 
     handlerOnMouseMuve(e) {
-        console.log('e >>', e)
-        console.log('e >>', e.type)
-        var chart,
+
+        let chart,
             point,
             i,
             event;
 
-
-        for (i = 0; i < Highcharts.charts.length; i++) {
-            if (Highcharts[i] !== undefined) {
+        for (i = 0; i < Highcharts.charts.length; i = i + 1) {
+            if (Highcharts.charts[i] !== undefined) {
                 chart = Highcharts.charts[i];
-                event = chart.pointer.normalize(e.originalEvent); // Find coordinates within the chart
+                event = chart.pointer.normalize(e.nativeEvent); // Find coordinates within the chart
+                console.log('event', event)
                 point = chart.series[0].searchPoint(event, true); // Get the hovered point
-
+                console.log('point >>', point)
                 if (point) {
-                    point.highlight(e);
+                    point.highlight(e.nativeEvent);
                 }
             }
 
-
         }
-        // this.refs.multiChart.on('mousemove', function (e) {
-        //
-        // });
-
 
     }
 
     getMultiChart() {
-        /**
-         * Override the reset function, we don't need to hide the tooltips and crosshairs.
-         */
-        Highcharts.Pointer.prototype.reset = function () {
-            return undefined;
-        };
 
-        /**
-         * Highlight a point by showing tooltip, setting hover state and draw crosshair
-         */
-        Highcharts.Point.prototype.highlight = function (event) {
-            console.log('44444 >>', 44444)
-            this.onMouseOver(); // Show the hover marker
-            this.series.chart.tooltip.refresh(this); // Show the tooltip
-            this.series.chart.xAxis[0].drawCrosshair(event, this); // Show the crosshair
-        };
-
-        /**
-         * Synchronize zooming through the setExtremes event handler.
-         */
-
-        function syncExtremes(e) {
-            var thisChart = this.chart;
-            console.log('syncExtremes  e >>', e)
-
-            if (e.trigger !== 'syncExtremes') { // Prevent feedback loop
-                console.log('5555 >>', 5555)
-                Highcharts.each(Highcharts.charts, function (chart) {
-                    if (chart !== thisChart && chart !== undefined) {
-                        if (chart.xAxis[0].setExtremes) { // It is null while updating
-                            chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {trigger: 'syncExtremes'});
-                        }
-                    }
-                });
-            }
-        }
 
         const {chart3} = this.props.map_reducer
 
@@ -342,9 +325,9 @@ class BarChart extends Component {
                     },
                     xAxis: {
                         crosshair: true,
-                        events: {
-                            setExtremes: syncExtremes
-                        },
+                        // events: {
+                        //     setExtremes: syncExtremes
+                        // },
                         labels: {
                             format: '{value} km'
                         }

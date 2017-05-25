@@ -1,13 +1,16 @@
 .block_map {
   position: relative;
 }
-#zoom_in, #zoom_out, #geolocate  {
+
+#zoom_in, #zoom_out, #geolocate {
   position: absolute;
 }
+
 .map_wrapper {
   width: 100%;
   height: 100%;
 }
+
 .maps__items {
   padding: 0;
   margin: 0;
@@ -30,12 +33,14 @@
   z-index: 101;
   color: #606060;
 }
+
 #basemaps-wrapper p {
   padding-bottom: 7px;
   color: white;
   //color: #606060 !important;
   font-size: 14px;
 }
+
 .zoom_in_icon, .zoom_out_icon, .geolocate_icon {
   background: #4f5b62 none repeat scroll 0 0;
   color: white;
@@ -48,22 +53,27 @@
   box-shadow: $shadow;
   cursor: pointer;
 }
+
 .zoom_in_icon:hover, .zoom_out_icon:hover, .geolocate_icon:hover {
   opacity: 0.8;
   transition: all 0.2s ease 0s;
 }
+
 .zoom_in_icon {
   border-radius: $radius $radius 0 0;
   bottom: 84px;
 }
+
 .zoom_out_icon {
   border-radius: 0 0 $radius $radius;
   bottom: 52px;
 }
+
 .geolocate_icon {
   border-radius: $radius;
   bottom: 10px;
 }
+
 .ico_map_full {
   margin: 0;
   padding: 10px;
@@ -75,7 +85,6 @@
   font-weight: bold;
 }
 
-
 .map_heder_title .test {
   color: #606060;
   font-size: 17px;
@@ -83,15 +92,17 @@
   width: 50%;
   transition: 0.5s;
 }
+
 .menu__item-text {
   transition: $transition-win;
   white-space: nowrap;
 }
+
 .test .menu__item {
   padding: 5px 5px 5px 9px;
 }
 
-.mapFull  .main__map {
+.mapFull .main__map {
   float: left;
   height: calc(100vh - 85px);
 }
@@ -107,6 +118,7 @@
 .chart_2 .highcharts-title {
   font-family: Arial, Helvetica, sans-serif !important;
 }
+
 .chart_2 .highcharts-drilldown-axis-label tspan {
   font-family: Arial, Helvetica, sans-serif !important;
 }
