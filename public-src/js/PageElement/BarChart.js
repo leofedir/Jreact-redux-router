@@ -278,15 +278,13 @@ class BarChart extends Component {
 
     getMultiChart() {
 
-
         const {chart3} = this.props.map_reducer
 
-
-
-        let chartData = [];
-        let chartType = ['line', 'area', 'area']
-        let units = ['кб.м', 'кб.м', 'осіб']
-        let year_labels = ['2014 р', '2015 р', '2016 р']
+        const chartData = [];
+        const chartType = ['area', 'area', 'line'];
+        const units = ['кб.м', 'кб.м', 'осіб'];
+        const year_labels = ['2014 р', '2015 р', '2016 р'];
+        const colors = ['#7cb5ec', '#f7a35c', '#90ee7e' ];
 
 
         for (let key in chart3) {
@@ -311,8 +309,9 @@ class BarChart extends Component {
 
                 let options = new Object({
                     chart: {
-                        marginLeft: 40, // Keep all charts left aligned
+                        marginLeft: 45, // Keep all charts left aligned
                         spacingTop: 20,
+                        marginRight: 20,
                         spacingBottom: 20,
                         renderTo: 'chart' + i
                     },
@@ -343,7 +342,7 @@ class BarChart extends Component {
                     tooltip: {
                         positioner: function () {
                             return {
-                                x: this.chart.chartWidth - this.label.width, // right aligned
+                                x: this.chart.chartWidth - this.label.width - 20, // right aligned
                                 y: -1 // align to title
                             };
                         },
@@ -361,7 +360,7 @@ class BarChart extends Component {
                         data: dataset.data,
                         name: dataset.name,
                         type: chartType[i],
-                        color: Highcharts.getOptions().colors[i],
+                        color: colors[i],
                         fillOpacity: 0.3,
                         tooltip: {
                             valueSuffix: ' ' + units[i]
