@@ -38,6 +38,7 @@ import {
 
 
 export function get_map_area(url, rebuild = true, alias, isRegion) {
+    
     return (dispatch) => {
         dispatch({
             type: GET_MAP_AREA_REQUEST,

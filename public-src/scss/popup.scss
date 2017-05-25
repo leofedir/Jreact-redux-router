@@ -41,3 +41,48 @@
   border-bottom: none;
 }
 
+.cadastral_popup {
+  margin: 0;
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.leaflet-popup-content p {
+  margin: 2px 0;
+}
+
+.cadastral_li_item {
+  display: flex;
+  align-items: baseline;
+  margin-left: 10px;
+}
+
+.cadastral_li_item p {
+  font-weight: bold;
+  color: #555555;
+  align-self: baseline;
+  width: 35%;
+  line-height: 1.4;
+}
+
+.cadastral_li_item span {
+  margin: 10px;
+  width: 65%;
+}
+
+.cadastral_title_layer {
+  background: #3a3d3f;
+  height: 24px;
+  align-items: center;
+  color: white;
+  border-radius: 4px 4px 0 0;
+}
+
+.leaflet-popup-content-wrapper {
+  padding:0;
+  border-radius: 12px 12px 4px 4px;
+}
+

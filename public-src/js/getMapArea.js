@@ -12,6 +12,7 @@ export let choroplethLayer = null;
 export let ato = null;
 let atoData = null;
 let unsubscribe = null;
+let randColor = {};
 
 export default function getMap(data, rebuild = true, isRegion) {
     let layer = null;
@@ -100,7 +101,29 @@ export default function getMap(data, rebuild = true, isRegion) {
         return
     }
 
+    function getRandomColorLayer() {
+        const arrWithColor = [
+            {
+                scale: ['#bdc9e1', '#045a8c'],
+                color: '#033a59'
+            },
+            {
+                scale: ['#edf8e9', '#006d2c'],
+                color: '#003b16',
+            },
+            {
+                scale: ['#ffffb2', '#bd0026'],
+                color: '#a12f19',
+            }
+        ];
+
+        let randIndex = Math.floor(Math.random() * 3);
+
+        return arrWithColor[randIndex]
+    }
+
     unsubscribe = store.subscribe(handleChange);
+    randColor = rebuild ? getRandomColorLayer() : randColor;
 
     function renderLayer() {
         // store.dispatch(startLoad());
@@ -122,7 +145,6 @@ export default function getMap(data, rebuild = true, isRegion) {
         isRegion ? joinGeometry(coordinate.region) : joinGeometry(coordinate.district)
 
         const eventsMap = {
-
             click: whenClicked,
             mouseover: onMouseOver,
             mouseout: onMouseout
@@ -160,21 +182,24 @@ export default function getMap(data, rebuild = true, isRegion) {
 
         }
 
-        choroplethLayer = L.choropleth(data, {
+        const layerObject = {
             valueProperty: range_items[range_item],
-            scale: ['#edf8e9', '#006d2c'],
-            steps: 5,
+            scale: randColor.scale,
+                steps: 5,
             mode: 'q',
             smoothFactor: 0,
             style: {
-                color: '#003b16',
+            color: randColor.color,
                 weight: 0.2,
                 fillOpacity: 0.85
-
             },
             onEachFeature: function (feature, layer) {
                 layer.on(eventsMap)
             }
+        };
+        choroplethLayer = L.choropleth(data, layerObject).addTo(Lmap);
+
+
         }).addTo(Lmap);
 
         function onMouseout(e) {

@@ -26,15 +26,19 @@ let layer;
 let cadastral = null
 
     function tmpl(dataObject) {
-        console.log(dataObject)
-        let templateString = `<ul>`;
-            for (let i in dataObject) {
-                console.log(dataObject[i])
-                templateString += `<li style="display: flex;align-items: center;justify-content: space-between; margin: 0 20px"><p style="font-weight: bold;color: #555555;">${i}:</p><span>${dataObject[i]}</span></li>`
-            }
-            templateString += `</ul>`;
+        let template = ``;
         
-        return templateString
+        let titleLayer = `<div class="cadastral_title_layer"></div>`;
+        template += titleLayer;
+        
+        let unorderList = `<ul>`;
+            for (let i in dataObject) {
+                unorderList += `<li class="cadastral_li_item"><p>${i}:</p><span>${dataObject[i]}</span></li>`;
+            }
+            unorderList += `</ul>`;
+        
+        template += unorderList;
+        return template
     }
 
 //parse html object and return javascript object
@@ -59,13 +63,19 @@ let cadastral = null
     
     //get html data from chunk of code
     const regex = /(<([^>]+)>)/ig
-    console.log(curObject)
     let result = curObject.replace(regex, "|");
-    console.log(result)
+        
     //string to array
     let newItem = result.split("|")
     newItem = newItem.filter((word) => word !== '');
     
+    //if Key: null remove this key
+    for(let i = 0; i < newItem.length; i++) {
+        
+        if ((i+1 !== newItem.length) && (newItem[i].endsWith(':') && newItem[i+1].endsWith(':')) ) {
+            newItem.splice(i, 1)
+        }
+    }
     //remove ':' symbols from array
     newItem = newItem.map((word) => {
         if (word.endsWith(':') )
@@ -74,14 +84,26 @@ let cadastral = null
             return word
     })
     
-    //array to key: value
+    
     let dataObject = {}
+    //check only important data
+    const goodKeys = [
+        "Район",
+        "Зона",
+        "Квартал",
+        "КОАТУУ",
+        "Область",
+        "Кадастровий номер",
+        "Тип власності",
+        "Цільове призначення",
+        "Площа"
+    ];
+    
+    //array to key: value
     for(let j = 0; j < newItem.length; j++) {
-        if(j > 6 ) {
-            continue;
+        if (goodKeys.includes(newItem[j]) ) {
+            dataObject[newItem[j]] = newItem[j+1]
         }
-        
-        dataObject[newItem[j]] = newItem[j+1]
         j++;
     }
     
@@ -206,13 +228,12 @@ class Map extends Component {
             .then(parseJSON)
             .then(d => {
                 if(!d.hasOwnProperty("pusto")) {
-                    console.log(d);
                     cadastral = parserHTMLtoObject(d);
                     let cadastral_template = tmpl(cadastral);
             
                     Lmap.openPopup(cadastral_template, coord, {
-                        maxWidth: 550,
-                        minWidth: 250,
+                        maxWidth: 300,
+                        minWidth: 200,
                     });
                 }
             })
