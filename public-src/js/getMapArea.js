@@ -153,7 +153,7 @@ export default function getMap(data, rebuild = true, isRegion) {
 
 // hightligth color
         function LightenDarkenColor(col, amt) {
-
+            
             let usePound = false;
 
             if (col[0] == "#") {
@@ -203,11 +203,13 @@ export default function getMap(data, rebuild = true, isRegion) {
             let item = e.target;
             // console.log('item >>', item.options.fillColor)
 
-            choroplethLayer.resetStyle(item);
+            if (item !== layer) choroplethLayer.resetStyle(item);
         }
 
         function onMouseOver(e) {
             let item = e.target;
+            if (item == layer) return;
+            
             let color = item.options.fillColor
             let newColor = LightenDarkenColor(color, +50)
             item.setStyle({fillColor: newColor})
