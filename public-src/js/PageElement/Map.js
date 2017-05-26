@@ -26,19 +26,19 @@ let layer;
 let cadastral = null
 
     function tmpl(dataObject) {
-        let template = ``;
-        
-        let titleLayer = `<div class="cadastral_title_layer"></div>`;
-        template += titleLayer;
-        
-        let unorderList = `<ul>`;
+            let template = ``;
+
+            let titleLayer = `<div class="cadastral_title_layer"></div>`;
+            template += titleLayer;
+
+            let unorderList = `<ul>`;
             for (let i in dataObject) {
                 unorderList += `<li class="cadastral_li_item"><p>${i}:</p><span>${dataObject[i]}</span></li>`;
             }
             unorderList += `</ul>`;
-        
-        template += unorderList;
-        return template
+
+            template += unorderList;
+            return template
     }
 
 //parse html object and return javascript object
@@ -204,6 +204,7 @@ class Map extends Component {
         kadastr = L.tileLayer.wms("http://212.26.144.110/geowebcache/service/wms", {
             layers: 'kadastr',
             format: 'image/png',
+            styles: 'fill:#0f0',
             crs: L.CRS.EPSG900913,
             uppercase: true,
             detectRetina: true,
@@ -227,14 +228,54 @@ class Map extends Component {
             .then(checkStatus)
             .then(parseJSON)
             .then(d => {
-                if(!d.hasOwnProperty("pusto")) {
+                if(!("pusto" in d)) {
                     cadastral = parserHTMLtoObject(d);
-                    let cadastral_template = tmpl(cadastral);
-            
-                    Lmap.openPopup(cadastral_template, coord, {
-                        maxWidth: 300,
-                        minWidth: 200,
-                    });
+                    if ('Кадастровий номер' in cadastral) {
+
+                        let number = cadastral['Кадастровий номер']
+
+                        fetch('/kadastr', {
+                            method: 'post',
+                            headers: {
+                                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                            },
+                            body: `number=${ number }`
+                        })
+                            .then(checkStatus)
+                            .then(parseJSON)
+                            .then(d=> {
+                                let info = d[0]
+                                let template = ``;
+
+                                let titleLayer = `<div class="cadastral_title_layer"></div>`;
+                                template += titleLayer;
+
+                                let unorderList = `<ul>`;
+                                for (let i in cadastral) {
+                                    unorderList += `<li class="cadastral_li_item"><p>${i}:</p><span>${cadastral[i]}</span></li>`;
+                                }
+                                if (info) {
+                                    unorderList += `<li class="cadastral_li_item"><p>Інформація:</p><span>${info.info}</span></li>`;
+                                    unorderList += `<li class="cadastral_li_item"><p>Код документа:</p><span>${info.kod_document}</span></li>`;
+                                }
+                                unorderList += `</ul>`;
+                                template += unorderList;
+                                return template
+                            })
+                            .then(template => {
+                                Lmap.openPopup(template, coord, {
+                                    maxWidth: 300,
+                                    minWidth: 200,
+                                });
+                            })
+                            .catch(e => console.error('e >>', e))
+                    } else {
+                        let template = tmpl(cadastral);
+                        Lmap.openPopup(template, coord, {
+                            maxWidth: 300,
+                            minWidth: 200,
+                        });
+                    }
                 }
             })
             .catch(e => console.error('e >>', e))
