@@ -114,7 +114,7 @@ class Map extends Component {
 
     componentDidMount() {
         this.createMap();
-        cordinateContainer = document.getElementById('coordinate')
+        cordinateContainer = this.refs.coordinate
     }
 
     zoomFunction() {
@@ -204,13 +204,13 @@ class Map extends Component {
         kadastr = L.tileLayer.wms("http://212.26.144.110/geowebcache/service/wms", {
             layers: 'kadastr',
             format: 'image/png',
-            styles: 'fill:#0f0',
             crs: L.CRS.EPSG900913,
             uppercase: true,
             detectRetina: true,
             maxZoom: 21,
             attribution: '<a href="http://dzk.gov.ua" target="_blank">ЦДЗК</a>'
         });
+
     }
 
     omButtonMapClick() {
@@ -222,7 +222,14 @@ class Map extends Component {
         let zoom = Lmap.getZoom();
         let nyCoordinat = kadastr.options.crs.project(coord)
 
-        let query = `x=${  nyCoordinat.y }&y=${ nyCoordinat.x }&zoom=${ zoom }&actLayers%5B%5D=kadastr`
+        const query = `x=${  nyCoordinat.y }&y=${ nyCoordinat.x }&zoom=${ zoom }&actLayers%5B%5D=kadastr`;
+        const dataStyle = `http://map.land.gov.ua/geowebcache/service/wms?SERVICE=WMS&REQUEST=GetStyles&LAYERS=kadastr&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=false&VERSION=1.1.1&HEIGHT=256&WIDTH=256&SRS=EPSG%3A900913&BBOX=4383204.949985147,5635549.221409476,5009377.085697311,6261721.357121641`
+
+        fetch(dataStyle)
+            .then(checkStatus)
+            .then(d => {
+                console.log('d >>', d)
+            })
 
         fetch(`http://map.land.gov.ua/kadastrova-karta/getobjectinfo?${query}`)
             .then(checkStatus)
@@ -320,7 +327,7 @@ class Map extends Component {
                     <i className="fa fa-plus fa-1x zoom_in_icon" onClick={::this.zoom_in} id="zoom_in"/>
                     <i className="fa fa-minus fa-1x zoom_out_icon" onClick={::this.zoom_out} id="zoom_out"/>
                     <i className="fa fa-dot-circle-o fa-1x geolocate_icon" onClick={::this.geolocate} id="geolocate"/>
-                    <p id="coordinate"/>
+                    <p ref="coordinate" id="coordinate"/>
                     <div id="map" className="maps__items"/>
                     <div id="basemaps-wrapper">
                         <p className="basemap_title">Базова карта</p>
