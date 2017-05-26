@@ -255,14 +255,15 @@ class BarChart extends Component {
         }
     }
 
-    handlerOnMouseMuve(e) {
-
+    handlerOnMouseMove(e) {
+        
         let chart,
             point,
             i,
             event;
 
         for (i = 0; i < Highcharts.charts.length; i = i + 1) {
+            if(Highcharts.chart[i] === undefined || Highcharts.chart[i].renderTo === 'div#item_chart') continue;
             if (Highcharts.charts[i] !== undefined) {
                 chart = Highcharts.charts[i];
                 event = chart.pointer.normalize(e.nativeEvent); // Find coordinates within the chart
@@ -277,7 +278,6 @@ class BarChart extends Component {
     }
 
     getMultiChart() {
-
         const {chart3} = this.props.map_reducer
 
         const chartData = [];
@@ -384,9 +384,10 @@ class BarChart extends Component {
 
     render() {
         const {bar_chart_full, chart3, dataChartRegion, data_success, properties} = this.props.map_reducer;
-        const chartDiv = <div ref="multiChart" className="multiChart" onMouseMove={::this.handlerOnMouseMuve}><div id="chart0" className="item_bar_chart"/><div id="chart1" className="item_bar_chart"/><div id="chart2" className="item_bar_chart"/></div>;
+        const chartDiv = <div ref="multiChart" className="multiChart" onMouseMove={::this.handlerOnMouseMove}><div id="chart0" className="item_bar_chart"/><div id="chart1" className="item_bar_chart"/><div id="chart2" className="item_bar_chart"/></div>;
         return (
             <div className={bar_chart_full ? 'chart_2 barChart_full' : 'chart_2'}>
+                {/*Title for right Trend BarChart*/}
                 <div className="item_header">
                     <div
                         className="map_heder_title">{chart3 || !properties ? 'Тренд' : 'Діаграма-рейтинг (ТОП-5)'}</div>
@@ -394,6 +395,8 @@ class BarChart extends Component {
                         <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"/>
                     </div>
                 </div>
+                
+                {/*Right Trend BarChart*/}
                 <div className="item_content">
                     <div className="region_toggle"
                          style={properties === null && !data_success ? {display: 'none'} : {display: 'block'}}
