@@ -153,7 +153,7 @@ export default function getMap(data, rebuild = true, isRegion) {
 
 // hightligth color
         function LightenDarkenColor(col, amt) {
-            
+
             let usePound = false;
 
             if (col[0] == "#") {
