@@ -256,22 +256,21 @@ class BarChart extends Component {
     }
 
     handlerOnMouseMove(e) {
-        
+    
         let chart,
             point,
             i = Highcharts.charts.length - 3,
             lenth = Highcharts.charts.length,
             event;
-        
-            if (Highcharts.charts[i] !== undefined ) {
-                chart = Highcharts.charts[i];
-                event = chart.pointer.normalize(e.nativeEvent); // Find coordinates within the chart
-                point = chart.series[0].searchPoint(event, true); // Get the hovered point
-                if (point) {
-                    point.highlight(e.nativeEvent);
-                }
+    
+        if (Highcharts.charts[i] !== undefined) {
+            chart = Highcharts.charts[i];
+            event = chart.pointer.normalize(e.nativeEvent); // Find coordinates within the chart
+            point = chart.series[0].searchPoint(event, true); // Get the hovered point
+            if (point) {
+                point.highlight(e.nativeEvent);
             }
-
+        }
     }
 
     getMultiChart() {
