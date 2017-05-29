@@ -26,7 +26,7 @@ let layer;
 let cadastral = null
 
     function tmpl(dataObject) {
-        let template = ``;
+         let template = ``;
         
         let titleLayer = `<div class="cadastral_title_layer"></div>`;
         template += titleLayer;
@@ -114,7 +114,7 @@ class Map extends Component {
 
     componentDidMount() {
         this.createMap();
-        cordinateContainer = document.getElementById('coordinate')
+        cordinateContainer = this.refs.coordinate
     }
 
     zoomFunction() {
@@ -221,20 +221,67 @@ class Map extends Component {
         let zoom = Lmap.getZoom();
         let nyCoordinat = kadastr.options.crs.project(coord)
 
-        let query = `x=${  nyCoordinat.y }&y=${ nyCoordinat.x }&zoom=${ zoom }&actLayers%5B%5D=kadastr`
+        const query = `x=${  nyCoordinat.y }&y=${ nyCoordinat.x }&zoom=${ zoom }&actLayers%5B%5D=kadastr`;
+        const dataStyle = `http://map.land.gov.ua/geowebcache/service/wms?SERVICE=WMS&REQUEST=GetStyles&LAYERS=kadastr&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=false&VERSION=1.1.1&HEIGHT=256&WIDTH=256&SRS=EPSG%3A900913&BBOX=4383204.949985147,5635549.221409476,5009377.085697311,6261721.357121641`
+
+        fetch(dataStyle)
+            .then(checkStatus)
+            .then(d => {
+                console.log('d >>', d)
+            })
 
         fetch(`http://map.land.gov.ua/kadastrova-karta/getobjectinfo?${query}`)
             .then(checkStatus)
             .then(parseJSON)
             .then(d => {
-                if(!d.hasOwnProperty("pusto")) {
+                if(!("pusto" in d)) {
                     cadastral = parserHTMLtoObject(d);
-                    let cadastral_template = tmpl(cadastral);
-            
-                    Lmap.openPopup(cadastral_template, coord, {
-                        maxWidth: 300,
-                        minWidth: 200,
-                    });
+                    if ('Кадастровий номер' in cadastral) {
+
+                        let number = cadastral['Кадастровий номер']
+
+                        fetch('/kadastr', {
+                            method: 'post',
+                            headers: {
+                                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                            },
+                            body: `number=${ number }`
+                        })
+                            .then(checkStatus)
+                            .then(parseJSON)
+                            .then(d=> {
+                                let info = d[0]
+                                let template = ``;
+
+                                let titleLayer = `<div class="cadastral_title_layer"></div>`;
+                                template += titleLayer;
+
+                                let unorderList = `<ul>`;
+                                for (let i in cadastral) {
+                                    unorderList += `<li class="cadastral_li_item"><p>${i}:</p><span>${cadastral[i]}</span></li>`;
+                                }
+                                if (info) {
+                                    unorderList += `<li class="cadastral_li_item"><p>Інформація:</p><span>${info.info}</span></li>`;
+                                    unorderList += `<li class="cadastral_li_item"><p>Код документа:</p><span>${info.kod_document}</span></li>`;
+                                }
+                                unorderList += `</ul>`;
+                                template += unorderList;
+                                return template
+                            })
+                            .then(template => {
+                                Lmap.openPopup(template, coord, {
+                                    maxWidth: 300,
+                                    minWidth: 200,
+                                });
+                            })
+                            .catch(e => console.error('e >>', e))
+                    } else {
+                        let template = tmpl(cadastral);
+                        Lmap.openPopup(template, coord, {
+                            maxWidth: 300,
+                            minWidth: 200,
+                        });
+                    }
                 }
             })
             .catch(e => console.error('e >>', e))
@@ -279,7 +326,7 @@ class Map extends Component {
                     <i className="fa fa-plus fa-1x zoom_in_icon" onClick={::this.zoom_in} id="zoom_in"/>
                     <i className="fa fa-minus fa-1x zoom_out_icon" onClick={::this.zoom_out} id="zoom_out"/>
                     <i className="fa fa-dot-circle-o fa-1x geolocate_icon" onClick={::this.geolocate} id="geolocate"/>
-                    <p id="coordinate"/>
+                    <p ref="coordinate" id="coordinate"/>
                     <div id="map" className="maps__items"/>
                     <div id="basemaps-wrapper">
                         <p className="basemap_title">Базова карта</p>

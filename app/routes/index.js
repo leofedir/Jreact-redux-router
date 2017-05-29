@@ -78,6 +78,15 @@ router.post('/region', function (req, res) {
     }
 });
 
+router.post('/kadastr', function (req, res) {
+    const number = req.body.number;
+
+    pgdb.query(`select* from kadastr where kod_dil='${ number }'`)
+        .then(d => {
+            res.json(d)
+        })
+})
+
 demografiya(router);
 claster(router)
 module.exports = router;
