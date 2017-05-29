@@ -309,6 +309,52 @@ body {
   fill: #dcdcdc !important;
 }
 
+
+.derj_simvol {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+}
+.derj_simvol > div {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-self: stretch;
+  margin-top: 7px;
+  margin-right: 10px;
+}
+.derj_prapor {
+  align-self: end;
+  -webkit-align-self: center;
+}
+
+.derj_simvol p {
+  align-self: end;
+  -webkit-align-self: flex-end;
+}
+.info .info_title {
+  background-color: rgba(0, 0, 0, 0.11);
+  border-top: 2px solid #3a3d3f;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.ukraine {
+  font-family: arial;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+.info_small_text {
+ font-size: 12px;
+  text-align: center;
+}
+.text_center {
+  text-align: center;
+}
 @media screen and (max-width:1600px)  {
   .map_heder_title .test{
     width: 50%;

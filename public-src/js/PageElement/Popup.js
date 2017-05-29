@@ -27,7 +27,6 @@ class Popup extends Component {
                 } else if(key.indexOf('usdyear') >= 0) {
                     dataToChartUsd.push(+feature[key])
                 }
-
             }
             return (
                 <div className="description">
@@ -88,6 +87,7 @@ class Popup extends Component {
 
     render() {
         const {feature, feature_claster} = this.props;
+        dataToChartUsd = [];
         return (feature !== null || feature_claster !== null) ? this.getInfo() : this.noInfo()
     }
 }
