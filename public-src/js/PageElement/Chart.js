@@ -205,7 +205,7 @@ class Chart extends Component {
     render() {
         const {chart_full, dataChartUsd, feature, claster, curentMap, for1Student, chart2} = this.props.map_reducer;
         const showToggleUsd = dataToChartUsd.length > 0;
-
+        
         return (
             <div className={chart_full ? 'chart_1 barChart_full' : 'chart_1'}>
                 <div className="item_header">
