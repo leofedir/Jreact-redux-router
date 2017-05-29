@@ -263,7 +263,7 @@ class BarChart extends Component {
             event;
 
         for (i = 0; i < Highcharts.charts.length; i = i + 1) {
-            if(Highcharts.chart[i] === undefined || Highcharts.chart[i].renderTo === 'div#item_chart') continue;
+            // if(Highcharts.chart[i] === undefined || Highcharts.chart[i].renderTo === 'div#item_chart') continue;
             if (Highcharts.charts[i] !== undefined) {
                 chart = Highcharts.charts[i];
                 event = chart.pointer.normalize(e.nativeEvent); // Find coordinates within the chart
@@ -278,7 +278,7 @@ class BarChart extends Component {
     }
 
     getMultiChart() {
-        const {chart3} = this.props.map_reducer
+        const {chart3} = this.props.map_reducer;
 
         const chartData = [];
         const chartType = ['area', 'area', 'line'];
