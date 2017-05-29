@@ -170,6 +170,25 @@ class Map extends Component {
         // add event to map actions
         Lmap.on('mousemove', onMouseMove);
 
+
+        // fetch("https://www.drv.gov.ua/portal/gis$core.Gis_DistrPoly?p_f5271=1&ts=0.5532982378139228", {
+        //     dataType: "json",
+        //     method: 'post',
+        //     mode: 'no-cors',
+        //     headers: {
+        //         "Content-type": "text/html; charset=WINDOWS-1251",
+        //         // "Access-Control-Allow-Origin": "http://localhost"
+        //     },
+        // })
+        //     // .then(checkStatus)
+        //     // .then(parseJSON)
+        //     .then(data => {
+        //         console.log('DATA >>', data.status , data.headers.get('Content-Type'))
+        //     })
+        //     .catch(e => {
+        //         console.log("Data err >> " ,  e);
+        //     })
+
         fetch('main', {
             method: 'post',
             body: ''
