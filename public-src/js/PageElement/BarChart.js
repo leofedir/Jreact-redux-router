@@ -259,12 +259,13 @@ class BarChart extends Component {
         
         let chart,
             point,
-            i,
+            i = Highcharts.charts.length - 3,
+            lenth = Highcharts.charts.length,
             event;
 
         for (i = 0; i < Highcharts.charts.length; i = i + 1) {
-            // if(Highcharts.chart[i] === undefined || Highcharts.chart[i].renderTo === 'div#item_chart') continue;
             if (Highcharts.charts[i] !== undefined) {
+        
                 chart = Highcharts.charts[i];
                 event = chart.pointer.normalize(e.nativeEvent); // Find coordinates within the chart
                 point = chart.series[0].searchPoint(event, true); // Get the hovered point
@@ -272,9 +273,7 @@ class BarChart extends Component {
                     point.highlight(e.nativeEvent);
                 }
             }
-
         }
-
     }
 
     getMultiChart() {
