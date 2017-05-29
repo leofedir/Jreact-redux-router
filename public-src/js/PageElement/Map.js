@@ -26,19 +26,19 @@ let layer;
 let cadastral = null
 
     function tmpl(dataObject) {
-            let template = ``;
-
-            let titleLayer = `<div class="cadastral_title_layer"></div>`;
-            template += titleLayer;
-
-            let unorderList = `<ul>`;
+         let template = ``;
+        
+        let titleLayer = `<div class="cadastral_title_layer"></div>`;
+        template += titleLayer;
+        
+        let unorderList = `<ul>`;
             for (let i in dataObject) {
                 unorderList += `<li class="cadastral_li_item"><p>${i}:</p><span>${dataObject[i]}</span></li>`;
             }
             unorderList += `</ul>`;
-
-            template += unorderList;
-            return template
+        
+        template += unorderList;
+        return template
     }
 
 //parse html object and return javascript object
@@ -210,7 +210,6 @@ class Map extends Component {
             maxZoom: 21,
             attribution: '<a href="http://dzk.gov.ua" target="_blank">ЦДЗК</a>'
         });
-
     }
 
     omButtonMapClick() {
