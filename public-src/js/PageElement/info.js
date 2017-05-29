@@ -10,8 +10,9 @@ class Info extends Component {
                     <div className="map_heder_title">Довідка</div>
                 </div>
                 <div className="item_content">
+
                     <div id="info"
-                         dangerouslySetInnerHTML={info ? {__html: info} : {__html: '&nbsp;&nbsp;Україна - держава у Східній Європі. <p>&nbsp;&nbsp;Площа території - 60 357 712 га.<p>&nbsp;&nbsp;Кількість населення - 44 756 215 особи. <p>&nbsp;&nbsp;Столиця - м.Київ <p>&nbsp;&nbsp;Державні символи - прапор і герб.<p>&nbsp;&nbsp;Державна мова - українська.<p>&nbsp;&nbsp;Державна валюта - гривня, ₴.'}}/>
+                         dangerouslySetInnerHTML={info ? {__html: info} : {__html: '<div class="ukraine">Україна</div><div class="info_title">&nbsp;&nbsp;Державні символи</div> <div class="derj_simvol"><div><img class="derj_prapor" src="img/Flag.png"/><p>Прапор</p></div><div><img class="derj_gerb" src="img/Coat.png"/><p>Герб</p></div></div><div class="info_title">Площа території</div> <div class="text_center">60 357 712 га.</div><div class="info_title">Кількість населення </div> <div class="text_center">44 756 215 особи.</div><div class="info_small_text">(станом на 01 січня 2017 року)</div> <div class="info_title">Столиця </div><div class="text_center">м.Київ</div> <div class="info_small_text">(50°27′ пн. ш. 30°30′ сх. д.)</div><p><div class="info_title">Державна мова</div> <div class="text_center">українська</div><div class="info_title">Державна валюта </div> <div class="text_center">гривня, ₴</div>'}}/>
                 </div>
             </div>
         )
