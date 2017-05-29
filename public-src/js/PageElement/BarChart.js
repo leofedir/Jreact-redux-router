@@ -259,12 +259,13 @@ class BarChart extends Component {
         
         let chart,
             point,
-            i,
+            i = Highcharts.charts.length - 3,
+            lenth = Highcharts.charts.length,
             event;
 
-        for (i = 0; i < Highcharts.charts.length; i = i + 1) {
+        for (i; i < lenth; i++) {
             // if(Highcharts.chart[i] === undefined || Highcharts.chart[i].renderTo === 'div#item_chart') continue;
-            if (Highcharts.charts[i] !== undefined) {
+            if (Highcharts.charts[i] !== undefined ) {
                 chart = Highcharts.charts[i];
                 event = chart.pointer.normalize(e.nativeEvent); // Find coordinates within the chart
                 point = chart.series[0].searchPoint(event, true); // Get the hovered point
