@@ -153,8 +153,6 @@ export default function getMap(data, rebuild = true, isRegion) {
 
 // hightligth color
         function LightenDarkenColor(col, amt) {
-            
-            console.log(col)
             let usePound = false;
 
             if (col[0] == "#") {
@@ -162,8 +160,6 @@ export default function getMap(data, rebuild = true, isRegion) {
                 usePound = true;
             }
             
-            console.log(col)
-
             let num = parseInt(col,16);
 
             let r = (num >> 16) + amt;
@@ -180,8 +176,6 @@ export default function getMap(data, rebuild = true, isRegion) {
 
             if (g > 255) g = 255;
             else if (g < 0) g = 0;
-            
-            console.log('red >>', r);
 
             return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
 
