@@ -263,7 +263,8 @@ class BarChart extends Component {
             event;
 
         for (i = 0; i < Highcharts.charts.length; i = i + 1) {
-            // if(Highcharts.chart[i] === undefined || Highcharts.chart[i].renderTo === 'div#item_chart') continue;
+            if(Highcharts.charts[i] === undefined || Highcharts.charts[i].renderTo === 'div#item_chart') continue;
+            // console.log(Highcharts.charts[i].renderTo);
             if (Highcharts.charts[i] !== undefined) {
                 chart = Highcharts.charts[i];
                 event = chart.pointer.normalize(e.nativeEvent); // Find coordinates within the chart

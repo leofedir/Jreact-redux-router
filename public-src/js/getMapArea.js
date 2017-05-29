@@ -197,7 +197,7 @@ export default function getMap(data, rebuild = true, isRegion) {
                 layer.on(eventsMap)
             }
         };
-        choroplethLayer = L.choropleth(data, layerObject).addTo(Lmap);
+        choroplethLayer = L.choropleth(data, layerObject).addTo();
 
         function onMouseout(e) {
             let item = e.target;
