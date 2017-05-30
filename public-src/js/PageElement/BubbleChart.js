@@ -92,13 +92,14 @@ class BubbleChart extends Component {
 
 
     render() {
-        const {bubble_chart_full, data_bubble} = this.props.map_reducer;
-
+        const {bubble_chart_full, data_bubble, bar_chart_full, chart_full} = this.props.map_reducer;
+        const chartStyle = (bar_chart_full || chart_full) ? `disabled` : ``;
+        
         if (data_bubble === null) {
             return null
         } else {
             return (
-                <div className={bubble_chart_full ? 'chart_3 barChart_full' : 'chart_3'}>
+                <div className={bubble_chart_full ? `chart_3 barChart_full` : `chart_3 ${chartStyle}`}>
                     <div className="item_header">
                         <div className="map_heder_title"/>
                         <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"
