@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+
+import * as Actions from '../REDUX/actions/actions';
 import * as MapActions from '../REDUX/actions/get_map_area';
 
 import {year_labels, dataToChart, dataToChartUsd} from './Popup'
@@ -202,6 +204,11 @@ class Chart extends Component {
         this.Chart()
     }
 
+    onHeaderChartClick() {
+        console.log('1111 >>', 1111)
+        this.props.Actions.resizeMap(this.props.main.mapFull)
+    }
+
     render() {
         const {chart_full, dataChartUsd, feature, claster, curentMap, for1Student, chart2} = this.props.map_reducer;
         const showToggleUsd = dataToChartUsd.length > 0;
@@ -209,7 +216,7 @@ class Chart extends Component {
         return (
             <div className={chart_full ? 'chart_1 barChart_full' : 'chart_1'}>
                 <div className="item_header">
-                    <div className="map_heder_title">Тренд</div>
+                    <div className="map_heder_title" onClick={::this.onHeaderChartClick}>Тренд</div>
                     <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>
                 </div>
                 <div className="item_content">
@@ -245,13 +252,15 @@ class Chart extends Component {
 
 function mapStateToProps(state) {
     return {
-        map_reducer: state.map_reducer
+        map_reducer: state.map_reducer,
+        main: state.main
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        MapActions: bindActionCreators(MapActions, dispatch)
+        MapActions: bindActionCreators(MapActions, dispatch),
+        Actions: bindActionCreators(Actions, dispatch),
     }
 }
 

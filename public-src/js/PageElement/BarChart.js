@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+
 import * as MapActions from '../REDUX/actions/get_map_area';
-import {region} from './region_null'
+import * as Actions from '../REDUX/actions/actions';
+import {region} from './region_null';
+
 const Highcharts = require('highcharts');
 const higchartsDrilldown = require('highcharts/modules/drilldown.js');
 
@@ -381,13 +384,17 @@ class BarChart extends Component {
         this.props.MapActions.toggle_data(this.props.map_reducer.dataChartRegion)
     }
 
+    onHeaderChartClick() {
+        this.props.Actions.resizeMap(this.props.main.mapFull)
+    }
+
     render() {
         const {bar_chart_full, chart3, dataChartRegion, data_success, properties} = this.props.map_reducer;
         const chartDiv = <div ref="multiChart" className="multiChart" onMouseMove={::this.handlerOnMouseMove}><div id="chart0" className="item_bar_chart"/><div id="chart1" className="item_bar_chart"/><div id="chart2" className="item_bar_chart"/></div>;
         return (
             <div className={bar_chart_full ? 'chart_2 barChart_full' : 'chart_2'}>
                 {/*Title for right Trend BarChart*/}
-                <div className="item_header">
+                <div className="item_header" onClick={::this.onHeaderChartClick}>
                     <div
                         className="map_heder_title">{chart3 || !properties ? 'Тренд' : 'Діаграма-рейтинг (ТОП-5)'}</div>
                     <div onClick={ ::this.toggleChart }>
@@ -423,7 +430,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        MapActions: bindActionCreators(MapActions, dispatch)
+        MapActions: bindActionCreators(MapActions, dispatch),
+        Actions: bindActionCreators(Actions, dispatch),
     }
 }
 
