@@ -96,7 +96,7 @@ export default function map(state = initialState, action) {
             return {...state, info: action.payload.data[0][0], clasterCount: action.payload.count, check: [], claster: true};
 
         case GET_SUBMENU_SUCCESS:
-            return {...state, info: null, properties: null, curentMap: null};
+            return {...state, info: null, properties: null, curentMap: null, data_bubble: null};
 
         case SET_SUBMENU_ITEM:
             return {...state,
