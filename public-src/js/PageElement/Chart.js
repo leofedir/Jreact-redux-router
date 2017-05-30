@@ -210,11 +210,12 @@ class Chart extends Component {
     }
 
     render() {
-        const {chart_full, dataChartUsd, feature, claster, curentMap, for1Student, chart2} = this.props.map_reducer;
+        const {chart_full, dataChartUsd, feature, claster, curentMap, for1Student, chart2, bubble_chart_full, bar_chart_full} = this.props.map_reducer;
         const showToggleUsd = dataToChartUsd.length > 0;
+        const chartStyle = (bubble_chart_full || bar_chart_full) ? `disabled` : ``;
         
         return (
-            <div className={chart_full ? 'chart_1 barChart_full' : 'chart_1'}>
+            <div className={chart_full ? `chart_1 barChart_full` : `chart_1 ${chartStyle}`}>
                 <div className="item_header">
                     <div className="map_heder_title" onClick={::this.onHeaderChartClick}>Тренд</div>
                     <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>

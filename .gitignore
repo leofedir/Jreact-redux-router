@@ -3,3 +3,9 @@ node_modules/
 public/
 *.log
 *.iml
+
+
+#testing functional
+doc/
+public-src/js/utils/
+.esdoc.json

@@ -389,10 +389,12 @@ class BarChart extends Component {
     }
 
     render() {
-        const {bar_chart_full, chart3, dataChartRegion, data_success, properties} = this.props.map_reducer;
+        const {bar_chart_full, chart3, dataChartRegion, data_success, properties, bubble_chart_full, chart_full} = this.props.map_reducer;
         const chartDiv = <div ref="multiChart" className="multiChart" onMouseMove={::this.handlerOnMouseMove}><div id="chart0" className="item_bar_chart"/><div id="chart1" className="item_bar_chart"/><div id="chart2" className="item_bar_chart"/></div>;
+        const chartStyle = (bubble_chart_full || chart_full) ? `disabled` : ``;
+        
         return (
-            <div className={bar_chart_full ? 'chart_2 barChart_full' : 'chart_2'}>
+            <div className={bar_chart_full ? `chart_2 barChart_full` : `chart_2 ${chartStyle}`}>
                 {/*Title for right Trend BarChart*/}
                 <div className="item_header" onClick={::this.onHeaderChartClick}>
                     <div

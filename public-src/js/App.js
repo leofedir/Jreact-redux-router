@@ -25,10 +25,12 @@ class App extends Component {
     render() {
         // console.log('this.props >>', this.props)
         const {showMenu, mapFull, range_items, range_item, show_range, title_map} = this.props.main;
-        const {info, feature, alias, feature_claster} = this.props.map_reducer;
+        const {info, feature, alias, feature_claster, bar_chart_full, chart_full, bubble_chart_full} = this.props.map_reducer;
         const {toggleMenu, get_submenu, set_Range_item} = this.props.Actions;
         const {set_chart_data,} = this.props.MapActions;
-
+        const mainRightStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `disabled` : ``;
+        const mainChartStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `zero-height`: ``;
+        
         return (
             <div id="wrapper" className={ (showMenu ? '' : 'hide' ) + (mapFull ? ' mapFull' : '')}>
                 <div className="heder">
@@ -43,18 +45,18 @@ class App extends Component {
                         <div className="main__map">
                             <Map />
                         </div>
-                        <div className="main__right">
+                        <div className={`main__right ${mainRightStyle}`}>
                             <SliderRange range_items={ range_items} range_item={ range_item}
                                          set_Range_item={ set_Range_item } show_range={ show_range }/>
                             <Popup feature={ feature } alias={ alias } feature_claster={ feature_claster } set_chart_data={ set_chart_data } />
                             <Legend />
                             <Info info={ info } />
                         </div>
-                        <div className="main__chart">
+                        <div className={`main__chart ${mainChartStyle}`}>
                             <Chart />
                             <BarChart />
                         </div>
-                        <div className="main__chart">
+                        <div className={`main__chart ${mainChartStyle}`}>
                             <BubbleChart />
                         </div>
                     </div>
