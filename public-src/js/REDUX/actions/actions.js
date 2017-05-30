@@ -50,7 +50,8 @@ export function get_submenu(url, title) {
                     payload: {data, title}
                 })
             })
-            .catch(() => {
+            .catch(e => {
+            console.log('e >>', e)
                 dispatch({
                     type: GET_SUBMENU_ERROR
                 })

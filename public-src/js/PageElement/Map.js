@@ -121,7 +121,7 @@ class Map extends Component {
 
         const {curentMap} = this.props.map_reducer;
 
-        if (Lmap.hasLayer(ukraine) || curentMap === null ) {
+        if (Lmap.hasLayer(ukraine) || curentMap === null  || this.props.main.fields === null) {
             return
         }
 
@@ -188,6 +188,16 @@ class Map extends Component {
         //     .catch(e => {
         //         console.log("Data err >> " ,  e);
         //     })
+
+
+        // fetch to wuboru
+
+        // let getInfo = 'http://map.land.gov.ua/kadastrova-karta/find-Parcel?cadnum=3221483800%3A02%3A003%3A0009&activeArchLayer=0'
+        //
+        // fetch(getInfo)
+        //     .then(checkStatus)
+        //     .then(parseJSON)
+        //     .then(d => console.log('d >>', d))
 
         fetch('main', {
             method: 'post',

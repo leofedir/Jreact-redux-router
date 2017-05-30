@@ -22,6 +22,7 @@ class BubbleChart extends Component {
 
         const {data_bubble, bubble_chart_full} = this.props.map_reducer;
 
+console.log('data_bubble >>', data_bubble)
         if (data_bubble !== null) {
             const {range_item, range_items} = this.props.main;
             const year = '20' + range_items[range_item].slice(5)
