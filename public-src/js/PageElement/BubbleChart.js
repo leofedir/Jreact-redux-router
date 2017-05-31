@@ -26,12 +26,13 @@ console.log('data_bubble >>', data_bubble)
         if (data_bubble !== null) {
             const {range_item, range_items} = this.props.main;
             const year = '20' + range_items[range_item].slice(5)
-
+            
             Bchart = Highcharts.chart('bubble_chart', {
+               
                 chart: {
                     type: 'bubble',
                     plotBorderWidth: 1,
-                    zoomType: 'xy'
+                    zoomType: 'xy',
                 },
                 credits: {
                     enabled: false
