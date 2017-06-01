@@ -64,6 +64,21 @@ input[type=range]::-moz-range-track {
     padding: 4px;
 }
 
+.container-fa {
+    width: 30px;
+    height: 30px;
+    padding-top: 12px;
+    cursor: pointer;
+}
+
+.current-year-container .left {
+    padding-right: 6px;
+}
+
+.current-year-container .right {
+    padding-left: 6px;
+}
+
 .rangeItem {
     font-size: 13px;
     font-weight: bold;
