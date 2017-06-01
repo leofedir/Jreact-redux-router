@@ -81,7 +81,6 @@ input[type=range]::-moz-range-track {
     padding: 5px;
     border-radius: 8px;
     border: 1px solid white;
-    cursor: default;
 }
 
 .rangePicker-item {
@@ -95,6 +94,7 @@ input[type=range]::-moz-range-track {
     padding: 6px;
     font-size: 20px;
     font-family: arial;
+    cursor: pointer;
 }
 
 .container-fa {
@@ -107,8 +107,6 @@ input[type=range]::-moz-range-track {
 .current-year-container .left {
     padding-right: 14px;
     font-size: 20px;
-
-
 }
 
 .current-year-container .right {

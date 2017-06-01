@@ -6,7 +6,9 @@ class SliderRange extends Component {
         const items = this.props.range_items;
         const curItem = this.props.range_item;
         let nextItem;
-        if (typeof(type) === 'number') {
+        console.log('curItem', curItem);
+        console.log('type', type);
+        if (typeof(type) === 'number' && type !== curItem) {
             nextItem = type;
             this.props.set_Range_item(nextItem);
         } else {
@@ -24,7 +26,7 @@ class SliderRange extends Component {
                     break;
                 
                 default:
-                    this.props.set_Range_item(curItem)
+                    break;
             }
         }
     }
