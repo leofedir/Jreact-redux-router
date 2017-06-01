@@ -15,7 +15,8 @@ import {
     GET_MAP_DATA_SUCCESS,
     GET_MAP_DATA_REQUEST,
     GET_MAP_AREA_SUCCESS,
-    SET_DATA_DISTRICT
+    SET_DATA_DISTRICT,
+    TOGGLE_SLIDER_PICKER
 
 } from '../actions/constant'
 
@@ -30,7 +31,8 @@ const initialState = {
     show_range: false,
     legend_data: null,
     claster_layers: null,
-    title_map: ''
+    title_map: '',
+    slider_range_picker: false,
 };
 
 export default function main(state = initialState, action) {
@@ -76,6 +78,9 @@ export default function main(state = initialState, action) {
 
         case SET_DATA_DISTRICT:
             return {...state, fetching: false};
+        
+        case TOGGLE_SLIDER_PICKER:
+            return {...state, slider_range_picker: action.payload};
 
         default:
             return state;

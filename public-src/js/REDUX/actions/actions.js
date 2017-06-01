@@ -10,7 +10,8 @@ import {
     SET_RANGE_ITEMS,
     SET_RANGE_ITEM,
     SET_LEGEND_DATA,
-    START_LOAD
+    START_LOAD,
+    TOGGLE_SLIDER_PICKER
 
 } from './constant';
 
@@ -84,5 +85,12 @@ export function set_legend_data(data) {
     return {
         type: SET_LEGEND_DATA,
         payload: data
+    }
+}
+
+export function toggle_Slider_Picker(slider) {
+    return {
+        type: TOGGLE_SLIDER_PICKER,
+        payload: slider
     }
 }

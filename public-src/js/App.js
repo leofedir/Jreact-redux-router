@@ -16,17 +16,15 @@ import Info from './PageElement/info';
 import MapTitle from './PageElement/MapTitle';
 import BubbleChart from './PageElement/BubbleChart';
 
-
 let wrapper = document.getElementById('wrapper')
-
 
 class App extends Component {
     
     render() {
         // console.log('this.props >>', this.props)
-        const {showMenu, mapFull, range_items, range_item, show_range, title_map} = this.props.main;
+        const {showMenu, mapFull, range_items, range_item, show_range, title_map, slider_range_picker} = this.props.main;
         const {info, feature, alias, feature_claster, bar_chart_full, chart_full, bubble_chart_full} = this.props.map_reducer;
-        const {toggleMenu, get_submenu, set_Range_item} = this.props.Actions;
+        const {toggleMenu, get_submenu, set_Range_item, toggle_Slider_Picker} = this.props.Actions;
         const {set_chart_data,} = this.props.MapActions;
         const mainRightStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `disabled` : ``;
         const mainChartStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `zero-height`: ``;
@@ -47,7 +45,8 @@ class App extends Component {
                         </div>
                         <div className={`main__right ${mainRightStyle}`}>
                             <SliderRange range_items={ range_items} range_item={ range_item}
-                                         set_Range_item={ set_Range_item } show_range={ show_range }/>
+                                         set_Range_item={ set_Range_item } show_range={ show_range } toggle_Slider_Picker={ toggle_Slider_Picker }
+                                         slider_range_picker = { slider_range_picker }/>
                             <Popup feature={ feature } alias={ alias } feature_claster={ feature_claster } set_chart_data={ set_chart_data } />
                             <Legend />
                             <Info info={ info } />
