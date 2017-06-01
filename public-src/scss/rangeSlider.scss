@@ -38,3 +38,34 @@ input[type=range]::slider-runnable-track {
 input[type=range]::-moz-range-track {
     height: 2px;
 }
+
+.sliderRange {
+    height: 59px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    background: #3A3D3F;
+    margin-bottom: 15px;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.current-year-container {
+    display: flex;
+    align-items: center;
+    self-align: center;
+    justify-content: space-around;
+    width: 70px;
+}
+
+.current-year {
+    border: 1px solid #fff;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.rangeItem {
+    font-size: 13px;
+    font-weight: bold;
+    padding-top: 10px;
+}
