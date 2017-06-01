@@ -385,7 +385,8 @@ class BarChart extends Component {
     }
 
     onHeaderChartClick() {
-        this.props.Actions.resizeMap(this.props.main.mapFull)
+        // what is it?
+        // this.props.Actions.resizeMap(this.props.main.mapFull)
     }
 
     render() {

@@ -1,27 +1,59 @@
 import React, {Component} from 'react';
 
 class SliderRange extends Component {
-    changeItem(e) {
-        this.props.set_Range_item(e.target.value);
-    }
+    
+    changeItem(type) {
+        const items = this.props.range_items;
+        const curItem = this.props.range_item;
+        let nextItem;
 
+        switch(type) {
+            case'-':
+                nextItem = curItem - 1;
+                if(nextItem >= 0)
+                    this.props.set_Range_item(nextItem);
+            break;
+
+            case'+':
+                nextItem = curItem + 1;
+                if(nextItem < items.length)
+                    this.props.set_Range_item(nextItem);
+                break;
+                
+            default:
+                this.props.set_Range_item(curItem)
+       }
+    }
+    
     createRange() {
         const items = this.props.range_items;
+        const curItem = items[this.props.range_item]; // by default 2013
 
+        const firstItem = items[0];
+        const lastItem = items[items.length-1];
+        
+        function toYear(str) {
+            return '20'+str.substring(5);
+        }
+        
         return (
-            <div className="slider" id="slider">
-                <div className="slider_title">
-                    {items.map((item, i) => <p key={ i }>20{item.substring(5)}</p>)}
+            <div className="sliderRange">
+                <p className="rangeItem first">{toYear(firstItem)}</p>
+                <div className="current-year-container">
+                    <div className="container-fa left" onClick={() => this.changeItem('-')}>
+                        <i className="fa fa-caret-left" aria-hidden="true"></i>
+                    </div>
+                
+                    <div className="current-year">
+                        <span>{toYear(curItem)}</span>
+                    </div>
+                
+                    <div className="container-fa right" onClick={() => this.changeItem('+')}>
+                        <i className="fa fa-caret-right" aria-hidden="true"></i>
+                    </div>
+            
                 </div>
-                <input
-                    className="slider_range"
-                    type="range"
-                    min="0"
-                    max={items.length - 1}
-                    value={this.props.range_item}
-                    id="fader"
-                    step="1"
-                    onChange={ ::this.changeItem}/>
+                <p className="rangeItem last">{toYear(lastItem)}</p>
             </div>
         )
     }

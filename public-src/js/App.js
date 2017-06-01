@@ -21,7 +21,7 @@ let wrapper = document.getElementById('wrapper')
 
 
 class App extends Component {
-
+    
     render() {
         // console.log('this.props >>', this.props)
         const {showMenu, mapFull, range_items, range_item, show_range, title_map} = this.props.main;
@@ -30,7 +30,7 @@ class App extends Component {
         const {set_chart_data,} = this.props.MapActions;
         const mainRightStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `disabled` : ``;
         const mainChartStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `zero-height`: ``;
-        
+        console.log('mapFull >>', mapFull );
         return (
             <div id="wrapper" className={ (showMenu ? '' : 'hide' ) + (mapFull ? ' mapFull' : '')}>
                 <div className="heder">
