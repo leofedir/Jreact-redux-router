@@ -37,7 +37,7 @@ class SubMenu extends Component {
     getItem(){
         return (
             <select value={ this.props.main.submenu_item } className="test" onChange={::this.getMap}>
-                {Object.keys(this.props.main.fields).map((item, i) => {
+                {Object.keys(this.props.main.fields).sort().map((item, i) => {
                     i === 0 ? itemMenu = item : '';
                     return <option  className="menu__item" key={i} value={item}>
                         {alias[item] ? alias[item] : item}
