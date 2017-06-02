@@ -15,7 +15,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(express.static(path.join(__dirname, './public')));
+app.use(express.static(path.join(__dirname, './public-src')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
