@@ -1,8 +1,8 @@
 @import './var';
 @import "./reset";
-@import "../lib/font-awesome/scss/font-awesome";
+//@import "../lib/font-awesome/scss/font-awesome";
 @import "../js/renderClaster/claster";
-@import "../js/renderClaster/geocoder";
+//@import "../js/renderClaster/geocoder";
 @import "./input";
 @import "./mainMenu";
 @import "./map";
@@ -14,6 +14,8 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300&subset=cyrillic-ext,cyrillic);
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:400,700&subset=cyrillic-ext,cyrillic);
 @import url(http://fonts.googleapis.com/css?family=Marck+Script&subset=cyrillic);
+@import url(https://unpkg.com/leaflet@1.0.3/dist/leaflet.css);
+@import url(https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css);
 
 body {
   margin: 0;
