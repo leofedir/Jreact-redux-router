@@ -92,9 +92,9 @@ export default function claster(data) {
     }
 
     function chartData(feature_claster) {
-        let chart1 = {};
-        let chart2 = {};
-        let chart3 = {};
+        let chart1 = null;
+        let chart2 = null;
+        let chart3 = null;
 
         if (feature_claster !== null) {
             for (let key in feature_claster) {
@@ -105,12 +105,15 @@ export default function claster(data) {
                     let value = +feature_claster[key];
 
                     if (name == 'chart1') {
+                        chart1 === null ? chart1 = {} : '';
                         chart1[serias] ? chart1[serias].push({year, value}) : chart1[serias] = [{year, value}];
                     }
                     else if (name == 'chart2') {
+                        chart2 === null ? chart2 = {} : '';
                         chart2[serias] ? chart2[serias].push({year, value}) : chart2[serias] = [{year, value}];
                     }
                     else if (name == 'chart3' || name =='kilkistuchniv') {
+                        chart3 === null ? chart3 = {} : '';
                         chart3[serias] ? chart3[serias].push({year, value}) : chart3[serias] = [{year, value}];
                     }
                 }
