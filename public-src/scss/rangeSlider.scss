@@ -70,7 +70,6 @@ input[type=range]::-moz-range-track {
     transition: all 0.6s ease 0s;
 }
 
-
 .current-year-container {
     display: flex;
     align-items: center;
@@ -87,12 +86,15 @@ input[type=range]::-moz-range-track {
 }
 
 .active-picker {
-    height: 47px;
+    height: 60px;
     font-size: 13px;
 }
 
 .active-picker .active {
     border: 1px solid white;
+    cursor: default;
+    font-family: arial;
+    color: navajowhite;
 }
 
 .rangePicker-item {
