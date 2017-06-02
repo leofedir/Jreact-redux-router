@@ -74,6 +74,7 @@ module.exports = {
             "/render": "http://localhost:8000",
             "/claster_layers": "http://localhost:8000",
             "/data_bubble": "http://localhost:8000",
+            "/ato": "http://localhost:8000",
         }
     },
     resolve: {
