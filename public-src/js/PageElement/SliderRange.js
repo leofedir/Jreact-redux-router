@@ -35,11 +35,12 @@ class SliderRange extends Component {
     
     autoCloseMenu() {
         const {toggle_Slider_Picker} = this.props.Actions;
-        const {slider_range_picker} = this.props.main;
-
+        
         function removePopups(e) {
+            const {slider_range_picker} = this.props.main;
             if(!e.target.matches('.sliderRangeContainer *') && slider_range_picker) {
-                toggle_Slider_Picker();
+                
+                toggle_Slider_Picker(!slider_range_picker);
                 window.removeEventListener('click', removePopups);
             }
         };
@@ -51,7 +52,7 @@ class SliderRange extends Component {
     }
 
     componentDidUpdate() {
-        this.autoCloseMenu()
+        // this.autoCloseMenu()
     }
     
     handlerToggleSliderPicker = () => {
@@ -72,9 +73,7 @@ class SliderRange extends Component {
         function toYear(str) {
             return '20'+str.substring(5);
         }
-        
-        
-        console.log('slider_range_picker >>', slider_range_picker);
+
         return (
             <div className="sliderRangeContainer">
                 <div className="sliderRange">
