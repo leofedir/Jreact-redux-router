@@ -4,7 +4,8 @@ import {connect} from 'react-redux';
 class Info extends Component {
 
     render() {
-        const {info} = this.props.main
+        const {info} = this.props.map_reducer;
+        
         return (
             <div className="info">
                 <div className="item_header">
@@ -22,7 +23,7 @@ class Info extends Component {
 
 function mapStateToProps(state) {
     return {
-        main: state.main
+        map_reducer: state.map_reducer
     }
 }
 
