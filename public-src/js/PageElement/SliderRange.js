@@ -33,6 +33,27 @@ class SliderRange extends Component {
         }
     }
     
+    autoCloseMenu() {
+        const {toggle_Slider_Picker} = this.props.Actions;
+        const {slider_range_picker} = this.props.main;
+
+        function removePopups(e) {
+            if(!e.target.matches('.sliderRangeContainer *') && slider_range_picker) {
+                toggle_Slider_Picker();
+                window.removeEventListener('click', removePopups);
+            }
+        };
+        window.addEventListener('click', removePopups.bind(this));
+    }
+
+    componentDidMount() {
+        this.autoCloseMenu()
+    }
+
+    componentDidUpdate() {
+        this.autoCloseMenu()
+    }
+    
     handlerToggleSliderPicker = () => {
       const {toggle_Slider_Picker} = this.props.Actions;
       const {slider_range_picker} = this.props.main;
@@ -52,8 +73,10 @@ class SliderRange extends Component {
             return '20'+str.substring(5);
         }
         
+        
+        console.log('slider_range_picker >>', slider_range_picker);
         return (
-            <div>
+            <div className="sliderRangeContainer">
                 <div className="sliderRange">
                     <p className="rangeItem first">{toYear(firstItem)}</p>
                     <div className="current-year-container">
@@ -72,8 +95,8 @@ class SliderRange extends Component {
                     </div>
                     <p className="rangeItem last">{toYear(lastItem)}</p>
                 </div>
-                <div className="sliderRangePicker-container" style={slider_range_picker ? {display: 'block'} : {display: 'none'}}>
-                    <div className="sliderRangePicker">
+                <div className="sliderRangePicker-container">
+                    <div className= {slider_range_picker ? "sliderRangePicker active-picker" : "sliderRangePicker"}>
                         {range_items.map((item, i) => {
                             
                             return <p
