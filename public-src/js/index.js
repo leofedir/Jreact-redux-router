@@ -16,10 +16,18 @@ export const store = configureStore()
 const rootEl = document.getElementById('root')
 const render = (Component) => {
     ReactDOM.render(
-        <Provider store={store}>
-            <Component />
-        </Provider>, rootEl
+        <AppContainer>
+            <Provider store={store}>
+                <Component />
+            </Provider>
+        </AppContainer>, rootEl
     );
 };
 
 render(App);
+
+if (module.hot) {
+    module.hot.accept('./App', () => {
+        render(App)
+    });
+}
