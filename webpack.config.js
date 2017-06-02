@@ -18,9 +18,9 @@ module.exports = {
         "./index.js"
     ],
     output: {
-        path: __dirname + "/dist",
+        path: __dirname + "/public-src/dist",
         filename: "bundle.js",
-        publicPath: "/js",
+        publicPath: "/dist/",
     },
     module: {
         rules: [
@@ -56,7 +56,7 @@ module.exports = {
         new webpack.NamedModulesPlugin(),
         // prints more readable module names in the browser console on HMR updates
         new ExtractTextPlugin({
-            publicPath: __dirname + "/dist",
+            publicPath: __dirname + "/public-src/dist",
             filename: "bundle.css",
             allChunks: true,
         })
@@ -75,6 +75,7 @@ module.exports = {
             "/claster_layers": "http://localhost:8000",
             "/data_bubble": "http://localhost:8000",
             "/ato": "http://localhost:8000",
+            "/info": "http://localhost:8000",
         }
     },
     resolve: {
