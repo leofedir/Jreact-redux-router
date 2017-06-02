@@ -10,32 +10,29 @@ import ButtonMenu from './PageElement/buttonMenu';
 import Popup from './PageElement/Popup';
 import Chart from './PageElement/Chart';
 import BarChart from './PageElement/BarChart';
-import SliderRange from './PageElement/sliderRange';
+import SliderRange from './PageElement/SliderRange';
 import Legend from './PageElement/Legend';
 import Info from './PageElement/info';
 import MapTitle from './PageElement/MapTitle';
 import BubbleChart from './PageElement/BubbleChart';
 
-let wrapper = document.getElementById('wrapper')
+let wrapper = document.getElementById('wrapper');
 
 class App extends Component {
     
     render() {
-        // console.log('this.props >>', this.props)
-        const {showMenu, mapFull, range_items, range_item, show_range, title_map, slider_range_picker} = this.props.main;
-        const {info, feature, alias, feature_claster, bar_chart_full, chart_full, bubble_chart_full} = this.props.map_reducer;
-        const {toggleMenu, get_submenu, set_Range_item, toggle_Slider_Picker} = this.props.Actions;
-        const {set_chart_data,} = this.props.MapActions;
+        const {showMenu, mapFull} = this.props.main;
+        const {bar_chart_full, chart_full, bubble_chart_full} = this.props.map_reducer;
         const mainRightStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `disabled` : ``;
         const mainChartStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `zero-height`: ``;
-        console.log('mapFull >>', mapFull );
+        
         return (
             <div id="wrapper" className={ (showMenu ? '' : 'hide' ) + (mapFull ? ' mapFull' : '')}>
                 <div className="heder">
 
                     <a className="logo_link" href="/"/>
-                    <ButtonMenu toggleMenu={ toggleMenu } showMenu={ showMenu }/>
-                    <MapTitle title_map={ title_map }/>
+                    <ButtonMenu />
+                    <MapTitle />
                 </div>
                 <div className="content__wrap">
 
@@ -44,12 +41,10 @@ class App extends Component {
                             <Map />
                         </div>
                         <div className={`main__right ${mainRightStyle}`}>
-                            <SliderRange range_items={ range_items} range_item={ range_item}
-                                         set_Range_item={ set_Range_item } show_range={ show_range } toggle_Slider_Picker={ toggle_Slider_Picker }
-                                         slider_range_picker = { slider_range_picker }/>
-                            <Popup feature={ feature } alias={ alias } feature_claster={ feature_claster } set_chart_data={ set_chart_data } />
+                            <SliderRange />
+                            <Popup />
                             <Legend />
-                            <Info info={ info } />
+                            <Info />
                         </div>
                         <div className={`main__chart ${mainChartStyle}`}>
                             <Chart />
@@ -60,7 +55,7 @@ class App extends Component {
                         </div>
                     </div>
                     <div className="aside">
-                        <Menu get_submenu={ get_submenu } toggleMenu={ toggleMenu } showMenu={ showMenu }/>
+                        <Menu />
                     </div>
                 </div>
             </div>

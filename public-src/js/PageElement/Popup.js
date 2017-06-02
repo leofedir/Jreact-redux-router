@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import getFields from '../renderClaster/setFields';
+import {connect} from 'react-redux';
 
 export let year_labels = [];
 export let dataToChart = [];
@@ -8,7 +9,7 @@ export let dataToChartUsd = [];
 class Popup extends Component {
 
     getInfo() {
-        const {feature, alias, feature_claster} = this.props;
+        const {feature, alias, feature_claster} = this.props.map_reducer;
         dataToChart = [];
         dataToChartUsd = [];
         year_labels = [];
@@ -86,10 +87,16 @@ class Popup extends Component {
     }
 
     render() {
-        const {feature, feature_claster} = this.props;
+        const {feature, feature_claster} = this.props.map_reducer;
         dataToChartUsd = [];
         return (feature !== null || feature_claster !== null) ? this.getInfo() : this.noInfo()
     }
 }
 
-export default Popup
+function mapStateToProps(state) {
+    return {
+        map_reducer: state.map_reducer,
+    }
+}
+
+export default connect(mapStateToProps)(Popup);
