@@ -1,28 +1,30 @@
 import React, {Component} from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {set_Range_item, toggle_Slider_Picker} from '../REDUX/actions/actions';
 
 class SliderRange extends Component {
 
     changeItem(type) {
-        const items = this.props.range_items;
-        const curItem = this.props.range_item;
+        const {range_items, range_item} = this.props.main;
+        const {set_Range_item} = this.props.Actions;
         let nextItem;
-        console.log('curItem', curItem);
-        console.log('type', type);
-        if (typeof(type) === 'number' && type !== curItem) {
+
+        if (typeof(type) === 'number' && type !== range_item) {
             nextItem = type;
-            this.props.set_Range_item(nextItem);
+            set_Range_item(nextItem);
         } else {
             switch(type) {
                 case'-':
-                    nextItem = curItem - 1;
+                    nextItem = range_item - 1;
                     if(nextItem >= 0)
-                        this.props.set_Range_item(nextItem);
+                        set_Range_item(nextItem);
                     break;
         
                 case'+':
-                    nextItem = curItem + 1;
-                    if(nextItem < items.length)
-                        this.props.set_Range_item(nextItem);
+                    nextItem = range_item + 1;
+                    if(nextItem < range_items.length)
+                        set_Range_item(nextItem);
                     break;
                 
                 default:
@@ -32,15 +34,19 @@ class SliderRange extends Component {
     }
     
     handlerToggleSliderPicker = () => {
-      this.props.toggle_Slider_Picker(!this.props.slider_range_picker)
+      const {toggle_Slider_Picker} = this.props.Actions;
+      const {slider_range_picker} = this.props.main;
+      
+      toggle_Slider_Picker(!slider_range_picker)
     };
     
     createRange() {
-        const items = this.props.range_items;
-        const curItem = items[this.props.range_item]; // by default 2013
+        const {range_items, range_item, slider_range_picker} = this.props.main;
 
-        const firstItem = items[0];
-        const lastItem = items[items.length-1];
+        const curItem = range_items[range_item]; // by default 2013
+
+        const firstItem = range_items[0];
+        const lastItem = range_items[range_items.length-1];
         
         function toYear(str) {
             return '20'+str.substring(5);
@@ -66,13 +72,13 @@ class SliderRange extends Component {
                     </div>
                     <p className="rangeItem last">{toYear(lastItem)}</p>
                 </div>
-                <div className="sliderRangePicker-container" style={this.props.slider_range_picker ? {display: 'block'} : {display: 'none'}}>
+                <div className="sliderRangePicker-container" style={slider_range_picker ? {display: 'block'} : {display: 'none'}}>
                     <div className="sliderRangePicker">
-                        {items.map((item, i) => {
+                        {range_items.map((item, i) => {
                             
                             return <p
                                      key={i}
-                                     className={`rangePicker-item ${i === this.props.range_item ? 'active' : ''}`}
+                                     className={`rangePicker-item ${i === range_item ? 'active' : ''}`}
                                      onClick={() => this.changeItem(i) || this.handlerToggleSliderPicker()}>
                                 {toYear(item)}
                             </p>
@@ -84,11 +90,25 @@ class SliderRange extends Component {
     }
 
     render() {
-        return this.props.show_range ? this.createRange() : null
+        const {show_range} = this.props.main;
+        return show_range ? this.createRange() : null
     }
 }
 
-export default SliderRange
+function mapStateToProps(state) {
+    return {
+        main: state.main,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        Actions: bindActionCreators({set_Range_item, toggle_Slider_Picker}, dispatch),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SliderRange);
+
 
 
 

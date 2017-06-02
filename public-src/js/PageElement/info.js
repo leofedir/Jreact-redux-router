@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 
 class Info extends Component {
 
     render() {
-        let info = this.props.info;
+        const {info} = this.props.main
         return (
             <div className="info">
                 <div className="item_header">
@@ -19,7 +20,13 @@ class Info extends Component {
     }
 }
 
-export default Info
+function mapStateToProps(state) {
+    return {
+        main: state.main
+    }
+}
+
+export default connect(mapStateToProps)(Info);
 
 
 

@@ -1,14 +1,18 @@
 import React, {Component} from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {get_submenu, toggleMenu} from '../REDUX/actions/actions';
 
 import {menu} from './menu_src'
-
 
 class Menu extends Component {
 
     onItemClick(e) {
         let title = e.currentTarget.title;
         let url = e.currentTarget.dataset.url;
-        this.props.get_submenu(url, title)
+        
+        const {get_submenu} = this.props.Actions;
+        get_submenu(url, title)
     }
 
     getItem(items) {
@@ -25,9 +29,12 @@ class Menu extends Component {
     }
 
     autoCloseMenu() {
+        const {toggleMenu} = this.props.Actions;
+        const {showMenu} = this.props.main;
+        
         function removePopups(e) {
-            if(!e.target.matches('.heder *') && this.props.showMenu) {
-                this.props.toggleMenu(true)
+            if(!e.target.matches('.heder *') && showMenu) {
+                toggleMenu(true);
                 window.removeEventListener('click', removePopups);
             }
         };
@@ -51,4 +58,16 @@ class Menu extends Component {
     }
 }
 
-export default Menu
+function mapStateToProps(state) {
+    return {
+        main: state.main,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        Actions: bindActionCreators({get_submenu, toggleMenu}, dispatch),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
