@@ -45,7 +45,7 @@ export let alias = {
     sotshelp:'Соціальна допомога',
     point_sotspol_sotshelp_tsentrzayn:'Центри зайнятості',
     point_sotspol_sotshelp_inshosotszaklady:'Інші соціальні заклади',
-    zaklohorzd:"Заклади охорони здоров'я",
+    '1zaklohorzd':"Заклади охорони здоров'я",
     point_ohorzdorov_1zaklohorzd_ambulator:'Амбулаторно-поліклінічні заклади',
     point_ohorzdorov_1zaklohorzd_likarny:'Лікарняні заклади',
     point_ohorzdorov_1zaklohorzd_medsotsz:'Заклади медико-соціального захисту',
