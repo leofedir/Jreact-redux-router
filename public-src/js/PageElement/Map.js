@@ -224,9 +224,19 @@ class Map extends Component {
             .then(checkStatus)
             .then(parseJSON)
             .then(data => {
-                coordinate.region = data.region.map(item => JSON.parse(item));
+                coordinate.region = data.region.map(item => {
+                    let obj = {};
+                    obj.geometry = JSON.parse(item.geojson);
+                    obj.id = item.id;
+                    return obj
+                });
 
-                coordinate.district = data.district.map(item => JSON.parse(item));
+                coordinate.district = data.district.map(item =>{
+                    let obj = {};
+                    obj.geometry = JSON.parse(item.geojson);
+                    obj.id = item.id;
+                    return obj
+                });
                 set_data_district();
             });
 

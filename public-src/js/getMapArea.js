@@ -134,9 +134,13 @@ export default function getMap(data, rebuild = true, isRegion) {
         function joinGeometry(cordinate) {
             let i;
             let len = data.length;
-
             for (i = 0; i < len; i++) {
-                data[i].geometry = cordinate[i]
+               let coord = cordinate.filter(item => {
+                    if (item.id == data[i].id) {
+                        return item.geometry
+                    }
+                });
+                data[i].geometry = coord[0].geometry
             }
 
         }
@@ -153,43 +157,32 @@ export default function getMap(data, rebuild = true, isRegion) {
 
 // hightligth color
         function LightenDarkenColor(col, amt) {
-
             let usePound = false;
-
             if (col[0] == "#") {
                 col = col.slice(1);
                 usePound = true;
             }
-
-
-            let num = parseInt(col,16);
-
+            let num = parseInt(col, 16);
             let r = (num >> 16) + amt;
-
             if (r > 255) r = 255;
-            else if  (r < 0) r = 0;
-
+            else if (r < 0) r = 0;
             let b = ((num >> 8) & 0x00FF) + amt;
-
             if (b > 255) b = 255;
-            else if  (b < 0) b = 0;
-
+            else if (b < 0) b = 0;
             let g = (num & 0x0000FF) + amt;
-
             if (g > 255) g = 255;
             else if (g < 0) g = 0;
-            return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
-
+            return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
         }
 
         const layerObject = {
             valueProperty: range_items[range_item],
             scale: randColor.scale,
-                steps: 5,
+            steps: 5,
             mode: 'q',
             smoothFactor: 0,
             style: {
-            color: randColor.color,
+                color: randColor.color,
                 weight: 0.2,
                 fillOpacity: 0.85
             },
@@ -209,7 +202,7 @@ export default function getMap(data, rebuild = true, isRegion) {
         function onMouseOver(e) {
             let item = e.target;
             if (item == layer) return;
-            
+
             let color = item.options.fillColor
             let newColor = LightenDarkenColor(color, +50)
             item.setStyle({fillColor: newColor})

@@ -65,8 +65,7 @@ router.post('/region', function (req, res) {
         ))
             .then(d => {
                 let _d = d.map(item => {
-                    item.sort((a, b) => b.id - a.id);
-                    return item.map(i => i.geojson)
+                    return item.sort((a, b) => b.id - a.id);
                 });
                 geometry.region = _d[0];
                 geometry.district = _d[1]
