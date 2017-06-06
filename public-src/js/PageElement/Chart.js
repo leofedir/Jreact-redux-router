@@ -33,11 +33,6 @@ class Chart extends Component {
         this.props.MapActions.ChartToggle(this.props.map_reducer.chart_full);
     }
 
-    toggleChartData(e) {
-        let status = +e.target.dataset.usd;
-        this.props.MapActions.toggle_curency(!!status)
-    }
-
     toggleToStudent(e) {
         let status = +e.target.dataset.user;
 
@@ -226,15 +221,6 @@ class Chart extends Component {
                         <p>
                             Оберіть територію на мапі
                         </p>
-                    </div>
-                    <div className="region_toggle"
-                         style={showToggleUsd && !claster ? {display: 'block'} : {display: 'none'}}>
-                        <div className="region_toggle_item">
-                            <p data-usd='0' className={ dataChartUsd ? 'toggle' : 'toggle active'}
-                               onClick={ ::this.toggleChartData }>UAH</p>
-                            <p data-usd='1' className={ !dataChartUsd ? 'toggle' : 'toggle active'}
-                               onClick={ ::this.toggleChartData }>USD</p>
-                        </div>
                     </div>
                     <div className="region_toggle" style={chart2 === null ? {display: 'none'} : {display: 'block'}}>
                         <div className="region_toggle_item">

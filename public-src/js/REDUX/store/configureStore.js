@@ -11,5 +11,12 @@ export default function configureteStore(initialState) {
         applyMiddleware(thunk, logger)
     );
 
+    if (module.hot) {
+        module.hot.accept('../redusers', () => {
+            const nextRootReducer = require('../redusers')
+            store.replaceReducer(nextRootReducer)
+        })
+    }
+
     return store
 }

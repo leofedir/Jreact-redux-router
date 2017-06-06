@@ -12,7 +12,6 @@ import {
     GET_MAP_DATA_SUCCESS,
     GET_MAP_DATA_ERROR,
     GET_MAP_DATA_REQUEST,
-    SHOW_CLASTER,
     CLICK_ON_FEATURE_CLASTER,
     TOGGLE_LAYER,
     GET_CLASTER_REQUEST,
@@ -26,12 +25,11 @@ import {
     CHECK_ALL_ICON,
     TOGGLE_DATA,
     SET_DATA_BUBBLE,
-    FINISH_LOAD,
     TOGGLE_CURENCY,
     SET_DATA_DISTRICT,
-    SET_DATA_REGION,
     TOGGLE_CHART_TO_STUDENT,
-    BUBBLE_CHART_TOGGLE
+    BUBBLE_CHART_TOGGLE,
+    SET_CURENCY
 
 
 } from './constant';
@@ -267,5 +265,12 @@ export function check_all(state, check) {
             payload: !state
         });
 
+    }
+}
+
+export function setCurency(val) {
+    return {
+        type: SET_CURENCY,
+        payload: val
     }
 }

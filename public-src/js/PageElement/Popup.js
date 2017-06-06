@@ -1,12 +1,57 @@
 import React, {Component} from 'react';
 import getFields from '../renderClaster/setFields';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+
+import * as MapActions from '../REDUX/actions/get_map_area';
 
 export let year_labels = [];
 export let dataToChart = [];
 export let dataToChartUsd = [];
 
+let curency = null;
+
+let curentCurency = null;
+
 class Popup extends Component {
+
+    setDataFromFeature() {
+        const {curencyIndexCurency} = this.props.map_reducer;
+        curency !== null ? curentCurency = curency[curencyIndexCurency] : curentCurency = "";
+        const {feature} = this.props.map_reducer;
+        let popupInfo = [];
+        let i = 0;
+        for (let key in feature) {
+            if (feature.hasOwnProperty(key) && key.indexOf(curentCurency + 'year_') >= 0) {
+                popupInfo.push(<p key={feature.id + i}>Станом на 20{key.substring(5)}р.
+                    <span>{new Intl.NumberFormat().format(feature[key])}</span></p>)
+                year_labels.push(20 + key.substring(5) + 'р');
+                dataToChart.push(+feature[key]);
+                i++
+            } else if(key.indexOf('usdyear') >= 0) {
+                dataToChartUsd.push(+feature[key])
+            }
+        }
+        return popupInfo
+    }
+
+    setCurentCurency(e) {
+        const {setCurency} = this.props.MapActions;
+        setCurency(e.target.value)
+    }
+
+    getCyrencyItems() {
+        const {curencyIndexCurency} = this.props.map_reducer
+        return (
+            <select className="" value={curencyIndexCurency} onChange={::this.setCurentCurency}>
+                {curency.map((item, i) => {
+                    return <option  className="" key={i} value={i}>
+                        {item.toUpperCase()}
+                    </option>
+                })}
+            </select>
+        )
+    }
 
     getInfo() {
         const {feature, alias, feature_claster} = this.props.map_reducer;
@@ -16,19 +61,14 @@ class Popup extends Component {
 
         if (feature !== null) {
 
-            let popupInfo = [];
-            let i = 0;
-            for (let key in feature) {
-                if (feature.hasOwnProperty(key) && key.indexOf('year_') >= 0 && key.indexOf('usdyear') < 0) {
-                    popupInfo.push(<p key={feature.id + i}>Станом на 20{key.substring(5)}р.
-                        <span>{new Intl.NumberFormat().format(feature[key])} {feature.parameter}</span></p>)
-                    year_labels.push(20 + key.substring(5) + 'р');
-                    dataToChart.push(+feature[key]);
-                    i++
-                } else if(key.indexOf('usdyear') >= 0) {
-                    dataToChartUsd.push(+feature[key])
-                }
+            if (feature.parameter2) {
+                curency = feature.parameter2.toLowerCase().split(',');
+                curentCurency = curency[0]
+            } else {
+                curency = null;
+                curentCurency = null;
             }
+
             return (
                 <div className="description">
                     <div className="item_header">
@@ -41,8 +81,15 @@ class Popup extends Component {
                             <p>Площа території <span>{new Intl.NumberFormat().format(feature.area)} га</span></p>
                         </div>
                         <div className="popup_bottom">
-                            <h4>{ alias }</h4>
-                            {popupInfo}
+                            <div className="popup_buttom-top">
+                                <div className="popup_buttom-title">
+                                    <h4>{ alias }</h4>
+                                </div>
+                                <div className="curency">
+                                    {curency !== null ? this.getCyrencyItems() : <p>{ feature.parameter}</p>}
+                                </div>
+                            </div>
+                            {::this.setDataFromFeature()}
                         </div>
                     </div>
                 </div>
@@ -96,7 +143,15 @@ class Popup extends Component {
 function mapStateToProps(state) {
     return {
         map_reducer: state.map_reducer,
+        main: state.main
     }
 }
 
-export default connect(mapStateToProps)(Popup);
+function mapDispatchToProps(dispatch) {
+    return {
+        MapActions: bindActionCreators(MapActions, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Popup);
+
