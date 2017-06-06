@@ -375,6 +375,33 @@ body {
 .text_center {
   text-align: center;
 }
+.curency_select {
+  outline: none;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: rgb(204, 204, 204);
+  color: #747474;
+  padding: 3px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+.popup_buttom-top {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.curency > p {
+  background: rgb(204, 204, 204);
+  border-radius: 6px;
+  display: block;
+  line-height: 1.5;
+  padding: 0 4px;
+  color: #747474;
+}
+
+
 @media screen and (max-width:1600px)  {
   .map_heder_title .test{
     width: 50%;

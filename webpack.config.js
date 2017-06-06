@@ -1,14 +1,20 @@
 const webpack = require("webpack");
 const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-module.exports = {
+
+const prod = process.argv.indexOf('-p') !== -1;
+
+console.log(prod)
+
+const config = {
+
     context: __dirname + "/public-src/js",
     devtool: "inline-source-map",
     entry: [
         'react-hot-loader/patch',
         // activate HMR for React
 
-        'webpack-dev-server/client?http://localhost:8080',
+        prod ? '' : 'webpack-dev-server/client?http://localhost:8080',
         // bundle the client for webpack-dev-server
         // and connect to the provided endpoint
 
@@ -26,7 +32,7 @@ module.exports = {
         rules: [
             {
                 test: /\.js?$/,
-                use: [ 'babel-loader', ],
+                use: ['babel-loader',],
                 exclude: /node_modules/
             },
             {
@@ -45,8 +51,11 @@ module.exports = {
             //     test: /\.svg$/,
             //     use: "file-loader"
             // },
-            { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, use: "url-loader?limit=10000&mimetype=application/font-woff" },
-            { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, use: "file-loader" }
+            {
+                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                use: "url-loader?limit=10000&mimetype=application/font-woff"
+            },
+            {test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, use: "file-loader"}
         ],
     },
     plugins: [
@@ -59,7 +68,7 @@ module.exports = {
             publicPath: __dirname + "/public-src/dist",
             filename: "bundle.css",
             allChunks: true,
-        })
+        }),
     ],
     devServer: {
         compress: true,
@@ -76,9 +85,43 @@ module.exports = {
             "/data_bubble": "http://localhost:8000",
             "/ato": "http://localhost:8000",
             "/info": "http://localhost:8000",
+            "/kadastr": "http://localhost:8000",
         }
     },
     resolve: {
         modules: [path.resolve(__dirname, "public-src"), "node_modules"]
     }
 };
+
+if (!prod) {
+    config.entry = [
+        'react-hot-loader/patch',
+        // activate HMR for React
+
+       'webpack-dev-server/client?http://localhost:8080',
+        // bundle the client for webpack-dev-server
+        // and connect to the provided endpoint
+
+        'webpack/hot/only-dev-server',
+        // bundle the client for hot reloading
+        // only- means to only hot reload for successful updates
+        "./index.js"
+    ]
+} else {
+    config.entry = [
+        'react-hot-loader/patch',
+        // activate HMR for React
+
+        // 'webpack-dev-server/client?http://localhost:8080',
+        // bundle the client for webpack-dev-server
+        // and connect to the provided endpoint
+
+        'webpack/hot/only-dev-server',
+        // bundle the client for hot reloading
+        // only- means to only hot reload for successful updates
+        "./index.js"
+    ]
+}
+
+module.exports = config;
+

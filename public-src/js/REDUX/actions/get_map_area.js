@@ -12,7 +12,6 @@ import {
     GET_MAP_DATA_SUCCESS,
     GET_MAP_DATA_ERROR,
     GET_MAP_DATA_REQUEST,
-    SHOW_CLASTER,
     CLICK_ON_FEATURE_CLASTER,
     TOGGLE_LAYER,
     GET_CLASTER_REQUEST,
@@ -26,14 +25,12 @@ import {
     CHECK_ALL_ICON,
     TOGGLE_DATA,
     SET_DATA_BUBBLE,
-    FINISH_LOAD,
     TOGGLE_CURENCY,
     SET_DATA_DISTRICT,
-    SET_DATA_REGION,
     TOGGLE_CHART_TO_STUDENT,
     BUBBLE_CHART_TOGGLE,
-    SET_HOVER_COLOR
-
+    SET_HOVER_COLOR,
+    SET_CURENCY
 } from './constant';
 
 
@@ -274,5 +271,12 @@ export function set_Hover_Color(color) {
     return {
         type: SET_HOVER_COLOR,
         payload: color
+    }
+}
+
+export function setCurency(val) {
+    return {
+        type: SET_CURENCY,
+        payload: val
     }
 }
