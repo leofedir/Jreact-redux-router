@@ -138,11 +138,12 @@ class Map extends Component {
     }
 
     componentWillUpdate() {
+        const {claster} = this.props.map_reducer
         // Lmap.off('zoomend', ::this.zoomFunction())
         Lmap.off('zoomend', ::this.zoomFunction);
         Lmap.on('zoomend', ::this.zoomFunction);
 
-        setTimeout(() => Lmap.invalidateSize(), 200);
+        !claster ? setTimeout(() => Lmap.invalidateSize(), 200) : ''
     }
 
     zoom_in() {
@@ -261,13 +262,6 @@ class Map extends Component {
         let nyCoordinat = kadastr.options.crs.project(coord)
 
         const query = `x=${  nyCoordinat.y }&y=${ nyCoordinat.x }&zoom=${ zoom }&actLayers%5B%5D=kadastr`;
-        const dataStyle = `http://map.land.gov.ua/geowebcache/service/wms?SERVICE=WMS&REQUEST=GetStyles&LAYERS=kadastr&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=false&VERSION=1.1.1&HEIGHT=256&WIDTH=256&SRS=EPSG%3A900913&BBOX=4383204.949985147,5635549.221409476,5009377.085697311,6261721.357121641`
-
-        fetch(dataStyle)
-            .then(checkStatus)
-            .then(d => {
-                console.log('d >>', d)
-            })
 
         fetch(`http://map.land.gov.ua/kadastrova-karta/getobjectinfo?${query}`)
             .then(checkStatus)
