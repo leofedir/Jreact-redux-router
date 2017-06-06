@@ -43,7 +43,7 @@ class Popup extends Component {
     getCyrencyItems() {
         const {curencyIndexCurency} = this.props.map_reducer
         return (
-            <select className="" value={curencyIndexCurency} onChange={::this.setCurentCurency}>
+            <select className="curency_select" value={curencyIndexCurency} onChange={::this.setCurentCurency}>
                 {curency.map((item, i) => {
                     return <option  className="" key={i} value={i}>
                         {item.toUpperCase()}
