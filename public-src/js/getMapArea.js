@@ -4,7 +4,7 @@ import esri from 'esri-leaflet/dist/esri-leaflet';
 import {checkStatus, parseJSON} from './checkJSON';
 
 import {set_Range_items, set_legend_data} from './REDUX/actions/actions'
-import {clickOnFeature} from './REDUX/actions/get_map_area'
+import {clickOnFeature, set_Hover_Color} from './REDUX/actions/get_map_area'
 import {store} from './index';
 import {coordinate} from './PageElement/Map'
 import {LightenDarkenColor} from './utils/colors'
@@ -176,13 +176,18 @@ export default function getMap(data, rebuild = true, isRegion) {
 
         function onMouseout(e) {
             let item = e.target;
-
-            if (item !== layer) choroplethLayer.resetStyle(item);
+            
+            if (item !== layer) {
+                choroplethLayer.resetStyle(item);
+                let state = store.getState();
+                store.dispatch(set_Hover_Color(''))
+            }
         }
 
         function onMouseOver(e) {
             let item = e.target;
             if (item == layer) return;
+            handleHoverLegendItem(item)
 
             let color = item.options.fillColor
             let newColor = LightenDarkenColor(color, +50)
@@ -191,6 +196,16 @@ export default function getMap(data, rebuild = true, isRegion) {
                 direction: 'top',
                 sticky: true
             }).openTooltip()
+        }
+    
+    
+        function handleHoverLegendItem(curColor) {
+            let state = store.getState();
+            const c = curColor.options.fillColor;
+            const {hoverColor} = state.map_reducer;
+
+            if (c !== hoverColor)
+                store.dispatch(set_Hover_Color(c))
         }
 
         function whenClicked(e) {

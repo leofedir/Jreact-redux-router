@@ -53,9 +53,13 @@ class Legend extends Component {
             choroplethLayer.resetStyle(layer);
         })
     }
+    
+    handleHoverMapLegend = (hc, c) => {
+        return hc === c
+    }
 
     createItem() {
-        const {check, clasterCount, checkAll} = this.props.map_reducer;
+        const {check, clasterCount, checkAll, hoverColor} = this.props.map_reducer;
         const {legend_data, claster_layers,} = this.props.main;
         const format = new Intl.NumberFormat().format;
         if (legend_data !== null) {
@@ -68,7 +72,7 @@ class Legend extends Component {
                     {limits.map((item, i) => {
                         return (
                             <p key={ i }>
-                                <i  onMouseMove={this.handleOnHover}  onMouseOut={this.handleOnUnhover} style={{backgroundColor: colors[i]}}/>
+                                <i className={this.handleHoverMapLegend(hoverColor, colors[i]) ? 'legend-active' : ''} onMouseMove={this.handleOnHover}  onMouseOut={this.handleOnUnhover} style={{backgroundColor: colors[i]}}/>
                                 {((limits[i] !== null) ? ' ' + format(limits[i]) : dani) + ((i !== limits.length - 1 && limits[i + 1] !== null) ? ' < ' + format(limits[i + 1]) : (limits[i] !== null) ? '  <' : '')}
                             </p>
                         )

@@ -31,8 +31,8 @@ import {
     SET_DATA_DISTRICT,
     SET_DATA_REGION,
     TOGGLE_CHART_TO_STUDENT,
-    BUBBLE_CHART_TOGGLE
-
+    BUBBLE_CHART_TOGGLE,
+    SET_HOVER_COLOR
 
 } from './constant';
 
@@ -267,5 +267,12 @@ export function check_all(state, check) {
             payload: !state
         });
 
+    }
+}
+
+export function set_Hover_Color(color) {
+    return {
+        type: SET_HOVER_COLOR,
+        payload: color
     }
 }
