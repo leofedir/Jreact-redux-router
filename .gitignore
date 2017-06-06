@@ -7,5 +7,6 @@ public/
 
 #testing functional
 doc/
-public-src/js/utils/
+public-src/js/utils/parser.js
 .esdoc.json
+package-lock.json
