@@ -32,9 +32,6 @@ import {
     SET_CURENCY
 } from './constant';
 
-export let properties = null;
-
-
 // export function get_map_area(url, rebuild = true, alias, isRegion) {
 //     let categori = url.slice(url.lastIndexOf('__'));
 //

@@ -16,7 +16,9 @@ export let propertiesMain = null;
 let atoData = null;
 let data = null;
 let unsubscribe = null;
+let unsubscribeCurency = null;
 let randColor = {};
+let myCurency = '';
 
 export default function getMap(properties, rebuild = true, isRegion) {
     let layer = null;
@@ -24,6 +26,11 @@ export default function getMap(properties, rebuild = true, isRegion) {
     if (unsubscribe !== null) {
         unsubscribe();
         unsubscribe = null
+    }
+
+    if (unsubscribeCurency !== null) {
+        unsubscribeCurency();
+        unsubscribeCurency = null
     }
     let myStyle = {
         "color": "#A9A9A9",
@@ -112,6 +119,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
         }
     }
 
+
     function handleChange() {
         let nexItem = store.getState().main.range_item;
 
@@ -123,7 +131,19 @@ export default function getMap(properties, rebuild = true, isRegion) {
         return
     }
 
+    myCurency = store.getState().map_reducer.curency;
+
+    function handleChangeCurency() {
+        let nextCurency = store.getState().map_reducer.curency;
+        if (nextCurency != myCurency) {
+            myCurency = nextCurency;
+            renderLayer()
+        }
+        return
+    }
+
     unsubscribe = store.subscribe(handleChange);
+    unsubscribeCurency = store.subscribe(handleChangeCurency);
 
     function getRandomColorLayer() {
         const arrWithColor = [
@@ -178,9 +198,10 @@ export default function getMap(properties, rebuild = true, isRegion) {
             mouseover: onMouseOver,
             mouseout: onMouseout
         };
+
 // hightligth color
         const layerObject = {
-            valueProperty: range_items[range_item],
+            valueProperty: myCurency + range_items[range_item],
             scale: randColor.scale,
             steps: 5,
             mode: 'q',
