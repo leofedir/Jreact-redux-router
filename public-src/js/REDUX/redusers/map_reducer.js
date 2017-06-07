@@ -24,7 +24,6 @@ import {
     TOGGLE_CURENCY,
     TOGGLE_CHART_TO_STUDENT,
     BUBBLE_CHART_TOGGLE,
-    SET_HOVER_COLOR,
     SET_CURENCY
 } from '../actions/constant'
 
@@ -50,7 +49,6 @@ const initialState = {
     data_bubble: null,
     dataChartUsd: false,
     for1Student: false,
-    hoverColor: '',
     curencyIndexCurency: '0'
 };
 
@@ -142,9 +140,6 @@ export default function map(state = initialState, action) {
 
         case TOGGLE_CHART_TO_STUDENT:
             return {...state, for1Student: action.payload};
-            
-        case SET_HOVER_COLOR:
-            return {...state, hoverColor: action.payload};
 
         case SET_CURENCY:
             return {...state, curencyIndexCurency: action.payload};
