@@ -3,7 +3,6 @@ const chroma = require('chroma-js');
 
 L.choropleth = module.exports = function (geojson, opts) {
     opts = opts || {};
-
     // Save what the user passed as the style property for later use (since we're overriding it)
     let userStyle = opts.style;
 

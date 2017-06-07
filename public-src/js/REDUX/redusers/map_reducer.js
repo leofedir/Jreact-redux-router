@@ -59,7 +59,7 @@ export default function map(state = initialState, action) {
             return {...state, curentMap: action.payload[0], alias: action.payload[1]};
 
         case GET_MAP_AREA_SUCCESS:
-            return {...state, info: action.payload[0], feature: null}
+            return {...state, info: action.payload, feature: null, data_success: true};
 
         case GET_MAP_DATA_REQUEST:
             return {...state, data_success: false, };

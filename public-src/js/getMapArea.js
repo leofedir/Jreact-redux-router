@@ -11,11 +11,13 @@ import {LightenDarkenColor} from './utils/colors'
 
 export let choroplethLayer = null;
 export let ato = null;
+export let propertiesMain = null;
 let atoData = null;
+let data = null;
 let unsubscribe = null;
 let randColor = {};
 
-export default function getMap(data, rebuild = true, isRegion) {
+export default function getMap(properties, rebuild = true, isRegion) {
     let layer = null;
 
     if (unsubscribe !== null) {
@@ -29,30 +31,48 @@ export default function getMap(data, rebuild = true, isRegion) {
         'className': 'ato'
 
     };
+    let filds;
+    let PropertiesLayer = [];
 
     if (rebuild) {
+        propertiesMain = properties;
+
+        if (isRegion) {
+            data = Object.values(propertiesMain.__region);
+            filds = propertiesMain.__region[0].properties
+        } else {
+            data = Object.values(propertiesMain.__district);
+            filds = propertiesMain.__district[0].properties
+        }
+
+        // select field width data
+        for (let key in filds) {
+            if (filds.hasOwnProperty(key) && key.slice(0, 4) === 'year') {
+                PropertiesLayer.push(key)
+            }
+        }
+
+        store.dispatch(set_Range_items(PropertiesLayer));
+
         Lmap.eachLayer(function (layer) {
             Lmap.removeLayer(layer)
         });
 
         Lmap.setView([49, 31], 5);
         esri.basemapLayer('Topographic').addTo(Lmap);
+    } else {
+        if (isRegion) {
+            data = Object.values(propertiesMain.__region);
+            filds = propertiesMain.__region[0].properties
+        } else {
+            data = Object.values(propertiesMain.__district);
+            filds = propertiesMain.__district[0].properties
+        }
     }
 
     if (Lmap.hasLayer(choroplethLayer)) {
         Lmap.removeLayer(choroplethLayer)
     }
-
-    let filds = data[0].properties;
-    let propertys = []
-
-    // select field width data
-    for (let key in filds) {
-        if (filds.hasOwnProperty(key) && key.slice(0, 4) === 'year') {
-            propertys.push(key)
-        }
-    }
-    store.dispatch(set_Range_items(propertys));
 
     let state = store.getState();
     let {range_item, range_items,} = state.main;
@@ -102,6 +122,8 @@ export default function getMap(data, rebuild = true, isRegion) {
         return
     }
 
+    unsubscribe = store.subscribe(handleChange);
+
     function getRandomColorLayer() {
         const arrWithColor = [
             {
@@ -123,7 +145,8 @@ export default function getMap(data, rebuild = true, isRegion) {
         return arrWithColor[randIndex]
     }
 
-    unsubscribe = store.subscribe(handleChange);
+
+
     randColor = rebuild ? getRandomColorLayer() : randColor;
 
     function renderLayer() {
@@ -136,7 +159,7 @@ export default function getMap(data, rebuild = true, isRegion) {
             let i;
             let len = data.length;
             for (i = 0; i < len; i++) {
-               let coord = cordinate.filter(item => {
+                let coord = cordinate.filter(item => {
                     if (item.id == data[i].id) {
                         return item.geometry
                     }
@@ -154,8 +177,6 @@ export default function getMap(data, rebuild = true, isRegion) {
             mouseover: onMouseOver,
             mouseout: onMouseout
         };
-
-
 // hightligth color
         const layerObject = {
             valueProperty: range_items[range_item],
@@ -172,6 +193,7 @@ export default function getMap(data, rebuild = true, isRegion) {
                 layer.on(eventsMap)
             }
         };
+
         choroplethLayer = L.choropleth(data, layerObject).addTo(Lmap);
 
         function onMouseout(e) {
@@ -220,7 +242,6 @@ export default function getMap(data, rebuild = true, isRegion) {
             colors: choroplethLayer.options.colors,
             parametr: filds.parameter
         };
-
         store.dispatch(set_legend_data(legend_data));
     }
 
