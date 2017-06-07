@@ -214,9 +214,9 @@ export default function getMap(data, rebuild = true, isRegion) {
             legend_data.refs.map((el, i) => {
                 const hexRef = rgbToHex(Object.values(refsThis.refs)[i].style.backgroundColor)
                 if (c === hexRef) {
-                    Object.values(refsThis.refs)[i].style.marginLeft = '-9px';
-                    Object.values(refsThis.refs)[i].style.width = '52px';
-                    Object.values(refsThis.refs)[i].style.height = '42px';
+                    Object.values(refsThis.refs)[i].style.marginLeft = '-6px';
+                    Object.values(refsThis.refs)[i].style.width = '48px';
+                    Object.values(refsThis.refs)[i].style.height = '36px';
                 }
             });
             
