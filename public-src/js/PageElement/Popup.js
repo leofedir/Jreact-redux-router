@@ -23,7 +23,7 @@ class Popup extends Component {
         let i = 0;
         for (let key in feature) {
             if (feature.hasOwnProperty(key) && key.indexOf(curentCurency + 'year_') >= 0) {
-                popupInfo.push(<p key={feature.id + i}>Станом на 20{key.substring(5)}р.
+                popupInfo.push(<p key={feature.id + i}>Станом на 20{key.substring(5)} р.
                     <span>{new Intl.NumberFormat().format(feature[key])}</span></p>)
                 year_labels.push(20 + key.substring(5) + 'р');
                 dataToChart.push(+feature[key]);
@@ -43,7 +43,7 @@ class Popup extends Component {
     getCyrencyItems() {
         const {curencyIndexCurency} = this.props.map_reducer
         return (
-            <select className="" value={curencyIndexCurency} onChange={::this.setCurentCurency}>
+            <select className="curency_select" value={curencyIndexCurency} onChange={::this.setCurentCurency}>
                 {curency.map((item, i) => {
                     return <option  className="" key={i} value={i}>
                         {item.toUpperCase()}
@@ -68,7 +68,6 @@ class Popup extends Component {
                 curency = null;
                 curentCurency = null;
             }
-
             return (
                 <div className="description">
                     <div className="item_header">

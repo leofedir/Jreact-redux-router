@@ -375,6 +375,38 @@ body {
 .text_center {
   text-align: center;
 }
+.curency_select {
+  outline: none;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color:#e2e2e2;
+  color: #747474;
+  padding: 3px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+.popup_buttom-top {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.curency > p {
+  background: #e2e2e2;
+  border-radius: 6px;
+  display: block;
+  line-height: 1.5;
+  padding: 0 4px;
+  color: #747474;
+}
+.curency_select * {
+  outline: none;
+  border: none;
+  background: white;
+  color: #747474;
+}
+
 @media screen and (max-width:1600px)  {
   .map_heder_title .test{
     width: 50%;

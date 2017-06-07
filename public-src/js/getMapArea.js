@@ -4,10 +4,11 @@ import esri from 'esri-leaflet/dist/esri-leaflet';
 import {checkStatus, parseJSON} from './checkJSON';
 
 import {set_Range_items, set_legend_data} from './REDUX/actions/actions'
-import {clickOnFeature} from './REDUX/actions/get_map_area'
+import {clickOnFeature, set_Hover_Color} from './REDUX/actions/get_map_area'
 import {store} from './index';
 import {coordinate} from './PageElement/Map'
-import {LightenDarkenColor} from './utils/colors'
+import {LightenDarkenColor, rgbToHex} from './utils/colors'
+import {refsThis} from './PageElement/Legend'
 
 export let choroplethLayer = null;
 export let ato = null;
@@ -195,16 +196,20 @@ export default function getMap(properties, rebuild = true, isRegion) {
         };
 
         choroplethLayer = L.choropleth(data, layerObject).addTo(Lmap);
-
+        
         function onMouseout(e) {
             let item = e.target;
-
-            if (item !== layer) choroplethLayer.resetStyle(item);
+            
+            if (item !== layer) {
+                choroplethLayer.resetStyle(item);
+                handleUnhoverLegendItem()
+            }
         }
 
         function onMouseOver(e) {
             let item = e.target;
             if (item == layer) return;
+            handleHoverLegendItem(item)
 
             let color = item.options.fillColor
             let newColor = LightenDarkenColor(color, +50)
@@ -214,6 +219,31 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 sticky: true
             }).openTooltip()
         }
+        
+        function handleUnhoverLegendItem() {
+            let state = store.getState();
+            const {legend_data} = state.main;
+            legend_data.refs.map((el, i) => {
+                Object.values(refsThis.refs)[i].style.width = '36px';
+                Object.values(refsThis.refs)[i].style.height = '26px';
+                Object.values(refsThis.refs)[i].style.marginLeft = '0px';
+            });
+        }
+        function handleHoverLegendItem(curColor) {
+            let state = store.getState();
+            const c = curColor.options.fillColor;
+            const {legend_data} = state.main;
+    
+            legend_data.refs.map((el, i) => {
+                const hexRef = rgbToHex(Object.values(refsThis.refs)[i].style.backgroundColor)
+                if (c === hexRef) {
+                    Object.values(refsThis.refs)[i].style.marginLeft = '-5px';
+                    Object.values(refsThis.refs)[i].style.width = '48px';
+                    Object.values(refsThis.refs)[i].style.height = '36px';
+                }
+            });
+            
+        }
 
         function whenClicked(e) {
             const bounds = e.target.getBounds();
@@ -221,6 +251,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             if (layer === null) {
                 layer = e.target;
             } else if (layer !== null && layer.feature.properties.name_ua != e.target.feature.properties.name_ua) {
+                handleUnhoverLegendItem()
                 choroplethLayer.resetStyle(layer);
                 layer = e.target;
             }
@@ -236,11 +267,15 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
             store.dispatch(clickOnFeature(e.target.feature.properties))
         }
-
+        let legend_refs = [];
+        for (let i = 0; i < choroplethLayer.options.limits.length; i++)
+            legend_refs.push(`legend${i}`)
+        
         let legend_data = {
             limits: choroplethLayer.options.limits,
             colors: choroplethLayer.options.colors,
-            parametr: filds.parameter
+            parametr: filds.parameter,
+            refs: legend_refs
         };
         store.dispatch(set_legend_data(legend_data));
     }

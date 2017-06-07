@@ -30,8 +30,6 @@ import {
     TOGGLE_CHART_TO_STUDENT,
     BUBBLE_CHART_TOGGLE,
     SET_CURENCY
-
-
 } from './constant';
 
 export let properties = null;
