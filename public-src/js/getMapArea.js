@@ -244,8 +244,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
         function handleUnhoverLegendItem() {
             let state = store.getState();
             const {legend_data} = state.main;
-            
-            if (legend_data.refs !== null) {
+            if (legend_data !== null) {
                 legend_data.refs.map((el, i) => {
                     Object.values(refsThis.refs)[i].style.width = '36px';
                     Object.values(refsThis.refs)[i].style.height = '26px';
@@ -258,8 +257,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
             let state = store.getState();
             const c = curColor.options.fillColor;
             const {legend_data} = state.main;
-    
-            if (legend_data.refs !== null) {
+            
+            if (legend_data !== null) {
                 legend_data.refs.map((el, i) => {
                     const hexRef = rgbToHex(Object.values(refsThis.refs)[i].style.backgroundColor)
                     if (c === hexRef) {
