@@ -183,7 +183,9 @@ export default function getMap(data, rebuild = true, isRegion) {
             if (item !== layer) {
                 choroplethLayer.resetStyle(item);
                 legend_data.refs.map((el, i) => {
-                        Object.values(refsThis.refs)[i].style.border = ''
+                    Object.values(refsThis.refs)[i].style.width = '36px';
+                    Object.values(refsThis.refs)[i].style.height = '26px';
+                    Object.values(refsThis.refs)[i].style.marginLeft = '0px';
                 });
             }
         }
@@ -211,8 +213,11 @@ export default function getMap(data, rebuild = true, isRegion) {
     
             legend_data.refs.map((el, i) => {
                 const hexRef = rgbToHex(Object.values(refsThis.refs)[i].style.backgroundColor)
-                if (c === hexRef)
-                    Object.values(refsThis.refs)[i].style.border = '3px solid red'
+                if (c === hexRef) {
+                    Object.values(refsThis.refs)[i].style.marginLeft = '-9px';
+                    Object.values(refsThis.refs)[i].style.width = '52px';
+                    Object.values(refsThis.refs)[i].style.height = '42px';
+                }
             });
             
         }

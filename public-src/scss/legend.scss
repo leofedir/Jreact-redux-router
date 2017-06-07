@@ -20,15 +20,10 @@
     margin-right: 8px;
     opacity: 0.7;
     width: 36px;
-  }
-
-   //edit for change style for map -> legend hover
-  .legend-active {
-    width: 30px;
-    height: 20px;
-    border: 3px solid red;
+    transition: .3s;
   }
 }
+
 .legend__title {
   span {
     font-style: italic !important;
