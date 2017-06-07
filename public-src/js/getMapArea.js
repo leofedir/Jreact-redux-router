@@ -174,19 +174,13 @@ export default function getMap(data, rebuild = true, isRegion) {
             }
         };
         choroplethLayer = L.choropleth(data, layerObject).addTo(Lmap);
-
+        
         function onMouseout(e) {
             let item = e.target;
-            let state = store.getState();
-            const {legend_data} = state.main;
             
             if (item !== layer) {
                 choroplethLayer.resetStyle(item);
-                legend_data.refs.map((el, i) => {
-                    Object.values(refsThis.refs)[i].style.width = '36px';
-                    Object.values(refsThis.refs)[i].style.height = '26px';
-                    Object.values(refsThis.refs)[i].style.marginLeft = '0px';
-                });
+                handleUnhoverLegendItem()
             }
         }
 
@@ -203,18 +197,25 @@ export default function getMap(data, rebuild = true, isRegion) {
                 sticky: true
             }).openTooltip()
         }
-    
-    
+        
+        function handleUnhoverLegendItem() {
+            let state = store.getState();
+            const {legend_data} = state.main;
+            legend_data.refs.map((el, i) => {
+                Object.values(refsThis.refs)[i].style.width = '36px';
+                Object.values(refsThis.refs)[i].style.height = '26px';
+                Object.values(refsThis.refs)[i].style.marginLeft = '0px';
+            });
+        }
         function handleHoverLegendItem(curColor) {
             let state = store.getState();
             const c = curColor.options.fillColor;
             const {legend_data} = state.main;
-
     
             legend_data.refs.map((el, i) => {
                 const hexRef = rgbToHex(Object.values(refsThis.refs)[i].style.backgroundColor)
                 if (c === hexRef) {
-                    Object.values(refsThis.refs)[i].style.marginLeft = '-6px';
+                    Object.values(refsThis.refs)[i].style.marginLeft = '-5px';
                     Object.values(refsThis.refs)[i].style.width = '48px';
                     Object.values(refsThis.refs)[i].style.height = '36px';
                 }
@@ -228,6 +229,7 @@ export default function getMap(data, rebuild = true, isRegion) {
             if (layer === null) {
                 layer = e.target;
             } else if (layer !== null && layer.feature.properties.name_ua != e.target.feature.properties.name_ua) {
+                handleUnhoverLegendItem()
                 choroplethLayer.resetStyle(layer);
                 layer = e.target;
             }
