@@ -41,8 +41,8 @@ class Legend extends Component {
         Object.values(choroplethLayer._layers).map((layer) => {
             if (layer.options.fillColor === color) {
                 layer.setStyle({
-                    weight: 2, // border of region or district
-                    fillColor: LightenDarkenColor(color, +50) // + light | - dark
+                    weight: 1, // border of region or district
+                    fillColor: LightenDarkenColor(color, +60) // + light | - dark
                 })
             }
         })
