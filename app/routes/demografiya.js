@@ -1,7 +1,8 @@
 const pgdb = require('../libs/pgdb')(),
     GeoJson = require('../libs/createGeoJson');
 
-let dataChart = {};
+let dataObj = {};
+let info = null;
 
 module.exports = function (router) {
 
@@ -10,16 +11,33 @@ module.exports = function (router) {
 
         table = table.split(',');
         arr = arr.split(',');
-        if (req.body.table in dataChart) {
-            res.json(dataChart[table[0]])
+        if (req.body.table in dataObj) {
+            res.json(dataObj[table[0]])
         } else {
-            Promise.all(table.map( item =>pgdb.query(`select koatuu,name_ua,year_13,year_14,year_15,year_16,parameter from ` + item)))
+            Promise.all(table.map( item =>pgdb.query(`select * from ` + item)))
                 .then(data => {
                     let obj = {};
-                    data.forEach((item, i) => obj[arr[i]] = item);
-                    dataChart[table[0]] = obj;
+                    data.forEach((item, i) => {
+                        let newData = item.map(item => {
+                            let obj = {};
+                            obj.id = item.id;
+                            obj.type = "Feature";
+                            obj.properties = {};
+                            for (let key in item) {
+                                if (item.hasOwnProperty(key)) {
+                                    obj.properties[key] = item[key];
+                                    if (key == 'info' && item[key] != null) {
+                                        info = item[key]
+                                    }
+                                }
+                            }
+                            return obj;
+                        });
+                        obj[arr[i]] = newData
+                    });
+                    dataObj[table[0]] = [obj, info];
                 })
-                .then(()=> res.json(dataChart[table[0]]))
+                .then(()=> res.json(dataObj[table[0]]))
         }
     });
 

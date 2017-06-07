@@ -32,47 +32,54 @@ import {
     SET_CURENCY
 } from './constant';
 
+// export function get_map_area(url, rebuild = true, alias, isRegion) {
+//     let categori = url.slice(url.lastIndexOf('__'));
+//
+//     return (dispatch) => {
+//         dispatch({
+//             type: GET_MAP_AREA_REQUEST,
+//             payload: [url, alias]
+//         })
+//
+//         fetch('/render', {
+//             method: 'post',
+//             headers: {
+//                 "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+//             },
+//             body: `table=${ url }`
+//         })
+//             .then(checkStatus)
+//             .then(parseJSON)
+//             .then(data => {
+//                 getMap(data[1], rebuild, isRegion);
+//                 dispatch({
+//                     type: GET_MAP_AREA_SUCCESS,
+//                     payload: {
+//                         info: data[0],
+//                         data: data[1],
+//                         categori
+//
+//                     }
+//                 });
+//             }).catch((err) => {
+//             console.log('err >>', err);
+//             dispatch({
+//                 type: GET_MAP_AREA_ERROR
+//             })
+//         });
+//     }
+// }
 
-export function get_map_area(url, rebuild = true, alias, isRegion) {
-    
-    return (dispatch) => {
-        dispatch({
-            type: GET_MAP_AREA_REQUEST,
-            payload: [url, alias]
-        })
+export function getMapData(tableData = null, arr = null, url, rebuild = true, alias, isRegion) {
 
-        fetch('/render', {
-            method: 'post',
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-            },
-            body: `table=${ url }`
-        })
-            .then(checkStatus)
-            .then(parseJSON)
-            .then(data => {
-                getMap(data[1], rebuild, isRegion);
-                dispatch({
-                    type: GET_MAP_AREA_SUCCESS,
-                    payload: [data[0]]
-                });
-            }).catch((err) => {
-            console.log('err >>', err);
+    if (arr !== null && tableData !== null) {
+        // let categori = tableData[1].slice(url.lastIndexOf('__'));
+
+        return (dispatch) => {
             dispatch({
-                type: GET_MAP_AREA_ERROR
+                type: GET_MAP_AREA_REQUEST,
+                payload: [url, alias]
             })
-        });
-    }
-}
-
-export function getMapData(tableData = null, arr = null) {
-    return (dispatch) => {
-        dispatch({
-            type: GET_MAP_DATA_REQUEST
-        });
-
-        if (arr !== null && tableData !== null) {
-
             fetch('/getmapdata', {
                 method: 'post',
                 headers: {
@@ -82,10 +89,11 @@ export function getMapData(tableData = null, arr = null) {
             })
                 .then(parseJSON)
                 .then((data) => {
+                    getMap(data[0], rebuild, isRegion);
                     dispatch({
-                        type: GET_MAP_DATA_SUCCESS,
-                        payload: data
-                    })
+                        type: GET_MAP_AREA_SUCCESS,
+                        payload: data[1]
+                    });
                 })
                 .catch((err) => {
                     console.log('err >>', err);

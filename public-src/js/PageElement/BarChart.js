@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import * as MapActions from '../REDUX/actions/get_map_area';
 import * as Actions from '../REDUX/actions/actions';
 import {region} from './region_null';
+import {propertiesMain} from '../getMapArea';
 
 const Highcharts = require('highcharts');
 const higchartsDrilldown = require('highcharts/modules/drilldown.js');
@@ -14,6 +15,8 @@ const aliasMultiChart = {
     haryachavoda: 'Обсяг споживання гарячої води, кб.м',
     uchniv: 'Кількість учнів'
 }
+
+let myCurency = '';
 
 higchartsDrilldown(Highcharts);
 let myChart = null;
@@ -54,32 +57,33 @@ class BarChart extends Component {
 
     createChart(full = null) {
         // save props
-        const {alias, properties, data_success, chart3, bar_cahrt_full, dataChartRegion} = this.props.map_reducer;
+        const {alias, data_success, chart3, bar_cahrt_full, dataChartRegion, curency} = this.props.map_reducer;
         const {range_item, range_items, submenu_item} = this.props.main;
         let curent_year = range_items[range_item] || 'year_13';
         let parametr;
 
         //check to hav region in props
-        if (data_success && properties && dataChartRegion) {
+        if (data_success && propertiesMain && dataChartRegion) {
 
-            if ('__district' in properties) {
-                parametr = properties.__district[0].parameter
-            } else if ('__region' in properties) {
-                parametr = properties.__region[0].parameter
+            if ('__district' in propertiesMain) {
+                parametr = curency === '' ? propertiesMain.__district[0].properties.parameter : curency
+            } else if ('__region' in propertiesMain) {
+                parametr = curency === '' ? propertiesMain.__region[0].properties.parameter : curency
             }
 
+            parametr == 'грн' ? myCurency = 'uah' : myCurency = curency
+
             let district = {};
-            if (!dataStore[submenu_item + curent_year + '__district'] && '__district' in properties) {
 
+            if (!dataStore[submenu_item + myCurency + curent_year + '__district'] && '__district' in propertiesMain) {
 
-                dataStore[submenu_item + curent_year + '__district'] = [];
-                properties.__district.forEach(item => {
+                dataStore[submenu_item + myCurency + curent_year + '__district'] = [];
+                propertiesMain.__district.forEach(item => {
+                    district[item.properties.koatuu.slice(0, 2)] ? '' : district[item.properties.koatuu.slice(0, 2)] = [];
 
-                    district[item.koatuu.slice(0, 2)] ? '' : district[item.koatuu.slice(0, 2)] = [];
+                    let _item = district[item.properties.koatuu.slice(0, 2)];
 
-                    let _item = district[item.koatuu.slice(0, 2)];
-
-                    _item.push([item.name_ua, +item[curent_year]])
+                    _item.push([item.properties.name_ua, +item.properties[myCurency + curent_year]])
 
                 });
 
@@ -103,29 +107,27 @@ class BarChart extends Component {
                         obj.color = '#27ae60';
                         obj.maxPointWidth = 25;
 
-                        dataStore[submenu_item + curent_year + '__district'].push(obj);
+                        dataStore[submenu_item + myCurency + curent_year + '__district'].push(obj);
                     }
                 }
             }
 
-
-            if (!dataStore[submenu_item + curent_year + '__region'] && '__region' in properties) {
+            if (!dataStore[submenu_item + myCurency + curent_year + '__region'] && '__region' in propertiesMain) {
                 // sort data to enable labels
-                properties.__region.sort((a, b) => b[curent_year] - a[curent_year]);
+                propertiesMain.__region.sort((a, b) => b.properties[myCurency + curent_year] - a.properties[myCurency + curent_year]);
                 let i = 1;
 
-                dataStore[submenu_item + curent_year + '__region'] = properties.__region.map(item => {
+                dataStore[submenu_item + myCurency + curent_year + '__region'] = propertiesMain.__region.map(item => {
                     let obj = {};
-                    obj.name = item.name_ua + `  (${ i })`;
-                    obj.y = +item[curent_year];
-                    obj.drilldown = item.koatuu.slice(0, 2);
+                    obj.name = item.properties.name_ua + `  (${ i })`;
+                    obj.y = +item.properties[myCurency + curent_year];
+                    obj.drilldown = item.properties.koatuu.slice(0, 2);
                     i++;
                     return obj
                 });
-            } else if ('__region' in properties === false) {
-                dataStore[submenu_item + curent_year + '__region'] = region
+            } else if ('__region' in propertiesMain === false) {
+                dataStore[submenu_item + myCurency + curent_year + '__region'] = region
             }
-
             // Create the chart
             myChart = Highcharts.chart('item_bar_chart', {
                 lang: {
@@ -163,7 +165,7 @@ class BarChart extends Component {
                 series: [{
                     name: alias,
                     maxPointWidth: 25,
-                    data: full ? dataStore[submenu_item + curent_year + '__region'] : dataStore[submenu_item + curent_year + '__region'].slice(0, 5),
+                    data: full ? dataStore[submenu_item + myCurency + curent_year + '__region'] : dataStore[submenu_item + myCurency + curent_year + '__region'].slice(0, 5),
                     negativeColor: '#e74c3c',
                     color: '#27ae60'
                 }],
@@ -183,21 +185,21 @@ class BarChart extends Component {
                             'font-size': '24px',
                         },
                     },
-                    series: dataStore[submenu_item + curent_year + '__district'] || []
+                    series: dataStore[submenu_item + myCurency + curent_year + '__district'] || []
                 }
             });
         }
-        else if (data_success && properties && '__district' in properties && !dataChartRegion) {
+        else if (data_success && propertiesMain && '__district' in propertiesMain && !dataChartRegion) {
 
-            if (!dataStore[submenu_item + curent_year]) {
+            if (!dataStore[submenu_item + myCurency + curent_year]) {
 
-                properties.__district.sort((a, b) => b[curent_year] - a[curent_year]);
+                propertiesMain.__district.sort((a, b) => b.properties[myCurency + curent_year] - a.properties[myCurency + curent_year]);
                 let i = 1;
 
-                dataStore[submenu_item + curent_year] = properties.__district.map(item => {
+                dataStore[submenu_item + myCurency + curent_year] = propertiesMain.__district.map(item => {
                     let obj = {};
-                    obj.name = item.name_ua + `  (${ i })`;
-                    obj.y = +item[curent_year];
+                    obj.name = item.properties.name_ua + `  (${ i })`;
+                    obj.y = +item.properties[myCurency + curent_year];
                     i++;
                     return obj
                 });
@@ -210,7 +212,7 @@ class BarChart extends Component {
                 },
                 chart: {
                     type: 'bar',
-                    height: full ? dataStore[submenu_item + curent_year].length * 25 : null,
+                    height: full ? dataStore[submenu_item + myCurency + curent_year].length * 25 : null,
                 },
                 credits: {
                     text: 'Енциклопедія територій',
@@ -218,7 +220,7 @@ class BarChart extends Component {
                     enabled: false
                 },
                 title: {
-                    text: alias + ', ' + properties.__district["0"].parameter + ', 20' + curent_year.substring(5) + 'р.'
+                    text: alias + ', ' + propertiesMain.__district["0"].parameter + ', 20' + curent_year.substring(5) + 'р.'
                 },
                 xAxis: {
                     type: 'category',
@@ -241,7 +243,7 @@ class BarChart extends Component {
                 },
                 series: [{
                     name: alias,
-                    data: full ? dataStore[submenu_item + curent_year] : dataStore[submenu_item + curent_year].slice(0, 5),
+                    data: full ? dataStore[submenu_item + myCurency + curent_year] : dataStore[submenu_item + myCurency + curent_year].slice(0, 5),
                     zones: [{
                         value: 0,
                         color: '#e74c3c'
@@ -390,7 +392,7 @@ class BarChart extends Component {
     }
 
     render() {
-        const {bar_chart_full, chart3, dataChartRegion, data_success, properties, bubble_chart_full, chart_full} = this.props.map_reducer;
+        const {bar_chart_full, chart3, dataChartRegion, data_success, bubble_chart_full, chart_full} = this.props.map_reducer;
         const chartDiv = <div ref="multiChart" className="multiChart" onMouseMove={::this.handlerOnMouseMove}><div id="chart0" className="item_bar_chart"/><div id="chart1" className="item_bar_chart"/><div id="chart2" className="item_bar_chart"/></div>;
         const chartStyle = (bubble_chart_full || chart_full) ? `disabled` : ``;
         
@@ -399,7 +401,7 @@ class BarChart extends Component {
                 {/*Title for right Trend BarChart*/}
                 <div className="item_header" onClick={::this.onHeaderChartClick}>
                     <div
-                        className="map_heder_title">{chart3 || !properties ? 'Тренд' : 'Діаграма-рейтинг (ТОП-5)'}</div>
+                        className="map_heder_title">{chart3 || !propertiesMain ? 'Тренд' : 'Діаграма-рейтинг (ТОП-5)'}</div>
                     <div onClick={ ::this.toggleChart }>
                         <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"/>
                     </div>
@@ -408,7 +410,7 @@ class BarChart extends Component {
                 {/*Right Trend BarChart*/}
                 <div className="item_content">
                     <div className="region_toggle"
-                         style={properties === null && !data_success ? {display: 'none'} : {display: 'block'}}
+                         style={propertiesMain === null && !data_success ? {display: 'none'} : {display: 'block'}}
                          onClick={::this.toggleChartData}>
                         <div className="region_toggle_item">Області
                             {chart3 ? '' :

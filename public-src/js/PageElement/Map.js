@@ -9,6 +9,7 @@ import L from 'leaflet';
 import esri from 'esri-leaflet/dist/esri-leaflet';
 import SubMenu from "./getSubMenu";
 import {alias} from '../aliasMapName';
+import getMap from './../getMapArea';
 
 export let Lmap = null;
 export let ukraine;
@@ -23,68 +24,69 @@ let icon = L.icon({
 let cordinateContainer;
 let kadastr;
 let layer;
-let cadastral = null
+let curentMap = null;
+let cadastral = null;
 
-    function tmpl(dataObject) {
-         let template = ``;
-        
-        let titleLayer = `<div class="cadastral_title_layer"></div>`;
-        template += titleLayer;
-        
-        let unorderList = `<ul>`;
-            for (let i in dataObject) {
-                unorderList += `<li class="cadastral_li_item"><p>${i}:</p><span>${dataObject[i]}</span></li>`;
-            }
-            unorderList += `</ul>`;
-        
-        template += unorderList;
-        return template
+function tmpl(dataObject) {
+    let template = ``;
+
+    let titleLayer = `<div class="cadastral_title_layer"></div>`;
+    template += titleLayer;
+
+    let unorderList = `<ul>`;
+    for (let i in dataObject) {
+        unorderList += `<li class="cadastral_li_item"><p>${i}:</p><span>${dataObject[i]}</span></li>`;
     }
+    unorderList += `</ul>`;
+
+    template += unorderList;
+    return template
+}
 
 //parse html object and return javascript object
-    function parserHTMLtoObject(obj) {
-        let curObject = {}
-        
-        //get current place by zoom
-        if(obj.hasOwnProperty("obl")) {
-            curObject = obj.obl
-            if(obj.hasOwnProperty("rajonunion")) {
+function parserHTMLtoObject(obj) {
+    let curObject = {}
+
+    //get current place by zoom
+    if (obj.hasOwnProperty("obl")) {
+        curObject = obj.obl
+        if (obj.hasOwnProperty("rajonunion")) {
             curObject = obj.rajonunion
-            
-            if(obj.hasOwnProperty("ikk")){
+
+            if (obj.hasOwnProperty("ikk")) {
                 curObject = obj.ikk
-                
-                if(obj.hasOwnProperty("dilanka")) {
+
+                if (obj.hasOwnProperty("dilanka")) {
                     curObject = obj.dilanka
                 }
             }
         }
     }
-    
+
     //get html data from chunk of code
     const regex = /(<([^>]+)>)/ig
     let result = curObject.replace(regex, "|");
-        
+
     //string to array
     let newItem = result.split("|")
     newItem = newItem.filter((word) => word !== '');
-    
+
     //if Key: null remove this key
-    for(let i = 0; i < newItem.length; i++) {
-        
-        if ((i+1 !== newItem.length) && (newItem[i].endsWith(':') && newItem[i+1].endsWith(':')) ) {
+    for (let i = 0; i < newItem.length; i++) {
+
+        if ((i + 1 !== newItem.length) && (newItem[i].endsWith(':') && newItem[i + 1].endsWith(':'))) {
             newItem.splice(i, 1)
         }
     }
     //remove ':' symbols from array
     newItem = newItem.map((word) => {
-        if (word.endsWith(':') )
-            return word.slice(0, word.length-1);
+        if (word.endsWith(':'))
+            return word.slice(0, word.length - 1);
         else
             return word
     })
-    
-    
+
+
     let dataObject = {}
     //check only important data
     const goodKeys = [
@@ -98,15 +100,15 @@ let cadastral = null
         "Цільове призначення",
         "Площа"
     ];
-    
+
     //array to key: value
-    for(let j = 0; j < newItem.length; j++) {
-        if (goodKeys.includes(newItem[j]) ) {
-            dataObject[newItem[j]] = newItem[j+1]
+    for (let j = 0; j < newItem.length; j++) {
+        if (goodKeys.includes(newItem[j])) {
+            dataObject[newItem[j]] = newItem[j + 1]
         }
         j++;
     }
-    
+
     return dataObject
 }
 
@@ -119,29 +121,32 @@ class Map extends Component {
 
     zoomFunction() {
 
-        const {curentMap} = this.props.map_reducer;
-
-        if (Lmap.hasLayer(ukraine) || curentMap === null  || this.props.main.fields === null) {
+        if (Lmap.hasLayer(ukraine) || this.props.main.fields === null) {
             return
         }
 
         const {fields, submenu_item} = this.props.main;
-        const {get_map_area} = this.props.MapActions;
         const mapSet = fields[submenu_item];
 
-        if (Lmap.getZoom() <= 5 && curentMap !== null && curentMap.indexOf('region') <= 0 && mapSet.some(a => ~a.indexOf('__region'))) {
-            get_map_area(submenu_item + '__region', false, alias[submenu_item], true)
+        curentMap === null ? curentMap = mapSet[0] : '';
 
-        } else if (Lmap.getZoom() >= 7 && curentMap !== null && curentMap.indexOf('region') >= 0 && mapSet.some(a => ~a.indexOf('__district'))) {
-            get_map_area(submenu_item + '__district', false, alias[submenu_item], false)
+        if (Lmap.getZoom() <= 5 && curentMap.indexOf('region') <= 0 && mapSet.some(a => ~a.indexOf('__region'))) {
+            curentMap = '__region';
+            getMap(null, false, true)
+            // getMapData(submenu_item + '__region', false, alias[submenu_item], true)
+
+        } else if (Lmap.getZoom() >= 7 && curentMap.indexOf('region') >= 0 && mapSet.some(a => ~a.indexOf('__district'))) {
+            curentMap = '__district';
+            getMap(null, false, false)
+            // getMapData(submenu_item + '__district', false, alias[submenu_item], false)
         }
     }
 
-    componentWillUpdate() {
+    componentDidUpdate() {
         const {claster} = this.props.map_reducer
         // Lmap.off('zoomend', ::this.zoomFunction())
-        Lmap.off('zoomend', ::this.zoomFunction);
-        Lmap.on('zoomend', ::this.zoomFunction);
+        // Lmap.off('zoomend', ::this.zoomFunction);
+        // Lmap.on('zoomend', ::this.zoomFunction);
 
         !claster ? setTimeout(() => Lmap.invalidateSize(), 200) : ''
     }
@@ -170,6 +175,7 @@ class Map extends Component {
 
         // add event to map actions
         Lmap.on('mousemove', onMouseMove);
+        Lmap.on('zoomend', ::this.zoomFunction);
 
 
         // fetch("https://www.drv.gov.ua/portal/gis$core.Gis_DistrPoly?p_f5271=1&ts=0.5532982378139228", {
@@ -232,7 +238,7 @@ class Map extends Component {
                     return obj
                 });
 
-                coordinate.district = data.district.map(item =>{
+                coordinate.district = data.district.map(item => {
                     let obj = {};
                     obj.geometry = JSON.parse(item.geojson);
                     obj.id = item.id;
@@ -267,7 +273,7 @@ class Map extends Component {
             .then(checkStatus)
             .then(parseJSON)
             .then(d => {
-                if(!("pusto" in d)) {
+                if (!("pusto" in d)) {
                     cadastral = parserHTMLtoObject(d);
                     if ('Кадастровий номер' in cadastral) {
 
@@ -282,7 +288,7 @@ class Map extends Component {
                         })
                             .then(checkStatus)
                             .then(parseJSON)
-                            .then(d=> {
+                            .then(d => {
                                 let info = d[0]
                                 let template = ``;
 
@@ -330,12 +336,14 @@ class Map extends Component {
             Lmap.removeLayer(layer);
         }
 
-        if (map == 'kadastr' && this.props.map_reducer.curentMap === null ) {
+        if (map == 'kadastr' && curentMap === null) {
             Lmap.hasLayer(ukraine) ? Lmap.removeLayer(ukraine) : '';
             layer = L.layerGroup()
                 .addLayer(esri.basemapLayer('Imagery'));
 
-            setTimeout(() => {layer.addLayer(kadastr)}, 100)
+            setTimeout(() => {
+                layer.addLayer(kadastr)
+            }, 100)
 
             Lmap.addLayer(layer);
             Lmap.on('click', this.onMouseClick)

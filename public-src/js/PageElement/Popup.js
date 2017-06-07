@@ -11,7 +11,7 @@ export let dataToChartUsd = [];
 
 let curency = null;
 
-let curentCurency = null;
+export let curentCurency = null;
 
 class Popup extends Component {
 
@@ -28,8 +28,6 @@ class Popup extends Component {
                 year_labels.push(20 + key.substring(5) + 'р');
                 dataToChart.push(+feature[key]);
                 i++
-            } else if(key.indexOf('usdyear') >= 0) {
-                dataToChartUsd.push(+feature[key])
             }
         }
         return popupInfo
@@ -37,7 +35,11 @@ class Popup extends Component {
 
     setCurentCurency(e) {
         const {setCurency} = this.props.MapActions;
-        setCurency(e.target.value)
+        let obj = {
+            index: e.target.value,
+            val: curency[e.target.value]
+        }
+        setCurency(obj)
     }
 
     getCyrencyItems() {

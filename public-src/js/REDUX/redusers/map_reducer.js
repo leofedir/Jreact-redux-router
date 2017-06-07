@@ -49,7 +49,8 @@ const initialState = {
     data_bubble: null,
     dataChartUsd: false,
     for1Student: false,
-    curencyIndexCurency: '0'
+    curencyIndexCurency: '0',
+    curency: null
 };
 
 export default function map(state = initialState, action) {
@@ -59,7 +60,7 @@ export default function map(state = initialState, action) {
             return {...state, curentMap: action.payload[0], alias: action.payload[1]};
 
         case GET_MAP_AREA_SUCCESS:
-            return {...state, info: action.payload[0], feature: null}
+            return {...state, info: action.payload, feature: null, data_success: true};
 
         case GET_MAP_DATA_REQUEST:
             return {...state, data_success: false, };
@@ -111,7 +112,10 @@ export default function map(state = initialState, action) {
                 data_success: false,
                 curentMap: null,
                 feature_claster: null,
-                data_bubble: null};
+                data_bubble: null,
+                curency: '',
+                curencyIndexCurency: '0'
+            };
 
         case SET_CLASTER_CHART_DATA:
             let [chart1, chart2, chart3] = action.payload;
@@ -142,7 +146,7 @@ export default function map(state = initialState, action) {
             return {...state, for1Student: action.payload};
 
         case SET_CURENCY:
-            return {...state, curencyIndexCurency: action.payload};
+            return {...state, curencyIndexCurency: action.payload.index, curency: action.payload.val};
 
         default:
             return state;
