@@ -16,3 +16,11 @@ export function LightenDarkenColor(col, amt) {
     else if (g < 0) g = 0;
     return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
 }
+
+export function rgbToHex(rgb) {
+    rgb = rgb.match(/^rgb?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+    return (rgb && rgb.length === 4) ? "#" +
+        ("0" + parseInt(rgb[1], 10).toString(16)).slice(-2) +
+        ("0" + parseInt(rgb[2], 10).toString(16)).slice(-2) +
+        ("0" + parseInt(rgb[3], 10).toString(16)).slice(-2) : '';
+}

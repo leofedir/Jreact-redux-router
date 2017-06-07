@@ -7,7 +7,8 @@ import {set_Range_items, set_legend_data} from './REDUX/actions/actions'
 import {clickOnFeature, set_Hover_Color} from './REDUX/actions/get_map_area'
 import {store} from './index';
 import {coordinate} from './PageElement/Map'
-import {LightenDarkenColor} from './utils/colors'
+import {LightenDarkenColor, rgbToHex} from './utils/colors'
+import {refsThis} from './PageElement/Legend'
 
 export let choroplethLayer = null;
 export let ato = null;
@@ -176,11 +177,14 @@ export default function getMap(data, rebuild = true, isRegion) {
 
         function onMouseout(e) {
             let item = e.target;
+            let state = store.getState();
+            const {legend_data} = state.main;
             
             if (item !== layer) {
                 choroplethLayer.resetStyle(item);
-                let state = store.getState();
-                store.dispatch(set_Hover_Color(''))
+                legend_data.refs.map((el, i) => {
+                        Object.values(refsThis.refs)[i].style.border = ''
+                });
             }
         }
 
@@ -202,10 +206,15 @@ export default function getMap(data, rebuild = true, isRegion) {
         function handleHoverLegendItem(curColor) {
             let state = store.getState();
             const c = curColor.options.fillColor;
-            const {hoverColor} = state.map_reducer;
+            const {legend_data} = state.main;
 
-            if (c !== hoverColor)
-                store.dispatch(set_Hover_Color(c))
+    
+            legend_data.refs.map((el, i) => {
+                const hexRef = rgbToHex(Object.values(refsThis.refs)[i].style.backgroundColor)
+                if (c === hexRef)
+                    Object.values(refsThis.refs)[i].style.border = '3px solid red'
+            });
+            
         }
 
         function whenClicked(e) {
@@ -229,11 +238,15 @@ export default function getMap(data, rebuild = true, isRegion) {
 
             store.dispatch(clickOnFeature(e.target.feature.properties))
         }
-
+        let legend_refs = [];
+        for (let i = 0; i < choroplethLayer.options.limits.length; i++)
+            legend_refs.push(`legend${i}`)
+        
         let legend_data = {
             limits: choroplethLayer.options.limits,
             colors: choroplethLayer.options.colors,
-            parametr: filds.parameter
+            parametr: filds.parameter,
+            refs: legend_refs
         };
 
         store.dispatch(set_legend_data(legend_data));

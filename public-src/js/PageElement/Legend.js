@@ -4,11 +4,17 @@ import {connect} from 'react-redux';
 import * as Actions from '../REDUX/actions/actions';
 import * as MapActions from '../REDUX/actions/get_map_area';
 import {choroplethLayer} from '../getMapArea'
-import {LightenDarkenColor} from '../utils/colors'
+import {LightenDarkenColor, rgbToHex} from '../utils/colors'
 import {alias} from '../aliasMapName';
 
-class Legend extends Component {
+export let refsThis;
 
+class Legend extends Component {
+    constructor() {
+        super()
+        
+        refsThis = this
+    }
     handleChange(e) {
         const {check} = this.props.map_reducer;
         const {toggle_layer, toggle_check} = this.props.MapActions;
@@ -27,13 +33,7 @@ class Legend extends Component {
     
     handleOnHover = (e) => {
         //transform tgb to hex
-        function rgbToHex(rgb) {
-            rgb = rgb.match(/^rgb?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-            return (rgb && rgb.length === 4) ? "#" +
-                ("0" + parseInt(rgb[1], 10).toString(16)).slice(-2) +
-                ("0" + parseInt(rgb[2], 10).toString(16)).slice(-2) +
-                ("0" + parseInt(rgb[3], 10).toString(16)).slice(-2) : '';
-        }
+        
     
         const color = rgbToHex(e.target.style.backgroundColor);
     
@@ -72,7 +72,7 @@ class Legend extends Component {
                     {limits.map((item, i) => {
                         return (
                             <p key={ i }>
-                                <i className={this.handleHoverMapLegend(hoverColor, colors[i]) ? 'legend-active' : ''} onMouseMove={this.handleOnHover}  onMouseOut={this.handleOnUnhover} style={{backgroundColor: colors[i]}}/>
+                                <i className={this.handleHoverMapLegend(hoverColor, colors[i]) ? 'legend-active' : '11 22'} ref={legend_data.refs[i]} onMouseMove={this.handleOnHover}  onMouseOut={this.handleOnUnhover} style={{backgroundColor: colors[i]}}/>
                                 {((limits[i] !== null) ? ' ' + format(limits[i]) : dani) + ((i !== limits.length - 1 && limits[i + 1] !== null) ? ' < ' + format(limits[i + 1]) : (limits[i] !== null) ? '  <' : '')}
                             </p>
                         )
