@@ -129,5 +129,8 @@ export let alias = {
     area_culturee_vydfizra:'Видатки місцевого бюджету на фізичну культуру та спорт',
     aptpunkt:'Аптечні пункти',
     point_ohorzdorov_aptpunkt_apteky:'Аптечні пункти',
-    area_demography_koefnarodj: 'Коефіцієнт народжуваності'
+    area_demography_koefnarodj: 'Коефіцієнт народжуваності',
+    area_demography_koefsmertnosti:'Коефіцієнт смертності',
+    area_demography_pryrodpryrist:'Природний приріст населення',
+    area_demography_migrpryrist:'Міграційний приріст населення'
 }
