@@ -244,26 +244,31 @@ export default function getMap(properties, rebuild = true, isRegion) {
         function handleUnhoverLegendItem() {
             let state = store.getState();
             const {legend_data} = state.main;
-            legend_data.refs.map((el, i) => {
-                Object.values(refsThis.refs)[i].style.width = '36px';
-                Object.values(refsThis.refs)[i].style.height = '26px';
-                Object.values(refsThis.refs)[i].style.marginLeft = '0px';
-            });
+            
+            if (legend_data.refs !== null) {
+                legend_data.refs.map((el, i) => {
+                    Object.values(refsThis.refs)[i].style.width = '36px';
+                    Object.values(refsThis.refs)[i].style.height = '26px';
+                    Object.values(refsThis.refs)[i].style.marginLeft = '0px';
+                });
+            }
         }
+        
         function handleHoverLegendItem(curColor) {
             let state = store.getState();
             const c = curColor.options.fillColor;
             const {legend_data} = state.main;
     
-            legend_data.refs.map((el, i) => {
-                const hexRef = rgbToHex(Object.values(refsThis.refs)[i].style.backgroundColor)
-                if (c === hexRef) {
-                    Object.values(refsThis.refs)[i].style.marginLeft = '-5px';
-                    Object.values(refsThis.refs)[i].style.width = '48px';
-                    Object.values(refsThis.refs)[i].style.height = '36px';
-                }
-            });
-            
+            if (legend_data.refs !== null) {
+                legend_data.refs.map((el, i) => {
+                    const hexRef = rgbToHex(Object.values(refsThis.refs)[i].style.backgroundColor)
+                    if (c === hexRef) {
+                        Object.values(refsThis.refs)[i].style.marginLeft = '-3px';
+                        Object.values(refsThis.refs)[i].style.width = '42px';
+                        Object.values(refsThis.refs)[i].style.height = '32px';
+                    }
+                });
+            }
         }
 
         function whenClicked(e) {
