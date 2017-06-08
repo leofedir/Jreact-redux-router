@@ -70,8 +70,8 @@ class Legend extends Component {
                     </h5>
                     {limits.map((item, i) => {
                         return (
-                            <p key={ i }>
-                                <i className={this.handleHoverMapLegend(hoverColor, colors[i]) ? 'legend-active' : '11 22'} ref={legend_data.refs[i]} onMouseMove={this.handleOnHover}  onMouseOut={this.handleOnUnhover} style={{backgroundColor: colors[i]}}/>
+                            <p key={ i } ref={legend_data.refs[i]}>
+                                <i className={this.handleHoverMapLegend(hoverColor, colors[i]) ? 'legend-active' : ''} onMouseMove={this.handleOnHover}  onMouseOut={this.handleOnUnhover} style={{backgroundColor: colors[i]}}/>
                                 {((limits[i] !== null) ? ' ' + format(limits[i]) : dani) + ((i !== limits.length - 1 && limits[i + 1] !== null) ? ' < ' + format(limits[i + 1]) : (limits[i] !== null) ? '  <' : '')}
                             </p>
                         )
