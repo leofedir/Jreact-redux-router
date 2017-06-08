@@ -295,11 +295,12 @@ body {
   margin-right: 5px;
   color: $grey;
   margin-top: 4px;
-  font-family: arial;
+
 
   &.active {
     font-weight: bold;
-    color: #000
+    color: #000;
+    font-family: arial;
   }
 }
 
@@ -378,9 +379,9 @@ body {
 .curency_select {
   outline: none;
   border: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+  //-webkit-appearance: none;
+  //-moz-appearance: none;
+  //appearance: none;
   background-color:#e2e2e2;
   color: #747474;
   padding: 3px;
