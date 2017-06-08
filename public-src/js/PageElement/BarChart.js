@@ -37,7 +37,7 @@ Highcharts.Pointer.prototype.reset = function () {
 function syncExtremes(e) {
     var thisChart = this.chart;
 
-    if (e.trigger !== 'syncExtremes') { // Prevent feedback loop
+    if (e.trigger !== 'syncExtremes') { // Prevent feedback loop z
         Highcharts.each(Highcharts.charts, function (chart) {
             if (chart !== thisChart) {
                 if (chart.xAxis[0].setExtremes) { // It is null while updating
@@ -46,7 +46,7 @@ function syncExtremes(e) {
             }
         });
     }
-}
+ }
 
 class BarChart extends Component {
 

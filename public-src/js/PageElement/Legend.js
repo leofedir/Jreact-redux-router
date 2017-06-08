@@ -32,9 +32,6 @@ class Legend extends Component {
     }
     
     handleOnHover = (e) => {
-        //transform tgb to hex
-        
-    
         const color = rgbToHex(e.target.style.backgroundColor);
     
         //search and modificate layer
@@ -59,16 +56,18 @@ class Legend extends Component {
     }
 
     createItem() {
-        const {check, clasterCount, checkAll, hoverColor} = this.props.map_reducer;
+        const {check, clasterCount, checkAll, hoverColor, curency} = this.props.map_reducer;
         const {legend_data, claster_layers,} = this.props.main;
         const format = new Intl.NumberFormat().format;
         if (legend_data !== null) {
             const {limits, colors} = legend_data;
             let dani = 'Дані відсутні';
+            const valueCur = curency === '' ? legend_data.parametr : curency
             return (
                 <div className="item_content" id="legend">
                     <h5 className="legend__title">Одиниці виміру:
-                        <span>{ legend_data != null ? legend_data.parametr : ''}</span></h5>
+                        <span> { legend_data != null ? valueCur.toUpperCase() : ''}</span>
+                    </h5>
                     {limits.map((item, i) => {
                         return (
                             <p key={ i }>
