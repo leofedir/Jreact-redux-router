@@ -43,10 +43,10 @@ class Chart extends Component {
     drawFinancialChart = () => {
         const {dataChartUsd, alias, feature, curency} = this.props.map_reducer;
         const valueData = dataChartUsd ? dataToChartUsd : dataToChart
-        const valueCur = curency === '' ? 'грн' : curency
+        const valueCur = curency === '' ? feature.parameter : curency
         let myData = [
             {
-                name: alias+', '+valueCur.toUpperCase(),
+                name: alias+', '+valueCur,
                 data: valueData,
             }
         ];
