@@ -17,6 +17,7 @@ const aliasMultiChart = {
 }
 
 let myCurency = '';
+let storeParametr;
 
 higchartsDrilldown(Highcharts);
 let myChart = null;
@@ -66,18 +67,18 @@ class BarChart extends Component {
         if (data_success && propertiesMain && dataChartRegion) {
 
             if ('__district' in propertiesMain) {
-                parametr = curency === '' ? propertiesMain.__district[0].properties.parameter : curency
+                parametr = curency == '' ? propertiesMain.__district[0].properties.parameter : curency
             } else if ('__region' in propertiesMain) {
-                parametr = curency === '' ? propertiesMain.__region[0].properties.parameter : curency
+                parametr = curency == '' ? propertiesMain.__region[0].properties.parameter : curency
             }
 
-            parametr == 'грн' ? myCurency = 'uah' : myCurency = curency
+            storeParametr = submenu_item + curency + curent_year;
 
             let district = {};
 
-            if (!dataStore[submenu_item + myCurency + curent_year + '__district'] && '__district' in propertiesMain) {
+            if (!dataStore[storeParametr + '__district'] && '__district' in propertiesMain) {
 
-                dataStore[submenu_item + myCurency + curent_year + '__district'] = [];
+                dataStore[storeParametr + '__district'] = [];
                 propertiesMain.__district.forEach(item => {
                     district[item.properties.koatuu.slice(0, 2)] ? '' : district[item.properties.koatuu.slice(0, 2)] = [];
 
@@ -107,17 +108,17 @@ class BarChart extends Component {
                         obj.color = '#27ae60';
                         obj.maxPointWidth = 25;
 
-                        dataStore[submenu_item + myCurency + curent_year + '__district'].push(obj);
+                        dataStore[storeParametr + '__district'].push(obj);
                     }
                 }
             }
 
-            if (!dataStore[submenu_item + myCurency + curent_year + '__region'] && '__region' in propertiesMain) {
+            if (!dataStore[storeParametr + '__region'] && '__region' in propertiesMain) {
                 // sort data to enable labels
                 propertiesMain.__region.sort((a, b) => b.properties[myCurency + curent_year] - a.properties[myCurency + curent_year]);
                 let i = 1;
 
-                dataStore[submenu_item + myCurency + curent_year + '__region'] = propertiesMain.__region.map(item => {
+                dataStore[storeParametr + '__region'] = propertiesMain.__region.map(item => {
                     let obj = {};
                     obj.name = item.properties.name_ua + `  (${ i })`;
                     obj.y = +item.properties[myCurency + curent_year];
@@ -126,7 +127,7 @@ class BarChart extends Component {
                     return obj
                 });
             } else if ('__region' in propertiesMain === false) {
-                dataStore[submenu_item + myCurency + curent_year + '__region'] = region
+                dataStore[storeParametr + '__region'] = region
             }
             // Create the chart
             myChart = Highcharts.chart('item_bar_chart', {
@@ -165,7 +166,7 @@ class BarChart extends Component {
                 series: [{
                     name: alias,
                     maxPointWidth: 25,
-                    data: full ? dataStore[submenu_item + myCurency + curent_year + '__region'] : dataStore[submenu_item + myCurency + curent_year + '__region'].slice(0, 5),
+                    data: full ? dataStore[storeParametr + '__region'] : dataStore[storeParametr + '__region'].slice(0, 5),
                     negativeColor: '#e74c3c',
                     color: '#27ae60'
                 }],
@@ -185,18 +186,18 @@ class BarChart extends Component {
                             'font-size': '24px',
                         },
                     },
-                    series: dataStore[submenu_item + myCurency + curent_year + '__district'] || []
+                    series: dataStore[storeParametr + '__district'] || []
                 }
             });
         }
         else if (data_success && propertiesMain && '__district' in propertiesMain && !dataChartRegion) {
 
-            if (!dataStore[submenu_item + myCurency + curent_year]) {
+            if (!dataStore[storeParametr]) {
 
                 propertiesMain.__district.sort((a, b) => b.properties[myCurency + curent_year] - a.properties[myCurency + curent_year]);
                 let i = 1;
 
-                dataStore[submenu_item + myCurency + curent_year] = propertiesMain.__district.map(item => {
+                dataStore[storeParametr] = propertiesMain.__district.map(item => {
                     let obj = {};
                     obj.name = item.properties.name_ua + `  (${ i })`;
                     obj.y = +item.properties[myCurency + curent_year];
@@ -212,7 +213,7 @@ class BarChart extends Component {
                 },
                 chart: {
                     type: 'bar',
-                    height: full ? dataStore[submenu_item + myCurency + curent_year].length * 25 : null,
+                    height: full ? dataStore[storeParametr].length * 25 : null,
                 },
                 credits: {
                     text: 'Енциклопедія територій',
@@ -243,7 +244,7 @@ class BarChart extends Component {
                 },
                 series: [{
                     name: alias,
-                    data: full ? dataStore[submenu_item + myCurency + curent_year] : dataStore[submenu_item + myCurency + curent_year].slice(0, 5),
+                    data: full ? dataStore[storeParametr] : dataStore[storeParametr].slice(0, 5),
                     zones: [{
                         value: 0,
                         color: '#e74c3c'

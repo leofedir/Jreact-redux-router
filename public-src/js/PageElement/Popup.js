@@ -22,7 +22,9 @@ class Popup extends Component {
         let popupInfo = [];
         let i = 0;
         for (let key in feature) {
+
             if (feature.hasOwnProperty(key) && key.indexOf(curentCurency + 'year_') >= 0) {
+                console.log('curentCurency >>', curentCurency)
                 popupInfo.push(<p key={feature.id + i}>Станом на 20{key.substring(key.lastIndexOf('_') + 1)} р.
                     <span>{new Intl.NumberFormat().format(feature[key])}</span></p>)
                 year_labels.push(20 + key.substring(key.lastIndexOf('_') + 1) + 'р');
@@ -37,13 +39,14 @@ class Popup extends Component {
         const {setCurency} = this.props.MapActions;
         let obj = {
             index: e.target.value,
-            val: curency[e.target.value]
-        }
+            val: curency[e.target.value].toUpperCase()
+        };
+        console.log(obj)
         setCurency(obj)
     }
 
     getCyrencyItems() {
-        const {curencyIndexCurency} = this.props.map_reducer
+        const {curencyIndexCurency} = this.props.map_reducer;
         return (
             <select className="curency_select" value={curencyIndexCurency} onChange={::this.setCurentCurency}>
                 {curency.map((item, i) => {
