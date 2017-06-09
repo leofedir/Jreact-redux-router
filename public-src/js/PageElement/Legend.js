@@ -66,7 +66,7 @@ class Legend extends Component {
             return (
                 <div className="item_content" id="legend">
                     <h5 className="legend__title">Одиниці виміру:
-                        <span> { legend_data != null ? valueCur.toUpperCase() : ''}</span>
+                        <span> { legend_data != null ? valueCur : ''}</span>
                     </h5>
                     {limits.map((item, i) => {
                         return (

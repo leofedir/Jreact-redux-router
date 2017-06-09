@@ -38,6 +38,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
         "fillOpacity": 1,
         'className': 'ato'
 
+
     };
     let filds;
     let PropertiesLayer = [];
@@ -268,7 +269,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
                         elI.style.width = '42px';
                         elI.style.height = '32px';
                         Object.values(refsThis.refs)[i].style.fontFamily = 'arial';
-                        Object.values(refsThis.refs)[i].style.fontSize = '16px';
+                        Object.values(refsThis.refs)[i].style.fontSize = '15px';
                     }
                 });
             }
