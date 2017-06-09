@@ -30,7 +30,7 @@ class SliderRange extends Component {
         
                 case'+':
                     nextItem = range_item + 1;
-                    if(nextItem < newRange.length)
+                    if(nextItem < range_items.length)
                         set_Range_item(nextItem);
                     break;
                 
@@ -72,26 +72,24 @@ class SliderRange extends Component {
     
     createRange() {
         const {range_items, range_item, slider_range_picker} = this.props.main;
-        let newRange = [...range_items];
-        newRange = newRange.map(el => this.toYear(el));
-        newRange.sort();
-    
-        const curItem = newRange[range_item]; // by default 2013
-        const firstItem = newRange[0];
-        const lastItem = newRange[newRange.length-1];
+
+
+        const curItem = range_items[range_item]; // by default 2013
+        const firstItem = range_items[0];
+        const lastItem = range_items[range_items.length-1];
         
         
         return (
             <div className="sliderRangeContainer">
                 <div className="sliderRange">
-                    <p className="rangeItem first">{firstItem}</p>
+                    <p className="rangeItem first">{this.toYear(firstItem)}</p>
                     <div className="current-year-container">
                         <div className="container-fa left" onClick={() => this.changeItem('-')}>
                             <i className="fa fa-caret-left" aria-hidden="true"></i>
                         </div>
                     
                         <div className="current-year" onClick={() => this.handlerToggleSliderPicker()}>
-                            <span>{curItem}</span>
+                            <span>{this.toYear(curItem)}</span>
                         </div>
                     
                         <div className="container-fa right" onClick={() => this.changeItem('+')}>
@@ -99,7 +97,7 @@ class SliderRange extends Component {
                         </div>
                 
                     </div>
-                    <p className="rangeItem last">{lastItem}</p>
+                    <p className="rangeItem last">{this.toYear(lastItem)}</p>
                 </div>
                 <div className="sliderRangePicker-container">
                     <div className= {slider_range_picker ? "sliderRangePicker active-picker" : "sliderRangePicker"}>
