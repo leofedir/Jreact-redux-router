@@ -132,12 +132,13 @@ export default function getMap(properties, rebuild = true, isRegion) {
         return
     }
 
-    myCurency = store.getState().map_reducer.curency;
+    myCurency = store.getState().map_reducer.curency.toLowerCase();
 
     function handleChangeCurency() {
-        let nextCurency = store.getState().map_reducer.curency;
+        let nextCurency = store.getState().map_reducer.curency.toLowerCase();
         if (nextCurency != myCurency) {
             myCurency = nextCurency;
+            getAto(range_item);
             renderLayer()
         }
         return
@@ -199,7 +200,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             mouseover: onMouseOver,
             mouseout: onMouseout
         };
-
+console.log('myCurency >>', myCurency)
 // hightligth color
         const layerObject = {
             valueProperty: myCurency + range_items[range_item],

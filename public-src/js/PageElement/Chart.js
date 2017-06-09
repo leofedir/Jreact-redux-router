@@ -28,31 +28,31 @@ let alias_series = {
 };
 
 class Chart extends Component {
-    
+
     toggleChart() {
         this.props.MapActions.ChartToggle(this.props.map_reducer.chart_full);
     }
-    
+
     toggleToStudent(e) {
         let status = +e.target.dataset.user;
-        
+
         this.props.MapActions.toggleChartToStudent(!!status)
-        
+
     }
     
     Chart() {
         const {feature, alias, chart1, chart2, dataChartUsd, for1Student} = this.props.map_reducer;
         const format = new Intl.NumberFormat().format;
-        
+
         if (feature != null) {
-            
+
             let myData = [
                 {
                     name: alias,
                     data: dataChartUsd ? dataToChartUsd : dataToChart
                 }
             ];
-            
+
             chart = Highcharts.chart('item_chart', {
                 colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
                 title: {
@@ -101,19 +101,19 @@ class Chart extends Component {
         } else if (chart1 !== null) {
             let myData2 = [];
             let labels2 = [];
-            
+
             if (chart2 !== null) {
-                
+
                 let i = 0;
-                
+
                 for (let key in chart2) {
                     if (chart2.hasOwnProperty(key)) {
-                        
+
                         let obj = {
                             name: alias_series[key] || key,
                             data: []
                         };
-                        
+
                         chart2[key].forEach(item => {
                             obj.data.push(item.value);
                             i === 0 ? labels2.push(`${ item.year }р`) : ''
@@ -123,20 +123,20 @@ class Chart extends Component {
                     }
                 }
             }
-            
+
             let myData = [];
             let labels = [];
             let i = 0;
-            
-            
+
+
             for (let key in chart1) {
                 if (chart1.hasOwnProperty(key)) {
-                    
+
                     let obj = {
                         name: alias_series[key] || key,
                         data: []
                     };
-                    
+
                     chart1[key].forEach(item => {
                         obj.data.push(item.value);
                         i === 0 ? labels.push(`${ item.year }р`) : ''
@@ -145,7 +145,7 @@ class Chart extends Component {
                     myData.push(obj)
                 }
             }
-            
+
             chart = Highcharts.chart('item_chart', {
                 colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
                 title: {
@@ -190,20 +190,20 @@ class Chart extends Component {
             });
         }
     }
-    
+
     componentDidMount() {
         // this.Chart()
     }
-    
+
     componentDidUpdate() {
         this.Chart()
     }
-    
+
     onHeaderChartClick() {
         console.log('1111 >>', 1111)
         this.props.Actions.resizeMap(this.props.main.mapFull)
     }
-    
+
     render() {
         const {chart_full, dataChartUsd, feature, claster, curentMap, for1Student, chart2, bubble_chart_full, bar_chart_full} = this.props.map_reducer;
         const showToggleUsd = dataToChartUsd.length > 0;
