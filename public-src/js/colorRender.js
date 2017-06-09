@@ -36,11 +36,11 @@ L.choropleth = module.exports = function (geojson, opts) {
 
         // Find the bucket/step/limit that this value is less than and give it that color
         for (let i = 0; i < limits.length; i++) {
-            if (featureValue == limits[limits.length -1]) {
+            if (featureValue == limits[limits.length-1]) {
                 style.fillColor = '#cccccc';
                 break
             } else if (featureValue <= limits[i]) {
-                style.fillColor = colors[i];
+                limits[i] === limits[0] ? style.fillColor = colors[i] : style.fillColor = colors[i-1];
                 break
             }
         }

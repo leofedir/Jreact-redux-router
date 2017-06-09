@@ -259,17 +259,14 @@ export default function getMap(properties, rebuild = true, isRegion) {
             let state = store.getState();
             const c = curColor.options.fillColor;
             const {legend_data} = state.main;
-            
             if (legend_data !== null) {
                 legend_data.refs.map((el, i) => {
-                    console.log(Object.values(refsThis.refs)[i])
                     const elI = Object.values(refsThis.refs)[i].children[0]
                     const hexRef = rgbToHex(elI.style.backgroundColor)
                     if (c === hexRef) {
                         elI.style.marginLeft = '-3px';
                         elI.style.width = '42px';
                         elI.style.height = '32px';
-                        console.log(Object.values(refsThis.refs)[i].style.fontFamily)
                         Object.values(refsThis.refs)[i].style.fontFamily = 'arial';
                         Object.values(refsThis.refs)[i].style.fontSize = '16px';
                     }
