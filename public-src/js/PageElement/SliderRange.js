@@ -12,7 +12,11 @@ class SliderRange extends Component {
         const {range_items, range_item} = this.props.main;
         const {set_Range_item} = this.props.Actions;
         let nextItem;
-        
+    
+        let newRange = [...range_items];
+        newRange = newRange.map(el => this.toYear(el));
+        newRange.sort();
+
         if (typeof(type) === 'number' && type !== range_item) {
             nextItem = type;
             set_Range_item(nextItem);
@@ -69,7 +73,7 @@ class SliderRange extends Component {
     createRange() {
         const {range_items, range_item, slider_range_picker} = this.props.main;
 
-    
+
         const curItem = range_items[range_item]; // by default 2013
         const firstItem = range_items[0];
         const lastItem = range_items[range_items.length-1];

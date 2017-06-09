@@ -143,5 +143,9 @@ export let alias = {
     area_zemres_chastkaderjavnyh : 'Частка земельних ділянок державної власності',
     area_zemres_chastkakomunalnyh : 'Частка земель комунальної власності',
     area_zemres_chastkapryvatnyh :' Частка земель приватної власності',
-    area_zemres_pryvatnizemli : 'Площа земельних ділянок приватної власності'
+    area_zemres_pryvatnizemli : 'Площа земельних ділянок приватної власності',
+    area_zemres_rekreaciyazemli : 'Площа рекреаційних територій',
+    area_zemres_lisovizemli :'Площа земель лісогосподарського призначення',
+    area_zemres_chastkalisovi:'Частка земель  лісогосподарського призначення',
+    area_zemres_chastkajytlova:'Частка земель житлової та громадської забудови'
 }

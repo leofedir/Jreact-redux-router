@@ -282,8 +282,8 @@ class BarChart extends Component {
     getMultiChart() {
         const {chart3} = this.props.map_reducer;
         const chartData = [];
-        const chartType = ['area', 'area', 'line'];
-        const units = ['кб.м', 'кб.м', 'осіб'];
+        const chartType = ['line','area', 'area' ];
+        const units = ['осіб','кб.м', 'кб.м' ];
         const year_labels = ['2014 р', '2015 р', '2016 р'];
         const colors = ['#7cb5ec', '#f7a35c', '#90ee7e' ];
 
@@ -307,6 +307,7 @@ class BarChart extends Component {
         let HTML = [];
         chartData.reverse()
         chartData.forEach((dataset, i) => {
+
                 HTML.push(<div key={i} id={'chart' + i}/>);
 
                 let options = new Object({
