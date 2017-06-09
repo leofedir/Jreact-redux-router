@@ -60,8 +60,14 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 PropertiesLayer.push(key)
             }
         }
-
-        store.dispatch(set_Range_items(PropertiesLayer));
+        
+        //get new sort data
+        let newRange = [...PropertiesLayer];
+        newRange = newRange.map(el => el.substring(5));
+        newRange.sort();
+        newRange = newRange.map(el => `year_${el}`);
+        
+        store.dispatch(set_Range_items(newRange));
 
         Lmap.eachLayer(function (layer) {
             Lmap.removeLayer(layer)
