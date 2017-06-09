@@ -14,7 +14,7 @@ const aliasMultiChart = {
     holodnavoda: 'Обсяг споживання холодної води, кб.м',
     haryachavoda: 'Обсяг споживання гарячої води, кб.м',
     uchniv: 'Кількість учнів'
-}
+};
 
 let myCurency = '';
 let storeParametr;
@@ -22,21 +22,19 @@ let storeParametr;
 higchartsDrilldown(Highcharts);
 let myChart = null;
 let dataStore = {};
-// let alias_series = {
 
-// };
 Highcharts.Point.prototype.highlight = function (event) {
     this.onMouseOver(); // Show the hover marker
-    // this.series.chart.tooltip.refresh(this); // Show the tooltip
+    // this.series.chart.tooltip.refresh(); // Show the tooltip
     this.series.chart.xAxis[0].drawCrosshair(event, this); // Show the crosshair
 };
 
-Highcharts.Pointer.prototype.reset = function () {
-    return undefined;
-};
+// Highcharts.Pointer.prototype.reset = function () {
+//     return undefined;
+// };
 
 function syncExtremes(e) {
-    var thisChart = this.chart;
+    let thisChart = this.chart;
 
     if (e.trigger !== 'syncExtremes') { // Prevent feedback loop z
         Highcharts.each(Highcharts.charts, function (chart) {
@@ -269,9 +267,8 @@ class BarChart extends Component {
             lenth = Highcharts.charts.length,
             event;
 
-        for (i = 0; i < Highcharts.charts.length; i = i + 1) {
+        for (i; i < lenth; i++) {
             if (Highcharts.charts[i] !== undefined) {
-        
                 chart = Highcharts.charts[i];
                 event = chart.pointer.normalize(e.nativeEvent); // Find coordinates within the chart
                 point = chart.series[0].searchPoint(event, true); // Get the hovered point
@@ -284,7 +281,6 @@ class BarChart extends Component {
 
     getMultiChart() {
         const {chart3} = this.props.map_reducer;
-
         const chartData = [];
         const chartType = ['area', 'area', 'line'];
         const units = ['кб.м', 'кб.м', 'осіб'];

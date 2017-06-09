@@ -56,22 +56,11 @@ class Chart extends Component {
             title: {
                 text: feature.name_ua
             },
-            exporting: {
-                buttons: {
-                    exportButton: {
-                        symbol: 'url(http://highcharts.com/demo/gfx/sun.png)',
-                        symbolX: 5,
-                        symbolY: 0
-                    }
-                }
-            },
             chart: {
                 type: 'line',
                 marginRight: 20
             },
             credits: {
-                text: 'Енциклопедія територій',
-                href: 'http://enter.co.ua',
                 enabled: false
             },
             yAxis: {
@@ -88,9 +77,10 @@ class Chart extends Component {
                 crosshair: true,
                 categories: year_labels
             },
-            tooltip: {
-                shared: true,
-            },
+            // tooltip: {
+            //     shared: true,
+            //     hideDelay: 100
+            // },
             series: myData
         })
     };
@@ -184,6 +174,7 @@ class Chart extends Component {
             },
             tooltip: {
                 shared: true,
+                hideDelay: 100
             },
             series: for1Student ? myData2 : myData
         })
