@@ -300,11 +300,12 @@ class BarChart extends Component {
                 });
 
                 chartData.push(obj)
+                console.log(chartData)
             }
         }
 
         let HTML = [];
-
+        chartData.reverse()
         chartData.forEach((dataset, i) => {
                 HTML.push(<div key={i} id={'chart' + i}/>);
 
@@ -367,7 +368,7 @@ class BarChart extends Component {
                             valueSuffix: ' ' + units[i]
                         }
                     }]
-                })
+                });
 
                 new Highcharts.Chart(options)
             }
