@@ -261,17 +261,14 @@ console.log('myCurency >>', myCurency)
             let state = store.getState();
             const c = curColor.options.fillColor;
             const {legend_data} = state.main;
-            
             if (legend_data !== null) {
                 legend_data.refs.map((el, i) => {
-
                     const elI = Object.values(refsThis.refs)[i].children[0]
                     const hexRef = rgbToHex(elI.style.backgroundColor)
                     if (c === hexRef) {
                         elI.style.marginLeft = '-3px';
                         elI.style.width = '42px';
                         elI.style.height = '32px';
-
                         Object.values(refsThis.refs)[i].style.fontFamily = 'arial';
                         Object.values(refsThis.refs)[i].style.fontSize = '15px';
                     }
