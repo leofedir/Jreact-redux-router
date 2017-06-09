@@ -68,6 +68,7 @@ input[type=range]::-moz-range-track {
     margin-top: -14px;
     align-items: center;
     transition: all 0.6s ease 0s;
+    flex-wrap: wrap;
 }
 
 .current-year-container {
@@ -100,6 +101,8 @@ input[type=range]::-moz-range-track {
 .rangePicker-item {
     padding: 6px;
     cursor: pointer;
+    text-align: center;
+    width: 50px;
 }
 
 .current-year {
