@@ -221,17 +221,17 @@ export default function getMap(properties, rebuild = true, isRegion) {
         
         function onMouseout(e) {
             let item = e.target;
-            
+            handleUnhoverLegendItem()
             if (item !== layer) {
                 choroplethLayer.resetStyle(item);
-                handleUnhoverLegendItem()
+                
             }
         }
 
         function onMouseOver(e) {
             let item = e.target;
-            if (item == layer) return;
             handleHoverLegendItem(item)
+            if (item == layer) return;
 
             let color = item.options.fillColor
             let newColor = LightenDarkenColor(color, +50)
@@ -264,7 +264,10 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 legend_data.refs.map((el, i) => {
                     const elI = Object.values(refsThis.refs)[i].children[0]
                     const hexRef = rgbToHex(elI.style.backgroundColor)
-                    if (c === hexRef) {
+                    const lighterRef = LightenDarkenColor(hexRef, +50)
+
+                    
+                    if (c === hexRef || c === lighterRef) {
                         elI.style.marginLeft = '-3px';
                         elI.style.width = '42px';
                         elI.style.height = '32px';
