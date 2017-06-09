@@ -23,8 +23,8 @@ class App extends Component {
     render() {
         const {showMenu, mapFull} = this.props.main;
         const {bar_chart_full, chart_full, bubble_chart_full} = this.props.map_reducer;
-        const mainRightStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `disabled` : ``;
-        const mainChartStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `zero-height`: ``;
+        // const mainRightStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `disabled` : ``;
+        // const mainChartStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `zero-height`: ``;
         
         return (
             <div id="wrapper" className={ (showMenu ? '' : 'hide' ) + (mapFull ? ' mapFull' : '')}>
@@ -40,17 +40,17 @@ class App extends Component {
                         <div className="main__map">
                             <Map />
                         </div>
-                        <div className={`main__right ${mainRightStyle}`}>
+                        <div className={`main__right`}>
                             <SliderRange />
                             <Popup />
                             <Legend />
                             <Info />
                         </div>
-                        <div className={`main__chart ${mainChartStyle}`}>
+                        <div className={`main__chart`}>
                             <Chart />
                             <BarChart />
                         </div>
-                        <div className={`main__chart ${mainChartStyle}`}>
+                        <div className={`main__chart `}>
                             <BubbleChart />
                         </div>
                     </div>
