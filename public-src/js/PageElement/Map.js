@@ -8,7 +8,6 @@ import {checkStatus, parseJSON} from '../checkJSON';
 import L from 'leaflet';
 import esri from 'esri-leaflet/dist/esri-leaflet';
 import SubMenu from "./getSubMenu";
-import {alias} from '../aliasMapName';
 import getMap from './../getMapArea';
 
 export let Lmap = null;
@@ -143,10 +142,7 @@ class Map extends Component {
     }
 
     componentDidUpdate() {
-        const {claster} = this.props.map_reducer
-        // Lmap.off('zoomend', ::this.zoomFunction())
-        // Lmap.off('zoomend', ::this.zoomFunction);
-        // Lmap.on('zoomend', ::this.zoomFunction);
+        const {claster} = this.props.map_reducer;
 
         !claster ? setTimeout(() => Lmap.invalidateSize(), 200) : ''
     }

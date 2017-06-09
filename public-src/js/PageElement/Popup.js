@@ -20,18 +20,27 @@ class Popup extends Component {
         curency !== null ? curentCurency = curency[curencyIndexCurency] : curentCurency = "";
         const {feature} = this.props.map_reducer;
         let popupInfo = [];
-        let i = 0;
-        for (let key in feature) {
 
-            if (feature.hasOwnProperty(key) && key.indexOf(curentCurency + 'year_') >= 0) {
-                console.log('curentCurency >>', curentCurency)
-                popupInfo.push(<p key={feature.id + i}>Станом на 20{key.substring(key.lastIndexOf('_') + 1)} р.
-                    <span>{new Intl.NumberFormat().format(feature[key])}</span></p>)
-                year_labels.push(20 + key.substring(key.lastIndexOf('_') + 1) + 'р');
-                dataToChart.push(+feature[key]);
-                i++
-            }
-        }
+        let objetKeys = Object.keys(feature).filter(item => item.indexOf(curentCurency + 'year_') >= 0).sort();
+
+        objetKeys.forEach((item, i) => {
+            popupInfo.push(<p key={feature.id + i}>Станом на 20{item.substring(item.lastIndexOf('_') + 1)} р.
+                <span>{new Intl.NumberFormat().format(feature[item])}</span></p>)
+            year_labels.push(20 + item.substring(item.lastIndexOf('_') + 1) + 'р');
+            dataToChart.push(+feature[item]);
+        })
+
+        // for (let key in feature) {
+        //     if (feature.hasOwnProperty(key) && key.indexOf(curentCurency + 'year_') >= 0) {
+        //         console.log('key >>', key)
+        //         popupInfo.push(<p key={feature.id + i}>Станом на 20{key.substring(key.lastIndexOf('_') + 1)} р.
+        //             <span>{new Intl.NumberFormat().format(feature[key])}</span></p>)
+        //         year_labels.push(20 + key.substring(key.lastIndexOf('_') + 1) + 'р');
+        //         dataToChart.push(+feature[key]);
+        //         i++
+        //     }
+        // }
+
         return popupInfo
     }
 
@@ -41,7 +50,6 @@ class Popup extends Component {
             index: e.target.value,
             val: curency[e.target.value].toUpperCase()
         };
-        console.log(obj)
         setCurency(obj)
     }
 

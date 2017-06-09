@@ -61,7 +61,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             }
         }
 
-        store.dispatch(set_Range_items(PropertiesLayer));
+        store.dispatch(set_Range_items(PropertiesLayer.sort()));
 
         Lmap.eachLayer(function (layer) {
             Lmap.removeLayer(layer)
@@ -200,7 +200,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
             mouseover: onMouseOver,
             mouseout: onMouseout
         };
-console.log('myCurency >>', myCurency)
 // hightligth color
         const layerObject = {
             valueProperty: myCurency + range_items[range_item],
