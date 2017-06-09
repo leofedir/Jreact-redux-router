@@ -28,193 +28,182 @@ let alias_series = {
 };
 
 class Chart extends Component {
-
+    
     toggleChart() {
         this.props.MapActions.ChartToggle(this.props.map_reducer.chart_full);
     }
-
+    
     toggleToStudent(e) {
         let status = +e.target.dataset.user;
-
+        
         this.props.MapActions.toggleChartToStudent(!!status)
-
+        
     }
     
-    drawFinancialChart = () => {
-        const {dataChartUsd, alias, feature, curency} = this.props.map_reducer;
-        const valueData = dataChartUsd ? dataToChartUsd : dataToChart
-        const valueCur = curency === '' ? feature.parameter : curency
-        let myData = [
-            {
-                name: alias+', '+valueCur,
-                data: valueData,
-            }
-        ];
-    
-        chart = Highcharts.chart('item_chart', {
-            colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
-            title: {
-                text: feature.name_ua
-            },
-            exporting: {
-                buttons: {
-                    exportButton: {
-                        symbol: 'url(http://highcharts.com/demo/gfx/sun.png)',
-                        symbolX: 5,
-                        symbolY: 0
+    Chart() {
+        const {feature, alias, chart1, chart2, dataChartUsd, for1Student} = this.props.map_reducer;
+        const format = new Intl.NumberFormat().format;
+        
+        if (feature != null) {
+            
+            let myData = [
+                {
+                    name: alias,
+                    data: dataChartUsd ? dataToChartUsd : dataToChart
+                }
+            ];
+            
+            chart = Highcharts.chart('item_chart', {
+                colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
+                title: {
+                    text: feature.name_ua
+                },
+                exporting: {
+                    buttons: {
+                        exportButton: {
+                            symbol: 'url(http://highcharts.com/demo/gfx/sun.png)',
+                            symbolX: 5,
+                            symbolY: 0
+                        }
+                    }
+                },
+                chart: {
+                    type: 'line',
+                    marginRight: 20
+                },
+                credits: {
+                    text: 'Енциклопедія територій',
+                    href: 'http://enter.co.ua',
+                    enabled: false
+                },
+                yAxis: {
+                    title: {
+                        text: dataChartUsd ? 'долар' : feature.parameter
+                    }
+                },
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                },
+                xAxis: {
+                    crosshair: true,
+                    categories: year_labels
+                },
+                tooltip: {
+                    shared: true,
+                },
+                series: myData
+            });
+        } else if (feature !== null, chart !== null && chart1 === null) {
+            chart.destroy();
+            chart = null
+        } else if (chart1 !== null) {
+            let myData2 = [];
+            let labels2 = [];
+            
+            if (chart2 !== null) {
+                
+                let i = 0;
+                
+                for (let key in chart2) {
+                    if (chart2.hasOwnProperty(key)) {
+                        
+                        let obj = {
+                            name: alias_series[key] || key,
+                            data: []
+                        };
+                        
+                        chart2[key].forEach(item => {
+                            obj.data.push(item.value);
+                            i === 0 ? labels2.push(`${ item.year }р`) : ''
+                        });
+                        i++;
+                        myData2.push(obj)
                     }
                 }
-            },
-            chart: {
-                type: 'line',
-                marginRight: 20
-            },
-            credits: {
-                text: 'Енциклопедія територій',
-                href: 'http://enter.co.ua',
-                enabled: false
-            },
-            yAxis: {
-                title: {
-                    text: ''
-                }
-            },
-            legend: {
-                layout: 'horizontal',
-                align: 'center',
-                verticalAlign: 'bottom'
-            },
-            xAxis: {
-                crosshair: true,
-                categories: year_labels
-            },
-            tooltip: {
-                shared: true,
-            },
-            series: myData
-        })
-    };
-    
-    drawSchoolChart = () => {
-        const {chart1, chart2, for1Student} = this.props.map_reducer;
-    
-        let myData2 = [];
-        let labels2 = [];
-    
-        if (chart2 !== null) {
-        
+            }
+            
+            let myData = [];
+            let labels = [];
             let i = 0;
-        
-            for (let key in chart2) {
-                if (chart2.hasOwnProperty(key)) {
-                
+            
+            
+            for (let key in chart1) {
+                if (chart1.hasOwnProperty(key)) {
+                    
                     let obj = {
                         name: alias_series[key] || key,
                         data: []
                     };
-                
-                    chart2[key].forEach(item => {
+                    
+                    chart1[key].forEach(item => {
                         obj.data.push(item.value);
-                        i === 0 ? labels2.push(`${ item.year }р`) : ''
+                        i === 0 ? labels.push(`${ item.year }р`) : ''
                     });
                     i++;
-                    myData2.push(obj)
+                    myData.push(obj)
                 }
             }
-        }
-    
-        let myData = [];
-        let labels = [];
-        let i = 0;
-    
-    
-        for (let key in chart1) {
-            if (chart1.hasOwnProperty(key)) {
             
-                let obj = {
-                    name: alias_series[key] || key,
-                    data: []
-                };
-            
-                chart1[key].forEach(item => {
-                    obj.data.push(item.value);
-                    i === 0 ? labels.push(`${ item.year }р`) : ''
-                });
-                i++;
-                myData.push(obj)
-            }
-        }
-    
-        chart = Highcharts.chart('item_chart', {
-            colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
-            title: {
-                text: for1Student ? 'Витрати  шкільного бюджету в розрахунку на одного учня' : 'Загальні витрати та доходи шкільного бюджету'
-            },
-            exporting: {
-                buttons: {
-                    exportButton: {
-                        symbol: 'url(http://highcharts.com/demo/gfx/sun.png)',
-                        symbolX: 5,
-                        symbolY: 0
-                    }
-                }
-            },
-            chart: {
-                type: 'line',
-                marginRight: 20
-            },
-            credits: {
-                text: 'Енциклопедія територій',
-                href: 'http://enter.co.ua',
-                enabled: false
-            },
-            yAxis: {
+            chart = Highcharts.chart('item_chart', {
+                colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
                 title: {
-                    text: 'грн.'
-                }
-            },
-            legend: {
-                layout: 'horizontal',
-                align: 'center',
-                verticalAlign: 'bottom'
-            },
-            xAxis: {
-                crosshair: true,
-                        categories: for1Student ? labels2 : labels
-            },
-            tooltip: {
-                shared: true,
-            },
-            series: for1Student ? myData2 : myData
-        })
-    };
-    
-    Chart() {
-        const {feature, chart1} = this.props.map_reducer;
-        const format = new Intl.NumberFormat().format;
-        if (feature !== null) {
-            this.drawFinancialChart()
-        } else if (feature !== null && chart !== null && chart1 === null) {
-            chart.destroy();
-            chart = null
-        } else if (chart1 !== null) {
-            this.drawSchoolChart()
+                    text: for1Student ? 'Витрати  шкільного бюджету в розрахунку на одного учня' : 'Загальні витрати та доходи шкільного бюджету'
+                },
+                exporting: {
+                    buttons: {
+                        exportButton: {
+                            symbol: 'url(http://highcharts.com/demo/gfx/sun.png)',
+                            symbolX: 5,
+                            symbolY: 0
+                        }
+                    }
+                },
+                chart: {
+                    type: 'line',
+                    marginRight: 20
+                },
+                credits: {
+                    text: 'Енциклопедія територій',
+                    href: 'http://enter.co.ua',
+                    enabled: false
+                },
+                yAxis: {
+                    title: {
+                        text: 'грн.'
+                    }
+                },
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                },
+                xAxis: {
+                    crosshair: true,
+                    categories: for1Student ? labels2 : labels
+                },
+                tooltip: {
+                    shared: true,
+                },
+                series: for1Student ? myData2 : myData
+            });
         }
     }
-
+    
     componentDidMount() {
         // this.Chart()
     }
-
+    
     componentDidUpdate() {
         this.Chart()
     }
-
+    
     onHeaderChartClick() {
         console.log('1111 >>', 1111)
         this.props.Actions.resizeMap(this.props.main.mapFull)
     }
-
+    
     render() {
         const {chart_full, dataChartUsd, feature, claster, curentMap, for1Student, chart2, bubble_chart_full, bar_chart_full} = this.props.map_reducer;
         const showToggleUsd = dataToChartUsd.length > 0;
