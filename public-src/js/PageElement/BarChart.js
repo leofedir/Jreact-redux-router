@@ -229,7 +229,7 @@ class BarChart extends Component {
                 },
                 yAxis: {
                     title: {
-                        enabled: false
+                        // enabled: false
                     }
                 },
                 plotOptions: {

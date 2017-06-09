@@ -12,6 +12,8 @@ const Highcharts = require('highcharts');
 
 let chart = null;
 
+let tooltipParametr;
+
 let alias_series = {
     budget: 'Бюджет закладу',
     zarplnarahuv: 'Заробітна плата з нарахуваннями',
@@ -41,10 +43,12 @@ class Chart extends Component {
     }
     
     Chart() {
-        const {feature, alias, chart1, chart2, dataChartUsd, for1Student} = this.props.map_reducer;
+        const {feature, alias, chart1, chart2, dataChartUsd, for1Student, curency} = this.props.map_reducer;
         const format = new Intl.NumberFormat().format;
 
+
         if (feature != null) {
+            tooltipParametr = curency != "" ? curency : feature.parameter
 
             let myData = [
                 {
@@ -78,7 +82,7 @@ class Chart extends Component {
                 },
                 yAxis: {
                     title: {
-                        text: dataChartUsd ? 'долар' : feature.parameter
+                        text: null
                     }
                 },
                 legend: {
@@ -92,13 +96,16 @@ class Chart extends Component {
                 },
                 tooltip: {
                     shared: true,
+                    hideDelay: 100,
+                    valueSuffix: ' ' + tooltipParametr
                 },
                 series: myData
             });
-        } else if (feature !== null, chart !== null && chart1 === null) {
+        } else if (feature === null && chart !== null && chart1 === null) {
             chart.destroy();
             chart = null
         } else if (chart1 !== null) {
+            tooltipParametr = 'UAH'
             let myData2 = [];
             let labels2 = [];
 
@@ -151,15 +158,6 @@ class Chart extends Component {
                 title: {
                     text: for1Student ? 'Витрати  шкільного бюджету в розрахунку на одного учня' : 'Загальні витрати та доходи шкільного бюджету'
                 },
-                exporting: {
-                    buttons: {
-                        exportButton: {
-                            symbol: 'url(http://highcharts.com/demo/gfx/sun.png)',
-                            symbolX: 5,
-                            symbolY: 0
-                        }
-                    }
-                },
                 chart: {
                     type: 'line',
                     marginRight: 20
@@ -171,7 +169,7 @@ class Chart extends Component {
                 },
                 yAxis: {
                     title: {
-                        text: 'грн.'
+                        text: null
                     }
                 },
                 legend: {
@@ -185,6 +183,8 @@ class Chart extends Component {
                 },
                 tooltip: {
                     shared: true,
+                    hideDelay: 100,
+                    valueSuffix: ' ' + tooltipParametr
                 },
                 series: for1Student ? myData2 : myData
             });

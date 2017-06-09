@@ -65,7 +65,7 @@ export default function main(state = initialState, action) {
             return {...state, legend_data: action.payload, fetching: false};
 
         case GET_CLASTER_REQUEST:
-            return {...state, fetching: true, claster_layers: null};
+            return {...state, fetching: true, claster_layers: null, legend_data: null};
 
         case GET_CLASTER_SUCCESS:
             return {...state, fetching: false, claster_layers: action.payload.data};
