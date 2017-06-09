@@ -4,11 +4,18 @@ import {connect} from 'react-redux';
 import {set_Range_item, toggle_Slider_Picker} from '../REDUX/actions/actions';
 
 class SliderRange extends Component {
-
+    toYear = (str) => {
+        return '20'+str.substring(5);
+    }
+    
     changeItem(type) {
         const {range_items, range_item} = this.props.main;
         const {set_Range_item} = this.props.Actions;
         let nextItem;
+    
+        let newRange = [...range_items];
+        newRange = newRange.map(el => this.toYear(el));
+        newRange.sort();
 
         if (typeof(type) === 'number' && type !== range_item) {
             nextItem = type;
@@ -23,7 +30,7 @@ class SliderRange extends Component {
         
                 case'+':
                     nextItem = range_item + 1;
-                    if(nextItem < range_items.length)
+                    if(nextItem < newRange.length)
                         set_Range_item(nextItem);
                     break;
                 
@@ -55,6 +62,7 @@ class SliderRange extends Component {
         // this.autoCloseMenu()
     }
     
+    
     handlerToggleSliderPicker = () => {
       const {toggle_Slider_Picker} = this.props.Actions;
       const {slider_range_picker} = this.props.main;
@@ -64,27 +72,26 @@ class SliderRange extends Component {
     
     createRange() {
         const {range_items, range_item, slider_range_picker} = this.props.main;
-
-        const curItem = range_items[range_item]; // by default 2013
-
-        const firstItem = range_items[0];
-        const lastItem = range_items[range_items.length-1];
+        let newRange = [...range_items];
+        newRange = newRange.map(el => this.toYear(el));
+        newRange.sort();
+    
+        const curItem = newRange[range_item]; // by default 2013
+        const firstItem = newRange[0];
+        const lastItem = newRange[newRange.length-1];
         
-        function toYear(str) {
-            return '20'+str.substring(5);
-        }
-
+        
         return (
             <div className="sliderRangeContainer">
                 <div className="sliderRange">
-                    <p className="rangeItem first">{toYear(firstItem)}</p>
+                    <p className="rangeItem first">{firstItem}</p>
                     <div className="current-year-container">
                         <div className="container-fa left" onClick={() => this.changeItem('-')}>
                             <i className="fa fa-caret-left" aria-hidden="true"></i>
                         </div>
                     
                         <div className="current-year" onClick={() => this.handlerToggleSliderPicker()}>
-                            <span>{toYear(curItem)}</span>
+                            <span>{curItem}</span>
                         </div>
                     
                         <div className="container-fa right" onClick={() => this.changeItem('+')}>
@@ -92,7 +99,7 @@ class SliderRange extends Component {
                         </div>
                 
                     </div>
-                    <p className="rangeItem last">{toYear(lastItem)}</p>
+                    <p className="rangeItem last">{lastItem}</p>
                 </div>
                 <div className="sliderRangePicker-container">
                     <div className= {slider_range_picker ? "sliderRangePicker active-picker" : "sliderRangePicker"}>
@@ -102,7 +109,7 @@ class SliderRange extends Component {
                                      key={i}
                                      className={`rangePicker-item ${i === range_item ? 'active' : ''}`}
                                      onClick={() => this.changeItem(i) || this.handlerToggleSliderPicker()}>
-                                {toYear(item)}
+                                {this.toYear(item)}
                             </p>
                         })}
                     </div>
