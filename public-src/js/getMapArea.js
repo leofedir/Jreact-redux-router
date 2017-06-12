@@ -102,22 +102,25 @@ export default function getMap(properties, rebuild = true, isRegion) {
     }
 
     function getAto(item) {
-        let {range_item, range_items,} = state.main;
+        Lmap.hasLayer(ato) ? Lmap.removeLayer(ato) : "";
+        let {range_items,} = state.main;
         if (range_items[item] > 'year_13' && atoData !== null) {
             ato ? ato.clearLayers() && Lmap.removeLayer(ato) : ''
             ato = L.geoJSON(atoData, {
                 style: myStyle
             });
             setTimeout(() => {
-                Lmap.addLayer(ato)
+               Lmap.addLayer(ato)
             }, 500)
 
-        } else if (range_item > 0 && atoData === null) {
+        } else if (range_items[item] > 'year_13' && atoData === null) {
             fetchAto()
-        } else if (range_item == 0 && ato !== null) {
+        } else if (range_items[item] < 'year_13' && ato !== null) {
             ato.clearLayers();
-            Lmap.removeLayer(ato);
-            ato = null;
+            setTimeout(() => {
+                Lmap.removeLayer(ato);
+                ato = null;
+            }, 500);
         }
     }
 
