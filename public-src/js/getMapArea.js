@@ -102,7 +102,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
     }
 
     function getAto(item) {
-        if (item > 0 && atoData !== null) {
+        let {range_item, range_items,} = state.main;
+        if (range_items[item] > 'year_13' && atoData !== null) {
             ato ? ato.clearLayers() && Lmap.removeLayer(ato) : ''
             ato = L.geoJSON(atoData, {
                 style: myStyle
