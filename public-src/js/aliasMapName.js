@@ -148,5 +148,7 @@ export let alias = {
     area_zemres_lisovizemli :'Площа земель лісогосподарського призначення',
     area_zemres_chastkalisovi:'Частка земель  лісогосподарського призначення',
     area_zemres_chastkajytlova:'Частка земель житлової та громадської забудови',
-    area_zemres_chastkapromyslovyh : "Частка земель, що використовуються підприємствами промисловості, енергетики, транспорту та зв’язку"
+    area_zemres_chastkapromyslovyh : "Частка земель, що використовуються підприємствами промисловості, енергетики, транспорту та зв’язку",
+    area_promislovist_obsyahprod :' Обсяги реалізації промислової продукції',
+    area_promislovist_kilkistpracivnykiv : 'Кількість працівників, зайнятих у промисловості'
 }
