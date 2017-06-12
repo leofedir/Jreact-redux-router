@@ -56,7 +56,7 @@ class BarChart extends Component {
 
     createChart(full = null) {
         // save props
-        const {alias, data_success, chart3, bar_cahrt_full, dataChartRegion, curency} = this.props.map_reducer;
+        const {alias, data_success, chart3, dataChartRegion, curency} = this.props.map_reducer;
         const {range_item, range_items, submenu_item} = this.props.main;
         let curent_year = range_items[range_item] || 'year_13';
         let parametr;
@@ -155,9 +155,8 @@ class BarChart extends Component {
                 plotOptions: {
                     series: {
                         borderWidth: 0,
-                        // minPointLength: 3,
                         dataLabels: {
-                            enabled: bar_cahrt_full
+                            enabled: full
                         }
                     }
                 },
@@ -236,7 +235,7 @@ class BarChart extends Component {
                     series: {
                         borderWidth: 0,
                         dataLabels: {
-                            enabled: bar_cahrt_full
+                            enabled: full
                         }
                     }
                 },
