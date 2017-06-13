@@ -22,6 +22,36 @@
   font-family: arial;
   line-height: 1.5;
 }
+
+.popup_bottom {
+  height: 180px;
+  overflow: hidden;
+  position: relative;
+}
+
+.popup_bottom-active {
+  height: 100%;
+}
+
+.popup-bottom-wrapper p:nth-child(4) {
+  margin-bottom: 40px;
+}
+
+.popup_bottom-active p:nth-child(4){
+  margin-bottom: 0;
+}
+
+.popup-toggle-button {
+  position: absolute;
+  bottom: 14px;
+  right: 82px;
+  outline: none;
+  border: none;
+  background: none;
+  color: #747474;
+  cursor: pointer;
+}
+
 .popup_item {
   display: flex;
   /*justify-content: space-between;*/

@@ -307,7 +307,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
         let legend_refs = [];
         for (let i = 0; i < choroplethLayer.options.limits.length; i++)
             legend_refs.push(`legend${i}`)
-        
+
         let legend_data = {
             limits: choroplethLayer.options.limits,
             colors: choroplethLayer.options.colors,

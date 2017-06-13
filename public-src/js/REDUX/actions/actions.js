@@ -11,7 +11,8 @@ import {
     SET_RANGE_ITEM,
     SET_LEGEND_DATA,
     START_LOAD,
-    TOGGLE_SLIDER_PICKER
+    TOGGLE_SLIDER_PICKER,
+    TOGGLE_POPUP_FULLSIZE
 
 } from './constant';
 
@@ -92,5 +93,12 @@ export function toggle_Slider_Picker(slider) {
     return {
         type: TOGGLE_SLIDER_PICKER,
         payload: slider
+    }
+}
+
+export function toggle_Popup_Fullsize(fullsize) {
+    return {
+        type: TOGGLE_POPUP_FULLSIZE,
+        payload: fullsize
     }
 }

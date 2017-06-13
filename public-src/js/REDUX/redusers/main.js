@@ -16,7 +16,8 @@ import {
     GET_MAP_DATA_REQUEST,
     GET_MAP_AREA_SUCCESS,
     SET_DATA_DISTRICT,
-    TOGGLE_SLIDER_PICKER
+    TOGGLE_SLIDER_PICKER,
+    TOGGLE_POPUP_FULLSIZE
 
 } from '../actions/constant'
 
@@ -33,6 +34,7 @@ const initialState = {
     claster_layers: null,
     title_map: '',
     slider_range_picker: false,
+    popup_fullsize: false
 };
 
 export default function main(state = initialState, action) {
@@ -81,6 +83,9 @@ export default function main(state = initialState, action) {
         
         case TOGGLE_SLIDER_PICKER:
             return {...state, slider_range_picker: action.payload};
+        
+        case TOGGLE_POPUP_FULLSIZE:
+            return {...state, popup_fullsize: action.payload};
 
         default:
             return state;

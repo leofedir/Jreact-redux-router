@@ -27,7 +27,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        Actions: bindActionCreators({toggleMenu}, dispatch),
+        Actions: bindActionCreators({toggleMenu}, dispatch)
     }
 }
 

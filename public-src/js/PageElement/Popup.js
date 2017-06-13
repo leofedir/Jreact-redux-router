@@ -3,6 +3,7 @@ import getFields from '../renderClaster/setFields';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
+import {toggle_Popup_Fullsize} from '../REDUX/actions/actions';
 import * as MapActions from '../REDUX/actions/get_map_area';
 
 export let year_labels = [];
@@ -14,7 +15,6 @@ let curency = null;
 export let curentCurency = null;
 
 class Popup extends Component {
-
     setDataFromFeature() {
         const {curencyIndexCurency} = this.props.map_reducer;
         curency !== null ? curentCurency = curency[curencyIndexCurency] : curentCurency = "";
@@ -22,8 +22,8 @@ class Popup extends Component {
         let popupInfo = [];
 
         let objetKeys = Object.keys(feature).filter(item => item.indexOf(curentCurency + 'year_') >= 0).sort();
-
-        objetKeys.forEach((item, i) => {
+        
+        objetKeys.reverse().forEach((item, i) => {
             popupInfo.push(<p key={feature.id + i}>Станом на 20{item.substring(item.lastIndexOf('_') + 1)} р.
                 <span>{new Intl.NumberFormat().format(feature[item])}</span></p>)
             year_labels.push(20 + item.substring(item.lastIndexOf('_') + 1) + 'р');
@@ -41,8 +41,22 @@ class Popup extends Component {
         //     }
         // }
 
-        return popupInfo
+        return <div className="popup-bottom-wrapper">{popupInfo}</div>
     }
+    
+    toggleFullSize = () => {
+        const {toggle_Popup_Fullsize} = this.props.Actions;
+        const {popup_fullsize} = this.props.main;
+        
+        toggle_Popup_Fullsize(!popup_fullsize)
+    }
+    
+    buttonFullSize = () =>  {
+        const {popup_fullsize} = this.props.main;
+        
+        return popup_fullsize ? '' : <input type='button' className='popup-toggle-button' value='Розгорнути' onClick={this.toggleFullSize}/>
+    }
+    
 
     setCurentCurency(e) {
         const {setCurency} = this.props.MapActions;
@@ -68,9 +82,11 @@ class Popup extends Component {
 
     getInfo() {
         const {feature, alias, feature_claster} = this.props.map_reducer;
+        const {popup_fullsize} = this.props.main
         dataToChart = [];
         dataToChartUsd = [];
         year_labels = [];
+        let popupItemCount = 0;
 
         if (feature !== null) {
 
@@ -81,6 +97,8 @@ class Popup extends Component {
                 curency = null;
                 curentCurency = null;
             }
+    
+            let objFeature =  Object.keys(feature).filter(item => item.indexOf(curentCurency + 'year_') >= 0)
             return (
                 <div className="description">
                     <div className="item_header">
@@ -92,7 +110,7 @@ class Popup extends Component {
                             <p>Населення (01.01.2017р.) <span>{new Intl.NumberFormat().format(feature.population)} осіб</span></p>
                             <p>Площа території <span>{new Intl.NumberFormat().format(feature.area)} га</span></p>
                         </div>
-                        <div className="popup_bottom">
+                        <div className={popup_fullsize ? "popup_bottom popup_bottom-active" : "popup_bottom"}>
                             <div className="popup_buttom-top">
                                 <div className="popup_buttom-title">
                                     <h4>{ alias }</h4>
@@ -101,7 +119,8 @@ class Popup extends Component {
                                     {curency !== null ? this.getCyrencyItems() : <p>{ feature.parameter}</p>}
                                 </div>
                             </div>
-                            {::this.setDataFromFeature()}
+                            {::this.setDataFromFeature(popupItemCount)}
+                            {objFeature.length > 4 ? this.buttonFullSize() : ''}
                         </div>
                     </div>
                 </div>
@@ -112,7 +131,8 @@ class Popup extends Component {
 
             let popapItems = [];
 
-            fields.forEach((item, i) => {
+
+            fields.reverse().forEach((item, i) => {
 
                 if (item.title === 'Назва') {
                     popapItems.push(<h5 key={feature_claster.object_id + (i + '')}
@@ -161,7 +181,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        MapActions: bindActionCreators(MapActions, dispatch)
+        MapActions: bindActionCreators(MapActions, dispatch),
+        Actions: bindActionCreators({toggle_Popup_Fullsize}, dispatch)
     }
 }
 
