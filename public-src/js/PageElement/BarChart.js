@@ -206,6 +206,7 @@ class BarChart extends Component {
             }
             
             // Create the chart
+            const curValue = curency || propertiesMain.__region[0].properties.parameter
             myChart = Highcharts.chart('item_bar_chart', {
                 lang: {
                     drillUpText: '\uf0a8'
@@ -220,7 +221,7 @@ class BarChart extends Component {
                     enabled: false
                 },
                 title: {
-                    text: alias + ', ' + propertiesMain.__region[0].properties.parameter + ', 20' + curent_year.substring(5) + 'р.'
+                    text: alias + ', ' + curValue + ', 20' + curent_year.substring(5) + 'р.'
                 },
                 xAxis: {
                     type: 'category',

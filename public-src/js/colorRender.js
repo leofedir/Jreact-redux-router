@@ -38,8 +38,8 @@ L.choropleth = module.exports = function (geojson, opts) {
             if (featureValue == limits[limits.length-1]) {
                 style.fillColor = '#cccccc';
                 break
-            } else if (featureValue === limits[limits.length-2]){
-                style.fillColor = colors[colors.length-1];
+            } else if (featureValue == limits[limits.length-2]){
+                style.fillColor = colors[colors.length-2];
                 break
             } else if (featureValue <= limits[i]) {
                 style.fillColor = limits[i] === limits[0] ? colors[i] : colors[i-1];
