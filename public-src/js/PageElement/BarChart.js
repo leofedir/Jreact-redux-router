@@ -40,12 +40,12 @@ function syncExtremes(e) {
         Highcharts.each(Highcharts.charts, function (chart) {
             if (chart !== thisChart) {
                 if (chart.xAxis[0].setExtremes) { // It is null while updating
-                    chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, { trigger: 'syncExtremes' });
+                    chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {trigger: 'syncExtremes'});
                 }
             }
         });
     }
- }
+}
 
 class BarChart extends Component {
 
@@ -61,17 +61,19 @@ class BarChart extends Component {
         let curent_year = range_items[range_item] || 'year_13';
         let parametr;
 
+
+
         //check to hav region in props
         if (data_success && propertiesMain && dataChartRegion) {
-            
+            storeParametr = submenu_item + curency.toLowerCase() + curent_year;
+
             if ('__district' in propertiesMain) {
                 parametr = curency == '' ? propertiesMain.__district[0].properties.parameter : curency
             } else if ('__region' in propertiesMain) {
                 parametr = curency == '' ? propertiesMain.__region[0].properties.parameter : curency
             }
-            myCurency = curency == '' ? curency : parametr.toLowerCase();
 
-            storeParametr = submenu_item + curency + curent_year;
+            myCurency = curency.toLowerCase()
 
             let district = {};
 
@@ -128,7 +130,6 @@ class BarChart extends Component {
             } else if ('__region' in propertiesMain === false) {
                 dataStore[storeParametr + '__region'] = region
             }
-
             // Create the chart
             myChart = Highcharts.chart('item_bar_chart', {
                 lang: {
@@ -191,6 +192,11 @@ class BarChart extends Component {
         }
         else if (data_success && propertiesMain && '__district' in propertiesMain && !dataChartRegion) {
 
+            parametr = curency == '' ? propertiesMain.__district[0].properties.parameter : curency
+            myCurency = curency.toLowerCase()
+
+            storeParametr = submenu_item + curency.toLowerCase() + curent_year;
+
             if (!dataStore[storeParametr]) {
 
                 propertiesMain.__district.sort((a, b) => b.properties[myCurency + curent_year] - a.properties[myCurency + curent_year]);
@@ -204,9 +210,8 @@ class BarChart extends Component {
                     return obj
                 });
             }
-            
+
             // Create the chart
-            // const curValue = curency || propertiesMain.__region[0].properties.parameter
             myChart = Highcharts.chart('item_bar_chart', {
                 lang: {
                     drillUpText: '\uf0a8'
@@ -262,7 +267,7 @@ class BarChart extends Component {
     }
 
     handlerOnMouseMove(e) {
-        
+
         let chart,
             point,
             i = Highcharts.charts.length - 3,
@@ -284,10 +289,10 @@ class BarChart extends Component {
     getMultiChart() {
         const {chart3} = this.props.map_reducer;
         const chartData = [];
-        const chartType = ['line','area', 'area' ];
-        const units = ['осіб','кб.м', 'кб.м' ];
+        const chartType = ['line', 'area', 'area'];
+        const units = ['осіб', 'кб.м', 'кб.м'];
         const year_labels = ['2014 р', '2015 р', '2016 р'];
-        const colors = ['#7cb5ec', '#f7a35c', '#90ee7e' ];
+        const colors = ['#7cb5ec', '#f7a35c', '#90ee7e'];
 
 
         for (let key in chart3) {
@@ -384,7 +389,6 @@ class BarChart extends Component {
     }
 
     toggleChartData() {
-        
         this.props.MapActions.toggle_data(this.props.map_reducer.dataChartRegion)
     }
 
@@ -395,9 +399,13 @@ class BarChart extends Component {
 
     render() {
         const {bar_chart_full, chart3, dataChartRegion, data_success, bubble_chart_full, chart_full, claster} = this.props.map_reducer;
-        const chartDiv = <div ref="multiChart" className="multiChart" onMouseMove={::this.handlerOnMouseMove}><div id="chart0" className="item_bar_chart"/><div id="chart1" className="item_bar_chart"/><div id="chart2" className="item_bar_chart"/></div>;
+        const chartDiv = <div ref="multiChart" className="multiChart" onMouseMove={::this.handlerOnMouseMove}>
+            <div id="chart0" className="item_bar_chart"/>
+            <div id="chart1" className="item_bar_chart"/>
+            <div id="chart2" className="item_bar_chart"/>
+        </div>;
         const chartStyle = (bubble_chart_full || chart_full) ? `disabled` : ``;
-        
+
         return (
             <div className={bar_chart_full ? `chart_2 barChart_full` : `chart_2 ${chartStyle}`}>
                 {/*Title for right Trend BarChart*/}
@@ -408,7 +416,7 @@ class BarChart extends Component {
                         <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"/>
                     </div>
                 </div>
-                
+
                 {/*Right Trend BarChart*/}
                 <div className="item_content">
                     <div className="region_toggle"
@@ -443,5 +451,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BarChart);
-
-
