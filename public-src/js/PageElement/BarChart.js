@@ -65,11 +65,12 @@ class BarChart extends Component {
         if (data_success && propertiesMain && dataChartRegion) {
             
             if ('__district' in propertiesMain) {
-                parametr = curency === '' ? propertiesMain.__district[0].properties.parameter : curency
+                parametr = curency == '' ? propertiesMain.__district[0].properties.parameter : curency
             } else if ('__region' in propertiesMain) {
-                parametr = curency === '' ? propertiesMain.__region[0].properties.parameter : curency
+                parametr = curency == '' ? propertiesMain.__region[0].properties.parameter : curency
             }
-            
+            myCurency = curency == '' ? curency : parametr.toLowerCase();
+
             storeParametr = submenu_item + curency + curent_year;
 
             let district = {};
@@ -127,8 +128,7 @@ class BarChart extends Component {
             } else if ('__region' in propertiesMain === false) {
                 dataStore[storeParametr + '__region'] = region
             }
-            
-            
+
             // Create the chart
             myChart = Highcharts.chart('item_bar_chart', {
                 lang: {
@@ -206,7 +206,7 @@ class BarChart extends Component {
             }
             
             // Create the chart
-            const curValue = curency || propertiesMain.__region[0].properties.parameter
+            // const curValue = curency || propertiesMain.__region[0].properties.parameter
             myChart = Highcharts.chart('item_bar_chart', {
                 lang: {
                     drillUpText: '\uf0a8'
@@ -221,7 +221,7 @@ class BarChart extends Component {
                     enabled: false
                 },
                 title: {
-                    text: alias + ', ' + curValue + ', 20' + curent_year.substring(5) + 'р.'
+                    text: alias + ', ' + parametr + ', 20' + curent_year.substring(5) + 'р.'
                 },
                 xAxis: {
                     type: 'category',
