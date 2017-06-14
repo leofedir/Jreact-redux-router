@@ -12,8 +12,6 @@ import {
     GET_CLASTER_REQUEST,
     GET_CLASTER_SUCCESS,
     GET_CLASTER_ERROR,
-    GET_MAP_DATA_SUCCESS,
-    GET_MAP_DATA_REQUEST,
     GET_MAP_AREA_SUCCESS,
     SET_DATA_DISTRICT,
     TOGGLE_SLIDER_PICKER,
@@ -46,7 +44,7 @@ export default function main(state = initialState, action) {
             return {...state, mapFull: action.payload, showMenu: false};
 
         case SET_SUBMENU_ITEM:
-            return {...state, submenu_item: action.payload, legend_data: null, claster_layers: null, mapFull: false, show_range: false, fetching: true};
+            return {...state, range_item: 0, submenu_item: action.payload, legend_data: null, claster_layers: null, mapFull: false, show_range: false, fetching: true};
 
         case GET_SUBMENU_REQUEST:
             return {...state,  claster_layers: null, title_map: action.payload};

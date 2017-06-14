@@ -72,13 +72,10 @@ class SliderRange extends Component {
     
     createRange() {
         const {range_items, range_item, slider_range_picker} = this.props.main;
-
-
         const curItem = range_items[range_item]; // by default 2013
         const firstItem = range_items[0];
         const lastItem = range_items[range_items.length-1];
-        
-        
+
         return (
             <div className="sliderRangeContainer">
                 <div className="sliderRange">
