@@ -61,7 +61,7 @@ input[type=range]::-moz-range-track {
     height: 0px;
     display: flex;
     position: absolute;
-    justify-content: space-around;
+    justify-content: flex-start;
     background: #3A3D3F;
     color: #fff;
     border-radius: 4px;
@@ -81,13 +81,14 @@ input[type=range]::-moz-range-track {
 
 .sliderRangePicker .active {
     height: 13px;
-    padding: 5px;
+    padding: 4px;
     border-radius: 8px;
     border: none;
 }
 
 .active-picker {
-    height: 60px;
+    min-height: 60px;
+    height: auto;
     font-size: 13px;
 }
 
@@ -100,6 +101,7 @@ input[type=range]::-moz-range-track {
 
 .rangePicker-item {
     padding: 6px;
+    margin: 0 6px;
     cursor: pointer;
     text-align: center;
     width: 50px;
