@@ -23,14 +23,12 @@ class Popup extends Component {
         let popupInfo = [];
 
         let objetKeys = Object.keys(feature).filter(item => item.indexOf(curentCurency + 'year_') >= 0).sort();
-    
         objetKeys.forEach((item, i) => {
             popupInfo.push(<p key={feature.id + i}>Станом на 20{item.substring(item.lastIndexOf('_') + 1)} р.
                 <span>{new Intl.NumberFormat().format(feature[item])}</span></p>)
             year_labels.push(20 + item.substring(item.lastIndexOf('_') + 1) + 'р');
             dataToChart.push(+feature[item]);
         })
-        
         //popup if > 4
         popupInfo.reverse();
         const shortPopup = popupInfo.slice(0, 4);
@@ -45,8 +43,6 @@ class Popup extends Component {
         //         i++
         //     }
         // }
-        
-        console.log('shortPopup >>>', shortPopup)
         return popup_fullsize ? <div className="popup-bottom-wrapper">{popupInfo}</div>:
                                 <div className="popup-bottom-wrapper">{shortPopup}</div>
     }
@@ -60,7 +56,6 @@ class Popup extends Component {
     
     buttonFullSize = () => {
         const {popup_fullsize} = this.props.main;
-    
         return popup_fullsize ? <i aria-hidden='true' className='fa fa-angle-up popup-toggle-button popup-down fa-2x'
                                    onClick={this.toggleFullSize}/> :
                                 <i aria-hidden='true' className='fa fa-angle-down popup-toggle-button popup-down fa-2x'
@@ -142,7 +137,6 @@ class Popup extends Component {
             let popapItems = [];
 
 
-            
             fields.forEach((item, i) => {
 
                 if (item.title === 'Назва') {

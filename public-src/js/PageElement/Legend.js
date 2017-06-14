@@ -30,7 +30,6 @@ class Legend extends Component {
         const {check_all} = this.props.MapActions;
         check_all(checkAll, check)
     }
-    
     handleOnHover = (e) => {
         const color = rgbToHex(e.target.style.backgroundColor);
     

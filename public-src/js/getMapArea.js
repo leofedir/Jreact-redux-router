@@ -54,6 +54,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             filds = propertiesMain.__district[0].properties
         }
 
+
         // select field width data
         for (let key in filds) {
             if (filds.hasOwnProperty(key) && key.slice(0, 4) === 'year') {
@@ -78,6 +79,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
             filds = propertiesMain.__district[0].properties
         }
     }
+
+
 
     if (Lmap.hasLayer(choroplethLayer)) {
         Lmap.removeLayer(choroplethLayer)
