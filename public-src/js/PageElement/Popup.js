@@ -17,6 +17,7 @@ export let curentCurency = null;
 class Popup extends Component {
     setDataFromFeature() {
         const {curencyIndexCurency} = this.props.map_reducer;
+        const {popup_fullsize} = this.props.main
         curency !== null ? curentCurency = curency[curencyIndexCurency] : curentCurency = "";
         const {feature} = this.props.map_reducer;
         let popupInfo = [];
@@ -29,7 +30,10 @@ class Popup extends Component {
             year_labels.push(20 + item.substring(item.lastIndexOf('_') + 1) + 'р');
             dataToChart.push(+feature[item]);
         })
-        popupInfo.reverse()
+        
+        //popup if > 4
+        popupInfo.reverse();
+        const shortPopup = popupInfo.slice(0, 4);
 
         // for (let key in feature) {
         //     if (feature.hasOwnProperty(key) && key.indexOf(curentCurency + 'year_') >= 0) {
@@ -41,8 +45,10 @@ class Popup extends Component {
         //         i++
         //     }
         // }
-
-        return <div className="popup-bottom-wrapper">{popupInfo}</div>
+        
+        console.log('shortPopup >>>', shortPopup)
+        return popup_fullsize ? <div className="popup-bottom-wrapper">{popupInfo}</div>:
+                                <div className="popup-bottom-wrapper">{shortPopup}</div>
     }
     
     toggleFullSize = () => {
@@ -52,12 +58,14 @@ class Popup extends Component {
         toggle_Popup_Fullsize(!popup_fullsize)
     }
     
-    buttonFullSize = () =>  {
+    buttonFullSize = () => {
         const {popup_fullsize} = this.props.main;
-        
-        return popup_fullsize ? '' : <input type='button' className='popup-toggle-button' value='Розгорнути' onClick={this.toggleFullSize}/>
-    }
     
+        return popup_fullsize ? <i aria-hidden='true' className='fa fa-angle-up popup-toggle-button popup-down fa-2x'
+                                   onClick={this.toggleFullSize}/> :
+                                <i aria-hidden='true' className='fa fa-angle-down popup-toggle-button popup-down fa-2x'
+                                   onClick={this.toggleFullSize}/>
+    }
 
     setCurentCurency(e) {
         const {setCurency} = this.props.MapActions;

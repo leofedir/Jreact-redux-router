@@ -71,3 +71,15 @@
   background:#fcfcfc;
   height: 100%;
 }
+
+.highcharts-drilldown-data-label text {
+  font-size: 11px !important;
+  font-weight: bold !important;
+  color: #000000 !important;
+  fill: #000000 !important;
+  text-decoration: none !important;
+}
+//
+//.highcharts-drilldown-data-label text tspan {
+//  text-decoration: none;
+//}

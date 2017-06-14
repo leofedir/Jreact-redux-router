@@ -1,7 +1,7 @@
 .popup_top, .popup_bottom {
   color: #009971;
   font-size: 14px;
-  padding: 10px 0;
+  padding: 10px 0 14px 0;
   width: calc(100% - 15px);
 }
 .popup_top {
@@ -24,8 +24,6 @@
 }
 
 .popup_bottom {
-  height: 170px;
-  overflow: hidden;
   position: relative;
 }
 
@@ -33,23 +31,20 @@
   height: 100%;
 }
 
-.popup-bottom-wrapper p:nth-child(4) {
-  margin-bottom: 30px;
-}
-
-.popup_bottom-active p:nth-child(4){
-  margin-bottom: 0;
-}
-
 .popup-toggle-button {
   position: absolute;
-  bottom: 14px;
-  right: 82px;
+  bottom: 2px;
+  right: 100px;
   outline: none;
   border: none;
   background: none;
-  color: #747474;
+  color: rgba(116, 116, 116, 0.67) !important;
   cursor: pointer;
+}
+
+.popup-down {
+  bottom: -4px;
+  right: 130px;
 }
 
 .popup_item {
