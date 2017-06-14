@@ -8,7 +8,7 @@ class ButtonMenu extends Component {
     onButtonMenuClick(e) {
         const {showMenu} = this.props.main;
         const {toggleMenu} = this.props.Actions;
-    
+        
         toggleMenu(showMenu)
     }
 

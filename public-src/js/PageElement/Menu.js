@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {get_submenu, toggleMenu} from '../REDUX/actions/actions';
+import {get_submenu, toggleMenu, toggle_Popup_Fullsize} from '../REDUX/actions/actions';
 
 import {menu} from './menu_src'
 
@@ -11,7 +11,9 @@ class Menu extends Component {
         let title = e.currentTarget.title;
         let url = e.currentTarget.dataset.url;
         
-        const {get_submenu} = this.props.Actions;
+        
+        const {get_submenu,toggle_Popup_Fullsize} = this.props.Actions;
+        toggle_Popup_Fullsize(false)
         get_submenu(url, title)
     }
 
@@ -24,7 +26,8 @@ class Menu extends Component {
                         <img className="menu__icon" src={'img/menu/' + item.icon}/>
                         <span className="menu__item-text">{item.name}</span>
                     </a>
-                </li>)
+                </li>
+            )
         });
     }
 
@@ -66,7 +69,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        Actions: bindActionCreators({get_submenu, toggleMenu}, dispatch),
+        Actions: bindActionCreators({get_submenu, toggleMenu, toggle_Popup_Fullsize}, dispatch),
     }
 }
 

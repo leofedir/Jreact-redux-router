@@ -22,13 +22,14 @@ class Popup extends Component {
         let popupInfo = [];
 
         let objetKeys = Object.keys(feature).filter(item => item.indexOf(curentCurency + 'year_') >= 0).sort();
-        
-        objetKeys.reverse().forEach((item, i) => {
+    
+        objetKeys.forEach((item, i) => {
             popupInfo.push(<p key={feature.id + i}>Станом на 20{item.substring(item.lastIndexOf('_') + 1)} р.
                 <span>{new Intl.NumberFormat().format(feature[item])}</span></p>)
             year_labels.push(20 + item.substring(item.lastIndexOf('_') + 1) + 'р');
             dataToChart.push(+feature[item]);
         })
+        popupInfo.reverse()
 
         // for (let key in feature) {
         //     if (feature.hasOwnProperty(key) && key.indexOf(curentCurency + 'year_') >= 0) {
@@ -98,7 +99,8 @@ class Popup extends Component {
                 curentCurency = null;
             }
     
-            let objFeature =  Object.keys(feature).filter(item => item.indexOf(curentCurency + 'year_') >= 0)
+            let tempObj = {...feature}
+            let objFeature =  Object.keys(tempObj).filter(item => item.indexOf(curentCurency + 'year_') >= 0)
             return (
                 <div className="description">
                     <div className="item_header">
@@ -110,7 +112,7 @@ class Popup extends Component {
                             <p>Населення (01.01.2017р.) <span>{new Intl.NumberFormat().format(feature.population)} осіб</span></p>
                             <p>Площа території <span>{new Intl.NumberFormat().format(feature.area)} га</span></p>
                         </div>
-                        <div className={popup_fullsize ? "popup_bottom popup_bottom-active" : "popup_bottom"}>
+                        <div className={objFeature.length > 4 && popup_fullsize ? "popup_bottom popup_bottom-active" : "popup_bottom"}>
                             <div className="popup_buttom-top">
                                 <div className="popup_buttom-title">
                                     <h4>{ alias }</h4>
@@ -132,7 +134,8 @@ class Popup extends Component {
             let popapItems = [];
 
 
-            fields.reverse().forEach((item, i) => {
+            
+            fields.forEach((item, i) => {
 
                 if (item.title === 'Назва') {
                     popapItems.push(<h5 key={feature_claster.object_id + (i + '')}
