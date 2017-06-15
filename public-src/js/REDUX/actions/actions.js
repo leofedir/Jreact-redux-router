@@ -68,10 +68,13 @@ export function set_submenu_item(item) {
     }
 }
 
-export function set_Range_items(items) {
+export function set_Range_items(items, item = 0) {
     return {
         type: SET_RANGE_ITEMS,
-        payload: items
+        payload: {
+            items: items,
+            item: item
+        }
     }
 }
 

@@ -150,6 +150,7 @@ export function show_claster(state, mapName) {
             .then(parseJSON)
             .then(data => {
                 claster(data.data);
+
                 dispatch({
                     type: GET_CLASTER_SUCCESS,
                     payload: data
@@ -165,7 +166,7 @@ export function show_claster(state, mapName) {
 
             })
             .catch((err) => {
-                console.log('err >>', err);
+                console.error('err >>', err);
                 dispatch({
                     type: GET_CLASTER_ERROR
                 })

@@ -46,7 +46,6 @@ class Popup extends Component {
         //     }
         // }
         
-        console.log('shortPopup >>>', shortPopup)
         return popup_fullsize ? <div className="popup-bottom-wrapper">{popupInfo}</div>:
                                 <div className="popup-bottom-wrapper">{shortPopup}</div>
     }

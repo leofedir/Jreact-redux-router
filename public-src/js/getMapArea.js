@@ -60,8 +60,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 PropertiesLayer.push(key)
             }
         }
-
-        store.dispatch(set_Range_items(PropertiesLayer.sort()));
+        
+        store.dispatch(set_Range_items(PropertiesLayer.sort(), PropertiesLayer.length-1));
 
         Lmap.eachLayer(function (layer) {
             Lmap.removeLayer(layer)

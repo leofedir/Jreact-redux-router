@@ -5,7 +5,7 @@ import {set_Range_item, toggle_Slider_Picker} from '../REDUX/actions/actions';
 
 class SliderRange extends Component {
     toYear = (str) => {
-        return '20'+str.substring(5);
+        if(str ) return '20'+str.substring(5)
     }
     
     changeItem(type) {

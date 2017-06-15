@@ -50,7 +50,7 @@ export default function main(state = initialState, action) {
             return {...state,  claster_layers: null, title_map: action.payload};
 
         case SET_RANGE_ITEMS:
-            return {...state, range_items: action.payload, show_range: true};
+            return {...state, range_items: action.payload.items, range_item: action.payload.item, show_range: true};
 
         case SET_RANGE_ITEM:
             return {...state, range_item: action.payload, fetching: true};
