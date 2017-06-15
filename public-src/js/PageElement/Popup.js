@@ -113,7 +113,7 @@ class Popup extends Component {
             }
     
             let tempObj = {...feature}
-            let objFeature =  Object.keys(tempObj).filter(item => item.indexOf(curentCurency + 'year_') >= 0)
+            let objFeature =  Object.keys(tempObj).filter(item => item.indexOf('year_') >= 0)
             return (
                 <div className="description">
                     <div className="item_header">
