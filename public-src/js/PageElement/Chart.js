@@ -213,7 +213,9 @@ class Chart extends Component {
             <div className={chart_full ? `chart_1 barChart_full` : `chart_1 ${chartStyle}`}>
                 <div className="item_header">
                     <div className="map_heder_title" onClick={::this.onHeaderChartClick}>Тренд</div>
-                    <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>
+                    <div className="icon-container">
+                        <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>
+                    </div>
                 </div>
                 <div className="item_content">
                     <div className="noData"

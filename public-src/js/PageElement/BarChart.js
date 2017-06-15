@@ -410,9 +410,10 @@ class BarChart extends Component {
             <div className={bar_chart_full ? `chart_2 barChart_full` : `chart_2 ${chartStyle}`}>
                 {/*Title for right Trend BarChart*/}
                 <div className="item_header" onClick={::this.onHeaderChartClick}>
-                    <div
-                        className="map_heder_title">{chart3 || !propertiesMain ? 'Тренд' : 'Діаграма-рейтинг (ТОП-5)'}</div>
-                    <div onClick={ ::this.toggleChart }>
+                    <div className="map_heder_title">
+                        {chart3 || !propertiesMain ? 'Тренд' : 'Діаграма-рейтинг (ТОП-5)'}
+                    </div>
+                    <div className="icon-container" onClick={ ::this.toggleChart }>
                         <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"/>
                     </div>
                 </div>

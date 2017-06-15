@@ -354,7 +354,7 @@ class Map extends Component {
 
         return (
             <div className="block block-top block_map">
-                <div className="item_header">
+                <div className="item_header icon-container">
                     <SubMenu />
                     <i className="fa fa-expand fa-1x ico_map_full ico_hover" onClick={::this.omButtonMapClick}/>
                 </div>
