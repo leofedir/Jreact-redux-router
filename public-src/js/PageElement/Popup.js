@@ -57,10 +57,19 @@ class Popup extends Component {
     
     buttonFullSize = () => {
         const {popup_fullsize} = this.props.main;
-        return popup_fullsize ? <i aria-hidden='true' className='fa fa-angle-up popup-toggle-button popup-down fa-2x'
-                                   onClick={this.toggleFullSize}/> :
-                                <i aria-hidden='true' className='fa fa-angle-down popup-toggle-button popup-down fa-2x'
-                                   onClick={this.toggleFullSize}/>
+        // return popup_fullsize ? <i aria-hidden='true' className='fa fa-angle-up popup-toggle-button popup-down fa-2x'
+        //                            onClick={this.toggleFullSize}/> :
+        //                         <i aria-hidden='true' className='fa fa-angle-down popup-toggle-button popup-down fa-2x'
+        //                            onClick={this.toggleFullSize}/>
+        
+            return (
+                <div className="arrow-container" onClick={this.toggleFullSize}>
+                    <button data-am-linearrow="tooltip tooltip-bottom" value="Show Utilities">
+                        <div className={popup_fullsize ? `line line-1 up-arrow-left` : `line line-1`}></div>
+                        <div className={popup_fullsize ? `line line-2 up-arrow-right` : `line line-2`}></div>
+                    </button>
+                </div>
+            )
     }
 
     setCurentCurency(e) {
@@ -163,7 +172,6 @@ class Popup extends Component {
             )
         }
     }
-
 
     noInfo() {
         dataToChart = [];
