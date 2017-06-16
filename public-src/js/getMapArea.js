@@ -252,11 +252,13 @@ export default function getMap(properties, rebuild = true, isRegion) {
             const {legend_data} = state.main;
             if (legend_data !== null) {
                 legend_data.refs.map((el, i) => {
-                    Object.values(refsThis.refs)[i].children[0].style.width = '36px';
-                    Object.values(refsThis.refs)[i].children[0].style.height = '26px';
-                    Object.values(refsThis.refs)[i].children[0].style.marginLeft = '0px';
-                    Object.values(refsThis.refs)[i].style.fontFamily = 'inherit';
-                    Object.values(refsThis.refs)[i].style.fontSize = '100%';
+                    if (Object.values(refsThis.refs)[i]) {
+                        Object.values(refsThis.refs)[i].children[0].style.width = '36px';
+                        Object.values(refsThis.refs)[i].children[0].style.height = '26px';
+                        Object.values(refsThis.refs)[i].children[0].style.marginLeft = '0px';
+                        Object.values(refsThis.refs)[i].style.fontFamily = 'inherit';
+                        Object.values(refsThis.refs)[i].style.fontSize = '100%';
+                    }
                 });
             }
         }
@@ -265,20 +267,23 @@ export default function getMap(properties, rebuild = true, isRegion) {
             let state = store.getState();
             const c = curColor.options.fillColor;
             const {legend_data} = state.main;
-            if (legend_data !== null) {
+            if (legend_data !== null ) {
                 legend_data.refs.map((el, i) => {
-                    const elI = Object.values(refsThis.refs)[i].children[0]
-                    const hexRef = rgbToHex(elI.style.backgroundColor)
-                    const lighterRef = LightenDarkenColor(hexRef, +50)
-
-                    
-                    if (c === hexRef || c === lighterRef) {
-                        elI.style.marginLeft = '-3px';
-                        elI.style.width = '42px';
-                        elI.style.height = '32px';
-                        Object.values(refsThis.refs)[i].style.fontFamily = 'arial';
-                        Object.values(refsThis.refs)[i].style.fontSize = '15px';
+                    if (Object.values(refsThis.refs)[i]) {
+                        const elI = Object.values(refsThis.refs)[i].children[0]
+                        const hexRef = rgbToHex(elI.style.backgroundColor)
+                        const lighterRef = LightenDarkenColor(hexRef, +50)
+    
+    
+                        if (c === hexRef || c === lighterRef) {
+                            elI.style.marginLeft = '-3px';
+                            elI.style.width = '42px';
+                            elI.style.height = '32px';
+                            Object.values(refsThis.refs)[i].style.fontFamily = 'arial';
+                            Object.values(refsThis.refs)[i].style.fontSize = '15px';
+                        }
                     }
+                    
                 });
             }
         }

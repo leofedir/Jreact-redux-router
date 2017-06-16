@@ -37,9 +37,8 @@ class Legend extends Component {
         Object.values(choroplethLayer._layers).map((layer) => {
             if (layer.options.fillColor === color) {
                 layer.setStyle({
-                    weight: 1.7, // border of region or district
+                    weight: 2, // border of region or district
                     fillColor: LightenDarkenColor(color, +60), // + light | - dark
-                    color: 'red'
                 })
             }
         })
@@ -62,19 +61,24 @@ class Legend extends Component {
         if (legend_data !== null) {
             const {limits, colors} = legend_data;
             let dani = 'Дані відсутні';
-            const valueCur = curency === '' ? legend_data.parametr : curency
+            const valueCur = curency === '' ? legend_data.parametr : curency;
             return (
                 <div className="item_content" id="legend">
                     <h5 className="legend__title">Одиниці виміру:
                         <span> { legend_data != null ? valueCur : ''}</span>
                     </h5>
                     {limits.map((item, i) => {
-                        return (
-                            <p key={ i } ref={legend_data.refs[i]}>
-                                <i className={this.handleHoverMapLegend(hoverColor, colors[i]) ? 'legend-active' : ''} onMouseMove={this.handleOnHover}  onMouseOut={this.handleOnUnhover} style={{backgroundColor: colors[i]}}/>
-                                {((limits[i] !== null) ? ' ' + format(limits[i]) : dani) + ((i !== limits.length - 1 && limits[i + 1] !== null) ? ' < ' + format(limits[i + 1]) : (limits[i] !== null) ? '  <' : '')}
-                            </p>
-                        )
+                        if (limits[i] == limits[i + 1] && limits[i] == 0){
+                            return null
+                        } else {
+                            return (
+                                <p key={ i } ref={legend_data.refs[i]}>
+                                    <i className={this.handleHoverMapLegend(hoverColor, colors[i]) ? 'legend-active' : ''} onMouseMove={this.handleOnHover}  onMouseOut={this.handleOnUnhover} style={{backgroundColor: colors[i]}}/>
+                                    {((limits[i] !== null) ? ' ' + format(limits[i]) : dani) + ((i !== limits.length - 1 && limits[i + 1] !== null) ? ' < ' + format(limits[i + 1]) : (limits[i] !== null) ? '  <' : '')}
+                                </p>
+                            )
+                        }
+
                     })}
                 </div>
             )
