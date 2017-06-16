@@ -41,7 +41,6 @@ class Legend extends Component {
                     fillColor: LightenDarkenColor(color, +60), // + light | - dark
                     color: 'red'
                 })
-                console.log(layer)
             }
         })
     }

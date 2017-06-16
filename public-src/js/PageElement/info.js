@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-
+import {choroplethLayer} from '../getMapArea.js'
 class Info extends Component {
-
+    // isAllData() {
+    //     if (choroplethLayer) {
+    //         for( let elem of Object.values(choroplethLayer._layers)) {
+    //             console.log('elem.options.fillColor >>>', elem.options.fillColor)
+    //             if (elem.options.fillColor === '#cccccc') {
+    //                 console.log('not correct data');
+    //                 break;
+    //             }
+    //         }
+    //     }
+    // }
+    
     render() {
         const {info} = this.props.map_reducer;
-        
+        // console.log(choroplethLayer);
+        // this.isAllData();
         return (
             <div className="info">
                 <div className="item_header">
