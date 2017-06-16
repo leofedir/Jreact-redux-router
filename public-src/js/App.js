@@ -19,13 +19,13 @@ import BubbleChart from './PageElement/BubbleChart';
 let wrapper = document.getElementById('wrapper');
 
 class App extends Component {
-    
+
     render() {
         const {showMenu, mapFull} = this.props.main;
-        const {bar_chart_full, chart_full, bubble_chart_full} = this.props.map_reducer;
+        const {data_bubble} = this.props.map_reducer;
         // const mainRightStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `disabled` : ``;
         // const mainChartStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `zero-height`: ``;
-        
+
         return (
             <div id="wrapper" className={ (showMenu ? '' : 'hide' ) + (mapFull ? ' mapFull' : '')}>
                 <div className="heder">
@@ -50,9 +50,7 @@ class App extends Component {
                             <Chart />
                             <BarChart />
                         </div>
-                        <div className={`main__chart `}>
-                            <BubbleChart />
-                        </div>
+                        {data_bubble ? <div className={`main__chart `}><BubbleChart /></div> : ''}
                     </div>
                     <div className="aside">
                         <Menu />

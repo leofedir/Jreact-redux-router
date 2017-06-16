@@ -50,8 +50,15 @@ function syncExtremes(e) {
 class BarChart extends Component {
 
     toggleChart() {
+
         const {barChartToggle} = this.props.MapActions;
         barChartToggle(this.props.map_reducer.bar_chart_full);
+        console.log(11111, this.props.map_reducer.bar_chart_full)
+        if (!this.props.map_reducer.bar_chart_full) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = 'auto'
+        }
     }
 
     createChart(full = null) {
@@ -388,6 +395,11 @@ class BarChart extends Component {
         this.props.map_reducer.chart3 !== null ? this.getMultiChart() : null
     }
 
+    componentWillUpdate() {
+        window.scrollTo(0,0);
+    }
+
+
     toggleChartData() {
         this.props.MapActions.toggle_data(this.props.map_reducer.dataChartRegion)
     }
@@ -428,7 +440,7 @@ class BarChart extends Component {
                                 <i className={ !dataChartRegion ? "fa fa-toggle-on" : 'fa fa-toggle-on fa-flip-horizontal' }/>}Райони
                         </div>
                     </div>
-                    <div id="item_bar_chart" className="item_bar_chart">
+                    <div ref='chartDiv' id="item_bar_chart" className="item_bar_chart">
                         {chart3 !== null ? chartDiv : null}
                     </div>
                 </div>
