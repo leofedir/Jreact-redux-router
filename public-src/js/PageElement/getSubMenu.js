@@ -16,8 +16,10 @@ class SubMenu extends Component {
         const {range_item, range_items} = this.props.main;
         const { getMapData, show_claster, set_data_bubble } = this.props.MapActions;
         const { set_submenu_item, toggle_Popup_Fullsize } = this.props.Actions;
-        
-        toggle_Popup_Fullsize(false);
+    
+        if (this.props.main.range_items) {
+            toggle_Popup_Fullsize(false);
+        }
         set_submenu_item(mapName);
 
         if (mapName == 'area_budgets_dohodymistsevogobudget') {

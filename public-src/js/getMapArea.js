@@ -315,14 +315,17 @@ export default function getMap(properties, rebuild = true, isRegion) {
         let legend_refs = [];
         for (let i = 0; i < choroplethLayer.options.limits.length; i++)
             legend_refs.push(`legend${i}`)
-        console.log('choroplethLayer.options.limits >>', choroplethLayer.options.limits)
+        // console.log('choroplethLayer.options.limits >>', choroplethLayer.options.limits)
         let legend_data = {
             limits: choroplethLayer.options.limits,
             colors: choroplethLayer.options.colors,
             parametr: filds.parameter,
             refs: legend_refs
         };
-        store.dispatch(set_legend_data(legend_data));
+        
+        if (!state.main.legend_data) {
+            store.dispatch(set_legend_data(legend_data));
+        }
     }
 
     renderLayer();
