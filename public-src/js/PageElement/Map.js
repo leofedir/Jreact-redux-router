@@ -162,7 +162,8 @@ class Map extends Component {
     createMap() {
         const {set_data_district} = this.props.MapActions;
         Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 6);
-        esri.basemapLayer('Topographic').addTo(Lmap);
+        layer = esri.basemapLayer('Topographic');
+        Lmap.addLayer(layer);
 
         function onMouseMove(e) {
             cordinateContainer.innerHTML = e.latlng.lat.toFixed(3) + "° пн. ш, " + e.latlng.lng.toFixed(3) + "° сх. д."
@@ -338,7 +339,7 @@ class Map extends Component {
 
             setTimeout(() => {
                 layer.addLayer(kadastr)
-            }, 100)
+            }, 100);
 
             Lmap.addLayer(layer);
             Lmap.on('click', this.onMouseClick)
