@@ -160,7 +160,6 @@ class Map extends Component {
     }
 
     createMap() {
-
         const {set_data_district} = this.props.MapActions;
         Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 6);
         esri.basemapLayer('Topographic').addTo(Lmap);
