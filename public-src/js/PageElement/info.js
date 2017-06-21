@@ -23,9 +23,9 @@ class Info extends Component {
                     <div className="map_heder_title">Довідка</div>
                 </div>
                 <div className="item_content">
-                    <div className={isAllData ? "not-all-data" : "disabled"}>
+                    <div className={isAllData ? "disabled" : "not-all-data"}>
                         <p>
-                            Данні можуть бути не коректні
+                            Дані можуть бути некоректні
                         </p>
                     </div>
                     <div id="info"
