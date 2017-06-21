@@ -11,7 +11,7 @@ let data_buble = {};
 const geometryQuery = [
     `SELECT * FROM geom_region`,
     `SELECT * FROM geom_district`
-]
+];
 
 router.use(compression({
     level: 4
@@ -84,7 +84,7 @@ router.post('/kadastr', function (req, res) {
         .then(d => {
             res.json(d)
         })
-})
+});
 
 demografiya(router);
 claster(router)
