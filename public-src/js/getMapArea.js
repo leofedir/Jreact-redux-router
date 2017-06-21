@@ -9,6 +9,7 @@ import {store} from './index';
 import {coordinate} from './PageElement/Map'
 import {LightenDarkenColor, rgbToHex} from './utils/colors'
 import {refsThis} from './PageElement/Legend'
+import {searchControlPoint} from './renderClaster/claster'
 
 export let choroplethLayer = null;
 export let ato = null;
@@ -19,7 +20,7 @@ let unsubscribe = null;
 let unsubscribeCurency = null;
 let randColor = {};
 let myCurency = '';
-let searchControl = null;
+export let searchControlArea = null;
 
 export default function getMap(properties, rebuild = true, isRegion) {
     let layer = null;
@@ -67,6 +68,10 @@ export default function getMap(properties, rebuild = true, isRegion) {
         Lmap.eachLayer(function (layer) {
             Lmap.removeLayer(layer)
         });
+
+        if (searchControlPoint !== null) {
+            Lmap.removeControl(searchControlPoint)
+        }
 
         Lmap.setView([49, 31], 5);
         esri.basemapLayer('Topographic').addTo(Lmap);
@@ -246,18 +251,18 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         choroplethLayer = L.choropleth(data, layerObject).addTo(Lmap);
 
-        if (searchControl !== null) {
-            Lmap.removeControl(searchControl)
+        if (searchControlArea !== null) {
+            Lmap.removeControl(searchControlArea)
         }
 
 
-        searchControl = new L.Control.Search({
+        searchControlArea = new L.Control.Search({
             propertyName: 'name_ua',
             marker: false,
             layer: choroplethLayer
         });
 
-        searchControl.on('search:locationfound', function (e) {
+        searchControlArea.on('search:locationfound', function (e) {
             const bounds = e.layer._bounds;
             let item = e.layer;
             let color = item.options.fillColor;
@@ -275,7 +280,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 padding: [10, 10]
             });
         });
-        Lmap.addControl(searchControl);  //inizialize search control
+        Lmap.addControl(searchControlArea);  //inizialize search control
 
         function onMouseout(e) {
             let item = e.target;
