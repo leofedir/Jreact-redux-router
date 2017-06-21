@@ -4,11 +4,12 @@ import esri from 'esri-leaflet/dist/esri-leaflet';
 import {checkStatus, parseJSON} from './checkJSON';
 
 import {set_Range_items, set_legend_data} from './REDUX/actions/actions'
-import {clickOnFeature, set_Hover_Color} from './REDUX/actions/get_map_area'
+import {clickOnFeature, set_Hover_Color, set_isAllData} from './REDUX/actions/get_map_area'
 import {store} from './index';
 import {coordinate} from './PageElement/Map'
 import {LightenDarkenColor, rgbToHex} from './utils/colors'
 import {refsThis} from './PageElement/Legend'
+import {searchControlPoint} from './renderClaster/claster'
 
 export let choroplethLayer = null;
 export let ato = null;
@@ -19,9 +20,11 @@ let unsubscribe = null;
 let unsubscribeCurency = null;
 let randColor = {};
 let myCurency = '';
+export let searchControlArea = null;
 
 export default function getMap(properties, rebuild = true, isRegion) {
     let layer = null;
+    let districtContainer = []
 
     if (unsubscribe !== null) {
         unsubscribe();
@@ -37,8 +40,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
         "weight": 2,
         "fillOpacity": 1,
         'className': 'ato'
-
-
     };
     let filds;
     let PropertiesLayer = [];
@@ -61,25 +62,32 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 PropertiesLayer.push(key)
             }
         }
-        
-        store.dispatch(set_Range_items(PropertiesLayer.sort(), PropertiesLayer.length-1));
+
+        store.dispatch(set_Range_items(PropertiesLayer.sort(), PropertiesLayer.length - 1));
 
         Lmap.eachLayer(function (layer) {
             Lmap.removeLayer(layer)
         });
+
+        if (searchControlPoint !== null) {
+            Lmap.removeControl(searchControlPoint)
+        }
 
         Lmap.setView([49, 31], 5);
         esri.basemapLayer('Topographic').addTo(Lmap);
     } else {
         if (isRegion) {
             data = Object.values(propertiesMain.__region);
-            filds = propertiesMain.__region[0].properties
+            filds = propertiesMain.__region[0].properties;
+
+            districtContainer = propertiesMain.__district;
         } else {
             data = Object.values(propertiesMain.__district);
-            filds = propertiesMain.__district[0].properties
+            filds = propertiesMain.__district[0].properties;
+
+            districtContainer = propertiesMain.__district;
         }
     }
-
 
 
     if (Lmap.hasLayer(choroplethLayer)) {
@@ -113,7 +121,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 style: myStyle
             });
             setTimeout(() => {
-               Lmap.addLayer(ato)
+                Lmap.addLayer(ato)
             }, 500)
 
         } else if (range_items[item] > 'year_13' && atoData === null) {
@@ -176,7 +184,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
     }
 
 
-
     randColor = rebuild ? getRandomColorLayer() : randColor;
 
     function renderLayer() {
@@ -224,14 +231,63 @@ export default function getMap(properties, rebuild = true, isRegion) {
             }
         };
 
+        //check all data is correct
+        function isAllData() {
+            for (let i of districtContainer) {
+                for (let j in i.properties) {
+                    if (j === range_items[range_item]) {
+                        if(i.properties[j] === null) return false
+                    }
+                }
+            }
+
+            return true
+        }
+
+        // let state = store.getState()
+        // let {isAllData} = state.map_reducer;
+
+        store.dispatch(set_isAllData(isAllData()));
+
         choroplethLayer = L.choropleth(data, layerObject).addTo(Lmap);
-        
+
+        if (searchControlArea !== null) {
+            Lmap.removeControl(searchControlArea)
+        }
+
+
+        searchControlArea = new L.Control.Search({
+            propertyName: 'name_ua',
+            marker: false,
+            layer: choroplethLayer
+        });
+
+        searchControlArea.on('search:locationfound', function (e) {
+            const bounds = e.layer._bounds;
+            let item = e.layer;
+            let color = item.options.fillColor;
+            let newColor = LightenDarkenColor(color, +50);
+            item.setStyle({
+                fillColor: newColor,
+                weight: 3
+            });
+            item.bindTooltip(item.feature.properties.name_ua, {
+                direction: 'top',
+                sticky: true
+            }).openTooltip();
+            isRegion ? Lmap.fitBounds(bounds, {maxZoom: 6, padding: [10, 10]}) : Lmap.fitBounds(bounds, {
+                maxZoom: 8,
+                padding: [10, 10]
+            });
+        });
+        Lmap.addControl(searchControlArea);  //inizialize search control
+
         function onMouseout(e) {
             let item = e.target;
             handleUnhoverLegendItem()
             if (item !== layer) {
                 choroplethLayer.resetStyle(item);
-                
+
             }
         }
 
@@ -248,7 +304,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 sticky: true
             }).openTooltip()
         }
-        
+
         function handleUnhoverLegendItem() {
             let state = store.getState();
             const {legend_data} = state.main;
@@ -264,19 +320,19 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 });
             }
         }
-        
+
         function handleHoverLegendItem(curColor) {
             let state = store.getState();
             const c = curColor.options.fillColor;
             const {legend_data} = state.main;
-            if (legend_data !== null ) {
+            if (legend_data !== null) {
                 legend_data.refs.map((el, i) => {
                     if (Object.values(refsThis.refs)[i]) {
                         const elI = Object.values(refsThis.refs)[i].children[0]
                         const hexRef = rgbToHex(elI.style.backgroundColor)
                         const lighterRef = LightenDarkenColor(hexRef, +50)
-    
-    
+
+
                         if (c === hexRef || c === lighterRef) {
                             elI.style.marginLeft = '-3px';
                             elI.style.width = '42px';
@@ -285,7 +341,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
                             Object.values(refsThis.refs)[i].style.fontSize = '15px';
                         }
                     }
-                    
+
                 });
             }
         }
@@ -312,17 +368,19 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
             store.dispatch(clickOnFeature(e.target.feature.properties))
         }
+
         let legend_refs = [];
         for (let i = 0; i < choroplethLayer.options.limits.length; i++)
             legend_refs.push(`legend${i}`)
-        console.log('choroplethLayer.options.limits >>', choroplethLayer.options.limits)
+
         let legend_data = {
             limits: choroplethLayer.options.limits,
             colors: choroplethLayer.options.colors,
             parametr: filds.parameter,
             refs: legend_refs
         };
-        store.dispatch(set_legend_data(legend_data));
+
+            store.dispatch(set_legend_data(legend_data));
     }
 
     renderLayer();

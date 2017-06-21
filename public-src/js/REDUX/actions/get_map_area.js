@@ -29,7 +29,8 @@ import {
     SET_DATA_DISTRICT,
     TOGGLE_CHART_TO_STUDENT,
     BUBBLE_CHART_TOGGLE,
-    SET_CURENCY
+    SET_CURENCY,
+    SET_IS_ALL_DATA
 } from './constant';
 
 // export function get_map_area(url, rebuild = true, alias, isRegion) {
@@ -279,5 +280,12 @@ export function setCurency(val) {
     return {
         type: SET_CURENCY,
         payload: val
+    }
+}
+
+export function set_isAllData(isAllData) {
+    return {
+        type: SET_IS_ALL_DATA,
+        payload: isAllData
     }
 }

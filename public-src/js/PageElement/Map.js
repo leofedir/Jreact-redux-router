@@ -8,6 +8,7 @@ import {checkStatus, parseJSON} from '../checkJSON';
 import L from 'leaflet';
 import esri from 'esri-leaflet/dist/esri-leaflet';
 import SubMenu from "./getSubMenu";
+import Search from "./Search";
 import getMap from './../getMapArea';
 
 export let Lmap = null;
@@ -159,11 +160,15 @@ class Map extends Component {
         Lmap.setView([49, 31], 5)
     }
 
-    createMap() {
+    search() {
+        console.log('search')
+    }
 
+    createMap() {
         const {set_data_district} = this.props.MapActions;
         Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 6);
-        esri.basemapLayer('Topographic').addTo(Lmap);
+        layer = esri.basemapLayer('Topographic');
+        Lmap.addLayer(layer);
 
         function onMouseMove(e) {
             cordinateContainer.innerHTML = e.latlng.lat.toFixed(3) + "° пн. ш, " + e.latlng.lng.toFixed(3) + "° сх. д."
@@ -339,7 +344,7 @@ class Map extends Component {
 
             setTimeout(() => {
                 layer.addLayer(kadastr)
-            }, 100)
+            }, 100);
 
             Lmap.addLayer(layer);
             Lmap.on('click', this.onMouseClick)
@@ -360,6 +365,7 @@ class Map extends Component {
                 </div>
                 <div id="map_wrapper" className="map_wrapper">
                     <div id="loader" className={fetching ? "show" : ''}/>
+                    <Search />
                     <i className="fa fa-plus fa-1x zoom_in_icon" onClick={::this.zoom_in} id="zoom_in"/>
                     <i className="fa fa-minus fa-1x zoom_out_icon" onClick={::this.zoom_out} id="zoom_out"/>
                     <i className="fa fa-dot-circle-o fa-1x geolocate_icon" onClick={::this.geolocate} id="geolocate"/>

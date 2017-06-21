@@ -17,7 +17,7 @@ module.exports = {
             res.json(store[table])
         } else {
             let query = `SELECT * FROM ${ table }`;
-            let fields = null
+            let fields = null;
             let aaa = `SELECT ARRAY_TO_STRING(ARRAY(SELECT COLUMN_NAME::VARCHAR(50)
 	                        FROM INFORMATION_SCHEMA.COLUMNS
 	                        WHERE TABLE_NAME='${ table }' AND

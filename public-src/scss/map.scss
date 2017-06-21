@@ -2,7 +2,10 @@
   position: relative;
 }
 
-#zoom_in, #zoom_out, #geolocate {
+#zoom_in,
+#zoom_out,
+#geolocate,
+.search_div {
   position: absolute;
 }
 
@@ -41,7 +44,10 @@
   font-size: 14px;
 }
 
-.zoom_in_icon, .zoom_out_icon, .geolocate_icon {
+.zoom_in_icon,
+.zoom_out_icon,
+.geolocate_icon,
+.search_icon {
   background: #4f5b62 none repeat scroll 0 0;
   color: white;
   height: 32px;
@@ -54,9 +60,27 @@
   cursor: pointer;
 }
 
-.zoom_in_icon:hover, .zoom_out_icon:hover, .geolocate_icon:hover {
+.zoom_in_icon:hover,
+.zoom_out_icon:hover,
+.geolocate_icon:hover,
+.search_icon:hover {
   opacity: 0.8;
   transition: all 0.2s ease 0s;
+}
+
+.search_div {
+  display: none;
+  bottom: 124px;
+  z-index: 101;
+
+  &.active {
+    display: block;
+  }
+
+}
+
+.search_icon {
+  border-radius: $radius;
 }
 
 .zoom_in_icon {

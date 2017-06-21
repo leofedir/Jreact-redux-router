@@ -3,16 +3,17 @@ import { checkStatus, parseJSON} from '../../checkJSON';
 import {
     TOGGLE_MENU,
     FULL_MAP,
-    FINISH_LOAD,
     GET_SUBMENU_SUCCESS,
     GET_SUBMENU_ERROR,
     SET_SUBMENU_ITEM,
     SET_RANGE_ITEMS,
     SET_RANGE_ITEM,
     SET_LEGEND_DATA,
-    START_LOAD,
     TOGGLE_SLIDER_PICKER,
-    TOGGLE_POPUP_FULLSIZE
+    TOGGLE_POPUP_FULLSIZE,
+    CHANGE_INPET_SEARCH,
+    SHOW_INPUT
+
 
 } from './constant';
 
@@ -103,5 +104,19 @@ export function toggle_Popup_Fullsize(fullsize) {
     return {
         type: TOGGLE_POPUP_FULLSIZE,
         payload: fullsize
+    }
+}
+
+export function changeInpeuSearch(val) {
+    return {
+        type: CHANGE_INPET_SEARCH,
+        payload: val
+    }
+}
+
+export function showInput(bool) {
+    return {
+        type: SHOW_INPUT,
+        payload: !bool
     }
 }
