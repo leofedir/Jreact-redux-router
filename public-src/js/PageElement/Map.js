@@ -8,7 +8,6 @@ import {checkStatus, parseJSON} from '../checkJSON';
 import L from 'leaflet';
 import esri from 'esri-leaflet/dist/esri-leaflet';
 import SubMenu from "./getSubMenu";
-import Search from "./Search";
 import getMap from './../getMapArea';
 
 export let Lmap = null;
@@ -365,7 +364,6 @@ class Map extends Component {
                 </div>
                 <div id="map_wrapper" className="map_wrapper">
                     <div id="loader" className={fetching ? "show" : ''}/>
-                    <Search />
                     <i className="fa fa-plus fa-1x zoom_in_icon" onClick={::this.zoom_in} id="zoom_in"/>
                     <i className="fa fa-minus fa-1x zoom_out_icon" onClick={::this.zoom_out} id="zoom_out"/>
                     <i className="fa fa-dot-circle-o fa-1x geolocate_icon" onClick={::this.geolocate} id="geolocate"/>
