@@ -19,6 +19,7 @@ let unsubscribe = null;
 let unsubscribeCurency = null;
 let randColor = {};
 let myCurency = '';
+let searchControl = null;
 
 export default function getMap(properties, rebuild = true, isRegion) {
     let layer = null;
@@ -61,8 +62,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 PropertiesLayer.push(key)
             }
         }
-        
-        store.dispatch(set_Range_items(PropertiesLayer.sort(), PropertiesLayer.length-1));
+
+        store.dispatch(set_Range_items(PropertiesLayer.sort(), PropertiesLayer.length - 1));
 
         Lmap.eachLayer(function (layer) {
             Lmap.removeLayer(layer)
@@ -79,7 +80,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
             filds = propertiesMain.__district[0].properties
         }
     }
-
 
 
     if (Lmap.hasLayer(choroplethLayer)) {
@@ -113,7 +113,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 style: myStyle
             });
             setTimeout(() => {
-               Lmap.addLayer(ato)
+                Lmap.addLayer(ato)
             }, 500)
 
         } else if (range_items[item] > 'year_13' && atoData === null) {
@@ -176,7 +176,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
     }
 
 
-
     randColor = rebuild ? getRandomColorLayer() : randColor;
 
     function renderLayer() {
@@ -225,13 +224,44 @@ export default function getMap(properties, rebuild = true, isRegion) {
         };
 
         choroplethLayer = L.choropleth(data, layerObject).addTo(Lmap);
-        
+
+        if (searchControl !== null) {
+            Lmap.removeControl(searchControl)
+        }
+
+
+        searchControl = new L.Control.Search({
+            propertyName: 'name_ua',
+            marker: false,
+            layer: choroplethLayer
+        });
+
+        searchControl.on('search:locationfound', function (e) {
+            const bounds = e.layer._bounds;
+            let item = e.layer;
+            let color = item.options.fillColor;
+            let newColor = LightenDarkenColor(color, +50);
+            item.setStyle({
+                fillColor: newColor,
+                weight: 3
+            });
+            item.bindTooltip(item.feature.properties.name_ua, {
+                direction: 'top',
+                sticky: true
+            }).openTooltip();
+            isRegion ? Lmap.fitBounds(bounds, {maxZoom: 6, padding: [10, 10]}) : Lmap.fitBounds(bounds, {
+                maxZoom: 8,
+                padding: [10, 10]
+            });
+        });
+        Lmap.addControl(searchControl);  //inizialize search control
+
         function onMouseout(e) {
             let item = e.target;
             handleUnhoverLegendItem()
             if (item !== layer) {
                 choroplethLayer.resetStyle(item);
-                
+
             }
         }
 
@@ -248,7 +278,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 sticky: true
             }).openTooltip()
         }
-        
+
         function handleUnhoverLegendItem() {
             let state = store.getState();
             const {legend_data} = state.main;
@@ -264,19 +294,19 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 });
             }
         }
-        
+
         function handleHoverLegendItem(curColor) {
             let state = store.getState();
             const c = curColor.options.fillColor;
             const {legend_data} = state.main;
-            if (legend_data !== null ) {
+            if (legend_data !== null) {
                 legend_data.refs.map((el, i) => {
                     if (Object.values(refsThis.refs)[i]) {
                         const elI = Object.values(refsThis.refs)[i].children[0]
                         const hexRef = rgbToHex(elI.style.backgroundColor)
                         const lighterRef = LightenDarkenColor(hexRef, +50)
-    
-    
+
+
                         if (c === hexRef || c === lighterRef) {
                             elI.style.marginLeft = '-3px';
                             elI.style.width = '42px';
@@ -285,7 +315,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
                             Object.values(refsThis.refs)[i].style.fontSize = '15px';
                         }
                     }
-                    
+
                 });
             }
         }
@@ -312,10 +342,10 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
             store.dispatch(clickOnFeature(e.target.feature.properties))
         }
+
         let legend_refs = [];
         for (let i = 0; i < choroplethLayer.options.limits.length; i++)
             legend_refs.push(`legend${i}`)
-        console.log('choroplethLayer.options.limits >>', choroplethLayer.options.limits)
         let legend_data = {
             limits: choroplethLayer.options.limits,
             colors: choroplethLayer.options.colors,

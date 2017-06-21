@@ -26,6 +26,7 @@
     "express": "^4.15.2",
     "highcharts": "^5.0.9",
     "leaflet": "^1.0.3",
+    "leaflet-search": "^2.7.2",
     "leaflet.locatecontrol": "^0.60.0",
     "leaflet.markercluster": "^1.0.3",
     "method-override": "latest",

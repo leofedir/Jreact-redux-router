@@ -15,7 +15,9 @@ import {
     GET_MAP_AREA_SUCCESS,
     SET_DATA_DISTRICT,
     TOGGLE_SLIDER_PICKER,
-    TOGGLE_POPUP_FULLSIZE
+    TOGGLE_POPUP_FULLSIZE,
+    CHANGE_INPET_SEARCH,
+    SHOW_INPUT
 
 } from '../actions/constant'
 
@@ -32,7 +34,9 @@ const initialState = {
     claster_layers: null,
     title_map: '',
     slider_range_picker: false,
-    popup_fullsize: false
+    popup_fullsize: false,
+    searchValue: '',
+    show_input: false
 };
 
 export default function main(state = initialState, action) {
@@ -84,6 +88,12 @@ export default function main(state = initialState, action) {
         
         case TOGGLE_POPUP_FULLSIZE:
             return {...state, popup_fullsize: action.payload};
+
+        case CHANGE_INPET_SEARCH:
+            return {...state, searchValue: action.payload};
+
+        case SHOW_INPUT:
+            return {...state, show_input: action.payload};
 
         default:
             return state;

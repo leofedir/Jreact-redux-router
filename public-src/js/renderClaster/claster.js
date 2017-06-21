@@ -8,6 +8,9 @@ import {clickOnFeatureClaster, set_chart_data} from '../REDUX/actions/get_map_ar
 // import {checkStatus, parseJSON} from '../checkJSON';
 
 import 'leaflet.markercluster/dist/leaflet.markercluster-src';
+import 'leaflet-search';
+
+import "leaflet-search/src/leaflet-search.css"
 
 // import getFields from './setFields';
 // import Cluster from 'esri-leaflet-cluster';
@@ -15,7 +18,10 @@ import 'leaflet.markercluster/dist/leaflet.markercluster-src';
 // import * as d3 from 'd3';
 // import React from 'react';
 // let currentSearcherControl = null;
-let layers = {};
+let layers = {},
+    groupLayer,
+    searchControl = null;
+
 
 export function removeClaster() {
 
@@ -26,13 +32,13 @@ export function layersTriger(id, status) {
 }
 
 function showLayer(id) {
-    Lmap.addLayer(layers[id]);
-    // addProvider(layers[id].options.url, id)
-    // updateSearchControl();
+    groupLayer.addLayer(layers[id]);
+
+
 }
 
 function hideLayer(id) {
-    Lmap.removeLayer(layers[id]);
+    groupLayer.removeLayer(layers[id]);
     // removeProvider(id)
     // updateSearchControl();
 }
@@ -57,6 +63,7 @@ export default function claster(data) {
     Lmap.setView([49, 31], 5);
     esri.basemapLayer('Topographic').addTo(Lmap);
 
+
     // choroplethLayer ? Lmap.removeLayer(choroplethLayer) : '';
 
     let icon = L.icon({
@@ -64,6 +71,8 @@ export default function claster(data) {
         iconSize: [25, 36],
         iconAnchor: [12, 33]
     });
+
+    groupLayer = L.layerGroup([]).addTo(Lmap);
 
     data.forEach(function (layer, i) {
         let grup = L.markerClusterGroup({chunkedLoading: true});
@@ -80,6 +89,27 @@ export default function claster(data) {
         grup.addLayer(m);
         grup.on('click', whenClicked);
         layers[i] = grup;
+    });
+
+    if (searchControl !== null) {
+        Lmap.removeControl(searchControl)
+    }
+
+    searchControl = L.control.search({
+        layer: groupLayer,
+        initial: false,
+        propertyName: 'nameua',
+        buildTip: function(text, val) {
+            var type = val.layer.feature.properties.amenity;
+            return '<a href="#" class="'+type+'">'+text+'<b>'+type+'</b></a>';
+        }
+    }).addTo(Lmap);
+
+    searchControl.on('search:locationfound', function (e) {
+        console.log('e >>', e)
+        let latlng = e.latlng
+        console.log('e >>', latlng)
+        Lmap.flyTo(latlng, 15)
     });
 
     function whenClicked(e) {
@@ -112,7 +142,7 @@ export default function claster(data) {
                         chart2 === null ? chart2 = {} : '';
                         chart2[serias] ? chart2[serias].push({year, value}) : chart2[serias] = [{year, value}];
                     }
-                    else if (name == 'chart3' || name =='kilkistuchniv') {
+                    else if (name == 'chart3' || name == 'kilkistuchniv') {
                         chart3 === null ? chart3 = {} : '';
                         chart3[serias] ? chart3[serias].push({year, value}) : chart3[serias] = [{year, value}];
                     }
