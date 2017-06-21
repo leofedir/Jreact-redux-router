@@ -1,7 +1,9 @@
 const L = require('leaflet');
 const chroma = require('chroma-js');
+import {set_isAllData} from './REDUX/actions/get_map_area';
+import {store} from './index';
 
-L.choropleth = module.exports = function (geojson, opts) {
+L.choropleth = function (geojson, opts) {
     opts = opts || {};
     // Save what the user passed as the style property for later use (since we're overriding it)
     let userStyle = opts.style;
@@ -47,6 +49,11 @@ L.choropleth = module.exports = function (geojson, opts) {
             }
         }
         
+        // let state = store.getState()
+        // let {isAllData} = state.map_reducer;
+        //
+        // store.dispatch(set_isAllData(!isAllData));
+        
         // Return this style, but include the user-defined style if it was passed
         switch (typeof userStyle) {
             case 'function':
@@ -57,6 +64,8 @@ L.choropleth = module.exports = function (geojson, opts) {
                 return style
         }
     };
-
+    
     return L.geoJson(geojson, opts)
 };
+
+export default L
