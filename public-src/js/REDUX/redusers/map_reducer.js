@@ -24,7 +24,8 @@ import {
     TOGGLE_CURENCY,
     TOGGLE_CHART_TO_STUDENT,
     BUBBLE_CHART_TOGGLE,
-    SET_CURENCY
+    SET_CURENCY,
+    SET_IS_ALL_DATA
 } from '../actions/constant'
 
 const initialState = {
@@ -50,7 +51,8 @@ const initialState = {
     dataChartUsd: false,
     for1Student: false,
     curencyIndexCurency: '0',
-    curency: null
+    curency: null,
+    isAllData: true
 };
 
 export default function map(state = initialState, action) {
@@ -147,7 +149,10 @@ export default function map(state = initialState, action) {
 
         case SET_CURENCY:
             return {...state, curencyIndexCurency: action.payload.index, curency: action.payload.val};
-
+        
+        case SET_IS_ALL_DATA:
+            return {...state, isAllData: action.payload};
+            
         default:
             return state;
     }

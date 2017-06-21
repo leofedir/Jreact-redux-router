@@ -7,21 +7,24 @@ import {menu} from './menu_src'
 
 class Menu extends Component {
 
-    onItemClick(e) {
+    onItemClick = (e) => {
         let title = e.currentTarget.title;
         let url = e.currentTarget.dataset.url;
         
+        console.log('onItemClick Menu Component');
+        const {get_submenu, toggle_Popup_Fullsize} = this.props.Actions;
+        get_submenu(url, title);
         
-        const {get_submenu,toggle_Popup_Fullsize} = this.props.Actions;
-        toggle_Popup_Fullsize(false)
-        get_submenu(url, title)
+        if (this.props.main.range_items) {
+            toggle_Popup_Fullsize(false);
+        }
     }
 
     getItem(items) {
         return items.map(item => {
             return (
                 <li className="menu__item" key={item.key}>
-                    <a title={item.name} href="#" onClick={::this.onItemClick} className="menu__link"
+                    <a title={item.name} href="#" onClick={this.onItemClick} className="menu__link"
                        data-url={item.url}>
                         <img className="menu__icon" src={'img/menu/' + item.icon}/>
                         <span className="menu__item-text">{item.name}</span>
