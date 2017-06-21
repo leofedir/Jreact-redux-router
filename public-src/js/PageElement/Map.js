@@ -26,6 +26,29 @@ let layer;
 let curentMap = null;
 let cadastral = null;
 
+//add two finger scroll
+
+L.WheelPanHandler = L.Handler.extend({
+    addHooks: function() {
+        L.DomEvent.on(map, 'wheel', this._wheelpan, this);
+    },
+
+    removeHooks: function() {
+        L.DomEvent.off(map, 'wheel', this._wheelpan, this);
+    },
+
+    _wheelpan: function(event) {
+        var panAmount = L.point(event.deltaX, event.deltaY);
+
+        // Normalize lines
+        if (event.deltaMode === 1) { panAmount = panAmount.multiplyBy(20); }
+        // Normalize pages
+        if (event.deltaMode === 2) { panAmount = panAmount.multiplyBy(60); }
+
+        this._map.panBy(panAmount);
+    }
+});
+
 function tmpl(dataObject) {
     let template = ``;
 
