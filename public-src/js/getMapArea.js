@@ -345,6 +345,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
         };
         
             store.dispatch(set_legend_data(legend_data));
+    }
 
     renderLayer();
     getAto(range_item);
