@@ -323,9 +323,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
             refs: legend_refs
         };
         
-        if (!state.main.legend_data) {
             store.dispatch(set_legend_data(legend_data));
-        }
+
     }
 
     renderLayer();
