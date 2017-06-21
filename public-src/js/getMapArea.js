@@ -22,6 +22,7 @@ let myCurency = '';
 
 export default function getMap(properties, rebuild = true, isRegion) {
     let layer = null;
+    let districtContainer = []
 
     if (unsubscribe !== null) {
         unsubscribe();
@@ -71,10 +72,14 @@ export default function getMap(properties, rebuild = true, isRegion) {
     } else {
         if (isRegion) {
             data = Object.values(propertiesMain.__region);
-            filds = propertiesMain.__region[0].properties
+            filds = propertiesMain.__region[0].properties;
+    
+            districtContainer = propertiesMain.__district;
         } else {
             data = Object.values(propertiesMain.__district);
-            filds = propertiesMain.__district[0].properties
+            filds = propertiesMain.__district[0].properties;
+    
+            districtContainer = propertiesMain.__district;
         }
     }
 
@@ -221,7 +226,13 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 layer.on(eventsMap)
             }
         };
-
+        
+        //check all data is correct
+        // let state = store.getState()
+        // let {isAllData} = state.map_reducer;
+        //
+        // store.dispatch(set_isAllData(!isAllData));
+        //
         choroplethLayer = L.choropleth(data, layerObject).addTo(Lmap);
         
         function onMouseout(e) {

@@ -16,8 +16,7 @@ class Info extends Component {
     
     render() {
         const {info, isAllData} = this.props.map_reducer;
-        // console.log(choroplethLayer);
-        // this.isAllData();
+
         return (
             <div className="info">
                 <div className="item_header">

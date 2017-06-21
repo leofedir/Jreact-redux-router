@@ -3,10 +3,8 @@ const chroma = require('chroma-js');
 import {set_isAllData} from './REDUX/actions/get_map_area';
 import {store} from './index';
 
-
 L.choropleth = function (geojson, opts) {
     opts = opts || {};
-    let isAllDataCorrect = true;
     // Save what the user passed as the style property for later use (since we're overriding it)
     let userStyle = opts.style;
 
@@ -40,7 +38,6 @@ L.choropleth = function (geojson, opts) {
         // Find the bucket/step/limit that this value is less than and give it that color
         for (let i = 0; i < limits.length; i++) {
             if (featureValue == limits[limits.length-1]) {
-                isAllDataCorrect = false
                 style.fillColor = '#cccccc';
                 break
             } else if (featureValue == limits[limits.length-2]){
@@ -52,10 +49,10 @@ L.choropleth = function (geojson, opts) {
             }
         }
         
-        let state = store.getState()
-        let {isAllData} = state.map_reducer;
-
-        store.dispatch(set_isAllData(!isAllData));
+        // let state = store.getState()
+        // let {isAllData} = state.map_reducer;
+        //
+        // store.dispatch(set_isAllData(!isAllData));
         
         // Return this style, but include the user-defined style if it was passed
         switch (typeof userStyle) {
