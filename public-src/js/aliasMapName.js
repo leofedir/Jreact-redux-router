@@ -151,5 +151,8 @@ export let alias = {
     area_promislovist_obsyahprod :' Обсяги реалізації промислової продукції',
     area_promislovist_kilkistpracivnykiv : 'Кількість працівників, зайнятих у промисловості',
     area_infrastructure_gkhvdtk:'Видатки місцевого бюджету на житлово-комунальне господарство',
-    area_ekonomika_kilkzaynyatyh: 'Зайняте населення'
+    area_ekonomika_kilkzaynyatyh: 'Зайняте населення',
+    area_ekonomika_indexspozhyvchyhtsin:'Індекс споживчих цін',
+    area_sotspol_vyddopomohakompensacii:'Видатки на виплату соціальних допомог та компенсацій',
+    area_sotspol_vydatkyinshe : 'Інші видатки на соціальний захист та соціальне забезпечення'
 }
