@@ -1,6 +1,6 @@
 import {checkStatus, parseJSON} from '../../checkJSON';
 import getMap from '../../getMapArea';
-import {layersTriger} from '../../renderClaster/claster'
+import {layersTriger, cleanClasterAll} from '../../renderClaster/claster'
 import claster from '../../renderClaster/claster'
 
 import {
@@ -256,12 +256,24 @@ export function toggleChartToStudent(state) {
 }
 
 export function check_all(state, check) {
-
-    let myCheck = check.map((item, i) => {
-        layersTriger(i, !state);
-        return !state
-    });
-    toggle_check(myCheck);
+    let myCheck;
+    if (state) {
+        cleanClasterAll();
+        myCheck = check.map(() => !state);
+        toggle_check(myCheck);
+    }
+    else {
+        myCheck = check.map((item, i) => {
+            if (item === !state) {
+                return !state
+            }
+            else {
+                layersTriger(i, !state);
+                return !state
+            }
+        });
+        toggle_check(myCheck);
+    }
 
     return (dispatch) => {
         dispatch({
@@ -274,6 +286,8 @@ export function check_all(state, check) {
         });
 
     }
+
+
 }
 
 export function setCurency(val) {
