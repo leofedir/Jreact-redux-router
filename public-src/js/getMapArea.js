@@ -25,7 +25,6 @@ export let searchControlArea = null;
 export default function getMap(properties, rebuild = true, isRegion) {
     let layer = null;
     let districtContainer = []
-    let regionContainer = []
 
     if (unsubscribe !== null) {
         unsubscribe();
@@ -51,9 +50,13 @@ export default function getMap(properties, rebuild = true, isRegion) {
         if (isRegion) {
             data = Object.values(propertiesMain.__region);
             filds = propertiesMain.__region[0].properties
+    
+            districtContainer = propertiesMain.__district;
         } else {
             data = Object.values(propertiesMain.__district);
             filds = propertiesMain.__district[0].properties
+    
+            districtContainer = propertiesMain.__district;
         }
 
 
@@ -82,13 +85,11 @@ export default function getMap(properties, rebuild = true, isRegion) {
             filds = propertiesMain.__region[0].properties;
 
             districtContainer = propertiesMain.__district;
-            regionContainer = propertiesMain.__region
         } else {
             data = Object.values(propertiesMain.__district);
             filds = propertiesMain.__district[0].properties;
 
             districtContainer = propertiesMain.__district;
-            regionContainer = propertiesMain.__region
         }
     }
 

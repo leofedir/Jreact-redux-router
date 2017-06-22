@@ -25,7 +25,7 @@ class Info extends PureComponent {
                 <div className="item_content">
                     <div className={isAllData ? "disabled" : "not-all-data"}>
                         <p>
-                            Дані можуть бути некоректні
+                            На цій карті дані обласного рівня можуть бути нерелевантними, через відсутність інформації щодо окремих районів. Для отримання релевантної інформації перейдіть на рівень районів
                         </p>
                     </div>
                     <div id="info"
