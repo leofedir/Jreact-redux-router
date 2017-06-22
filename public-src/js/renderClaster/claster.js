@@ -8,6 +8,8 @@ import {searchControlArea} from '../getMapArea'
 
 import 'leaflet.markercluster/dist/leaflet.markercluster-src';
 import 'leaflet-search';
+import 'leaflet-pulse-icon/dist/L.Icon.Pulse.css'
+import 'leaflet-pulse-icon/dist/L.Icon.Pulse'
 
 import "leaflet-search/src/leaflet-search.css"
 
@@ -74,6 +76,7 @@ export default function claster(data) {
         iconSize: [25, 36],
         iconAnchor: [12, 33]
     });
+    let pulsingIcon = L.icon.pulse({iconSize:[20,20],color:'red'});
 
     groupLayer = L.layerGroup([]).addTo(Lmap);
 
@@ -86,7 +89,9 @@ export default function claster(data) {
             },
             // Feature Layer Options
             pointToLayer: function (geojson, latlng) {
-                return L.marker(latlng, {icon: icon});
+                return L.marker(latlng, {
+                    icon: icon
+                });
             },
         });
         grup.addLayer(m);
@@ -102,17 +107,23 @@ export default function claster(data) {
         layer: groupLayer,
         initial: false,
         propertyName: 'nameua',
-        marker: L.circleMarker([0,0],{radius:20})
+        marker: L.marker([0, 0], {
+            icon: pulsingIcon
+        })
     }).addTo(Lmap);
 
     searchControlPoint.once('search:locationfound', function (e) {
         Lmap.flyTo(e.latlng, 13)
+        console.log('searchControlPoint >>', searchControlPoint)
+        setTimeout(() => {
+            searchControlPoint.options.marker.remove()
+        }, 10000)
+
     });
 
     function whenClicked(e) {
         let feature = e.layer.feature.properties;
         store.dispatch(clickOnFeatureClaster(feature));
-
         if (Object.keys(feature).some(item => item.indexOf('chart'))) {
             chartData(feature)
         }
