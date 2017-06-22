@@ -25,6 +25,7 @@ export let searchControlArea = null;
 export default function getMap(properties, rebuild = true, isRegion) {
     let layer = null;
     let districtContainer = []
+    let regionContainer = []
 
     if (unsubscribe !== null) {
         unsubscribe();
@@ -81,11 +82,13 @@ export default function getMap(properties, rebuild = true, isRegion) {
             filds = propertiesMain.__region[0].properties;
 
             districtContainer = propertiesMain.__district;
+            regionContainer = propertiesMain.__region
         } else {
             data = Object.values(propertiesMain.__district);
             filds = propertiesMain.__district[0].properties;
 
             districtContainer = propertiesMain.__district;
+            regionContainer = propertiesMain.__region
         }
     }
 
@@ -233,10 +236,14 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         //check all data is correct
         function isAllData() {
+            let dontSearchKoatuu = ['44', '14', '01', '85'];
+            
             for (let i of districtContainer) {
                 for (let j in i.properties) {
-                    if (j === range_items[range_item]) {
-                        if(i.properties[j] === null) return false
+                    if (range_items !== undefined &&
+                        j === range_items[range_item] &&
+                        !dontSearchKoatuu.includes(i.properties.koatuu.substring(0,2))) {
+                            if(i.properties[j] === null) return false
                     }
                 }
             }
