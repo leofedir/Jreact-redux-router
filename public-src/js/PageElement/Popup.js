@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import getFields from '../renderClaster/setFields';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -14,7 +14,7 @@ let curency = null;
 
 export let curentCurency = null;
 
-class Popup extends Component {
+class Popup extends PureComponent {
     setDataFromFeature() {
         const {curencyIndexCurency} = this.props.map_reducer;
         const {popup_fullsize} = this.props.main
@@ -44,32 +44,32 @@ class Popup extends Component {
         //     }
         // }
 
-        return popup_fullsize ? <div className="popup-bottom-wrapper">{popupInfo}</div>:
-                                <div className="popup-bottom-wrapper">{shortPopup}</div>
+        return popup_fullsize ? <div className="popup-bottom-wrapper">{popupInfo}</div> :
+            <div className="popup-bottom-wrapper">{shortPopup}</div>
     }
-    
+
     toggleFullSize = () => {
         const {toggle_Popup_Fullsize} = this.props.Actions;
         const {popup_fullsize} = this.props.main;
-        
+
         toggle_Popup_Fullsize(!popup_fullsize)
     }
-    
+
     buttonFullSize = () => {
         const {popup_fullsize} = this.props.main;
         // return popup_fullsize ? <i aria-hidden='true' className='fa fa-angle-up popup-toggle-button popup-down fa-2x'
         //                            onClick={this.toggleFullSize}/> :
         //                         <i aria-hidden='true' className='fa fa-angle-down popup-toggle-button popup-down fa-2x'
         //                            onClick={this.toggleFullSize}/>
-        
-            return (
-                <div className="arrow-container" onClick={this.toggleFullSize}>
-                    <button data-am-linearrow="tooltip tooltip-bottom" value="Show Utilities">
-                        <div className={popup_fullsize ? `line line-1 up-arrow-left` : `line line-1`}></div>
-                        <div className={popup_fullsize ? `line line-2 up-arrow-right` : `line line-2`}></div>
-                    </button>
-                </div>
-            )
+
+        return (
+            <div className="arrow-container" onClick={this.toggleFullSize}>
+                <button data-am-linearrow="tooltip tooltip-bottom" value="Show Utilities">
+                    <div className={popup_fullsize ? `line line-1 up-arrow-left` : `line line-1`}></div>
+                    <div className={popup_fullsize ? `line line-2 up-arrow-right` : `line line-2`}></div>
+                </button>
+            </div>
+        )
     }
 
     setCurentCurency(e) {
@@ -86,7 +86,7 @@ class Popup extends Component {
         return (
             <select className="curency_select" value={curencyIndexCurency} onChange={::this.setCurentCurency}>
                 {curency.map((item, i) => {
-                    return <option  className="" key={i} value={i}>
+                    return <option className="" key={i} value={i}>
                         {item.toUpperCase()}
                     </option>
                 })}
@@ -111,11 +111,10 @@ class Popup extends Component {
                 curency = null;
                 curentCurency = null;
             }
-    
-            let tempObj = {...feature}
-            
-            let objFeature =  Object.keys(tempObj).filter(item => item.indexOf('year_') >= 0)
-            console.log('objFeature >>', objFeature)
+
+            let tempObj = {...feature};
+
+            let objFeature = Object.keys(tempObj).filter(item => item.indexOf('year_') >= 0);
             return (
                 <div className="description">
                     <div className="item_header">
@@ -124,10 +123,12 @@ class Popup extends Component {
                     <div className="item_content">
                         <div className="popup_top">
                             <p>Код КОАТУУ <span>{feature.koatuu}</span></p>
-                            <p>Населення (01.01.2017р.) <span>{new Intl.NumberFormat().format(feature.population)} осіб</span></p>
+                            <p>Населення (01.01.2017р.) <span>{new Intl.NumberFormat().format(feature.population)}
+                                осіб</span></p>
                             <p>Площа території <span>{new Intl.NumberFormat().format(feature.area)} га</span></p>
                         </div>
-                        <div className={objFeature.length > 4 && popup_fullsize ? "popup_bottom popup_bottom-active" : "popup_bottom"}>
+                        <div
+                            className={objFeature.length > 4 && popup_fullsize ? "popup_bottom popup_bottom-active" : "popup_bottom"}>
                             <div className="popup_buttom-top">
                                 <div className="popup_buttom-title">
                                     <h4>{ alias }</h4>

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -29,7 +29,7 @@ let alias_series = {
     waternaodnogo: 'Видатки на водопостачання в розрахунку на одного учня'
 };
 
-class Chart extends Component {
+class Chart extends PureComponent {
 
     toggleChart() {
         this.props.MapActions.ChartToggle(this.props.map_reducer.chart_full);
@@ -41,7 +41,7 @@ class Chart extends Component {
         this.props.MapActions.toggleChartToStudent(!!status)
 
     }
-    
+
     Chart() {
         const {feature, alias, chart1, chart2, dataChartUsd, for1Student, curency} = this.props.map_reducer;
         const format = new Intl.NumberFormat().format;
@@ -208,13 +208,14 @@ class Chart extends Component {
         const {chart_full, dataChartUsd, feature, claster, curentMap, for1Student, chart2, bubble_chart_full, bar_chart_full} = this.props.map_reducer;
         const showToggleUsd = dataToChartUsd.length > 0;
         const chartStyle = (bubble_chart_full || bar_chart_full) ? `disabled` : ``;
-        
+
         return (
             <div className={chart_full ? `chart_1 barChart_full` : `chart_1 ${chartStyle}`}>
                 <div className="item_header">
                     <div className="map_heder_title" onClick={::this.onHeaderChartClick}>Тренд</div>
                     <div className="icon-container">
-                        <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover" onClick={ ::this.toggleChart }/>
+                        <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"
+                           onClick={ ::this.toggleChart }/>
                     </div>
                 </div>
                 <div className="item_content">

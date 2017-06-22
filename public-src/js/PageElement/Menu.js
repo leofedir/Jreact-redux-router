@@ -1,20 +1,20 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {get_submenu, toggleMenu, toggle_Popup_Fullsize} from '../REDUX/actions/actions';
 
 import {menu} from './menu_src'
 
-class Menu extends Component {
+class Menu extends PureComponent {
 
     onItemClick = (e) => {
         let title = e.currentTarget.title;
         let url = e.currentTarget.dataset.url;
-        
+
         console.log('onItemClick Menu Component');
         const {get_submenu, toggle_Popup_Fullsize} = this.props.Actions;
         get_submenu(url, title);
-        
+
         if (this.props.main.range_items) {
             toggle_Popup_Fullsize(false);
         }
@@ -37,9 +37,9 @@ class Menu extends Component {
     autoCloseMenu() {
         const {toggleMenu} = this.props.Actions;
         const {showMenu} = this.props.main;
-        
+
         function removePopups(e) {
-            if(!e.target.matches('.heder *') && showMenu) {
+            if (!e.target.matches('.heder *') && showMenu) {
                 toggleMenu(true);
                 window.removeEventListener('click', removePopups);
             }

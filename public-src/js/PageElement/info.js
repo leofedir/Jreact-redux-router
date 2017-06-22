@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {choroplethLayer} from '../getMapArea.js'
-class Info extends Component {
+class Info extends PureComponent {
     // isAllData() {
     //     if (choroplethLayer) {
     //         for( let elem of Object.values(choroplethLayer._layers)) {
@@ -13,7 +13,7 @@ class Info extends Component {
     //         }
     //     }
     // }
-    
+
     render() {
         const {info, isAllData} = this.props.map_reducer;
 
