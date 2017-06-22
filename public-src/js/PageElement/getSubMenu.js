@@ -16,7 +16,7 @@ class SubMenu extends Component {
         const {range_item, range_items} = this.props.main;
         const { getMapData, show_claster, set_data_bubble } = this.props.MapActions;
         const { set_submenu_item, toggle_Popup_Fullsize } = this.props.Actions;
-    
+        
         if (this.props.main.range_items) {
             toggle_Popup_Fullsize(false);
         }
@@ -42,6 +42,7 @@ class SubMenu extends Component {
             <select value={ this.props.main.submenu_item } className="test" onChange={::this.getMap}>
                 {Object.keys(this.props.main.fields).sort().map((item, i) => {
                     i === 0 ? itemMenu = item : '';
+                    if (!alias[item]) return // skip option if don't have ukrainian alias
                     return <option  className="menu__item" key={i} value={item}>
                         {alias[item] ? alias[item] : item}
                     </option>
