@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../REDUX/actions/actions';
@@ -29,21 +29,25 @@ let cadastral = null;
 //add two finger scroll
 
 L.WheelPanHandler = L.Handler.extend({
-    addHooks: function() {
+    addHooks: function () {
         L.DomEvent.on(map, 'wheel', this._wheelpan, this);
     },
 
-    removeHooks: function() {
+    removeHooks: function () {
         L.DomEvent.off(map, 'wheel', this._wheelpan, this);
     },
 
-    _wheelpan: function(event) {
+    _wheelpan: function (event) {
         var panAmount = L.point(event.deltaX, event.deltaY);
 
         // Normalize lines
-        if (event.deltaMode === 1) { panAmount = panAmount.multiplyBy(20); }
+        if (event.deltaMode === 1) {
+            panAmount = panAmount.multiplyBy(20);
+        }
         // Normalize pages
-        if (event.deltaMode === 2) { panAmount = panAmount.multiplyBy(60); }
+        if (event.deltaMode === 2) {
+            panAmount = panAmount.multiplyBy(60);
+        }
 
         this._map.panBy(panAmount);
     }
@@ -134,7 +138,7 @@ function parserHTMLtoObject(obj) {
     return dataObject
 }
 
-class Map extends Component {
+class Map extends PureComponent {
 
     componentDidMount() {
         this.createMap();

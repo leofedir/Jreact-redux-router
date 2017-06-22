@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 
-class MapTitle extends Component {
+class MapTitle extends PureComponent {
     render() {
         const {title_map} = this.props.main;
-        
+
         return (
             <h2 className="map_title">
                 {title_map}

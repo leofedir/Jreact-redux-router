@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent } from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../REDUX/actions/actions';
@@ -9,7 +9,7 @@ import {alias} from '../aliasMapName';
 
 export let refsThis;
 
-class Legend extends Component {
+class Legend extends PureComponent  {
     constructor() {
         super()
         

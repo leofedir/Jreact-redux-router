@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent  } from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {toggleMenu} from '../REDUX/actions/actions';
 
 
-class ButtonMenu extends Component {
+class ButtonMenu extends PureComponent  {
     onButtonMenuClick(e) {
         const {showMenu} = this.props.main;
         const {toggleMenu} = this.props.Actions;

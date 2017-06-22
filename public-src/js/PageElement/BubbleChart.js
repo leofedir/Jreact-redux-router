@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as MapActions from '../REDUX/actions/get_map_area';
@@ -8,7 +8,7 @@ require('highcharts/highcharts-more.js')(Highcharts);
 
 let Bchart = null;
 
-class BubbleChart extends Component {
+class BubbleChart extends PureComponent {
 
     toggleChart() {
         this.props.MapActions.BubbleChartToggle(this.props.map_reducer.bubble_chart_full);
@@ -24,9 +24,9 @@ class BubbleChart extends Component {
         if (data_bubble !== null) {
             const {range_item, range_items} = this.props.main;
             const year = '20' + range_items[range_item].slice(5)
-            
+
             Bchart = Highcharts.chart('bubble_chart', {
-               
+
                 chart: {
                     type: 'bubble',
                     plotBorderWidth: 1,
@@ -94,7 +94,7 @@ class BubbleChart extends Component {
     render() {
         const {bubble_chart_full, data_bubble, bar_chart_full, chart_full} = this.props.map_reducer;
         const chartStyle = (bar_chart_full || chart_full) ? `disabled` : ``;
-        
+
         if (data_bubble === null) {
             return null
         } else {
