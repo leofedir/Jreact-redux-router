@@ -107,7 +107,7 @@ export default function claster(data) {
         })
     }).addTo(Lmap);
 
-    searchControlPoint.once('search:locationfound', function (e) {
+    searchControlPoint.on('search:locationfound', function (e) {
         Lmap.flyTo(e.latlng, 13);
         console.log('searchControlPoint >>', searchControlPoint)
         setTimeout(() => {
