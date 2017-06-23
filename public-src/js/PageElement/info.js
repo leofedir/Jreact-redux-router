@@ -15,15 +15,17 @@ class Info extends PureComponent {
     // }
 
     render() {
-        const {info, isAllData} = this.props.map_reducer;
-
+        const {info, isAllData, claster} = this.props.map_reducer;
+        console.log('claster', claster)
+        console.log('isAllData', isAllData)
+        
         return (
             <div className="info">
                 <div className="item_header">
                     <div className="map_heder_title">Довідка</div>
                 </div>
                 <div className="item_content">
-                    <div className={isAllData ? "disabled" : "not-all-data"}>
+                    <div className={isAllData || claster ? "disabled" : "not-all-data"}>
                         <p>
                             На цій карті дані обласного рівня можуть бути нерелевантними, через відсутність інформації щодо окремих районів. Для отримання релевантної інформації перейдіть на рівень районів
                         </p>
