@@ -10,6 +10,8 @@ import {coordinate} from './PageElement/Map'
 import {LightenDarkenColor, rgbToHex} from './utils/colors'
 import {refsThis} from './PageElement/Legend'
 import {searchControlPoint} from './renderClaster/claster'
+import '../lib/search';
+import "leaflet-search/src/leaflet-search.css"
 
 export let choroplethLayer = null;
 export let ato = null;
@@ -292,6 +294,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             layer: choroplethLayer
         });
 
+
         searchControlArea.on('search:locationfound', function (e) {
             const bounds = e.layer._bounds;
             if (searchItem !== null) {
@@ -321,6 +324,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
             }, 2000)
         });
         Lmap.addControl(searchControlArea);  //inizialize search control
+
+        // searchControlPoint.__proto__._handleAutoresize = () => {}; //need to fix resize bug
 
         function onMouseout(e) {
             let item = e.target;
