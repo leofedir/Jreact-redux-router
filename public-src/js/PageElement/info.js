@@ -16,8 +16,6 @@ class Info extends PureComponent {
 
     render() {
         const {info, isAllData, claster} = this.props.map_reducer;
-        console.log('claster', claster)
-        console.log('isAllData', isAllData)
         
         return (
             <div className="info">
