@@ -11,9 +11,9 @@ import configureStore from './REDUX/store/configureStore';
 import "../lib/font-awesome/scss/font-awesome.scss";
 import '../scss/index.scss'
 
-export const store = configureStore()
+export const store = configureStore();
 
-const rootEl = document.getElementById('root')
+const rootEl = document.getElementById('root');
 const render = (Component) => {
     ReactDOM.render(
         <AppContainer>
