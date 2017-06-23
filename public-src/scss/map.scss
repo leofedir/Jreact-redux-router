@@ -166,7 +166,7 @@
 
 
 .leaflet-control-search input.search-input {
-  display: block !important;
+  //display: block !important;
   width: 60px;
   border: none;
   margin: 0 0 0 2px;
@@ -201,9 +201,9 @@
 .leaflet-control-search .search-button {
 opacity: 0.35;
 }
-.leaflet-control-search .search-cancel {
-  display: none!important;
-}
+//.leaflet-control-search .search-cancel {
+//  display: none!important;
+//}
 input {
   outline: -webkit-focus-ring-color auto 0px !important;
   padding: 0 5px;

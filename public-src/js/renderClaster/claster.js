@@ -101,7 +101,7 @@ export default function claster(data) {
         initial: false,
         propertyName: 'nameua',
         position: 'topright',
-        textPlaceholder: 'Знайти',
+        textPlaceholder: 'Пошук',
         marker: L.marker([0, 0], {
             icon: pulsingIcon
         })

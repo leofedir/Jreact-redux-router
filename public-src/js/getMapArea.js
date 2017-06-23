@@ -287,6 +287,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             propertyName: 'name_ua',
             marker: false,
             position: 'topright',
+            textPlaceholder: 'Пошук',
             layer: choroplethLayer
         });
 
