@@ -171,7 +171,7 @@ class Map extends PureComponent {
     componentDidUpdate() {
         const {claster} = this.props.map_reducer;
 
-        !claster ? setTimeout(() => Lmap.invalidateSize(), 200) : ''
+        !claster ? setTimeout(() => Lmap.invalidateSize(), 300) : ''
     }
 
     zoom_in() {

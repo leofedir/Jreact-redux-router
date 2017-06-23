@@ -107,8 +107,10 @@ export default function claster(data) {
         })
     }).addTo(Lmap);
 
+    searchControlPoint.__proto__._handleAutoresize = () => {}; //need to fix resize bug
+
     searchControlPoint.on('search:locationfound', function (e) {
-        Lmap.flyTo(e.latlng, 13);
+        Lmap.flyTo(e.latlng, 14);
         console.log('searchControlPoint >>', searchControlPoint)
         setTimeout(() => {
             searchControlPoint.options.marker.remove()
