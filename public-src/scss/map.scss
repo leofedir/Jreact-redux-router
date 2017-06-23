@@ -85,12 +85,12 @@
 
 .zoom_in_icon {
   border-radius: $radius $radius 0 0;
-  bottom: 84px;
+  bottom: 118px;
 }
 
 .zoom_out_icon {
   border-radius: 0 0 $radius $radius;
-  bottom: 52px;
+  bottom: 86px;
 }
 
 .geolocate_icon {
@@ -161,5 +161,79 @@
   line-height: 32px;
   padding: 0 5px;
   position: absolute;
-  z-index: 400;
+  z-index: 310;
 }
+
+
+.leaflet-control-search input.search-input {
+  display: block !important;
+  width: 60px;
+  border: none;
+  margin: 0 0 0 2px;
+  padding: 0px 5px;
+  height: 26px;
+  transition: 0.3s;
+}
+.leaflet-control-search input.search-input:focus {
+  width: 300px;
+}
+
+.leaflet-container .leaflet-control-search {
+  border: 1px solid #777777;
+  box-shadow: none!important;
+}
+
+.leaflet-control-search.leaflet-control {
+  top:5px;
+  right: 5px;
+  width: auto;
+}
+
+.leaflet-control-search input.search-input:focus .search-tooltip {
+  min-width: 302px !important;
+}
+
+.leaflet-top  .leaflet-control-search .search-tooltip {
+  min-width: 201px!important;
+  max-width: 338px!important;
+  right: 0;
+}
+.leaflet-control-search .search-button {
+opacity: 0.35;
+}
+.leaflet-control-search .search-cancel {
+  display: none!important;
+}
+input {
+  outline: -webkit-focus-ring-color auto 0px !important;
+  padding: 0 5px;
+}
+//
+//#map .leaflet-control-search.leaflet-control {
+//  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+//  bottom: 38px;
+//  color: white;
+//  right: 0;
+//  box-shadow: none;
+//}
+//#map .leaflet-control-search.leaflet-control .search-button {
+//  background: #4f5b62 none repeat scroll 0 0;
+//  border-radius: 4px;
+//  font-size: 20px;
+//  height: 32px;
+//  text-align: center;
+//  text-decoration: none;
+//  transition: all 0.2s ease 0s;
+//  width: 32px;
+//}
+//
+//#map .leaflet-control-search.leaflet-control .search-button:hover {
+//    opacity: 0.8;
+//    transition: all 0.2s ease 0s;
+//    background: #4f5b62 none repeat scroll 0 0;
+//}
+//#map .leaflet-control-search.leaflet-control .search-button::before {
+//  font-family: 'FontAwesome';
+//  content: "\f002";
+//  color: white;
+//}

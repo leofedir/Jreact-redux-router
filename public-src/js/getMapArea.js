@@ -267,6 +267,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
         searchControlArea = new L.Control.Search({
             propertyName: 'name_ua',
             marker: false,
+            position: 'topright',
             layer: choroplethLayer
         });
 

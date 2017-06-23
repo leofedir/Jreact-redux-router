@@ -399,6 +399,14 @@ body {
   font-size: 12px;
   cursor: pointer;
 }
+
+.curency_select * {
+  outline: none;
+  border: none;
+  background: white;
+  color: #747474;
+}
+
 .popup_buttom-top {
   align-items: center;
   display: flex;

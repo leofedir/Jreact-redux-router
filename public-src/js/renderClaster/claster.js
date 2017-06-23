@@ -20,12 +20,12 @@ import "leaflet-search/src/leaflet-search.css"
 // import React from 'react';
 // let currentSearcherControl = null;
 let layers = {},
-    myClaster,
-    createMarkers;
+    groupLayer;
 export let searchControlPoint = null;
 
-export function cleanClasterAll() {
-    myClaster.clearLayers()
+
+export function removeClaster() {
+
 }
 
 export function layersTriger(id, status) {
@@ -33,11 +33,15 @@ export function layersTriger(id, status) {
 }
 
 function showLayer(id) {
-    createMarkers(id);
+    groupLayer.addLayer(layers[id]);
+
+
 }
 
 function hideLayer(id) {
-    myClaster.removeLayer(layers[id]);
+    groupLayer.removeLayer(layers[id]);
+    // removeProvider(id)
+    // updatesearchControlPoint();
 }
 
 
@@ -49,6 +53,8 @@ export default function claster(data) {
             }
         }
     }
+
+
     layers = {};
 
     if (searchControlArea !== null) {
@@ -62,19 +68,21 @@ export default function claster(data) {
     Lmap.setView([49, 31], 5);
     esri.basemapLayer('Topographic').addTo(Lmap);
 
+
+    // choroplethLayer ? Lmap.removeLayer(choroplethLayer) : '';
+
     let icon = L.icon({
         iconUrl: '/img/marker-icon.svg',
         iconSize: [25, 36],
         iconAnchor: [12, 33]
     });
+    let pulsingIcon = L.icon.pulse({iconSize:[20,20],color:'red'});
 
-    let pulsingIcon = L.icon.pulse({iconSize: [20, 20], color: 'red'});
+    groupLayer = L.layerGroup([]).addTo(Lmap);
 
-    myClaster = L.markerClusterGroup({chunkedLoading: true}).addTo(Lmap);
-    myClaster.on('click', whenClicked);
-
-    createMarkers = function (id) {
-        let marker = L.geoJson(data[id][1], {
+    data.forEach(function (layer, i) {
+        let grup = L.markerClusterGroup({chunkedLoading: true});
+        let m = L.geoJson(layer[1], {
             // Cluster Options
             polygonOptions: {
                 color: "#2d84c8"
@@ -86,29 +94,32 @@ export default function claster(data) {
                 });
             },
         });
-        layers[id] = marker;
-        myClaster.addLayer(layers[id]);
-    };
+        grup.addLayer(m);
+        grup.on('click', whenClicked);
+        layers[i] = grup;
+    });
 
     if (searchControlPoint !== null) {
         Lmap.removeControl(searchControlPoint)
     }
 
     searchControlPoint = L.control.search({
-        layer: myClaster,
+        layer: groupLayer,
         initial: false,
         propertyName: 'nameua',
+        position: 'topright',
+        textPlaceholder: 'Знайти',
         marker: L.marker([0, 0], {
             icon: pulsingIcon
         })
     }).addTo(Lmap);
 
     searchControlPoint.once('search:locationfound', function (e) {
-        Lmap.flyTo(e.latlng, 13);
+        Lmap.flyTo(e.latlng, 13)
         console.log('searchControlPoint >>', searchControlPoint)
         setTimeout(() => {
             searchControlPoint.options.marker.remove()
-        }, 4000)
+        }, 10000)
 
     });
 
