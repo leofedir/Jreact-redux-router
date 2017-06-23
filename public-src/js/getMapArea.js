@@ -10,6 +10,8 @@ import {coordinate} from './PageElement/Map'
 import {LightenDarkenColor, rgbToHex} from './utils/colors'
 import {refsThis} from './PageElement/Legend'
 import {searchControlPoint} from './renderClaster/claster'
+import '../lib/search';
+import "leaflet-search/src/leaflet-search.css"
 
 export let choroplethLayer = null;
 export let ato = null;

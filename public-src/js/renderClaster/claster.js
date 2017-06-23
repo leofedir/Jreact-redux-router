@@ -7,10 +7,9 @@ import {clickOnFeatureClaster, set_chart_data} from '../REDUX/actions/get_map_ar
 import {searchControlArea} from '../getMapArea'
 
 import 'leaflet.markercluster/dist/leaflet.markercluster-src';
-import 'leaflet-search';
+import '../../lib/search';
 import 'leaflet-pulse-icon/dist/L.Icon.Pulse.css'
 import 'leaflet-pulse-icon/dist/L.Icon.Pulse'
-
 import "leaflet-search/src/leaflet-search.css"
 
 // import getFields from './setFields';
