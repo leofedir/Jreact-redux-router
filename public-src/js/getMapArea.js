@@ -24,6 +24,7 @@ export let searchControlArea = null;
 
 export default function getMap(properties, rebuild = true, isRegion) {
     let layer = null;
+    let searchItem = null;
     let districtContainer = []
 
     if (unsubscribe !== null) {
@@ -293,21 +294,31 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         searchControlArea.on('search:locationfound', function (e) {
             const bounds = e.layer._bounds;
-            let item = e.layer;
-            let color = item.options.fillColor;
+            if (searchItem !== null) {
+                choroplethLayer.resetStyle(searchItem);
+            }
+            searchItem = e.layer;
+            let color = searchItem.options.fillColor;
             let newColor = LightenDarkenColor(color, +50);
-            item.setStyle({
+            if (layer !== null) {
+                choroplethLayer.resetStyle(layer);
+            }
+
+            searchItem.setStyle({
                 fillColor: newColor,
                 weight: 3
             });
-            item.bindTooltip(item.feature.properties.name_ua, {
+            searchItem.bindTooltip(searchItem.feature.properties.name_ua, {
                 direction: 'top',
                 sticky: true
             }).openTooltip();
             isRegion ? Lmap.fitBounds(bounds, {maxZoom: 6, padding: [10, 10]}) : Lmap.fitBounds(bounds, {
                 maxZoom: 8,
                 padding: [10, 10]
-            });
+            })
+            setTimeout(() => {
+                searchItem.closeTooltip()
+            }, 2000)
         });
         Lmap.addControl(searchControlArea);  //inizialize search control
 
@@ -377,6 +388,10 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         function whenClicked(e) {
             const bounds = e.target.getBounds();
+
+            if (searchItem !== null) {
+                choroplethLayer.resetStyle(searchItem);
+            }
 
             if (layer === null) {
                 layer = e.target;
