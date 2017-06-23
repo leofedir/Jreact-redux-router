@@ -291,7 +291,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             textPlaceholder: 'Пошук',
             layer: choroplethLayer
         });
-        searchControlPoint.__proto__._handleAutoresize = () => {}; //need to fix resize bug
+
 
         searchControlArea.on('search:locationfound', function (e) {
             const bounds = e.layer._bounds;
@@ -322,6 +322,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
             }, 2000)
         });
         Lmap.addControl(searchControlArea);  //inizialize search control
+
+        // searchControlPoint.__proto__._handleAutoresize = () => {}; //need to fix resize bug
 
         function onMouseout(e) {
             let item = e.target;

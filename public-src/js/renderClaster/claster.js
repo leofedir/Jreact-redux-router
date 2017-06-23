@@ -107,7 +107,7 @@ export default function claster(data) {
         })
     }).addTo(Lmap);
 
-    searchControlPoint.__proto__._handleAutoresize = () => {}; //need to fix resize bug
+    // searchControlPoint.__proto__._handleAutoresize = () => {}; //need to fix resize bug
 
     searchControlPoint.on('search:locationfound', function (e) {
         Lmap.flyTo(e.latlng, 14);
