@@ -74,19 +74,21 @@ export default function claster(data) {
     myClaster.on('click', whenClicked);
 
     createMarkers = function (id) {
-        let marker = L.geoJson(data[id][1], {
-            // Cluster Options
-            polygonOptions: {
-                color: "#2d84c8"
-            },
-            // Feature Layer Options
-            pointToLayer: function (geojson, latlng) {
-                return L.marker(latlng, {
-                    icon: icon
-                });
-            },
-        });
-        layers[id] = marker;
+        if (!layers[id]) {
+            let marker = L.geoJson(data[id][1], {
+                // Cluster Options
+                polygonOptions: {
+                    color: "#2d84c8"
+                },
+                // Feature Layer Options
+                pointToLayer: function (geojson, latlng) {
+                    return L.marker(latlng, {
+                        icon: icon
+                    });
+                },
+            });
+            layers[id] = marker;
+        }
         myClaster.addLayer(layers[id]);
     };
 
