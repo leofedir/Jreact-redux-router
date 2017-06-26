@@ -659,11 +659,14 @@
         },
         
        removePopups: function (e) {
-            if (!e.target.matches('.search-input')) {
-                window.removeEventListener('onfocus', this.removePopups);
-                e.target.value = '';
-                this.collapse();
-            }
+            // let searchValue = document.getElementsByClassName('search-input')[0].innerHTML
+            // console.log('searchValue', searchValue)
+            // if (!e.target.matches('.search-input') && (searchValue !== '')) {
+            //     console.log('wjoox')
+            //     window.removeEventListener('onfocus', this.removePopups);
+            //     e.target.value = '';
+            //     this.collapse();
+            // }
        },
         
         _handleKeypress: function (e) {	//run _input keyup event
@@ -682,7 +685,10 @@
                     this._handleArrowSelect(-1);
                     break;
                 case 40://Down
-                    this._handleArrowSelect(1);
+                    if(this._tooltip.hasChildNodes()) {
+                        this._handleArrowSelect(1);
+                    }
+                    
                     break;
                 case  8://Backspace
                 case 45://Insert

@@ -322,12 +322,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             }, 2000)
         });
         Lmap.addControl(searchControlArea);  //inizialize search control
-    
-        searchControlArea.on('search:collapsed', function (e) {
-            setTimeout(() => {
-                console.log('close');
-            }, 2000)
-        })
+        
 
         // searchControlPoint.__proto__._handleAutoresize = () => {}; //need to fix resize bug
         
