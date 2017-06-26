@@ -285,7 +285,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
             Lmap.removeControl(searchControlArea)
         }
 
-
         searchControlArea = new L.Control.Search({
             propertyName: 'name_ua',
             marker: false,
@@ -293,8 +292,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             textPlaceholder: 'Пошук',
             layer: choroplethLayer
         });
-
-
+        
         searchControlArea.on('search:locationfound', function (e) {
             const bounds = e.layer._bounds;
             if (searchItem !== null) {
@@ -324,9 +322,15 @@ export default function getMap(properties, rebuild = true, isRegion) {
             }, 2000)
         });
         Lmap.addControl(searchControlArea);  //inizialize search control
+    
+        searchControlArea.on('search:collapsed', function (e) {
+            setTimeout(() => {
+                console.log('close');
+            }, 2000)
+        })
 
         // searchControlPoint.__proto__._handleAutoresize = () => {}; //need to fix resize bug
-
+        
         function onMouseout(e) {
             let item = e.target;
             handleUnhoverLegendItem()

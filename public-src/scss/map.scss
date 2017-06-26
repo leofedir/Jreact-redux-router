@@ -165,17 +165,17 @@
 }
 
 
-.leaflet-control-search input.search-input {
-  //display: block !important;
-  width: 60px;
+.leaflet-control-search > input.search-input {
+  display: block !important;
+  width: 300px;
   border: none;
   margin: 0 0 0 2px;
   padding: 0px 5px;
   height: 26px;
-  transition: 5s;
+  //transition: 1s;
 }
 .leaflet-control-search input.search-input:focus {
-  width: 300px;
+
 }
 
 .leaflet-container .leaflet-control-search {
@@ -189,9 +189,21 @@
   width: auto;
 }
 
+.leaflet-control-search input.search-input:focus + ul.search-tooltip .search-tip {
+  display: block;
+}
+
+//.leaflet-control-search ul.search-tooltip .search-tip {
+//  display: none;
+//}
+
 .leaflet-control-search input.search-input:focus .search-tooltip {
   min-width: 302px !important;
 }
+
+//.leaflet-control-search .search-tip {
+//  transition: 0s;
+//}
 
 .leaflet-top  .leaflet-control-search .search-tooltip {
   min-width: 201px!important;

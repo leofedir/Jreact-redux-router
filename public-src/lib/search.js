@@ -140,6 +140,7 @@
             this._countertips = 0;		//number of tips items
             this._recordsCache = {};	//key,value table! that store locations! format: key,latlng
             this._curReq = null;
+            window.addEventListener('click', this.removePopups.bind(this));
         },
 
         onAdd: function (map) {
@@ -262,7 +263,10 @@
                 if (this.options.hideMarkerOnCollapse) {
                     this._map.removeLayer(this._markerSearch);
                 }
-                this._map.off('dragstart click', this.collapse, this);
+                
+                if (this._map) {
+                    this._map.off('dragstart click', this.collapse, this);
+                }
             }
             this.fire('search:collapsed');
             return this;
@@ -466,7 +470,9 @@
                 this._hideTooltip();
 
             this._tooltip.scrollTop = 0;
-
+            
+            this.expand(true)//auto expand custom!!!
+            
             return this._countertips;
         },
 
@@ -651,7 +657,15 @@
                 this._input.selectionStart = this._input.selectionEnd;
             }
         },
-
+        
+       removePopups: function (e) {
+            if (!e.target.matches('.search-input')) {
+                window.removeEventListener('onfocus', this.removePopups);
+                e.target.value = '';
+                this.collapse();
+            }
+       },
+        
         _handleKeypress: function (e) {	//run _input keyup event
 
             switch(e.keyCode)
