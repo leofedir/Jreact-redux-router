@@ -11,6 +11,7 @@ import {LightenDarkenColor, rgbToHex} from './utils/colors'
 import {refsThis} from './PageElement/Legend'
 import {searchControlPoint} from './renderClaster/claster'
 import '../lib/search';
+import '../lib/leaflet.pattern'
 import "leaflet-search/src/leaflet-search.css"
 
 export let choroplethLayer = null;
@@ -38,12 +39,24 @@ export default function getMap(properties, rebuild = true, isRegion) {
         unsubscribeCurency();
         unsubscribeCurency = null
     }
+    
+    var stripes = new L.StripePattern({
+        'color': '#808080',
+        'weight': 2,
+        'spaceColor': '#c7c7c7',
+        'spaceOpacity': 1,
+        'spaceWeight': 10,
+        'angle': -45
+    });
+    stripes.addTo(Lmap);
+    
     let myStyle = {
         "color": "#A9A9A9",
         "weight": 2,
         "fillOpacity": 1,
         'className': 'ato'
     };
+    
     let filds;
     let PropertiesLayer = [];
 
@@ -103,7 +116,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
     let state = store.getState();
     let {range_item, range_items,} = state.main;
-
+    
     function fetchAto() {
         fetch('/ato', {
             method: 'post'
@@ -113,7 +126,12 @@ export default function getMap(properties, rebuild = true, isRegion) {
             .then(data => {
                 atoData = data[1];
                 ato = L.geoJSON(data[1], {
-                    style: myStyle
+                    style: {
+                        fillPattern: stripes,
+                        'color': '#A9A9A9',
+                        "fillOpacity": 1,
+                        'className': 'ato'
+                    }
                 });
                 Lmap.addLayer(ato)
             });
@@ -125,10 +143,16 @@ export default function getMap(properties, rebuild = true, isRegion) {
         if (range_items[item] > 'year_13' && atoData !== null) {
             ato ? ato.clearLayers() && Lmap.removeLayer(ato) : ''
             ato = L.geoJSON(atoData, {
-                style: myStyle
+                style: {
+                    fillPattern: stripes,
+                    'color': '#A9A9A9',
+                    "fillOpacity": 1,
+                    'className': 'ato'
+                }
             });
             setTimeout(() => {
                 Lmap.addLayer(ato)
+                
             }, 500)
 
         } else if (range_items[item] > 'year_13' && atoData === null) {
@@ -430,8 +454,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
             store.dispatch(set_legend_data(legend_data));
     }
-
+    
     renderLayer();
     getAto(range_item);
-
 }
