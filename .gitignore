@@ -4,6 +4,7 @@ public/
 *.log
 *.iml
 dist/*
+public-src/dist*
 config.js
 #testing functional
 doc/
