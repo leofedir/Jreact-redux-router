@@ -128,7 +128,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 ato = L.geoJSON(data[1], {
                     style: {
                         fillPattern: stripes,
-                        'color': '#A9A9A9',
+                        'color': '#808080',
                         "fillOpacity": 1,
                         'className': 'ato',
                         "weight": 1.5,
@@ -146,7 +146,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             ato = L.geoJSON(atoData, {
                 style: {
                     fillPattern: stripes,
-                    'color': '#A9A9A9',
+                    'color': '#808080',
                     "fillOpacity": 1,
                     'className': 'ato',
                     "weight": 1,
