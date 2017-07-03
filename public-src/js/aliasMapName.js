@@ -193,7 +193,7 @@ export let alias = {
     area_budgets_finenerhozber:'Фінансування енергозберігаючих заходів',
     area_budgets_vykonzahalnohoo:'Виконання видаткової частини загального фонду бюджету',
     area_budgets_vykonspetsialnoho:'Виконання видаткової частини спеціального фонду бюджету',
-    area_promislovist_kilkistmistsrynky:'Кількість торгових місць на ринках'
+    area_promislovist_kilkistmistsrynky:'Кількість торгових місць на ринках '
 
 
 
