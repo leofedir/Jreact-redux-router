@@ -3,8 +3,8 @@ node_modules/
 public/
 *.log
 *.iml
-
-
+dist/*
+config.js
 #testing functional
 doc/
 public-src/js/utils/parser.js
