@@ -118,6 +118,7 @@ export default function claster(data) {
     });
 
     function whenClicked(e) {
+
         let feature = e.layer.feature.properties;
         store.dispatch(clickOnFeatureClaster(feature));
         if (Object.keys(feature).some(item => item.indexOf('chart'))) {

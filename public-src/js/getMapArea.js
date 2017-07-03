@@ -156,20 +156,21 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 Lmap.addLayer(ato)
                 
             }, 500)
-            
+
             store.dispatch(isAtoLayer(true))
         } else if (range_items[item] > 'year_13' && atoData === null) {
             fetchAto()
             
             store.dispatch(isAtoLayer(true))
-        } else if (range_items[item] < 'year_13' && ato !== null) {
+        } else if (range_items[item] <= 'year_13' && ato !== null) {
+
+            store.dispatch(isAtoLayer(false))
             ato.clearLayers();
             setTimeout(() => {
                 Lmap.removeLayer(ato);
                 ato = null;
             }, 500);
-    
-            store.dispatch(isAtoLayer(false))
+
         }
     }
 

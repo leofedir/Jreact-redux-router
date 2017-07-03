@@ -127,7 +127,7 @@ export let alias = {
     area_culturee_vydknyhovydannya:'Видатки місцевого бюджету на книговидання',
     area_culturee_vydinshe:'Видатки місцевого бюджету на інші засоби масової інформації',
     area_culturee_vydfizra:'Видатки місцевого бюджету на фізичну культуру та спорт',
-    aptpunkt:'Аптечні пункти',
+    aptpunkt:'Аптечні заклади',
     point_ohorzdorov_aptpunkt_apteky:'Аптечні пункти',
     area_demography_koefnarodj: 'Коефіцієнт народжуваності',
     area_demography_koefsmertnosti:'Коефіцієнт смертності',
@@ -185,7 +185,17 @@ export let alias = {
     area_budgets_aktsyznyipodatok: "Акцизний податок з реалізації суб'єктами господарювання роздрібної торгівлі підакцизних товарів",
     area_budgets_edynyipodatok: 'Єдиний податок в доходах місцевих бюджетів',
     area_budgets_podatoknamaino: 'Податок на нерухоме майно в доходах місцевих бюджетів',
-    area_budgets_vydatkybudgetu: 'Загальна сума видатків бюджету'
+    area_budgets_vydatkybudgetu: 'Загальна сума видатків бюджету',
+    area_budgets_dohzahalnohofondu:'Доходи загального фонду місцевого бюджету',
+    area_budgets_dohspetsfond:'Доходи спеціального фонду бюджету',
+    area_budgets_vydjytlovokomunalni:'Видатки на житлово-комунальне господарство',
+    area_budgets_vydkombudivnytstva:'Видатки на капітальні вкладення, компенсації будівництва житла',
+    area_budgets_finenerhozber:'Фінансування енергозберігаючих заходів',
+    area_budgets_vykonzahalnohoo:'Виконання видаткової частини загального фонду бюджету',
+    area_budgets_vykonspetsialnoho:'Виконання видаткової частини спеціального фонду бюджету',
+    area_promislovist_kilkistmistsrynky:'Кількість торгових місць на ринках'
+
+
 
 
 

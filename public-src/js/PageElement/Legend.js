@@ -81,7 +81,7 @@ class Legend extends PureComponent  {
                     })}
                     {isAtoLayer ? <p className="ato-legend-data">
                         <i className="ato-legend-icon"/>
-                        Зона АТО
+                        Тимчасово окупована територія
                     </p> : ''}
                 </div>
             )
