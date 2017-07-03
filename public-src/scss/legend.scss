@@ -92,3 +92,14 @@
   .legend .item_content i {
     margin-right: 8px;
   }
+
+.ato-legend-icon {
+    color: white;
+    background: repeating-linear-gradient(
+                    -45deg,
+                    #c7c7c7,
+                    #c7c7c7 3px,
+                    #808080 3px,
+                    #808080 7px
+    );
+}

@@ -41,5 +41,5 @@ export const SET_CURENCY = 'SET_CURENCY';
 export const TOGGLE_POPUP_FULLSIZE = 'TOGGLE_POPUP_FULLSIZE';
 export const CHANGE_INPET_SEARCH = 'CHANGE_INPET_SEARCH';
 export const SHOW_INPUT = 'SHOW_INPUT';
-
+export const IS_ATO_LAYER = 'IS_ATO_LAYER';
 export const SET_IS_ALL_DATA = 'SET_IS_ALL_DATA';

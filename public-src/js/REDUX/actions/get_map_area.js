@@ -30,6 +30,7 @@ import {
     TOGGLE_CHART_TO_STUDENT,
     BUBBLE_CHART_TOGGLE,
     SET_CURENCY,
+    IS_ATO_LAYER,
     SET_IS_ALL_DATA
 } from './constant';
 
@@ -301,5 +302,12 @@ export function set_isAllData(isAllData) {
     return {
         type: SET_IS_ALL_DATA,
         payload: isAllData
+    }
+}
+
+export function isAtoLayer(isAto) {
+    return {
+        type: IS_ATO_LAYER,
+        payload: isAto
     }
 }

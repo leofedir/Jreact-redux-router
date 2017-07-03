@@ -55,7 +55,7 @@ class Legend extends PureComponent  {
     }
 
     createItem() {
-        const {check, clasterCount, checkAll, hoverColor, curency} = this.props.map_reducer;
+        const {check, clasterCount, checkAll, hoverColor, curency, isAtoLayer} = this.props.map_reducer;
         const {legend_data, claster_layers,} = this.props.main;
         const format = new Intl.NumberFormat().format;
         if (legend_data !== null) {
@@ -78,8 +78,11 @@ class Legend extends PureComponent  {
                                 </p>
                             )
                         }
-
                     })}
+                    {isAtoLayer ? <p className="ato-legend-data">
+                        <i className="ato-legend-icon"/>
+                        Зона АТО
+                    </p> : ''}
                 </div>
             )
         } else if (claster_layers !== null) {

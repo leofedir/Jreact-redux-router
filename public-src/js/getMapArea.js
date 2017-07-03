@@ -4,7 +4,7 @@ import esri from 'esri-leaflet/dist/esri-leaflet';
 import {checkStatus, parseJSON} from './checkJSON';
 
 import {set_Range_items, set_legend_data} from './REDUX/actions/actions'
-import {clickOnFeature, set_Hover_Color, set_isAllData} from './REDUX/actions/get_map_area'
+import {clickOnFeature, set_Hover_Color, set_isAllData, isAtoLayer} from './REDUX/actions/get_map_area'
 import {store} from './index';
 import {coordinate} from './PageElement/Map'
 import {LightenDarkenColor, rgbToHex} from './utils/colors'
@@ -42,21 +42,21 @@ export default function getMap(properties, rebuild = true, isRegion) {
     
     var stripes = new L.StripePattern({
         'color': '#808080',
-        'weight': 2,
+        'weight': 1.5,
         'spaceColor': '#c7c7c7',
         'spaceOpacity': 1,
-        'spaceWeight': 10,
+        'spaceWeight': 7,
         'angle': -45
     });
     stripes.addTo(Lmap);
     
-    let myStyle = {
-        "color": "#A9A9A9",
-        "weight": 2,
-        "fillOpacity": 1,
-        'className': 'ato'
-    };
-    
+    // let myStyle = {
+    //     "color": "#A9A9A9",
+    //     "weight": 2,
+    //     "fillOpacity": 1,
+    //     'className': 'ato'
+    // };
+    //
     let filds;
     let PropertiesLayer = [];
 
@@ -130,7 +130,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
                         fillPattern: stripes,
                         'color': '#A9A9A9',
                         "fillOpacity": 1,
-                        'className': 'ato'
+                        'className': 'ato',
+                        "weight": 1.5,
                     }
                 });
                 Lmap.addLayer(ato)
@@ -147,22 +148,28 @@ export default function getMap(properties, rebuild = true, isRegion) {
                     fillPattern: stripes,
                     'color': '#A9A9A9',
                     "fillOpacity": 1,
-                    'className': 'ato'
+                    'className': 'ato',
+                    "weight": 1,
                 }
             });
             setTimeout(() => {
                 Lmap.addLayer(ato)
                 
             }, 500)
-
+            
+            store.dispatch(isAtoLayer(true))
         } else if (range_items[item] > 'year_13' && atoData === null) {
             fetchAto()
+            
+            store.dispatch(isAtoLayer(true))
         } else if (range_items[item] < 'year_13' && ato !== null) {
             ato.clearLayers();
             setTimeout(() => {
                 Lmap.removeLayer(ato);
                 ato = null;
             }, 500);
+    
+            store.dispatch(isAtoLayer(false))
         }
     }
 

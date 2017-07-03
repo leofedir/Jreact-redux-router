@@ -25,6 +25,7 @@ import {
     TOGGLE_CHART_TO_STUDENT,
     BUBBLE_CHART_TOGGLE,
     SET_CURENCY,
+    IS_ATO_LAYER,
     SET_IS_ALL_DATA
 } from '../actions/constant'
 
@@ -52,7 +53,8 @@ const initialState = {
     for1Student: false,
     curencyIndexCurency: '0',
     curency: null,
-    isAllData: true
+    isAllData: true,
+    isAtoLayer: false
 };
 
 export default function map(state = initialState, action) {
@@ -150,6 +152,9 @@ export default function map(state = initialState, action) {
         case SET_CURENCY:
             return {...state, curencyIndexCurency: action.payload.index, curency: action.payload.val};
         
+        case IS_ATO_LAYER:
+            return {...state, isAtoLayer: action.payload}
+            
         case SET_IS_ALL_DATA:
             return {...state, isAllData: action.payload};
             
