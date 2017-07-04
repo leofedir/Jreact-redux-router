@@ -14,7 +14,7 @@ class ButtonMenu extends PureComponent  {
 
     render() {
         return (
-            <i className="fa fa-bars fa-1x menu_ico" onClick={::this.onButtonMenuClick} id="hide_menu"/>
+            <i className="fa fa-bars fa-1x menu_ico" onClick={::this.onButtonMenuClick } id="hide_menu"/>
         )
     }
 }
