@@ -10,4 +10,3 @@ config.js
 doc/
 public-src/js/utils/parser.js
 .esdoc.json
-package-lock.json
