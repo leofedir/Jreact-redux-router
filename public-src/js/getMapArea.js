@@ -173,8 +173,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         }
     }
-
-
+    
     function handleChange() {
         let nexItem = store.getState().main.range_item;
 
@@ -221,12 +220,29 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         return arrWithColor[randIndex]
     }
+    
+    function renderSelectedArea() {
+        let state = store.getState();
+        const {selectedArea} = state.map_reducer;
 
+        Object.values(choroplethLayer._layers).forEach(layer => {
+
+            if (layer.feature.id === selectedArea) {
+                let newColor = LightenDarkenColor(layer.options.fillColor, +50);
+    
+                layer.setStyle({
+                    fillColor: newColor,
+                    weight: 3
+                });
+            }
+        });
+    }
 
     randColor = rebuild ? getRandomColorLayer() : randColor;
 
     function renderLayer() {
         // store.dispatch(startLoad());
+        
         if (Lmap.hasLayer(choroplethLayer)) {
             Lmap.removeLayer(choroplethLayer)
         }
@@ -359,18 +375,20 @@ export default function getMap(properties, rebuild = true, isRegion) {
         // searchControlPoint.__proto__._handleAutoresize = () => {}; //need to fix resize bug
         
         function onMouseout(e) {
+            let state = store.getState()
             let item = e.target;
-            handleUnhoverLegendItem()
-            if (item !== layer) {
-                choroplethLayer.resetStyle(item);
 
+            handleUnhoverLegendItem()
+            if (item !== layer && item.feature.id !== state.map_reducer.selectedArea) {
+                choroplethLayer.resetStyle(item);
             }
         }
 
         function onMouseOver(e) {
+            let state = store.getState()
             let item = e.target;
             handleHoverLegendItem(item)
-            if (item == layer) return;
+            if (item == layer || item.feature.id == state.map_reducer.selectedArea) return;
 
             let color = item.options.fillColor
             let newColor = LightenDarkenColor(color, +50)
@@ -423,8 +441,21 @@ export default function getMap(properties, rebuild = true, isRegion) {
         }
 
         function whenClicked(e) {
-            const bounds = e.target.getBounds();
+            let state = store.getState();
+            const {selectedArea} = state.map_reducer;
+    
+            if (e.target.feature.id === selectedArea) {
+                return
+            }
 
+            Object.values(choroplethLayer._layers).forEach(layer => {
+        
+                if (layer.feature.id === selectedArea) {
+                    choroplethLayer.resetStyle(layer)
+                }
+            });
+            
+            const bounds = e.target.getBounds();
             if (searchItem !== null) {
                 choroplethLayer.resetStyle(searchItem);
             }
@@ -432,8 +463,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
             if (layer === null) {
                 layer = e.target;
             } else if (layer !== null && layer.feature.properties.name_ua != e.target.feature.properties.name_ua) {
-                handleUnhoverLegendItem()
                 choroplethLayer.resetStyle(layer);
+                handleUnhoverLegendItem();
                 layer = e.target;
             }
 
@@ -446,7 +477,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 padding: [10, 10]
             });
 
-            store.dispatch(clickOnFeature(e.target.feature.properties))
+            store.dispatch(clickOnFeature(e.target.feature.properties, e.target.feature.properties.id))
         }
 
         let legend_refs = [];
@@ -460,7 +491,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
             refs: legend_refs
         };
 
-            store.dispatch(set_legend_data(legend_data));
+        store.dispatch(set_legend_data(legend_data));
+        renderSelectedArea();
     }
     
     renderLayer();

@@ -171,7 +171,7 @@ class Map extends PureComponent {
     componentDidUpdate() {
         const {claster} = this.props.map_reducer;
 
-        !claster ? setTimeout(() => Lmap.invalidateSize(), 300) : ''
+        setTimeout(() => Lmap.invalidateSize(), 300)/* claster ? setTimeout(() => Lmap.invalidateSize(), 300) : '' */
     }
 
     zoom_in() {
@@ -192,7 +192,7 @@ class Map extends PureComponent {
 
     createMap() {
         const {set_data_district} = this.props.MapActions;
-        Lmap = L.map('map', {zoomControl: false}).setView([49, 31], 6);
+        Lmap = L.map('map', {zoomControl: false, minZoom: 3}).setView([49, 31], 6);
         layer = esri.basemapLayer('Topographic');
         Lmap.addLayer(layer);
 
@@ -354,7 +354,6 @@ class Map extends PureComponent {
     }
 
     changeBasemap(e) {
-
         Lmap.listens('click') ? Lmap.off('click', this.onMouseClick) : '';
 
         let map = e.target.value;

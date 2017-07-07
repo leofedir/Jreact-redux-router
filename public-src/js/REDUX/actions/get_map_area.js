@@ -107,10 +107,13 @@ export function getMapData(tableData = null, arr = null, url, rebuild = true, al
     }
 }
 
-export function clickOnFeature(feature) {
+export function clickOnFeature(feature, selectedArea) {
     return {
         type: CLICK_ON_FEATURE,
-        payload: feature
+        payload: {
+            feature: feature,
+            selectedArea: selectedArea
+        }
     }
 }
 

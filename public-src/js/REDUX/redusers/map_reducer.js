@@ -26,7 +26,7 @@ import {
     BUBBLE_CHART_TOGGLE,
     SET_CURENCY,
     IS_ATO_LAYER,
-    SET_IS_ALL_DATA
+    SET_IS_ALL_DATA,
 } from '../actions/constant'
 
 const initialState = {
@@ -54,7 +54,8 @@ const initialState = {
     curencyIndexCurency: '0',
     curency: null,
     isAllData: true,
-    isAtoLayer: false
+    isAtoLayer: false,
+    selectedArea: null
 };
 
 export default function map(state = initialState, action) {
@@ -82,7 +83,7 @@ export default function map(state = initialState, action) {
             return {...state, bubble_chart_full: action.payload};
 
         case CLICK_ON_FEATURE:
-            return {...state, feature: action.payload};
+            return {...state, feature: action.payload.feature, selectedArea: action.payload.selectedArea};
 
         case CLICK_ON_FEATURE_CLASTER:
             return {...state, feature_claster: action.payload};
@@ -118,7 +119,8 @@ export default function map(state = initialState, action) {
                 feature_claster: null,
                 data_bubble: null,
                 curency: '',
-                curencyIndexCurency: '0'
+                curencyIndexCurency: '0',
+                selectedArea: null
             };
 
         case SET_CLASTER_CHART_DATA:

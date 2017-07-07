@@ -73,6 +73,7 @@ class Popup extends PureComponent {
     }
 
     setCurentCurency(e) {
+        console.log('setCurentCurency')
         const {setCurency} = this.props.MapActions;
         let obj = {
             index: e.target.value,
@@ -83,6 +84,7 @@ class Popup extends PureComponent {
 
     getCyrencyItems() {
         const {curencyIndexCurency} = this.props.map_reducer;
+        console.log('curency select ->')
         return (
             <select className="curency_select" value={curencyIndexCurency} onChange={::this.setCurentCurency}>
                 {curency.map((item, i) => {
