@@ -21,6 +21,8 @@
   height: calc(100% - #{$block-heder-height});
   z-index: 100;
   box-shadow: $shadow;
+
+  background: #ffffff url("/img/logo_gray.png") repeat scroll 0 0 / 270px 60px
 }
 
 #basemaps-wrapper {
