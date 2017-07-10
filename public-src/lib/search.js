@@ -71,7 +71,7 @@
 //	in this way every record can have a free structure of attributes, only 'loc' is required
 
     L.Control.Search = L.Control.extend({
-        includes: L.Mixin.Events,
+        includes: L.Evented.prototype,
         //
         //	Name					Data passed			   Description
         //
@@ -897,7 +897,7 @@
 
     L.Control.Search.Marker = L.Marker.extend({
 
-        includes: L.Mixin.Events,
+        includes: L.Evented.prototype,
 
         options: {
             icon: new L.Icon.Default(),

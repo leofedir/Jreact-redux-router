@@ -109,16 +109,15 @@ export default function claster(data) {
     // searchControlPoint.__proto__._handleAutoresize = () => {}; //need to fix resize bug
 
     searchControlPoint.on('search:locationfound', function (e) {
+        whenClicked(e) // call click action
         Lmap.flyTo(e.latlng, 14);
-        console.log('searchControlPoint >>', searchControlPoint)
         setTimeout(() => {
             searchControlPoint.options.marker.remove()
         }, 4000)
-
     });
+    
 
     function whenClicked(e) {
-
         let feature = e.layer.feature.properties;
         store.dispatch(clickOnFeatureClaster(feature));
         if (Object.keys(feature).some(item => item.indexOf('chart'))) {

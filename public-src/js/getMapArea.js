@@ -39,7 +39,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
         unsubscribeCurency();
         unsubscribeCurency = null
     }
-    
+
     var stripes = new L.StripePattern({
         'color': '#808080',
         'weight': 1.5,
@@ -49,14 +49,14 @@ export default function getMap(properties, rebuild = true, isRegion) {
         'angle': -45
     });
     stripes.addTo(Lmap);
-    
+
     // let myStyle = {
     //     "color": "#A9A9A9",
     //     "weight": 2,
     //     "fillOpacity": 1,
     //     'className': 'ato'
     // };
-    //
+
     let filds;
     let PropertiesLayer = [];
 
@@ -66,12 +66,12 @@ export default function getMap(properties, rebuild = true, isRegion) {
         if (isRegion) {
             data = Object.values(propertiesMain.__region);
             filds = propertiesMain.__region[0].properties
-    
+
             districtContainer = propertiesMain.__district;
         } else {
             data = Object.values(propertiesMain.__district);
             filds = propertiesMain.__district[0].properties
-    
+
             districtContainer = propertiesMain.__district;
         }
 
@@ -116,7 +116,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
     let state = store.getState();
     let {range_item, range_items,} = state.main;
-    
+
     function fetchAto() {
         fetch('/ato', {
             method: 'post'
@@ -125,7 +125,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             .then(parseJSON)
             .then(data => {
                 atoData = data[1];
-                ato = L.geoJSON(data[1], {
+                ato = L.geoJSON(atoData, {
                     style: {
                         fillPattern: stripes,
                         'color': '#808080',
@@ -149,18 +149,17 @@ export default function getMap(properties, rebuild = true, isRegion) {
                     'color': '#808080',
                     "fillOpacity": 1,
                     'className': 'ato',
-                    "weight": 1,
+                    "weight": 1.5,
                 }
             });
             setTimeout(() => {
                 Lmap.addLayer(ato)
-                
-            }, 500)
+            }, 500);
 
             store.dispatch(isAtoLayer(true))
         } else if (range_items[item] > 'year_13' && atoData === null) {
             fetchAto()
-            
+
             store.dispatch(isAtoLayer(true))
         } else if (range_items[item] <= 'year_13' && ato !== null) {
 
@@ -173,7 +172,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         }
     }
-    
+
     function handleChange() {
         let nexItem = store.getState().main.range_item;
 
@@ -220,7 +219,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         return arrWithColor[randIndex]
     }
-    
+
     function renderSelectedArea() {
         let state = store.getState();
         const {selectedArea} = state.map_reducer;
@@ -229,7 +228,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
             if (layer.feature.id === selectedArea) {
                 let newColor = LightenDarkenColor(layer.options.fillColor, +50);
-    
+
                 layer.setStyle({
                     fillColor: newColor,
                     weight: 3
@@ -242,7 +241,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
     function renderLayer() {
         // store.dispatch(startLoad());
-        
+
         if (Lmap.hasLayer(choroplethLayer)) {
             Lmap.removeLayer(choroplethLayer)
         }
@@ -326,8 +325,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
         //     return true
         // }
         // store.dispatch(set_isAllData(isAllData()));
-        
-        choroplethLayer = L.choropleth(data, layerObject).addTo(Lmap);
+
+        choroplethLayer = L.choropleth(data, layerObject);
 
         if (searchControlArea !== null) {
             Lmap.removeControl(searchControlArea)
@@ -340,12 +339,13 @@ export default function getMap(properties, rebuild = true, isRegion) {
             textPlaceholder: 'Пошук',
             layer: choroplethLayer
         });
-        
+
         searchControlArea.on('search:locationfound', function (e) {
             const bounds = e.layer._bounds;
             if (searchItem !== null) {
                 choroplethLayer.resetStyle(searchItem);
             }
+            store.dispatch(clickOnFeature(e.layer.feature.properties, e.layer.feature.properties.id)) // call click action
             searchItem = e.layer;
             let color = searchItem.options.fillColor;
             let newColor = LightenDarkenColor(color, +50);
@@ -364,16 +364,13 @@ export default function getMap(properties, rebuild = true, isRegion) {
             isRegion ? Lmap.fitBounds(bounds, {maxZoom: 6, padding: [10, 10]}) : Lmap.fitBounds(bounds, {
                 maxZoom: 8,
                 padding: [10, 10]
-            })
+            });
             setTimeout(() => {
                 searchItem.closeTooltip()
             }, 2000)
         });
         Lmap.addControl(searchControlArea);  //inizialize search control
-        
 
-        // searchControlPoint.__proto__._handleAutoresize = () => {}; //need to fix resize bug
-        
         function onMouseout(e) {
             let state = store.getState()
             let item = e.target;
@@ -385,14 +382,14 @@ export default function getMap(properties, rebuild = true, isRegion) {
         }
 
         function onMouseOver(e) {
-            let state = store.getState()
+            let state = store.getState();
             let item = e.target;
-            handleHoverLegendItem(item)
+            handleHoverLegendItem(item);
             if (item == layer || item.feature.id == state.map_reducer.selectedArea) return;
 
-            let color = item.options.fillColor
-            let newColor = LightenDarkenColor(color, +50)
-            item.setStyle({fillColor: newColor})
+            let color = item.options.fillColor;
+            let newColor = LightenDarkenColor(color, +50);
+            item.setStyle({fillColor: newColor});
             item.bindTooltip(item.feature.properties.name_ua, {
                 direction: 'top',
                 sticky: true
@@ -422,9 +419,9 @@ export default function getMap(properties, rebuild = true, isRegion) {
             if (legend_data !== null) {
                 legend_data.refs.map((el, i) => {
                     if (Object.values(refsThis.refs)[i]) {
-                        const elI = Object.values(refsThis.refs)[i].children[0]
-                        const hexRef = rgbToHex(elI.style.backgroundColor)
-                        const lighterRef = LightenDarkenColor(hexRef, +50)
+                        const elI = Object.values(refsThis.refs)[i].children[0];
+                        const hexRef = rgbToHex(elI.style.backgroundColor);
+                        const lighterRef = LightenDarkenColor(hexRef, +50);
 
 
                         if (c === hexRef || c === lighterRef) {
@@ -441,20 +438,21 @@ export default function getMap(properties, rebuild = true, isRegion) {
         }
 
         function whenClicked(e) {
+            // console.log(e);
             let state = store.getState();
             const {selectedArea} = state.map_reducer;
-    
+
             if (e.target.feature.id === selectedArea) {
                 return
             }
 
             Object.values(choroplethLayer._layers).forEach(layer => {
-        
+
                 if (layer.feature.id === selectedArea) {
                     choroplethLayer.resetStyle(layer)
                 }
             });
-            
+
             const bounds = e.target.getBounds();
             if (searchItem !== null) {
                 choroplethLayer.resetStyle(searchItem);
@@ -490,11 +488,12 @@ export default function getMap(properties, rebuild = true, isRegion) {
             parametr: filds.parameter,
             refs: legend_refs
         };
-
+        Lmap.addLayer(choroplethLayer);
         store.dispatch(set_legend_data(legend_data));
         renderSelectedArea();
+        Lmap.invalidateSize();
     }
-    
+
     renderLayer();
     getAto(range_item);
 }

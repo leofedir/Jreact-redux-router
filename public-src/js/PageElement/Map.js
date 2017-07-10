@@ -170,8 +170,10 @@ class Map extends PureComponent {
 
     componentDidUpdate() {
         const {claster} = this.props.map_reducer;
+        // Lmap.invalidateSize(false)
 
-        setTimeout(() => Lmap.invalidateSize(), 300)/* claster ? setTimeout(() => Lmap.invalidateSize(), 300) : '' */
+        // setTimeout(() => Lmap.invalidateSize(), 500)
+        // claster ? setTimeout(() => Lmap.invalidateSize(), 300) : ''
     }
 
     zoom_in() {
@@ -184,10 +186,6 @@ class Map extends PureComponent {
 
     geolocate() {
         Lmap.setView([49, 31], 5)
-    }
-
-    search() {
-        console.log('search')
     }
 
     createMap() {
@@ -292,7 +290,7 @@ class Map extends PureComponent {
     onMouseClick(e) {
         let coord = e.latlng
         let zoom = Lmap.getZoom();
-        let nyCoordinat = kadastr.options.crs.project(coord)
+        let nyCoordinat = kadastr.options.crs.project(coord);
 
         const query = `x=${  nyCoordinat.y }&y=${ nyCoordinat.x }&zoom=${ zoom }&actLayers%5B%5D=kadastr`;
 
