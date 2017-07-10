@@ -27,6 +27,7 @@ const initialState = {
     mapFull: true,
     fetching: true,
     submenu_item: '',
+    item_name: '',
     range_items: '',
     range_item: 0,
     show_range: false,
@@ -54,7 +55,7 @@ export default function main(state = initialState, action) {
             return {...state,  claster_layers: null, title_map: action.payload};
 
         case SET_RANGE_ITEMS:
-            return {...state, range_items: action.payload.items, range_item: action.payload.item, show_range: true};
+            return {...state, item_name: action.payload.item_name, range_items: action.payload.items, range_item: action.payload.item, show_range: true};
 
         case SET_RANGE_ITEM:
             return {...state, range_item: action.payload, fetching: true};

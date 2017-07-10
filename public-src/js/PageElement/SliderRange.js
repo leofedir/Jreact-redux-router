@@ -4,17 +4,13 @@ import {connect} from 'react-redux';
 import {set_Range_item, toggle_Slider_Picker} from '../REDUX/actions/actions';
 
 class SliderRange extends PureComponent {
-    toYear = (str) => {
-        if (str) return '20' + str.substring(5)
-    }
 
     changeItem(type) {
-        const {range_items, range_item} = this.props.main;
+        const {range_items, range_item, item_name} = this.props.main;
         const {set_Range_item} = this.props.Actions;
         let nextItem;
 
-        let newRange = [...range_items];
-        newRange = newRange.map(el => this.toYear(el));
+        let newRange = [...item_name];
         newRange.sort();
 
         if (typeof(type) === 'number' && type !== range_item) {
@@ -71,22 +67,22 @@ class SliderRange extends PureComponent {
     };
 
     createRange() {
-        const {range_items, range_item, slider_range_picker} = this.props.main;
-        const curItem = range_items[range_item]; // by default 2013
-        const firstItem = range_items[0];
-        const lastItem = range_items[range_items.length - 1];
+        const {range_items, range_item, slider_range_picker, item_name} = this.props.main;
+        const curItem = item_name[range_item]; // by default 2013
+        const firstItem = item_name[0];
+        const lastItem = item_name[range_items.length - 1];
 
         return (
             <div className="sliderRangeContainer">
                 <div className="sliderRange">
-                    <p className="rangeItem first">{this.toYear(firstItem)}</p>
+                    <p className="rangeItem first">{firstItem}</p>
                     <div className="current-year-container">
                         <div className="container-fa left" onClick={() => this.changeItem('-')}>
                             <i className="fa fa-caret-left" aria-hidden="true"></i>
                         </div>
 
                         <div className="current-year" onClick={() => this.handlerToggleSliderPicker()}>
-                            <span>{this.toYear(curItem)}</span>
+                            <span>{curItem}</span>
                         </div>
 
                         <div className="container-fa right" onClick={() => this.changeItem('+')}>
@@ -94,17 +90,17 @@ class SliderRange extends PureComponent {
                         </div>
 
                     </div>
-                    <p className="rangeItem last">{this.toYear(lastItem)}</p>
+                    <p className="rangeItem last">{lastItem}</p>
                 </div>
                 <div className="sliderRangePicker-container">
                     <div className={slider_range_picker ? "sliderRangePicker active-picker" : "sliderRangePicker"}>
-                        {range_items.map((item, i) => {
+                        {item_name.map((item, i) => {
 
                             return <p
                                 key={i}
                                 className={`rangePicker-item ${i === range_item ? 'active' : ''}`}
                                 onClick={() => this.changeItem(i) || this.handlerToggleSliderPicker()}>
-                                {this.toYear(item)}
+                                {item}
                             </p>
                         })}
                     </div>

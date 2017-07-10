@@ -83,7 +83,19 @@ export default function getMap(properties, rebuild = true, isRegion) {
             }
         }
 
-        store.dispatch(set_Range_items(PropertiesLayer.sort(), PropertiesLayer.length - 1));
+        store.dispatch(set_Range_items(PropertiesLayer.sort((a, b) => {
+            a.length == 7 ? a = 'year_20' + a.substring(5) : '';
+            b.length == 7 ? b = 'year_20' + b.substring(5) : '';
+
+            if (a < b ) {
+                return -1;
+            }
+            if (a > b ) {
+                return 1;
+            }
+            return 0;
+
+        }), PropertiesLayer.length - 1));
 
         Lmap.eachLayer(function (layer) {
             Lmap.removeLayer(layer)
