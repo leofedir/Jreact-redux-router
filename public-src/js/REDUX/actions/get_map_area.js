@@ -81,7 +81,7 @@ export function getMapData(tableData = null, arr = null, url, rebuild = true, al
             dispatch({
                 type: GET_MAP_AREA_REQUEST,
                 payload: [url, alias]
-            })
+            });
             fetch('/getmapdata', {
                 method: 'post',
                 headers: {
@@ -91,11 +91,12 @@ export function getMapData(tableData = null, arr = null, url, rebuild = true, al
             })
                 .then(parseJSON)
                 .then((data) => {
-                    getMap(data[0], rebuild, isRegion);
+
                     dispatch({
                         type: GET_MAP_AREA_SUCCESS,
                         payload: data[1]
                     });
+                    getMap(data[0], rebuild, isRegion);
                 })
                 .catch((err) => {
                     console.log('err >>', err);
