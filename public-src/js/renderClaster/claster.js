@@ -111,7 +111,6 @@ export default function claster(data) {
     searchControlPoint.on('search:locationfound', function (e) {
         whenClicked(e) // call click action
         Lmap.flyTo(e.latlng, 14);
-        console.log('searchControlPoint >>', searchControlPoint)
         setTimeout(() => {
             searchControlPoint.options.marker.remove()
         }, 4000)

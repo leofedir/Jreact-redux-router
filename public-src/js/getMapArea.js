@@ -346,7 +346,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             if (searchItem !== null) {
                 choroplethLayer.resetStyle(searchItem);
             }
-            // whenClicked(e) //call clicked action
+            store.dispatch(clickOnFeature(e.layer.feature.properties, e.layer.feature.properties.id)) // call click action
             searchItem = e.layer;
             let color = searchItem.options.fillColor;
             let newColor = LightenDarkenColor(color, +50);
@@ -442,7 +442,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
         }
 
         function whenClicked(e) {
-            console.log(e);
+            // console.log(e);
             let state = store.getState();
             const {selectedArea} = state.map_reducer;
     
