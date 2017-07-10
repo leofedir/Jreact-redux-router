@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "7.4.0"
+  },
   "scripts": {
     "start": "gulp",
     "server": "node index.js",
@@ -25,7 +28,7 @@
     "esri-leaflet-geocoder": "^2.2.3",
     "express": "^4.15.2",
     "highcharts": "^5.0.9",
-    "leaflet": "^1.0.3",
+    "leaflet": "1.0.3",
     "leaflet-pulse-icon": "^0.1.0",
     "leaflet-search": "^2.7.2",
     "leaflet.locatecontrol": "^0.60.0",
