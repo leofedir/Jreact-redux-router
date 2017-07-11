@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 import * as Actions from '../REDUX/actions/actions';
 import * as MapActions from '../REDUX/actions/get_map_area';
 
-import {dataToChart} from './Popup'
+import {dataToChart, dataToChartUsd} from './Popup'
 
 const Highcharts = require('highcharts');
 
@@ -43,7 +43,7 @@ class Chart extends PureComponent {
     }
 
     Chart() {
-        const {feature, alias, chart1, chart2, for1Student, curency} = this.props.map_reducer;
+        const {feature, alias, chart1, chart2, for1Student, curency, dataChartUsd} = this.props.map_reducer;
         const {item_name} = this.props.main;
         const format = new Intl.NumberFormat().format;
 
@@ -57,7 +57,7 @@ class Chart extends PureComponent {
             let myData = [
                 {
                     name: alias,
-                    data: dataToChart
+                    data: dataChartUsd ? dataToChartUsd : dataToChart
                 }
             ];
 
