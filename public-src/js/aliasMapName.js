@@ -193,7 +193,32 @@ export let alias = {
     area_budgets_finenerhozber:'Фінансування енергозберігаючих заходів',
     area_budgets_vykonzahalnohoo:'Виконання видаткової частини загального фонду бюджету',
     area_budgets_vykonspetsialnoho:'Виконання видаткової частини спеціального фонду бюджету',
-    area_promislovist_kilkistmistsrynky:'Кількість торгових місць на ринках '
+    area_promislovist_kilkistmistsrynky:'Кількість торгових місць на ринках ',
+    area_infrastructure_vydatkydorohy:'Видатки місцевого бюджету на проведення дорожніх робіт',
+    area_infrastructure_vydatkygkhnaosobu:'Видатки місцевого бюджету на житлово-комунальне господарство в розрахунку на одну особу',
+    area_infrastructure_vydatkyinshi:"Інші видатки на транспорт, дорожнє господарство, зв'язок, телекомунікації та інформатику",
+    area_infrastructure_podatoktransport:'Транспортний податок в доходах місцевого бюджету',
+    area_infrastructure_vydatkydorojniroboty:'Видатки місцевого бюджету на проведення дорожніх робіт на 1 км доріг місцевого значення',
+    area_infrastructure_vydatkytransport:"Видатки місцевого бюджету на транспорт, дорожнє господарство, зв'язок, телекомунікації та інформатику",
+
+    area_infrastructure_distanceavtoshlyah:'Загальна протяжність автошляхів',
+    area_infrastructure_distancetberdepoktyttya:'Протяжність автошляхів загального користування з твердим покриттям',
+    area_infrastructure_distancegruntovyh:'Протяжність ґрунтових шляхів загального користування',
+    area_infrastructure_kilkistmostiv:'Кількість мостів загального користування',
+    area_budgets_budgzatverdjdohody:'Затверджений бюджет області за доходами',
+    area_budgets_faktychninadhodg:'Фактичні надходження до бюджету області',
+    area_budgets_vykonbudgvidsotok:'Відсоток виконання бюджету області за доходами',
+    area_budgets_budgzatverdjvydatky:'Затверджений бюджет області за видатками',
+    area_budgets_vykonbudgzavydatkamy:'Виконаний бюджет області за видатками',
+    area_budgets_vbzvvidsotok:'Відсоток виконання бюджету області за видатками',
+    area_budgets_deficytzatverdgenyi:'Затверджений дефіцит (профіцит) бюджету області',
+    area_budgets_deficytfaktychnyi:'Фактичний дефіцит (профіцит) бюджету області',
+    area_budgets_vidsotokvdohodah:'Обласний бюджет у фактичних доходах бюджету області',
+    area_budgets_vidsotokvvydatkah:'Обласний бюджет у фактичних видатках бюджету області',
+    area_infrastructure_vydatkytransportnaosobu:"Видатки місцевого бюджету на транспорт, дорожнє господарство, зв'язок, телекомунікації та інформатику в розрахунку на одну особу",
+    area_infrastructure_dorohyderzh:'Протяжність автошляхів державного значення',
+    area_infrastructure_dorohymistsevi:'Протяжність автошляхів місцевого значення'
+
 
 
 
