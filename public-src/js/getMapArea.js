@@ -190,7 +190,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         if (nexItem != range_item) {
             range_item = nexItem;
-            getAto(range_item);
+            // getAto(range_item);
             renderLayer()
         }
         return
@@ -202,7 +202,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
         let nextCurency = store.getState().map_reducer.curency.toLowerCase();
         if (nextCurency != myCurency) {
             myCurency = nextCurency;
-            getAto(range_item);
+            // getAto(range_item);
             renderLayer()
         }
         return
@@ -507,5 +507,5 @@ export default function getMap(properties, rebuild = true, isRegion) {
     }
 
     renderLayer();
-    getAto(range_item);
+    // getAto(range_item);
 }

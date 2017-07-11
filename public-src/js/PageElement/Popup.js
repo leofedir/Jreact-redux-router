@@ -21,26 +21,16 @@ class Popup extends PureComponent {
         let popupInfo = [];
         
         item_name.forEach((item, i) => {
+            let value = +feature[curentCurency + range_items[i]];
             popupInfo.push(<p key={feature.id + i}>Станом на {item} р.
-                <span>{new Intl.NumberFormat().format(feature[range_items[i]])}</span></p>);
-            dataToChart.push(+feature[range_items[i]]);
-        })
+                <span>{new Intl.NumberFormat().format(value)}</span></p>);
+            dataToChart.push(value);
+        });
         
         //popup if > 4
         popupInfo.reverse();
         const shortPopup = popupInfo.slice(0, 4);
-        
-        // for (let key in feature) {
-        //     if (feature.hasOwnProperty(key) && key.indexOf(curentCurency + 'year_') >= 0) {
-        //         console.log('key >>', key)
-        //         popupInfo.push(<p key={feature.id + i}>Станом на 20{key.substring(key.lastIndexOf('_') + 1)} р.
-        //             <span>{new Intl.NumberFormat().format(feature[key])}</span></p>)
-        //         year_labels.push(20 + key.substring(key.lastIndexOf('_') + 1) + 'р');
-        //         dataToChart.push(+feature[key]);
-        //         i++
-        //     }
-        // }
-        
+
         return popup_fullsize ? <div className="popup-bottom-wrapper">{popupInfo}</div> :
             <div className="popup-bottom-wrapper">{shortPopup}</div>
     }
