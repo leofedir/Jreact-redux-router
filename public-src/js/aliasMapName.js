@@ -194,6 +194,7 @@ export let alias = {
     area_budgets_vykonzahalnohoo:'Виконання видаткової частини загального фонду бюджету',
     area_budgets_vykonspetsialnoho:'Виконання видаткової частини спеціального фонду бюджету',
     area_promislovist_kilkistmistsrynky:'Кількість торгових місць на ринках ',
+
     area_infrastructure_vydatkydorohy:'Видатки місцевого бюджету на проведення дорожніх робіт',
     area_infrastructure_vydatkygkhnaosobu:'Видатки місцевого бюджету на житлово-комунальне господарство в розрахунку на одну особу',
     area_infrastructure_vydatkyinshi:"Інші видатки на транспорт, дорожнє господарство, зв'язок, телекомунікації та інформатику",
@@ -218,6 +219,7 @@ export let alias = {
     area_infrastructure_vydatkytransportnaosobu:"Видатки місцевого бюджету на транспорт, дорожнє господарство, зв'язок, телекомунікації та інформатику в розрахунку на одну особу",
     area_infrastructure_dorohyderzh:'Протяжність автошляхів державного значення',
     area_infrastructure_dorohymistsevi:'Протяжність автошляхів місцевого значення'
+
 
 
 

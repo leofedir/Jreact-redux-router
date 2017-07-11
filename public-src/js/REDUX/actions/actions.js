@@ -70,11 +70,19 @@ export function set_submenu_item(item) {
 }
 
 export function set_Range_items(items, item = 0) {
+    let item_name = items.map(item => {
+        let year = item.substring(item.lastIndexOf('_') + 1);
+        return year.length == 2 ? 20 + year : year;
+    });
+
+    item_name.sort();
+
     return {
         type: SET_RANGE_ITEMS,
         payload: {
             items: items,
-            item: item
+            item: item,
+            item_name
         }
     }
 }

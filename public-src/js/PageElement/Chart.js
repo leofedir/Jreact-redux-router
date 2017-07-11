@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 import * as Actions from '../REDUX/actions/actions';
 import * as MapActions from '../REDUX/actions/get_map_area';
 
-import {year_labels, dataToChart, dataToChartUsd} from './Popup'
+import {dataToChart} from './Popup'
 
 const Highcharts = require('highcharts');
 
@@ -43,7 +43,8 @@ class Chart extends PureComponent {
     }
 
     Chart() {
-        const {feature, alias, chart1, chart2, dataChartUsd, for1Student, curency} = this.props.map_reducer;
+        const {feature, alias, chart1, chart2, for1Student, curency} = this.props.map_reducer;
+        const {item_name} = this.props.main;
         const format = new Intl.NumberFormat().format;
 
 
@@ -53,7 +54,7 @@ class Chart extends PureComponent {
             let myData = [
                 {
                     name: alias,
-                    data: dataChartUsd ? dataToChartUsd : dataToChart
+                    data: dataToChart
                 }
             ];
 
@@ -92,7 +93,7 @@ class Chart extends PureComponent {
                 },
                 xAxis: {
                     crosshair: true,
-                    categories: year_labels
+                    categories: item_name
                 },
                 tooltip: {
                     shared: true,
@@ -200,13 +201,11 @@ class Chart extends PureComponent {
     }
 
     onHeaderChartClick() {
-        console.log('1111 >>', 1111)
         this.props.Actions.resizeMap(this.props.main.mapFull)
     }
 
     render() {
         const {chart_full, dataChartUsd, feature, claster, curentMap, for1Student, chart2, bubble_chart_full, bar_chart_full} = this.props.map_reducer;
-        const showToggleUsd = dataToChartUsd.length > 0;
         const chartStyle = (bubble_chart_full || bar_chart_full) ? `disabled` : ``;
 
         return (
