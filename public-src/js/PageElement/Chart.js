@@ -52,7 +52,69 @@ class Chart extends PureComponent {
             let selectPoint = [];
             let label = null,
                 line = null;
-            tooltipParametr = curency != "" ? curency : feature.parameter
+            tooltipParametr = curency != "" ? curency : feature.parameter;
+
+            function compare(e) {
+                console.log(e.point)
+
+                if (Object.keys(selectPoint).length < 2 && !e.point.selected) {
+                    selectPoint[e.point.x] = e.point.y;
+                    e.point.select(true, true);
+                }
+                else if (e.point.selected) {
+                    e.point.select(false, true);
+                    delete selectPoint[e.point.x];
+                }
+                else if (Object.keys(selectPoint).length === 2) {
+                    alert('Оберіть не більше двох точок')
+                    return
+                }
+
+
+                if (Object.keys(selectPoint).length < 2 && label !== null) {
+                    label.destroy();
+                    line.destroy();
+                    label = line = null;
+                }
+
+                if (Object.keys(selectPoint).length == 2) {
+
+                    let keys = Object.keys(selectPoint).sort();
+                    let resulr = selectPoint[keys[0]] - selectPoint[keys[1]];
+                    let persent = (resulr / selectPoint[keys[1]]) * 100;
+                    persent = persent.toFixed(2);
+
+                    line = this.chart.addSeries({
+                        enableMouseTracking: false,
+                        dashStyle: 'Dash',
+                        lineWidth: 1,
+                        showInLegend: false,
+                        allowPointSelect: false,
+                        dataLabels: false,
+                        color: '#27ae60',
+                        data: [
+                            [+keys[1], selectPoint[keys[1]]], [+keys[0], selectPoint[keys[1]]],
+                            null,
+                            [+keys[0], selectPoint[keys[0]]], [+keys[0], selectPoint[keys[1]]]
+                        ]
+                    });
+                    let point = chart.series[1].points[1];
+
+                    let labelTEXT = `<p className="labelChart">${resulr} <span>(${persent} %)</span></p> `;
+
+                    label = chart.renderer.label(labelTEXT, point.plotX, point.plotY, 'callout', point.plotX + chart.plotLeft, point.plotY + chart.plotTop, true)
+                        .css({
+                            color: '#FFFFFF'
+                        })
+                        .attr({
+                            fill: 'rgba(0, 0, 0, 0.75)',
+                            padding: 8,
+                            r: 5,
+                            zIndex: 6
+                        })
+                        .add();
+                }
+            }
 
             let myData = [
                 {
@@ -60,8 +122,6 @@ class Chart extends PureComponent {
                     data: dataChartUsd ? dataToChartUsd : dataToChart
                 }
             ];
-
-            console.log(myData)
 
             chart = Highcharts.chart('item_chart', {
                 colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
@@ -117,68 +177,7 @@ class Chart extends PureComponent {
                             }
                         },
                         events: {
-                            click: function (e) {
-                                console.log(e.point)
-
-                                if (Object.keys(selectPoint).length < 2 && !e.point.selected) {
-                                    selectPoint[e.point.x] = e.point.y;
-                                    e.point.select(true, true);
-                                }
-                                else if (e.point.selected) {
-                                    e.point.select(false, true);
-                                    delete selectPoint[e.point.x];
-                                }
-                                else if (Object.keys(selectPoint).length === 2) {
-                                    alert('Оберіть не більше двох точок')
-                                    return
-                                }
-
-
-                                if (Object.keys(selectPoint).length < 2 && label !== null) {
-                                    label.destroy();
-                                    line.destroy();
-                                    label = line = null;
-                                }
-
-                                if (Object.keys(selectPoint).length == 2) {
-
-                                    let keys = Object.keys(selectPoint).sort();
-                                    let resulr = selectPoint[keys[0]] - selectPoint[keys[1]];
-                                    let persent = (resulr / selectPoint[keys[1]]) * 100;
-                                    persent = persent.toFixed(2);
-
-                                    line = this.chart.addSeries({
-                                        enableMouseTracking: false,
-                                        dashStyle: 'Dash',
-                                        lineWidth: 1,
-                                        showInLegend: false,
-                                        allowPointSelect: false,
-                                        dataLabels: false,
-                                        color: '#27ae60',
-                                        data: [
-                                            [+keys[1], selectPoint[keys[1]]], [+keys[0], selectPoint[keys[1]]],
-                                            null,
-                                            [+keys[0], selectPoint[keys[0]]], [+keys[0], selectPoint[keys[1]]]
-                                             ]
-                                    });
-                                    let point = chart.series[1].points[1];
-
-                                    let labelTEXT = `<p className="labelChart">${resulr} <span>(${persent} %)</span></p> `;
-
-                                    label = chart.renderer.label(labelTEXT, point.plotX, point.plotY, 'callout', point.plotX + chart.plotLeft, point.plotY + chart.plotTop, true)
-                                        .css({
-                                            color: '#FFFFFF'
-                                        })
-                                        .attr({
-                                            fill: 'rgba(0, 0, 0, 0.75)',
-                                            padding: 8,
-                                            r: 5,
-                                            zIndex: 6
-                                        })
-                                        .add();
-                                }
-
-                            }
+                            click: compare
                         }
                     }
                 },
