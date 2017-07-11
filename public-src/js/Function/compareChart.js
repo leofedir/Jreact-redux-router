@@ -18,7 +18,11 @@ export function compareChart(e) {
         delete __selectPoint[e.point.x];
     }
     else if (Object.keys(__selectPoint).length === 2) {
-        alert('Оберіть не більше двох точок')
+        e.point.select(false, false);
+        __label.destroy();
+        __line.destroy();
+        __label = __line = null;
+        __selectPoint = [];
         return
     }
 
