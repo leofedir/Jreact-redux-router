@@ -49,6 +49,8 @@ class Chart extends PureComponent {
 
 
         if (feature != null) {
+            let selectPoint = [];
+            let label = null;
             tooltipParametr = curency != "" ? curency : feature.parameter
 
             let myData = [
@@ -99,6 +101,62 @@ class Chart extends PureComponent {
                     shared: true,
                     hideDelay: 100,
                     valueSuffix: ' ' + tooltipParametr
+                },
+                plotOptions: {
+                    series: {
+                        cursor: 'pointer',
+                        marker: {
+                            states: {
+                                select: {
+                                    fillColor: '#f00',
+                                    lineWidth: 0
+                                }
+                            }
+                        },
+                        events: {
+                            click: function (e) {
+
+                                if (Object.keys(selectPoint).length < 2 && !e.point.selected) {
+                                    selectPoint[e.point.x] = e.point.y;
+                                    e.point.select(true, true);
+                                }
+                                else if (e.point.selected) {
+                                    e.point.select(false, true);
+                                    delete selectPoint[e.point.x];
+                                }
+                                else if (Object.keys(selectPoint).length === 2) {
+                                    alert('Оберіть не більше двох точок')
+                                    return
+                                }
+
+
+                                if (Object.keys(selectPoint).length < 2 && label !== null) {
+                                    label.destroy();
+                                    label = null;
+                                }
+
+                                if (Object.keys(selectPoint).length == 2) {
+                                    let keys = Object.keys(selectPoint).sort();
+                                    let resulr = selectPoint[keys[0]] - selectPoint[keys[1]];
+                                    let persent = (resulr / selectPoint[keys[1]]) * 100;
+                                    persent = persent.toFixed(2);
+
+                                    label = chart.renderer.label(resulr + `(${persent} %)`, 270, 50, 'callout', chart.plotLeft, chart.plotTop)
+                                        .css({
+                                            color: '#FFFFFF'
+                                        })
+                                        .attr({
+                                            fill: 'rgba(0, 0, 0, 0.75)',
+                                            padding: 8,
+                                            r: 5,
+                                            zIndex: 6
+                                        })
+                                        .add();
+                                }
+
+                            }
+                        }
+                    }
                 },
                 series: myData
             });
