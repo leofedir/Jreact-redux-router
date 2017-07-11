@@ -8,7 +8,6 @@ import * as MapActions from '../REDUX/actions/get_map_area';
 
 export let year_labels = [];
 export let dataToChart = [];
-export let dataToChartUsd = [];
 
 let curency = null;
 
@@ -100,7 +99,6 @@ class Popup extends PureComponent {
         const {feature, alias, feature_claster} = this.props.map_reducer;
         const {popup_fullsize} = this.props.main
         dataToChart = [];
-        dataToChartUsd = [];
         year_labels = [];
         let popupItemCount = 0;
         
@@ -186,7 +184,6 @@ class Popup extends PureComponent {
     
     render() {
         const {feature, feature_claster} = this.props.map_reducer;
-        dataToChartUsd = [];
         return (feature !== null || feature_claster !== null) ? this.getInfo() : this.noInfo()
     }
 }
