@@ -261,26 +261,13 @@ export default function getMap(properties, rebuild = true, isRegion) {
         }
 
         function joinGeometry(cordinate) {
-            let count = 0;
             let i;
             let len = data.length;
 
-
             for (i = 0; i < len; i++) {
-
-                console.log('cordinate >>', cordinate[i]);
-                console.log('data >>', data[i]);
-
-                let coord = cordinate.filter(item => {
-                    count++;
-                    if (item.id == data[i].id) {
-
-                        return item.geometry
-                    }
-                });
-                data[i].geometry = coord[0].geometry
+                data[i].geometry = cordinate[data[i].id];
             }
-            console.log('count >>', count)
+
         }
 
         // join geometry

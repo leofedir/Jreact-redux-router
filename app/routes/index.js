@@ -64,11 +64,29 @@ router.post('/region', function (req, res) {
             pgdb.query(item)
         ))
             .then(d => {
-                let _d = d.map(item => {
-                    return item.sort((a, b) => b.id - a.id);
+                let obj1 = {};
+                let obj2 = {};
+                d.forEach((item, i) => {
+                    switch (i) {
+                        case 0 :
+                            item.forEach(i => {
+                                let key = i.id
+                                obj1[key] = i.geojson
+
+                            });
+                        case 1 :
+                            item.forEach(i => {
+                                obj2[i.id] = i.geojson
+                            });
+                        default:
+                            return
+                    }
+
+                    // item.sort((a, b) => b.id - a.id);
                 });
-                geometry.region = _d[0];
-                geometry.district = _d[1]
+
+                geometry.region = obj1;
+                geometry.district = obj2;
             })
             .then(() => {
                 res.json(geometry)
