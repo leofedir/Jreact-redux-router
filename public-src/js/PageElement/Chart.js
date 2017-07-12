@@ -97,11 +97,6 @@ class Chart extends PureComponent {
                     crosshair: true,
                     categories: item_name
                 },
-                tooltip: {
-                    shared: true,
-                    hideDelay: 100,
-                    valueSuffix: ' ' + tooltipParametr
-                },
                 plotOptions: {
                     series: {
                         cursor: 'pointer',
@@ -118,7 +113,18 @@ class Chart extends PureComponent {
                         }
                     }
                 },
-                series: myData
+                series: myData,
+                tooltip: {
+                    formatter: function () {
+                        let s = '<p style="font-weight: 300">' + 'Станом на 01.01.' + (+this.x+1) + ' р.' + '</p>';
+                        let p = '<br/><p>' + this.points.map(i => i.series.name) + ': '+
+                            this.y + ' '+ tooltipParametr + '</p>';
+                        
+                        return s+p
+                    },
+                    shared: true,
+                    hideDelay: 100,
+                },
             });
         } else if (feature === null && chart !== null && chart1 === null) {
             chart.destroy();
