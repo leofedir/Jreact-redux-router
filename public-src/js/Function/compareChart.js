@@ -35,8 +35,7 @@ export function compareChart(e) {
 
     if (Object.keys(_selectPoint).length == 2) {
 
-        let keys = Object.keys(_selectPoint).map(i => +i).sort((a,b) => b-a);
-        console.log(keys)
+        let keys = Object.keys(_selectPoint).map(i => +i).sort((a, b) => b - a);
         let resulr = _selectPoint[keys[0]] - _selectPoint[keys[1]];
         let persent = (resulr / _selectPoint[keys[1]]) * 100;
         persent = persent.toFixed(2);
@@ -57,9 +56,16 @@ export function compareChart(e) {
         });
         let point = this.chart.series[1].points[1];
 
-        let labelTEXT = `<p className="_labelChart">${new Intl.NumberFormat().format(resulr)} <span>(${persent} %)</span></p> `;
+        let x = point.plotX + this.chart.plotLeft;
+        let y = point.plotY + this.chart.plotTop;
+        let chartW = this.chart.chartWidth;
+        //
+        // chartW - point.plotX < 100 ? point.plotX = point.plotX - 100 : '';
 
-        _label = this.chart.renderer.label(labelTEXT, point.plotX, point.plotY, 'callout', point.plotX + this.chart.plotLeft, point.plotY + this.chart.plotTop, true)
+        let labelTEXT = `<p className="labelChart">${new Intl.NumberFormat().format(resulr)} <span> (${persent}  %)</span></p> `;
+
+
+        _label = this.chart.renderer.label(labelTEXT, point.plotX, point.plotY, 'callout', x, y, true)
             .css({
                 color: '#FFFFFF'
             })
@@ -70,5 +76,9 @@ export function compareChart(e) {
                 zIndex: 6
             })
             .add();
+
+        let _position = _label.width / 2 < chartW - x
+
+        _position ? '' :  _label.xSetter(point.plotX - ((_label.width / 2 + 20) - (chartW - x) ))
     }
 }
