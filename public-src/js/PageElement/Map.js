@@ -145,23 +145,30 @@ class Map extends PureComponent {
         cordinateContainer = this.refs.coordinate
     }
 
-    zoomFunction() {
+    hendlerChangeOT(e) {
+        let target = e.target;
+        let id = e.target.id;
 
-        if (Lmap.hasLayer(ukraine) || this.props.main.fields === null) {
-            return
-        }
+        if (target.id == '') return;
+        console.log('e >>', target.id)
 
+
+
+        // if (Lmap.hasLayer(ukraine) || this.props.main.fields === null) {
+        //     return
+        // }
+        //
         const {fields, submenu_item} = this.props.main;
         const mapSet = fields[submenu_item];
 
         curentMap === null ? curentMap = mapSet[0] : '';
 
-        if (Lmap.getZoom() <= 5 && curentMap.indexOf('region') <= 0 && mapSet.some(a => ~a.indexOf('__region'))) {
+        if (id == 'region' && curentMap.indexOf('region') <= 0 && mapSet.some(a => ~a.indexOf('__region'))) {
             curentMap = '__region';
             getMap(null, false, true)
             // getMapData(submenu_item + '__region', false, alias[submenu_item], true)
 
-        } else if (Lmap.getZoom() >= 7 && curentMap.indexOf('region') >= 0 && mapSet.some(a => ~a.indexOf('__district'))) {
+        } else if (id == 'district' && curentMap.indexOf('region') >= 0 && mapSet.some(a => ~a.indexOf('__district'))) {
             curentMap = '__district';
             getMap(null, false, false)
             // getMapData(submenu_item + '__district', false, alias[submenu_item], false)
@@ -200,7 +207,7 @@ class Map extends PureComponent {
 
         // add event to map actions
         Lmap.on('mousemove', onMouseMove);
-        Lmap.on('zoomend', ::this.zoomFunction);
+        // Lmap.on('zoomend', ::this.zoomFunction);
 
 
         // fetch("https://www.drv.gov.ua/portal/gis$core.Gis_DistrPoly?p_f5271=1&ts=0.5532982378139228", {
@@ -378,6 +385,23 @@ class Map extends PureComponent {
         }
     }
 
+    button() {
+        const {submenu_item} = this.props.main;
+        if (submenu_item.indexOf('area_') < 0) {
+            return null;
+        } else {
+            return (
+                <div className="buttons_change_TO">
+                    <p onClick={::this.hendlerChangeOT} id='region' className="button_change_TO">Області</p>
+                    <p onClick={::this.hendlerChangeOT} id='district' className="button_change_TO" >Райони</p>
+                    <p onClick={::this.hendlerChangeOT} className="button_change_TO">ОТГ</p>
+                    <p onClick={::this.hendlerChangeOT} className="button_change_TO">Міста</p>
+                </div>
+            )
+        }
+
+    }
+
     render() {
         const {fetching} = this.props.main;
 
@@ -385,6 +409,8 @@ class Map extends PureComponent {
             <div className="block block-top block_map">
                 <div className="item_header icon-container">
                     <SubMenu />
+                    {::this.button()}
+
                     <i className="fa fa-expand fa-1x ico_map_full ico_hover" onClick={::this.omButtonMapClick}/>
                 </div>
                 <div id="map_wrapper" className="map_wrapper">
