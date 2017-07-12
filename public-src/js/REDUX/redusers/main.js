@@ -49,19 +49,42 @@ export default function main(state = initialState, action) {
             return {...state, mapFull: action.payload, showMenu: false};
 
         case SET_SUBMENU_ITEM:
-            return {...state, submenu_item: action.payload, legend_data: null, claster_layers: null, mapFull: false, show_range: false, fetching: true};
+            return {
+                ...state,
+                submenu_item: action.payload,
+                legend_data: null,
+                claster_layers: null,
+                mapFull: false,
+                show_range: false,
+                fetching: true
+            };
 
         case GET_SUBMENU_REQUEST:
-            return {...state,  claster_layers: null, title_map: action.payload};
+            return {...state, claster_layers: null, title_map: action.payload};
 
         case SET_RANGE_ITEMS:
-            return {...state, item_name: action.payload.item_name, range_items: action.payload.items, range_item: action.payload.item, show_range: true};
+            return {
+                ...state,
+                item_name: action.payload.item_name,
+                range_items: action.payload.items,
+                range_item: action.payload.item,
+                show_range: true
+            };
 
         case SET_RANGE_ITEM:
             return {...state, range_item: action.payload, fetching: true};
 
         case GET_SUBMENU_SUCCESS:
-            return { ...state, fields: action.payload.data, submenu_item: '', range_items: '', show_range: false, legend_data: null, claster_layers: null, title_map: action.payload.title};
+            return {
+                ...state,
+                fields: action.payload.data,
+                submenu_item: '',
+                range_items: '',
+                show_range: false,
+                legend_data: null,
+                claster_layers: null,
+                title_map: action.payload.title
+            };
 
         case GET_SUBMENU_ERROR:
             return {...state, fields: null, fetching: false};
@@ -83,10 +106,10 @@ export default function main(state = initialState, action) {
 
         case SET_DATA_DISTRICT:
             return {...state, fetching: false};
-        
+
         case TOGGLE_SLIDER_PICKER:
             return {...state, slider_range_picker: action.payload};
-        
+
         case TOGGLE_POPUP_FULLSIZE:
             return {...state, popup_fullsize: action.payload};
 

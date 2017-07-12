@@ -12,7 +12,7 @@ import getMap from './../getMapArea';
 
 export let Lmap = null;
 export let ukraine;
-export const coordinate = {};
+export let coordinate = {};
 
 let icon = L.icon({
     iconUrl: '/img/marker-icon.svg',
@@ -152,23 +152,19 @@ class Map extends PureComponent {
         if (target.id == '') return;
 
         const {fields, submenu_item} = this.props.main;
+        const {curentMap} = this.props.map_reducer;
         const mapSet = fields[submenu_item];
 
-        curentMap === null ? curentMap = mapSet[0] : '';
-
-        if (id == 'region' && curentMap.indexOf('region') <= 0 && mapSet.some(a => ~a.indexOf('__region'))) {
-            curentMap = '__region';
+        if (id == 'region' && mapSet.some(a => ~a.indexOf('__region'))) {
             getMap(null, false, true)
-            // getMapData(submenu_item + '__region', false, alias[submenu_item], true)
 
-        } else if (id == 'district' && curentMap.indexOf('region') >= 0 && mapSet.some(a => ~a.indexOf('__district'))) {
-            curentMap = '__district';
+        } else if (id == 'district' && mapSet.some(a => ~a.indexOf('__district'))) {
             getMap(null, false, false)
-            // getMapData(submenu_item + '__district', false, alias[submenu_item], false)
         }
     }
 
-    componentDidUpdate() {}
+    componentDidUpdate() {
+    }
 
     zoom_in() {
         Lmap.zoomIn(1)
@@ -250,19 +246,19 @@ class Map extends PureComponent {
             .then(checkStatus)
             .then(parseJSON)
             .then(data => {
-                coordinate.region = data.region.map(item => {
-                    let obj = {};
-                    obj.geometry = JSON.parse(item.geojson);
-                    obj.id = item.id;
-                    return obj
-                });
+                coordinate.region = {};
+                coordinate.district = {};
+                for (let key in data.region) {
+                    if (data.region.hasOwnProperty(key)) {
+                        coordinate.region[key] = JSON.parse(data.region[key])
+                    }
+                }
+                for (let key in data.district) {
+                    if (data.district.hasOwnProperty(key)) {
+                        coordinate.district[key] = JSON.parse(data.district[key])
+                    }
+                }
 
-                coordinate.district = data.district.map(item => {
-                    let obj = {};
-                    obj.geometry = JSON.parse(item.geojson);
-                    obj.id = item.id;
-                    return obj
-                });
                 set_data_district();
             });
 
@@ -380,7 +376,7 @@ class Map extends PureComponent {
             return (
                 <div className="buttons_change_TO">
                     <p onClick={::this.hendlerChangeOT} id='region' className="button_change_TO">Області</p>
-                    <p onClick={::this.hendlerChangeOT} id='district' className="button_change_TO" >Райони</p>
+                    <p onClick={::this.hendlerChangeOT} id='district' className="button_change_TO">Райони</p>
                     <p onClick={::this.hendlerChangeOT} className="button_change_TO">ОТГ</p>
                     <p onClick={::this.hendlerChangeOT} className="button_change_TO">Міста</p>
                 </div>
