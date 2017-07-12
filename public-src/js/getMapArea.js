@@ -11,7 +11,7 @@ import {LightenDarkenColor, rgbToHex} from './utils/colors'
 import {refsThis} from './PageElement/Legend'
 import {searchControlPoint} from './renderClaster/claster'
 import '../lib/search';
-import '../lib/leaflet.pattern'
+// import '../lib/leaflet.pattern'
 import "leaflet-search/src/leaflet-search.css"
 
 export let choroplethLayer = null;
@@ -40,22 +40,22 @@ export default function getMap(properties, rebuild = true, isRegion) {
         unsubscribeCurency = null
     }
 
-    var stripes = new L.StripePattern({
-        'color': '#808080',
-        'weight': 1.5,
-        'spaceColor': '#c7c7c7',
-        'spaceOpacity': 1,
-        'spaceWeight': 7,
-        'angle': -45
-    });
-    stripes.addTo(Lmap);
+    // var stripes = new L.StripePattern({
+    //     'color': '#808080',
+    //     'weight': 1.5,
+    //     'spaceColor': '#c7c7c7',
+    //     'spaceOpacity': 1,
+    //     'spaceWeight': 7,
+    //     'angle': -45
+    // });
+    // stripes.addTo(Lmap);
 
-    // let myStyle = {
-    //     "color": "#A9A9A9",
-    //     "weight": 2,
-    //     "fillOpacity": 1,
-    //     'className': 'ato'
-    // };
+    let myStyle = {
+        "color": "#A9A9A9",
+        "weight": 2,
+        "fillOpacity": 1,
+        'className': 'ato'
+    };
 
     let filds;
     let PropertiesLayer = [];
@@ -138,13 +138,14 @@ export default function getMap(properties, rebuild = true, isRegion) {
             .then(data => {
                 atoData = data[1];
                 ato = L.geoJSON(atoData, {
-                    style: {
-                        fillPattern: stripes,
-                        'color': '#808080',
-                        "fillOpacity": 1,
-                        'className': 'ato',
-                        "weight": 1.5,
-                    }
+                    style: myStyle
+                    //     {
+                    //     fillPattern: stripes,
+                    //     'color': '#808080',
+                    //     "fillOpacity": 1,
+                    //     'className': 'ato',
+                    //     "weight": 1.5,
+                    // }
                 });
                 Lmap.addLayer(ato)
             });
@@ -156,13 +157,14 @@ export default function getMap(properties, rebuild = true, isRegion) {
         if (range_items[item] > 'year_13' && atoData !== null) {
             ato ? ato.clearLayers() && Lmap.removeLayer(ato) : ''
             ato = L.geoJSON(atoData, {
-                style: {
-                    fillPattern: stripes,
-                    'color': '#808080',
-                    "fillOpacity": 1,
-                    'className': 'ato',
-                    "weight": 1.5,
-                }
+                style: myStyle
+                //     {
+                //     fillPattern: stripes,
+                //     'color': '#808080',
+                //     "fillOpacity": 1,
+                //     'className': 'ato',
+                //     "weight": 1.5,
+                // }
             });
             setTimeout(() => {
                 Lmap.addLayer(ato)
@@ -259,17 +261,26 @@ export default function getMap(properties, rebuild = true, isRegion) {
         }
 
         function joinGeometry(cordinate) {
+            let count = 0;
             let i;
             let len = data.length;
+
+
             for (i = 0; i < len; i++) {
+
+                console.log('cordinate >>', cordinate[i]);
+                console.log('data >>', data[i]);
+
                 let coord = cordinate.filter(item => {
+                    count++;
                     if (item.id == data[i].id) {
+
                         return item.geometry
                     }
                 });
                 data[i].geometry = coord[0].geometry
             }
-
+            console.log('count >>', count)
         }
 
         // join geometry

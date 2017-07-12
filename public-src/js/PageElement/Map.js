@@ -150,14 +150,7 @@ class Map extends PureComponent {
         let id = e.target.id;
 
         if (target.id == '') return;
-        console.log('e >>', target.id)
 
-
-
-        // if (Lmap.hasLayer(ukraine) || this.props.main.fields === null) {
-        //     return
-        // }
-        //
         const {fields, submenu_item} = this.props.main;
         const mapSet = fields[submenu_item];
 
@@ -175,13 +168,7 @@ class Map extends PureComponent {
         }
     }
 
-    componentDidUpdate() {
-        const {claster} = this.props.map_reducer;
-        // Lmap.invalidateSize(false)
-
-        // setTimeout(() => Lmap.invalidateSize(), 500)
-        // claster ? setTimeout(() => Lmap.invalidateSize(), 300) : ''
-    }
+    componentDidUpdate() {}
 
     zoom_in() {
         Lmap.zoomIn(1)
