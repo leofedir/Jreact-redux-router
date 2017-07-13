@@ -27,10 +27,11 @@ export let searchControlArea = null;
 let layerObject;
 
 export default function getMap(properties, rebuild = true, isRegion) {
+
     let data = null;
     let layer = null;
     let searchItem = null;
-    let districtContainer = []
+    let districtContainer = [];
 
     if (unsubscribe !== null) {
         unsubscribe();
@@ -59,11 +60,11 @@ export default function getMap(properties, rebuild = true, isRegion) {
         'className': 'ato'
     };
 
+
     let filds;
     let PropertiesLayer = [];
-
     if (rebuild) {
-        propertiesMain = Object.assign(properties);
+        propertiesMain = properties;
 
         if (isRegion) {
             data = propertiesMain.__region;
