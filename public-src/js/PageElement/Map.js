@@ -150,6 +150,14 @@ class Map extends PureComponent {
         let id = e.target.id;
 
         if (target.id == '') return;
+        //
+        this.refs.area1.className = this.refs.area1.className.replace(' active', '')
+        this.refs.area2.className = this.refs.area2.className.replace(' active', '')
+        //
+        if (!target.className.includes(' active')) {
+            target.className += ' active';
+        }
+        //
 
         const {fields, submenu_item} = this.props.main;
         const {curentMap} = this.props.map_reducer;
