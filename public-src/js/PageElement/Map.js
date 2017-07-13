@@ -155,17 +155,18 @@ class Map extends PureComponent {
         const {dataChartRegion} = this.props.map_reducer;
         const {toggle_data} = this.props.MapActions;
     
-        if (!target.className.includes(' active')) {
-            target.className += ' active';
+        if (target.className.includes(' active')) {
+            return
         }
-    
-    
+        
         if (dataChartRegion) {
             this.refs.area2.className = this.refs.area2.className.replace(' active', '');
-            toggle_data(true)
+            toggle_data(false)
+            target.className += ' active';
         } else {
             this.refs.area1.className = this.refs.area1.className.replace(' active', '');
-            toggle_data(false)
+            toggle_data(true)
+            target.className += ' active';
         }
         
         
