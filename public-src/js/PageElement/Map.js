@@ -150,17 +150,26 @@ class Map extends PureComponent {
         let id = e.target.id;
 
         if (target.id == '') return;
+        
+
+        const {fields, submenu_item} = this.props.main;
+        const {curentMap} = this.props.map_reducer;
+    
         //
         this.refs.area1.className = this.refs.area1.className.replace(' active', '')
         this.refs.area2.className = this.refs.area2.className.replace(' active', '')
-        //
+    
         if (!target.className.includes(' active')) {
             target.className += ' active';
         }
         //
-
-        const {fields, submenu_item} = this.props.main;
-        const {curentMap} = this.props.map_reducer;
+        const {dataChartRegion} = this.props.map_reducer;
+        const {toggle_data} = this.props.MapActions;
+        
+        console.log(curentMap)
+        toggle_data(dataChartRegion);
+        //
+        
         const mapSet = fields[submenu_item];
 
         if (id == 'region' && mapSet.some(a => ~a.indexOf('__region'))) {
