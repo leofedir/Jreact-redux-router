@@ -156,12 +156,14 @@ class Map extends PureComponent {
         const {curentMap} = this.props.map_reducer;
     
         //
+        
         this.refs.area1.className = this.refs.area1.className.replace(' active', '')
         this.refs.area2.className = this.refs.area2.className.replace(' active', '')
     
         if (!target.className.includes(' active')) {
             target.className += ' active';
         }
+
         //
         const {dataChartRegion} = this.props.map_reducer;
         const {toggle_data} = this.props.MapActions;
@@ -394,8 +396,8 @@ class Map extends PureComponent {
                 <div className="buttons_change_TO">
                     <p onClick={::this.hendlerChangeOT} ref="area1" id='region' className="button_change_TO">Області</p>
                     <p onClick={::this.hendlerChangeOT} ref="area2" id='district' className="button_change_TO">Райони</p>
-                    <p onClick={::this.hendlerChangeOT} ref="area" className="button_change_TO">ОТГ</p>
-                    <p onClick={::this.hendlerChangeOT} ref="area" className="button_change_TO">Міста</p>
+                    {/*<p onClick={::this.hendlerChangeOT} ref="area" className="button_change_TO">ОТГ</p>*/}
+                    {/*<p onClick={::this.hendlerChangeOT} ref="area" className="button_change_TO">Міста</p>*/}
                 </div>
             )
         }

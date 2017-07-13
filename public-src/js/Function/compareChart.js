@@ -70,7 +70,7 @@ export function compareChart(e) {
             })
             .attr({
                 // fill: resulr < 0 ? 'rgba(255, 102, 102, 0.75)' : 'rgba(77, 184, 255, 0.85)',
-                fill: resulr < 0 ? 'rgba(255, 102, 102, 1)' : 'rgba(102, 204, 153, 1)',
+                fill: resulr < 0 ? 'rgba(255, 102, 102, 0.75)' : 'rgba(102, 204, 153, 0.9)',
                 padding: 8,
                 r: 10,
                 zIndex: 6

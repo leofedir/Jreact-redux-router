@@ -22,7 +22,7 @@ class Popup extends PureComponent {
         
         item_name.forEach((item, i) => {
             let value = +feature[curentCurency + range_items[i]];
-            popupInfo.push(<p key={feature.id + i}>Станом на {item} р.
+            popupInfo.push(<p key={feature.id + i}>Дані за {item} р.
                 <span>{new Intl.NumberFormat().format(value)}</span></p>);
             dataToChart.push(value);
         });
