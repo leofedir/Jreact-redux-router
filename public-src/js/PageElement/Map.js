@@ -377,8 +377,8 @@ class Map extends PureComponent {
                 <div className="buttons_change_TO">
                     <p onClick={::this.hendlerChangeOT} id='region' className="button_change_TO">Області</p>
                     <p onClick={::this.hendlerChangeOT} id='district' className="button_change_TO">Райони</p>
-                    <p onClick={::this.hendlerChangeOT} className="button_change_TO">ОТГ</p>
-                    <p onClick={::this.hendlerChangeOT} className="button_change_TO">Міста</p>
+                    {/*<p onClick={::this.hendlerChangeOT} className="button_change_TO">ОТГ</p>*/}
+                    {/*<p onClick={::this.hendlerChangeOT} className="button_change_TO">Міста</p>*/}
                 </div>
             )
         }
