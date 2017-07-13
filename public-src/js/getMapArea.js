@@ -24,6 +24,7 @@ let unsubscribeCurency = null;
 let randColor = {};
 let myCurency = '';
 export let searchControlArea = null;
+let layerObject;
 
 export default function getMap(properties, rebuild = true, isRegion) {
     let layer = null;
@@ -104,7 +105,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
         if (searchControlPoint !== null) {
             Lmap.removeControl(searchControlPoint)
         }
-
         Lmap.setView([49, 31], 5);
         esri.basemapLayer('Topographic').addTo(Lmap);
     } else {
@@ -251,27 +251,30 @@ export default function getMap(properties, rebuild = true, isRegion) {
         });
     }
 
+    function joinGeometry(cordinate) {
+        let i;
+        let len = data.length;
+
+        for (i = 0; i < len; i++) {
+            data[i].geometry = cordinate[data[i].id];
+        }
+
+    }
+
     randColor = rebuild ? getRandomColorLayer() : randColor;
+    // join geometry
+    isRegion ? joinGeometry(coordinate.region) : joinGeometry(coordinate.district)
 
     function renderLayer() {
-        // store.dispatch(startLoad());
+        console.log('create layer')
 
         if (Lmap.hasLayer(choroplethLayer)) {
             Lmap.removeLayer(choroplethLayer)
         }
 
-        function joinGeometry(cordinate) {
-            let i;
-            let len = data.length;
 
-            for (i = 0; i < len; i++) {
-                data[i].geometry = cordinate[data[i].id];
-            }
 
-        }
 
-        // join geometry
-        isRegion ? joinGeometry(coordinate.region) : joinGeometry(coordinate.district)
 
         const eventsMap = {
             click: whenClicked,
@@ -279,7 +282,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             mouseout: onMouseout
         };
 // hightligth color
-        const layerObject = {
+        layerObject = {
             valueProperty: myCurency + range_items[range_item],
             scale: randColor.scale,
             steps: 5,
