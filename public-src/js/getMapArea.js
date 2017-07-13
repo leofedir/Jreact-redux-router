@@ -66,12 +66,12 @@ export default function getMap(properties, rebuild = true, isRegion) {
         propertiesMain = Object.assign(properties);
 
         if (isRegion) {
-            data = Object.values(propertiesMain.__region);
+            data = propertiesMain.__region;
             filds = propertiesMain.__region[0].properties
 
             districtContainer = propertiesMain.__district;
         } else {
-            data = Object.values(propertiesMain.__district);
+            data = propertiesMain.__district;
             filds = propertiesMain.__district[0].properties
 
             districtContainer = propertiesMain.__district;
@@ -110,12 +110,12 @@ export default function getMap(properties, rebuild = true, isRegion) {
         esri.basemapLayer('Topographic').addTo(Lmap);
     } else {
         if (isRegion) {
-            data = Object.values(propertiesMain.__region);
+            data = propertiesMain.__region;
             filds = propertiesMain.__region[0].properties;
 
             districtContainer = propertiesMain.__district;
         } else {
-            data = Object.values(propertiesMain.__district);
+            data = propertiesMain.__district;
             filds = propertiesMain.__district[0].properties;
 
             districtContainer = propertiesMain.__district;
@@ -512,8 +512,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
         renderSelectedArea();
         Lmap.invalidateSize();
     }
-    console.log('propertiesMain >>', propertiesMain)
-
 
     renderLayer();
     // getAto(range_item);

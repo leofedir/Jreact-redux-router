@@ -62,16 +62,14 @@ class BarChart extends Component {
 
     createChart(full = null) {
 
-        console.log('propertiesMain >>', propertiesMain)
-
         // save props
         const {alias, data_success, chart3, dataChartRegion, curency} = this.props.map_reducer;
         const {range_item, range_items, submenu_item, item_name} = this.props.main;
         let curent_year = range_items[range_item] || 'year_13';
         let yearToTitlaChart = item_name[range_item];
         let parametr;
-
         if (data_success && propertiesMain && dataChartRegion) {
+
             storeParametr = submenu_item + curency.toLowerCase() + curent_year;
 
             if ('__district' in propertiesMain) {
@@ -390,11 +388,12 @@ class BarChart extends Component {
     }
 
     componentDidUpdate() {
-        this.createChart(this.props.map_reducer.bar_chart_full)
+
         this.props.map_reducer.chart3 !== null ? this.getMultiChart() : null
     }
 
     componentWillUpdate() {
+        this.createChart(this.props.map_reducer.bar_chart_full)
         window.scrollTo(0,0);
     }
 
