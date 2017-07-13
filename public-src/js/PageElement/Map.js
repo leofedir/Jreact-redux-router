@@ -142,9 +142,10 @@ class Map extends PureComponent {
 
     componentDidMount() {
         this.createMap();
+       
         cordinateContainer = this.refs.coordinate
     }
-
+    
     hendlerChangeOT(e) {
         let target = e.target;
         let id = e.target.id;
@@ -153,23 +154,35 @@ class Map extends PureComponent {
         
 
         const {fields, submenu_item} = this.props.main;
-        const {curentMap} = this.props.map_reducer;
     
         //
         
-        this.refs.area1.className = this.refs.area1.className.replace(' active', '')
-        this.refs.area2.className = this.refs.area2.className.replace(' active', '')
+       
+        
     
         if (!target.className.includes(' active')) {
             target.className += ' active';
         }
 
+        // // initialize by default
+        // const {toggle_data} = this.props.MapActions;
+        // if (curentMap.search('district' > 0)) {
+        //     console.log('y')
         //
-        const {dataChartRegion} = this.props.map_reducer;
-        const {toggle_data} = this.props.MapActions;
-        
-        console.log(curentMap)
-        toggle_data(dataChartRegion);
+        //     toggle_data(false);
+        //     this.refs.area2.className = this.refs.area2.className.replace(' active', '')
+        // } else {
+        //     console.log('f')
+        //
+        //     toggle_data(true)
+        //     this.refs.area1.className = this.refs.area1.className.replace(' active', '')
+        // }
+        //
+        // const {dataChartRegion} = this.props.map_reducer;
+        //
+        //
+        // console.log(curentMap)
+        // toggle_data(false);
         //
         
         const mapSet = fields[submenu_item];
@@ -202,6 +215,7 @@ class Map extends PureComponent {
         Lmap = L.map('map', {zoomControl: false, minZoom: 3}).setView([49, 31], 6);
         layer = esri.basemapLayer('Topographic');
         Lmap.addLayer(layer);
+        
 
         function onMouseMove(e) {
             cordinateContainer.innerHTML = e.latlng.lat.toFixed(3) + "° пн. ш, " + e.latlng.lng.toFixed(3) + "° сх. д."
@@ -279,7 +293,7 @@ class Map extends PureComponent {
                 }
 
                 set_data_district();
-            });
+            })
 
         kadastr = L.tileLayer.wms("http://212.26.144.110/geowebcache/service/wms", {
             layers: 'kadastr',

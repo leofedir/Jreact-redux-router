@@ -120,7 +120,8 @@ export default function map(state = initialState, action) {
                 data_bubble: null,
                 curency: '',
                 curencyIndexCurency: '0',
-                selectedArea: null
+                selectedArea: null,
+                dataChartRegion: true
             };
 
         case SET_CLASTER_CHART_DATA:
@@ -140,6 +141,7 @@ export default function map(state = initialState, action) {
             return {...state, check: action.payload};
 
         case TOGGLE_DATA:
+            console.log('toggle')
             return {...state, dataChartRegion: action.payload};
 
         case TOGGLE_CURENCY:
