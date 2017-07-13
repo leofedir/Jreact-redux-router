@@ -80,6 +80,6 @@ export function compareChart(e) {
 
         let _position = _label.width / 2 < chartW - x;
 
-        _position ? '' :  _label.xSetter(point.plotX - ((_label.width / 2 + 60) - (chartW - x) ));
+        _position ? '' :  _label.xSetter(point.plotX - ((_label.width / 2 + 40) - (chartW - x) ));
     }
 }
