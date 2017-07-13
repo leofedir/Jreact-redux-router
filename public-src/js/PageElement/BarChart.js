@@ -61,6 +61,9 @@ class BarChart extends Component {
     }
 
     createChart(full = null) {
+
+        console.log('propertiesMain >>', propertiesMain)
+
         // save props
         const {alias, data_success, chart3, dataChartRegion, curency} = this.props.map_reducer;
         const {range_item, range_items, submenu_item, item_name} = this.props.main;
@@ -68,9 +71,6 @@ class BarChart extends Component {
         let yearToTitlaChart = item_name[range_item];
         let parametr;
 
-
-
-        //check to hav region in props
         if (data_success && propertiesMain && dataChartRegion) {
             storeParametr = submenu_item + curency.toLowerCase() + curent_year;
 
@@ -314,7 +314,6 @@ class BarChart extends Component {
                 });
 
                 chartData.push(obj)
-                console.log(chartData)
             }
         }
 
@@ -404,11 +403,6 @@ class BarChart extends Component {
         this.props.MapActions.toggle_data(this.props.map_reducer.dataChartRegion)
     }
 
-    onHeaderChartClick() {
-        // what is it?
-        // this.props.Actions.resizeMap(this.props.main.mapFull)
-    }
-
     render() {
         const {bar_chart_full, chart3, dataChartRegion, data_success, bubble_chart_full, chart_full, claster} = this.props.map_reducer;
         const chartDiv = <div ref="multiChart" className="multiChart" onMouseMove={::this.handlerOnMouseMove}>
@@ -421,7 +415,7 @@ class BarChart extends Component {
         return (
             <div className={bar_chart_full ? `chart_2 barChart_full` : `chart_2 ${chartStyle}`}>
                 {/*Title for right Trend BarChart*/}
-                <div className="item_header" onClick={::this.onHeaderChartClick}>
+                <div className="item_header" >
                     <div className="map_heder_title">
                         {chart3 || !propertiesMain ? 'Тренд' : 'Діаграма-рейтинг (ТОП-5)'}
                     </div>

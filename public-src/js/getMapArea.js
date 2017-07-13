@@ -18,7 +18,7 @@ export let choroplethLayer = null;
 export let ato = null;
 export let propertiesMain = null;
 let atoData = null;
-let data = null;
+
 let unsubscribe = null;
 let unsubscribeCurency = null;
 let randColor = {};
@@ -27,6 +27,7 @@ export let searchControlArea = null;
 let layerObject;
 
 export default function getMap(properties, rebuild = true, isRegion) {
+    let data = null;
     let layer = null;
     let searchItem = null;
     let districtContainer = []
@@ -62,7 +63,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
     let PropertiesLayer = [];
 
     if (rebuild) {
-        propertiesMain = properties;
+        propertiesMain = Object.assign(properties);
 
         if (isRegion) {
             data = Object.values(propertiesMain.__region);
@@ -120,7 +121,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
             districtContainer = propertiesMain.__district;
         }
     }
-
 
     if (Lmap.hasLayer(choroplethLayer)) {
         Lmap.removeLayer(choroplethLayer)
@@ -271,10 +271,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
         if (Lmap.hasLayer(choroplethLayer)) {
             Lmap.removeLayer(choroplethLayer)
         }
-
-
-
-
 
         const eventsMap = {
             click: whenClicked,
@@ -506,6 +502,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
         renderSelectedArea();
         Lmap.invalidateSize();
     }
+    console.log('propertiesMain >>', propertiesMain)
+
 
     renderLayer();
     // getAto(range_item);

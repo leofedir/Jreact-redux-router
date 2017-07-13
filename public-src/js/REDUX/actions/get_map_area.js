@@ -90,13 +90,13 @@ export function getMapData(tableData = null, arr = null, url, rebuild = true, al
                 body: `table=${ tableData }&arr=${arr}`
             })
                 .then(parseJSON)
-                .then((data) => {
+                .then((res) => {
 
                     dispatch({
                         type: GET_MAP_AREA_SUCCESS,
-                        payload: data[1]
+                        payload: res[1]
                     });
-                    getMap(data[0], rebuild, isRegion);
+                    getMap(res[0], rebuild, isRegion);
                 })
                 .catch((err) => {
                     console.log('err >>', err);

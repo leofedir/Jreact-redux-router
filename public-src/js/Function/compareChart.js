@@ -9,7 +9,6 @@ export function clearSelectionChart() {
 }
 
 export function compareChart(e) {
-
     if (Object.keys(_selectPoint).length < 2 && !e.point.selected) {
         _selectPoint[e.point.x] = e.point.y;
         e.point.select(true, true);
