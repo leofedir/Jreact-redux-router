@@ -7,13 +7,13 @@ import {choroplethLayer} from '../getMapArea'
 import {LightenDarkenColor, rgbToHex} from '../utils/colors'
 import {alias} from '../aliasMapName';
 
-export let refsThis;
+export let refsThisLegend;
 
 class Legend extends PureComponent  {
     constructor() {
         super()
         
-        refsThis = this
+        refsThisLegend = this
     }
     handleChange(e) {
         const {check} = this.props.map_reducer;

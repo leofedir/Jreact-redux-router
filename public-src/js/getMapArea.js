@@ -4,11 +4,11 @@ import esri from 'esri-leaflet/dist/esri-leaflet';
 import {checkStatus, parseJSON} from './checkJSON';
 
 import {set_Range_items, set_legend_data} from './REDUX/actions/actions'
-import {clickOnFeature, set_Hover_Color, set_isAllData, isAtoLayer} from './REDUX/actions/get_map_area'
+import {clickOnFeature, set_Hover_Color, set_isAllData, isAtoLayer, toggle_data} from './REDUX/actions/get_map_area'
 import {store} from './index';
 import {coordinate} from './PageElement/Map'
 import {LightenDarkenColor, rgbToHex} from './utils/colors'
-import {refsThis} from './PageElement/Legend'
+import {refsThisLegend} from './PageElement/Legend'
 import {searchControlPoint} from './renderClaster/claster'
 import '../lib/search';
 // import '../lib/leaflet.pattern'
@@ -233,6 +233,15 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         return arrWithColor[randIndex]
     }
+    
+    function initArea () {
+        const state = store.getState();
+        const {curentMap} = state.map_reducer;
+        
+        if (curentMap !== null && curentMap.search('district') > 0) {
+            store.dispatch(toggle_data(true));
+        }
+    }
 
     function renderSelectedArea() {
         let state = store.getState();
@@ -410,12 +419,12 @@ export default function getMap(properties, rebuild = true, isRegion) {
             const {legend_data} = state.main;
             if (legend_data !== null) {
                 legend_data.refs.map((el, i) => {
-                    if (Object.values(refsThis.refs)[i]) {
-                        Object.values(refsThis.refs)[i].children[0].style.width = '36px';
-                        Object.values(refsThis.refs)[i].children[0].style.height = '26px';
-                        Object.values(refsThis.refs)[i].children[0].style.marginLeft = '0px';
-                        Object.values(refsThis.refs)[i].style.fontFamily = 'inherit';
-                        Object.values(refsThis.refs)[i].style.fontSize = '100%';
+                    if (Object.values(refsThisLegend.refs)[i]) {
+                        Object.values(refsThisLegend.refs)[i].children[0].style.width = '36px';
+                        Object.values(refsThisLegend.refs)[i].children[0].style.height = '26px';
+                        Object.values(refsThisLegend.refs)[i].children[0].style.marginLeft = '0px';
+                        Object.values(refsThisLegend.refs)[i].style.fontFamily = 'inherit';
+                        Object.values(refsThisLegend.refs)[i].style.fontSize = '100%';
                     }
                 });
             }
@@ -427,8 +436,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
             const {legend_data} = state.main;
             if (legend_data !== null) {
                 legend_data.refs.map((el, i) => {
-                    if (Object.values(refsThis.refs)[i]) {
-                        const elI = Object.values(refsThis.refs)[i].children[0];
+                    if (Object.values(refsThisLegend.refs)[i]) {
+                        const elI = Object.values(refsThisLegend.refs)[i].children[0];
                         const hexRef = rgbToHex(elI.style.backgroundColor);
                         const lighterRef = LightenDarkenColor(hexRef, +50);
 
@@ -437,8 +446,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
                             elI.style.marginLeft = '-3px';
                             elI.style.width = '42px';
                             elI.style.height = '32px';
-                            Object.values(refsThis.refs)[i].style.fontFamily = 'arial';
-                            Object.values(refsThis.refs)[i].style.fontSize = '15px';
+                            Object.values(refsThisLegend.refs)[i].style.fontFamily = 'arial';
+                            Object.values(refsThisLegend.refs)[i].style.fontSize = '15px';
                         }
                     }
 
@@ -499,6 +508,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
         };
         Lmap.addLayer(choroplethLayer);
         store.dispatch(set_legend_data(legend_data));
+        initArea();
         renderSelectedArea();
         Lmap.invalidateSize();
     }

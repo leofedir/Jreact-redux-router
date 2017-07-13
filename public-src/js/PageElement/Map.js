@@ -139,28 +139,57 @@ function parserHTMLtoObject(obj) {
 }
 
 class Map extends PureComponent {
-
     componentDidMount() {
         this.createMap();
         cordinateContainer = this.refs.coordinate
     }
-
+    
     hendlerChangeOT(e) {
         let target = e.target;
         let id = e.target.id;
 
         if (target.id == '') return;
-        //
-        this.refs.area1.className = this.refs.area1.className.replace(' active', '')
-        this.refs.area2.className = this.refs.area2.className.replace(' active', '')
-        //
+        
+
+        const {fields, submenu_item} = this.props.main;
+        const {dataChartRegion} = this.props.map_reducer;
+        const {toggle_data} = this.props.MapActions;
+    
         if (!target.className.includes(' active')) {
             target.className += ' active';
         }
+    
+    
+        if (dataChartRegion) {
+            this.refs.area2.className = this.refs.area2.className.replace(' active', '');
+            toggle_data(true)
+        } else {
+            this.refs.area1.className = this.refs.area1.className.replace(' active', '');
+            toggle_data(false)
+        }
+        
+        
+        // // initialize by default
+        // const {toggle_data} = this.props.MapActions;
+        // if (curentMap.search('district' > 0)) {
+        //     console.log('y')
         //
-
-        const {fields, submenu_item} = this.props.main;
-        const {curentMap} = this.props.map_reducer;
+        //     toggle_data(false);
+        //
+        // } else {
+        //     console.log('f')
+        //
+        //     toggle_data(true)
+        //
+        // }
+        //
+        // const {dataChartRegion} = this.props.map_reducer;
+        //
+        //
+        // console.log(curentMap)
+        // toggle_data(false);
+        //
+        
         const mapSet = fields[submenu_item];
 
         if (id == 'region' && mapSet.some(a => ~a.indexOf('__region'))) {
@@ -191,6 +220,7 @@ class Map extends PureComponent {
         Lmap = L.map('map', {zoomControl: false, minZoom: 3}).setView([49, 31], 6);
         layer = esri.basemapLayer('Topographic');
         Lmap.addLayer(layer);
+        
 
         function onMouseMove(e) {
             cordinateContainer.innerHTML = e.latlng.lat.toFixed(3) + "° пн. ш, " + e.latlng.lng.toFixed(3) + "° сх. д."
@@ -268,7 +298,7 @@ class Map extends PureComponent {
                 }
 
                 set_data_district();
-            });
+            })
 
         kadastr = L.tileLayer.wms("http://212.26.144.110/geowebcache/service/wms", {
             layers: 'kadastr',
@@ -378,13 +408,14 @@ class Map extends PureComponent {
 
     button() {
         const {submenu_item} = this.props.main;
+        const {dataChartRegion} = this.props.map_reducer;
         if (submenu_item.indexOf('area_') < 0) {
             return null;
         } else {
             return (
                 <div className="buttons_change_TO">
-                    <p onClick={::this.hendlerChangeOT} ref="area1" id='region' className="button_change_TO">Області</p>
-                    <p onClick={::this.hendlerChangeOT} ref="area2" id='district' className="button_change_TO">Райони</p>
+                    <p onClick={::this.hendlerChangeOT} id='region' ref="area1" className={dataChartRegion ? "button_change_TO active" : "button_change_TO"}>Області</p>
+                    <p onClick={::this.hendlerChangeOT} id='district' ref="area2" className={dataChartRegion ? "button_change_TO" : "button_change_TO active"}>Райони</p>
                     {/*<p onClick={::this.hendlerChangeOT} ref="area" className="button_change_TO">ОТГ</p>*/}
                     {/*<p onClick={::this.hendlerChangeOT} ref="area" className="button_change_TO">Міста</p>*/}
                 </div>
@@ -392,7 +423,7 @@ class Map extends PureComponent {
         }
 
     }
-
+    
     render() {
         const {fetching} = this.props.main;
 

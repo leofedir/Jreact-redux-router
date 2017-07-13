@@ -426,14 +426,14 @@ class BarChart extends Component {
 
                 {/*Right Trend BarChart*/}
                 <div className="item_content">
-                    <div className="region_toggle"
-                         style={propertiesMain === null && !data_success || claster ? {display: 'none'} : {display: 'block'}}
-                         onClick={::this.toggleChartData}>
-                        <div className="region_toggle_item">Області
-                            {chart3 ? '' :
-                                <i className={ !dataChartRegion ? "fa fa-toggle-on" : 'fa fa-toggle-on fa-flip-horizontal' }/>}Райони
-                        </div>
-                    </div>
+                    {/*<div className="region_toggle"*/}
+                         {/*style={propertiesMain === null && !data_success || claster ? {display: 'none'} : {display: 'block'}}*/}
+                         {/*onClick={::this.toggleChartData}>*/}
+                        {/*<div className="region_toggle_item">Області*/}
+                            {/*{chart3 ? '' :*/}
+                                {/*<i className={ !dataChartRegion ? "fa fa-toggle-on" : 'fa fa-toggle-on fa-flip-horizontal' }/>}Райони*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
                     <div ref='chartDiv' id="item_bar_chart" className="item_bar_chart">
                         {chart3 !== null ? chartDiv : null}
                     </div>
