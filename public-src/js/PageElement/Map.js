@@ -187,6 +187,7 @@ class Map extends PureComponent {
     }
 
     createMap() {
+        console.log('create map >>')
         const {set_data_district} = this.props.MapActions;
         Lmap = L.map('map', {zoomControl: false, minZoom: 3}).setView([49, 31], 6);
         layer = esri.basemapLayer('Topographic');

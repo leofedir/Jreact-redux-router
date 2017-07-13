@@ -53,7 +53,6 @@ class BarChart extends Component {
 
         const {barChartToggle} = this.props.MapActions;
         barChartToggle(this.props.map_reducer.bar_chart_full);
-        console.log(11111, this.props.map_reducer.bar_chart_full)
         if (!this.props.map_reducer.bar_chart_full) {
             document.body.style.overflow = 'hidden'
         } else {
@@ -64,8 +63,9 @@ class BarChart extends Component {
     createChart(full = null) {
         // save props
         const {alias, data_success, chart3, dataChartRegion, curency} = this.props.map_reducer;
-        const {range_item, range_items, submenu_item} = this.props.main;
+        const {range_item, range_items, submenu_item, item_name} = this.props.main;
         let curent_year = range_items[range_item] || 'year_13';
+        let yearToTitlaChart = item_name[range_item];
         let parametr;
 
 
@@ -149,7 +149,7 @@ class BarChart extends Component {
                     type: 'bar'
                 },
                 title: {
-                    text: alias + ', ' + parametr + ', 20' + curent_year.substring(5) + 'р.'
+                    text: alias + ', ' + parametr + ', ' + yearToTitlaChart + 'р.'
                 },
                 xAxis: {
                     type: 'category',
@@ -233,7 +233,7 @@ class BarChart extends Component {
                     enabled: false
                 },
                 title: {
-                    text: alias + ', ' + parametr + ', 20' + curent_year.substring(5) + 'р.'
+                    text: alias + ', ' + parametr + ', ' + yearToTitlaChart + 'р.'
                 },
                 xAxis: {
                     type: 'category',
