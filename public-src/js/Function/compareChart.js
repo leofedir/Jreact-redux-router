@@ -63,7 +63,6 @@ export function compareChart(e) {
         // chartW - point.plotX < 100 ? point.plotX = point.plotX - 100 : '';
 
         let labelTEXT = `<p className="labelChart">${new Intl.NumberFormat().format(resulr)} <span> (${persent}  %)</span></p> `;
-        console.log(resulr)
 
         _label = this.chart.renderer.label(labelTEXT, point.plotX, point.plotY, 'callout', x, y, true)
             .css({
@@ -78,8 +77,8 @@ export function compareChart(e) {
             })
             .add();
 
-        let _position = _label.width / 2 < chartW - x;
+        let _position = _label.width + 20 / 2 < chartW - x;
 
-        _position ? '' :  _label.xSetter(point.plotX - ((_label.width / 2 + 40) - (chartW - x) ));
+        _position ? '' :  _label.xSetter(point.plotX - ((_label.width + 20 / 2) - (chartW - x) ));
     }
 }
