@@ -139,10 +139,8 @@ function parserHTMLtoObject(obj) {
 }
 
 class Map extends PureComponent {
-
     componentDidMount() {
         this.createMap();
-       
         cordinateContainer = this.refs.coordinate
     }
     
@@ -154,28 +152,35 @@ class Map extends PureComponent {
         
 
         const {fields, submenu_item} = this.props.main;
-    
-        //
-        
-       
-        
+        const {dataChartRegion} = this.props.map_reducer;
+        const {toggle_data} = this.props.MapActions;
     
         if (!target.className.includes(' active')) {
             target.className += ' active';
         }
-
+    
+    
+        if (dataChartRegion) {
+            this.refs.area2.className = this.refs.area2.className.replace(' active', '');
+            toggle_data(true)
+        } else {
+            this.refs.area1.className = this.refs.area1.className.replace(' active', '');
+            toggle_data(false)
+        }
+        
+        
         // // initialize by default
         // const {toggle_data} = this.props.MapActions;
         // if (curentMap.search('district' > 0)) {
         //     console.log('y')
         //
         //     toggle_data(false);
-        //     this.refs.area2.className = this.refs.area2.className.replace(' active', '')
+        //
         // } else {
         //     console.log('f')
         //
         //     toggle_data(true)
-        //     this.refs.area1.className = this.refs.area1.className.replace(' active', '')
+        //
         // }
         //
         // const {dataChartRegion} = this.props.map_reducer;
@@ -403,13 +408,14 @@ class Map extends PureComponent {
 
     button() {
         const {submenu_item} = this.props.main;
+        const {dataChartRegion} = this.props.map_reducer;
         if (submenu_item.indexOf('area_') < 0) {
             return null;
         } else {
             return (
                 <div className="buttons_change_TO">
-                    <p onClick={::this.hendlerChangeOT} ref="area1" id='region' className="button_change_TO">Області</p>
-                    <p onClick={::this.hendlerChangeOT} ref="area2" id='district' className="button_change_TO">Райони</p>
+                    <p onClick={::this.hendlerChangeOT} id='region' ref="area1" className={dataChartRegion ? "button_change_TO active" : "button_change_TO"}>Області</p>
+                    <p onClick={::this.hendlerChangeOT} id='district' ref="area2" className={dataChartRegion ? "button_change_TO" : "button_change_TO active"}>Райони</p>
                     {/*<p onClick={::this.hendlerChangeOT} ref="area" className="button_change_TO">ОТГ</p>*/}
                     {/*<p onClick={::this.hendlerChangeOT} ref="area" className="button_change_TO">Міста</p>*/}
                 </div>
@@ -417,7 +423,7 @@ class Map extends PureComponent {
         }
 
     }
-
+    
     render() {
         const {fetching} = this.props.main;
 

@@ -9,7 +9,6 @@ import {store} from './index';
 import {coordinate} from './PageElement/Map'
 import {LightenDarkenColor, rgbToHex} from './utils/colors'
 import {refsThisLegend} from './PageElement/Legend'
-// import {refs}
 import {searchControlPoint} from './renderClaster/claster'
 import '../lib/search';
 // import '../lib/leaflet.pattern'
@@ -236,27 +235,12 @@ export default function getMap(properties, rebuild = true, isRegion) {
     }
     
     function initArea () {
-        // initialize by default
         const state = store.getState();
-        console.log('STATE >>>>>>>>>>', state)
         const {curentMap} = state.map_reducer;
-        // const {toggle_data} = state.MapActions;
-        console.log(curentMap);
-        if (curentMap !== null) {
-            console.log('curentMap !== null')
-            if (curentMap.search('district') > 0) {
-                console.log('y');
-                
-                store.dispatch(toggle_data(true));
-                // this.refs.area2.className = this.refs.area2.className.replace(' active', '')
-            } else {
-                console.log('f');
-                
-                // toggle_data(true); by default?
-                // this.refs.area1.className = this.refs.area1.className.replace(' active', '')
-            }
+        
+        if (curentMap !== null && curentMap.search('district') > 0) {
+            store.dispatch(toggle_data(true));
         }
-        //
     }
 
     function renderSelectedArea() {
