@@ -215,7 +215,7 @@ class Chart extends PureComponent {
             });
         }
     }
-
+    
     componentDidMount() {
         // this.Chart()
     }

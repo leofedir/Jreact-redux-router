@@ -9,7 +9,6 @@ export function clearSelectionChart() {
 }
 
 export function compareChart(e) {
-
     if (Object.keys(_selectPoint).length < 2 && !e.point.selected) {
         _selectPoint[e.point.x] = e.point.y;
         e.point.select(true, true);
@@ -34,7 +33,7 @@ export function compareChart(e) {
     }
 
     if (Object.keys(_selectPoint).length == 2) {
-
+        
         let keys = Object.keys(_selectPoint).map(i => +i).sort((a, b) => b - a);
         let resulr = _selectPoint[keys[0]] - _selectPoint[keys[1]];
         let persent = (resulr / _selectPoint[keys[1]]) * 100;
