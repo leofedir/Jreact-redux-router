@@ -92,7 +92,8 @@ export default function claster(data) {
     };
 
     if (searchControlPoint !== null) {
-        Lmap.removeControl(searchControlPoint)
+        Lmap.removeControl(searchControlPoint);
+        searchControlPoint = null;
     }
 
     searchControlPoint = L.control.search({

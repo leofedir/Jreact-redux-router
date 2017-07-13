@@ -91,7 +91,6 @@ export function getMapData(tableData = null, arr = null, url, rebuild = true, al
             })
                 .then(parseJSON)
                 .then((res) => {
-                console.log(res);
                     dispatch({
                         type: GET_MAP_AREA_SUCCESS,
                         payload: res[1]
