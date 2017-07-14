@@ -338,7 +338,7 @@ class Map extends PureComponent {
 
     omButtonMapClick() {
         this.props.Actions.resizeMap(this.props.main.mapFull)
-        setTimeout(() => Lmap.invalidateSize(false), 250)
+        // setTimeout(() => Lmap.invalidateSize(false), 250)
     }
 
     onMouseClick(e) {

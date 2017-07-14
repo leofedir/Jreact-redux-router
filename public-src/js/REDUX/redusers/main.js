@@ -17,7 +17,8 @@ import {
     TOGGLE_SLIDER_PICKER,
     TOGGLE_POPUP_FULLSIZE,
     CHANGE_INPET_SEARCH,
-    SHOW_INPUT
+    SHOW_INPUT,
+    SET_CLASTER_CHART_DATA
 
 } from '../actions/constant'
 
@@ -54,7 +55,7 @@ export default function main(state = initialState, action) {
                 submenu_item: action.payload,
                 legend_data: null,
                 claster_layers: null,
-                mapFull: false,
+                mapFull: true,
                 show_range: false,
                 fetching: true
             };
@@ -87,10 +88,10 @@ export default function main(state = initialState, action) {
             };
 
         case GET_SUBMENU_ERROR:
-            return {...state, fields: null, fetching: false};
+            return {...state, fields: null, fetching: false,};
 
         case SET_LEGEND_DATA:
-            return {...state, legend_data: action.payload, fetching: false};
+            return {...state, legend_data: action.payload, fetching: false, mapFull: false};
 
         case GET_CLASTER_REQUEST:
             return {...state, fetching: true, claster_layers: null, legend_data: null};
@@ -118,6 +119,9 @@ export default function main(state = initialState, action) {
 
         case SHOW_INPUT:
             return {...state, show_input: action.payload};
+
+        case SET_CLASTER_CHART_DATA:
+            return {...state, mapFull: false};
 
         default:
             return state;
