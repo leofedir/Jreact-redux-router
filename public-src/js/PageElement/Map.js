@@ -26,6 +26,7 @@ let layer;
 let curentMap = null;
 let cadastral = null;
 let _curentMap = null;
+let _submenu_item = null;
 
 //add two finger scroll
 
@@ -145,17 +146,32 @@ class Map extends PureComponent {
         this.createMap();
         cordinateContainer = this.refs.coordinate
     }
+
+    componentDidUpdate() {
+        const {submenu_item} = this.props.main;
+
+        _submenu_item === null ? _submenu_item = submenu_item : '';
+
+        if (submenu_item != _submenu_item) {
+            _submenu_item = submenu_item;
+            _curentMap = null;
+            this.refs.region.classList.remove('active')
+            this.refs.district.classList.remove('active')
+        }
+    }
     
     hendlerChangeOT(e) {
         let target = e.target;
         let id = e.target.id;
 
-
-
         const {fields, submenu_item} = this.props.main;
         const mapSet = fields[submenu_item];
         const {curentMap} = this.props.map_reducer;
+
+
+
         _curentMap === null ? _curentMap = curentMap : '';
+
 
         if (~_curentMap.indexOf(id)) {
             return
@@ -224,9 +240,7 @@ class Map extends PureComponent {
 
     }
 
-    componentDidUpdate() {
-        // ukraine.clearLayers()
-    }
+
 
     zoom_in() {
         Lmap.zoomIn(1)
@@ -433,7 +447,6 @@ class Map extends PureComponent {
 
     button() {
         const {submenu_item} = this.props.main;
-        const {dataChartRegion} = this.props.map_reducer;
         if (submenu_item.indexOf('area_') < 0) {
             return null;
         } else {

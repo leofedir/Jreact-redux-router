@@ -57,11 +57,14 @@ class BarChart extends PureComponent {
 
     createChart(full = null) {
 
+
         const {alias, data_success, dataChartRegion, curency} = this.props.map_reducer;
         const {range_item, range_items, submenu_item, item_name} = this.props.main;
         let curent_year = range_items[range_item] || 'year_13';
         let yearToTitlaChart = item_name[range_item];
         let parametr;
+
+        console.log('dataChartRegion >>', dataChartRegion)
 
         if (data_success && propertiesMain && dataChartRegion) {
 

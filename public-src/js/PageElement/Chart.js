@@ -118,7 +118,7 @@ class Chart extends PureComponent {
                     formatter: function () {
                         let s = '<p style="font-weight: 300">' + 'Станом на 01.01.' + (+this.x+1) + ' р.' + '</p>';
                         let p = '<br/><p>' + this.points.map(i => i.series.name) + ': '+
-                            this.y + ' '+ tooltipParametr + '</p>';
+                            format(this.y) + ' '+ tooltipParametr + '</p>';
                         
                         return s+p
                     },
