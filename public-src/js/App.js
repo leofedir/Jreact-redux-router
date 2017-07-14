@@ -17,7 +17,7 @@ import Info from './PageElement/info';
 import MapTitle from './PageElement/MapTitle';
 import BubbleChart from './PageElement/BubbleChart';
 
-let wrapper = document.getElementById('wrapper');
+// let wrapper = document.getElementById('wrapper');
 
 class App extends Component {
     componentDidUpdate() {

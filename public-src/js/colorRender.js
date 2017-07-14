@@ -1,8 +1,8 @@
 const L = require('leaflet');
 const chroma = require('chroma-js');
-import {set_isAllData} from './REDUX/actions/get_map_area';
-import {store} from './index';
-import {LightenDarkenColor} from './utils/colors'
+// import {set_isAllData} from './REDUX/actions/get_map_area';
+// import {store} from './index';
+// import {LightenDarkenColor} from './utils/colors'
 
 L.choropleth = function (geojson, opts) {
     opts = opts || {};

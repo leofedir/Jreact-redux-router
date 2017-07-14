@@ -28,17 +28,10 @@ let layerObject;
 
 export default function getMap(properties, rebuild = true, isRegion) {
 
-    if (ukraine) {
-        ukraine.clearLayers()
-
-        console.log('ukraine')
-        // Lmap.removeLayer(choroplethLayer)
-    }
-
     let data = null;
     let layer = null;
     let searchItem = null;
-    let districtContainer = [];
+    // let districtContainer = [];
 
     if (unsubscribe !== null) {
         unsubscribe();
