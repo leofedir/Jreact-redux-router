@@ -152,7 +152,7 @@ class Map extends PureComponent {
 
         _submenu_item === null ? _submenu_item = submenu_item : '';
 
-        if (submenu_item != _submenu_item) {
+        if (submenu_item != _submenu_item && Object.keys(this.refs).length > 1) {
             _submenu_item = submenu_item;
             _curentMap = null;
             this.refs.region.classList.remove('active')
