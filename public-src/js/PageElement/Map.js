@@ -11,7 +11,7 @@ import SubMenu from "./getSubMenu";
 import getMap from './../getMapArea';
 
 export let Lmap = null;
-export let ukraine;
+export let ukraine = null;
 export let coordinate = {};
 
 let icon = L.icon({
@@ -141,6 +141,7 @@ function parserHTMLtoObject(obj) {
 
 class Map extends PureComponent {
     componentDidMount() {
+
         this.createMap();
         cordinateContainer = this.refs.coordinate
     }
@@ -224,6 +225,7 @@ class Map extends PureComponent {
     }
 
     componentDidUpdate() {
+        // ukraine.clearLayers()
     }
 
     zoom_in() {

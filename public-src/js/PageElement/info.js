@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import {choroplethLayer} from '../getMapArea.js'
+// import {choroplethLayer} from '../getMapArea.js'
 class Info extends PureComponent {
     // isAllData() {
     //     if (choroplethLayer) {

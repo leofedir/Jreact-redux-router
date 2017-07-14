@@ -28,6 +28,13 @@ let layerObject;
 
 export default function getMap(properties, rebuild = true, isRegion) {
 
+    if (ukraine) {
+        ukraine.clearLayers()
+
+        console.log('ukraine')
+        // Lmap.removeLayer(choroplethLayer)
+    }
+
     let data = null;
     let layer = null;
     let searchItem = null;
@@ -70,12 +77,12 @@ export default function getMap(properties, rebuild = true, isRegion) {
             data = propertiesMain.__region;
             filds = propertiesMain.__region[0].properties
 
-            districtContainer = propertiesMain.__district;
+            // districtContainer = propertiesMain.__district;
         } else {
             data = propertiesMain.__district;
             filds = propertiesMain.__district[0].properties
 
-            districtContainer = propertiesMain.__district;
+            // districtContainer = propertiesMain.__district;
         }
 
 
@@ -114,17 +121,18 @@ export default function getMap(properties, rebuild = true, isRegion) {
             data = propertiesMain.__region;
             filds = propertiesMain.__region[0].properties;
 
-            districtContainer = propertiesMain.__district;
+            // districtContainer = propertiesMain.__district;
         } else {
             data = propertiesMain.__district;
             filds = propertiesMain.__district[0].properties;
 
-            districtContainer = propertiesMain.__district;
+            // districtContainer = propertiesMain.__district;
         }
     }
 
     if (Lmap.hasLayer(choroplethLayer)) {
         Lmap.removeLayer(choroplethLayer)
+        choroplethLayer.clearLayers()
     }
 
     let state = store.getState();
@@ -278,8 +286,11 @@ export default function getMap(properties, rebuild = true, isRegion) {
     function renderLayer() {
         console.log('create layer')
 
+
         if (Lmap.hasLayer(choroplethLayer)) {
             Lmap.removeLayer(choroplethLayer)
+            choroplethLayer.clearLayers()
+            choroplethLayer = null;
         }
 
         const eventsMap = {

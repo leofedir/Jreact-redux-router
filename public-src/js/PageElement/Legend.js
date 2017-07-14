@@ -12,7 +12,6 @@ export let refsThisLegend;
 class Legend extends PureComponent  {
     constructor() {
         super()
-        
         refsThisLegend = this
     }
     handleChange(e) {
