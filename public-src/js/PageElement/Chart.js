@@ -143,7 +143,8 @@ class Chart extends PureComponent {
 
                         let obj = {
                             name: alias_series[key] || key,
-                            data: []
+                            data: [],
+                            visible: i===0
                         };
 
                         chart2[key].forEach(item => {
@@ -166,7 +167,8 @@ class Chart extends PureComponent {
 
                     let obj = {
                         name: alias_series[key] || key,
-                        data: []
+                        data: [],
+                        visible: i===0
                     };
 
                     chart1[key].forEach(item => {

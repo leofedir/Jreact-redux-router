@@ -109,6 +109,9 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         Lmap.eachLayer(function (layer) {
             Lmap.removeLayer(layer)
+            // console.log('layer 1 >>', layer)
+            // layer.clearLayers()
+            // console.log('layer 2 >>', layer)
         });
 
         if (searchControlPoint !== null) {
