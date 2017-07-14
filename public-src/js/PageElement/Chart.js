@@ -49,8 +49,8 @@ class Chart extends PureComponent {
         const {item_name} = this.props.main;
         const format = new Intl.NumberFormat().format;
 
-
         if (feature != null) {
+
             tooltipParametr = curency != "" ? curency : feature.parameter;
 
             let myData = [
@@ -130,7 +130,7 @@ class Chart extends PureComponent {
             chart.destroy();
             chart = null
         } else if (chart1 !== null) {
-            tooltipParametr = 'UAH'
+            tooltipParametr = 'UAH';
             let myData2 = [];
             let labels2 = [];
 
@@ -217,14 +217,17 @@ class Chart extends PureComponent {
     }
     
     componentDidMount() {
-        // this.Chart()
+        this.Chart()
     }
 
     componentDidUpdate() {
-        this.Chart();
+        this.Chart()
         clearSelectionChart();
     }
 
+    componentWillUpdate() {
+
+    }
     onHeaderChartClick() {
         this.props.Actions.resizeMap(this.props.main.mapFull)
     }

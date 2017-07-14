@@ -10,6 +10,7 @@ import ButtonMenu from './PageElement/buttonMenu';
 import Popup from './PageElement/Popup';
 import Chart from './PageElement/Chart';
 import BarChart from './PageElement/BarChart';
+import MultiChart from './PageElement/MultiChart';
 import SliderRange from './PageElement/SliderRange';
 import Legend from './PageElement/Legend';
 import Info from './PageElement/info';
@@ -22,7 +23,7 @@ class App extends Component {
 
     render() {
         const {showMenu, mapFull} = this.props.main;
-        const {data_bubble} = this.props.map_reducer;
+        const {data_bubble, chart3, data_success, feature, chart1, chart2} = this.props.map_reducer;
         // const mainRightStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `disabled` : ``;
         // const mainChartStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `zero-height`: ``;
 
@@ -47,8 +48,9 @@ class App extends Component {
                             <Info />
                         </div>
                         <div className={`main__chart`}>
-                            <Chart />
-                            <BarChart />
+                            {feature !== null || chart1 !== null || chart2 !== null ? <Chart /> : ""}
+                            {data_success ? <BarChart /> : ''}
+                            {chart3 !== null ? <MultiChart /> : ''}
                         </div>
                         {data_bubble ? <div className={`main__chart `}><BubbleChart /></div> : ''}
                     </div>

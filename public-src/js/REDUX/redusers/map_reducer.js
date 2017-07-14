@@ -141,7 +141,6 @@ export default function map(state = initialState, action) {
             return {...state, check: action.payload};
 
         case TOGGLE_DATA:
-            console.log('toggle ', action.payload)
             return {...state, dataChartRegion: action.payload};
 
         case TOGGLE_CURENCY:

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -10,44 +10,39 @@ import {propertiesMain} from '../getMapArea';
 const Highcharts = require('highcharts');
 const higchartsDrilldown = require('highcharts/modules/drilldown.js');
 
-const aliasMultiChart = {
-    holodnavoda: 'Обсяг споживання холодної води, кб.м',
-    haryachavoda: 'Обсяг споживання гарячої води, кб.м',
-    uchniv: 'Кількість учнів'
-};
+higchartsDrilldown(Highcharts);
 
 let myCurency = '';
 let storeParametr;
 
-higchartsDrilldown(Highcharts);
 let myChart = null;
 let dataStore = {};
 
-Highcharts.Point.prototype.highlight = function (event) {
-    this.onMouseOver(); // Show the hover marker
-    // this.series.chart.tooltip.refresh(); // Show the tooltip
-    this.series.chart.xAxis[0].drawCrosshair(event, this); // Show the crosshair
-};
-
-// Highcharts.Pointer.prototype.reset = function () {
-//     return undefined;
+// Highcharts.Point.prototype.highlight = function (event) {
+//     this.onMouseOver(); // Show the hover marker
+//     // this.series.chart.tooltip.refresh(); // Show the tooltip
+//     this.series.chart.xAxis[0].drawCrosshair(event, this); // Show the crosshair
 // };
+//
+// // Highcharts.Pointer.prototype.reset = function () {
+// //     return undefined;
+// // };
+//
+// function syncExtremes(e) {
+//     let thisChart = this.chart;
+//
+//     if (e.trigger !== 'syncExtremes') { // Prevent feedback loop z
+//         Highcharts.each(Highcharts.charts, function (chart) {
+//             if (chart !== thisChart) {
+//                 if (chart.xAxis[0].setExtremes) { // It is null while updating
+//                     chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {trigger: 'syncExtremes'});
+//                 }
+//             }
+//         });
+//     }
+// }
 
-function syncExtremes(e) {
-    let thisChart = this.chart;
-
-    if (e.trigger !== 'syncExtremes') { // Prevent feedback loop z
-        Highcharts.each(Highcharts.charts, function (chart) {
-            if (chart !== thisChart) {
-                if (chart.xAxis[0].setExtremes) { // It is null while updating
-                    chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {trigger: 'syncExtremes'});
-                }
-            }
-        });
-    }
-}
-
-class BarChart extends Component {
+class BarChart extends PureComponent {
 
     toggleChart() {
 
@@ -62,13 +57,14 @@ class BarChart extends Component {
 
     createChart(full = null) {
 
-        // save props
-        const {alias, data_success, chart3, dataChartRegion, curency} = this.props.map_reducer;
+        const {alias, data_success, dataChartRegion, curency} = this.props.map_reducer;
         const {range_item, range_items, submenu_item, item_name} = this.props.main;
         let curent_year = range_items[range_item] || 'year_13';
         let yearToTitlaChart = item_name[range_item];
         let parametr;
+
         if (data_success && propertiesMain && dataChartRegion) {
+            console.log('dataChartRegion >>', dataChartRegion)
 
             storeParametr = submenu_item + curency.toLowerCase() + curent_year;
 
@@ -265,131 +261,18 @@ class BarChart extends Component {
             });
 
         }
-        else if (!data_success && myChart !== null && chart3 === null) {
+        else if (!data_success && myChart !== null) {
             myChart.destroy();
             myChart = null
         }
     }
 
-    handlerOnMouseMove(e) {
-
-        let chart,
-            point,
-            i = Highcharts.charts.length - 3,
-            lenth = Highcharts.charts.length,
-            event;
-
-        for (i; i < lenth; i++) {
-            if (Highcharts.charts[i] !== undefined) {
-                chart = Highcharts.charts[i];
-                event = chart.pointer.normalize(e.nativeEvent); // Find coordinates within the chart
-                point = chart.series[0].searchPoint(event, true); // Get the hovered point
-                if (point) {
-                    point.highlight(e.nativeEvent);
-                }
-            }
-        }
-    }
-
-    getMultiChart() {
-        const {chart3} = this.props.map_reducer;
-        const chartData = [];
-        const chartType = ['line', 'area', 'area'];
-        const units = ['осіб', 'кб.м', 'кб.м'];
-        const year_labels = ['2014 р', '2015 р', '2016 р'];
-        const colors = ['#7cb5ec', '#f7a35c', '#90ee7e'];
-
-
-        for (let key in chart3) {
-
-            if (chart3.hasOwnProperty(key)) {
-                let obj = {
-                    name: key,
-                    data: []
-                };
-                chart3[key].forEach(item => {
-                    obj.data.push(item.value)
-                });
-
-                chartData.push(obj)
-            }
-        }
-
-        let HTML = [];
-        chartData.reverse()
-        chartData.forEach((dataset, i) => {
-
-                HTML.push(<div key={i} id={'chart' + i}/>);
-
-                let options = new Object({
-                    chart: {
-                        marginLeft: 45, // Keep all charts left aligned
-                        spacingTop: 20,
-                        marginRight: 20,
-                        spacingBottom: 20,
-                        renderTo: 'chart' + i
-                    },
-                    title: {
-                        text: aliasMultiChart[dataset.name],
-                        align: 'left',
-                        margin: 0,
-                        x: 30
-                    },
-                    credits: {
-                        enabled: false
-                    },
-                    legend: {
-                        enabled: false
-                    },
-                    xAxis: {
-                        crosshair: true,
-                        events: {
-                            setExtremes: syncExtremes
-                        },
-                        categories: year_labels
-                    },
-                    yAxis: {
-                        title: {
-                            text: null
-                        }
-                    },
-                    tooltip: {
-                        positioner: function () {
-                            return {
-                                x: this.chart.chartWidth - this.label.width - 20, // right aligned
-                                y: -1 // align to title
-                            };
-                        },
-                        borderWidth: 0,
-                        backgroundColor: 'none',
-                        pointFormat: '{point.y}',
-                        headerFormat: '',
-                        shadow: false,
-                        style: {
-                            fontSize: '18px'
-                        },
-                        valueDecimals: dataset.valueDecimals
-                    },
-                    series: [{
-                        data: dataset.data,
-                        name: dataset.name,
-                        type: chartType[i],
-                        color: colors[i],
-                        fillOpacity: 0.3,
-                        tooltip: {
-                            valueSuffix: ' ' + units[i]
-                        }
-                    }]
-                });
-
-                new Highcharts.Chart(options)
-            }
-        );
-    }
-
     componentDidUpdate() {
-
-        this.props.map_reducer.chart3 !== null ? this.getMultiChart() : null
+        this.createChart(this.props.map_reducer.bar_chart_full)
+        // this.props.map_reducer.chart3 !== null ? this.getMultiChart() : null
+    }
+    componentDidMount() {
+        // this.createChart()
     }
 
     componentWillUpdate() {
@@ -397,18 +280,17 @@ class BarChart extends Component {
         window.scrollTo(0,0);
     }
 
-
     toggleChartData() {
         this.props.MapActions.toggle_data(this.props.map_reducer.dataChartRegion)
     }
 
     render() {
         const {bar_chart_full, chart3, dataChartRegion, data_success, bubble_chart_full, chart_full, claster} = this.props.map_reducer;
-        const chartDiv = <div ref="multiChart" className="multiChart" onMouseMove={::this.handlerOnMouseMove}>
-            <div id="chart0" className="item_bar_chart"/>
-            <div id="chart1" className="item_bar_chart"/>
-            <div id="chart2" className="item_bar_chart"/>
-        </div>;
+        // const chartDiv = <div ref="multiChart" className="multiChart" onMouseMove={::this.handlerOnMouseMove}>
+        //     <div id="chart0" className="item_bar_chart"/>
+        //     <div id="chart1" className="item_bar_chart"/>
+        //     <div id="chart2" className="item_bar_chart"/>
+        // </div>;
         const chartStyle = (bubble_chart_full || chart_full) ? `disabled` : ``;
 
         return (
@@ -425,14 +307,14 @@ class BarChart extends Component {
 
                 {/*Right Trend BarChart*/}
                 <div className="item_content">
-                    {/*<div className="region_toggle"*/}
-                         {/*style={propertiesMain === null && !data_success || claster ? {display: 'none'} : {display: 'block'}}*/}
-                         {/*onClick={::this.toggleChartData}>*/}
-                        {/*<div className="region_toggle_item">Області*/}
-                            {/*{chart3 ? '' :*/}
-                                {/*<i className={ !dataChartRegion ? "fa fa-toggle-on" : 'fa fa-toggle-on fa-flip-horizontal' }/>}Райони*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
+                    <div className="region_toggle"
+                         style={propertiesMain === null && !data_success || claster ? {display: 'none'} : {display: 'block'}}
+                         onClick={::this.toggleChartData}>
+                        <div className="region_toggle_item">Області
+                            {chart3 ? '' :
+                                <i className={ !dataChartRegion ? "fa fa-toggle-on" : 'fa fa-toggle-on fa-flip-horizontal' }/>}Райони
+                        </div>
+                    </div>
                     <div ref='chartDiv' id="item_bar_chart" className="item_bar_chart">
                         {chart3 !== null ? chartDiv : null}
                     </div>
