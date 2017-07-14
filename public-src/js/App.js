@@ -20,6 +20,9 @@ import BubbleChart from './PageElement/BubbleChart';
 let wrapper = document.getElementById('wrapper');
 
 class App extends Component {
+    componentDidUpdate() {
+        window.scrollTo(0,0);
+    }
 
     render() {
         const {showMenu, mapFull} = this.props.main;

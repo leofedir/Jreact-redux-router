@@ -64,7 +64,6 @@ class BarChart extends PureComponent {
         let parametr;
 
         if (data_success && propertiesMain && dataChartRegion) {
-            console.log('dataChartRegion >>', dataChartRegion)
 
             storeParametr = submenu_item + curency.toLowerCase() + curent_year;
 
@@ -280,9 +279,9 @@ class BarChart extends PureComponent {
         window.scrollTo(0,0);
     }
 
-    toggleChartData() {
-        this.props.MapActions.toggle_data(this.props.map_reducer.dataChartRegion)
-    }
+    // toggleChartData() {
+    //     this.props.MapActions.toggle_data(this.props.map_reducer.dataChartRegion)
+    // }
 
     render() {
         const {bar_chart_full, chart3, dataChartRegion, data_success, bubble_chart_full, chart_full, claster} = this.props.map_reducer;
@@ -307,14 +306,14 @@ class BarChart extends PureComponent {
 
                 {/*Right Trend BarChart*/}
                 <div className="item_content">
-                    <div className="region_toggle"
-                         style={propertiesMain === null && !data_success || claster ? {display: 'none'} : {display: 'block'}}
-                         onClick={::this.toggleChartData}>
-                        <div className="region_toggle_item">Області
-                            {chart3 ? '' :
-                                <i className={ !dataChartRegion ? "fa fa-toggle-on" : 'fa fa-toggle-on fa-flip-horizontal' }/>}Райони
-                        </div>
-                    </div>
+                    {/*<div className="region_toggle"*/}
+                         {/*style={propertiesMain === null && !data_success || claster ? {display: 'none'} : {display: 'block'}}*/}
+                         {/*onClick={::this.toggleChartData}>*/}
+                        {/*<div className="region_toggle_item">Області*/}
+                            {/*{chart3 ? '' :*/}
+                                {/*<i className={ !dataChartRegion ? "fa fa-toggle-on" : 'fa fa-toggle-on fa-flip-horizontal' }/>}Райони*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
                     <div ref='chartDiv' id="item_bar_chart" className="item_bar_chart">
                         {chart3 !== null ? chartDiv : null}
                     </div>

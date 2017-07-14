@@ -4,8 +4,6 @@ import {bindActionCreators} from 'redux';
 
 import * as MapActions from '../REDUX/actions/get_map_area';
 import * as Actions from '../REDUX/actions/actions';
-import {region} from './region_null';
-import {propertiesMain} from '../getMapArea';
 
 const Highcharts = require('highcharts');
 
@@ -41,6 +39,26 @@ function syncExtremes(e) {
 
 
 class MultiChart extends Component {
+
+    componentDidMount() {
+        this.getMultiChart()
+    }
+
+    componentDidUpdate() {
+        this.getMultiChart()
+    }
+
+    toggleChart() {
+
+        const {barChartToggle} = this.props.MapActions;
+        barChartToggle(this.props.map_reducer.bar_chart_full);
+        if (!this.props.map_reducer.bar_chart_full) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = 'auto'
+        }
+    }
+
     handlerOnMouseMove(e) {
 
         let chart,
@@ -86,7 +104,7 @@ class MultiChart extends Component {
         }
 
         let HTML = [];
-        chartData.reverse()
+        chartData.reverse();
         chartData.forEach((dataset, i) => {
 
                 HTML.push(<div key={i} id={'chart' + i}/>);
@@ -157,7 +175,7 @@ class MultiChart extends Component {
         );
     }
     render() {
-        const {bar_chart_full, chart3, dataChartRegion, data_success, bubble_chart_full, chart_full, claster} = this.props.map_reducer;
+        const {bar_chart_full,chart_full} = this.props.map_reducer;
         const chartDiv = <div ref="multiChart" className="multiChart" onMouseMove={::this.handlerOnMouseMove}>
             <div id="chart0" className="item_bar_chart"/>
             <div id="chart1" className="item_bar_chart"/>
@@ -170,7 +188,11 @@ class MultiChart extends Component {
                 {/*Title for right Trend BarChart*/}
                 <div className="item_header" >
                     <div className="map_heder_title">Тренд</div>
+                    <div className="icon-container" onClick={ ::this.toggleChart }>
+                        <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"/>
+                    </div>
                 </div>
+
 
                 {/*Right Trend BarChart*/}
                 <div className="item_content">

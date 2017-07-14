@@ -25,6 +25,7 @@ let kadastr;
 let layer;
 let curentMap = null;
 let cadastral = null;
+let _curentMap = null;
 
 //add two finger scroll
 
@@ -148,26 +149,52 @@ class Map extends PureComponent {
         let target = e.target;
         let id = e.target.id;
 
-        if (target.id == '') return;
-        
+
 
         const {fields, submenu_item} = this.props.main;
-        const {dataChartRegion} = this.props.map_reducer;
-        const {toggle_data} = this.props.MapActions;
-    
-        if (target.className.includes(' active')) {
+        const mapSet = fields[submenu_item];
+        const {curentMap} = this.props.map_reducer;
+        _curentMap === null ? _curentMap = curentMap : '';
+
+        if (~_curentMap.indexOf(id)) {
             return
         }
-        
-        if (dataChartRegion) {
-            this.refs.area2.className = this.refs.area2.className.replace(' active', '');
-            toggle_data(false)
-            target.className += ' active';
-        } else {
-            this.refs.area1.className = this.refs.area1.className.replace(' active', '');
-            toggle_data(true)
-            target.className += ' active';
+
+        if (id == 'region' && mapSet.some(a => ~a.indexOf('__region'))) {
+            target.classList.add('active')
+            this.refs.district.classList.remove('active')
+            getMap(null, false, true)
+
+            // toggle BarChart
+            this.props.MapActions.toggle_data(this.props.map_reducer.dataChartRegion)
+
+            _curentMap = id
+
+        } else if (id == 'district' && mapSet.some(a => ~a.indexOf('__district'))) {
+            target.classList.add('active')
+            this.refs.region.classList.remove('active')
+
+            getMap(null, false, false)
+
+            // toggle BarChart
+            this.props.MapActions.toggle_data(this.props.map_reducer.dataChartRegion)
+
+            _curentMap = id
         }
+    
+        // if (target.className.includes(' active')) {
+        //     return
+        // }
+        //
+        // if (dataChartRegion) {
+        //     this.refs.area2.className = this.refs.area2.className.replace(' active', '');
+        //     toggle_data(false)
+        //     target.className += ' active';
+        // } else {
+        //     this.refs.area1.className = this.refs.area1.className.replace(' active', '');
+        //     toggle_data(true)
+        //     target.className += ' active';
+        // }
         
         
         // // initialize by default
@@ -191,14 +218,9 @@ class Map extends PureComponent {
         // toggle_data(false);
         //
         
-        const mapSet = fields[submenu_item];
 
-        if (id == 'region' && mapSet.some(a => ~a.indexOf('__region'))) {
-            getMap(null, false, true)
 
-        } else if (id == 'district' && mapSet.some(a => ~a.indexOf('__district'))) {
-            getMap(null, false, false)
-        }
+
     }
 
     componentDidUpdate() {
@@ -415,8 +437,8 @@ class Map extends PureComponent {
         } else {
             return (
                 <div className="buttons_change_TO">
-                    <p onClick={::this.hendlerChangeOT} id='region' ref="area1" className={dataChartRegion ? "button_change_TO active" : "button_change_TO"}>Області</p>
-                    <p onClick={::this.hendlerChangeOT} id='district' ref="area2" className={dataChartRegion ? "button_change_TO" : "button_change_TO active"}>Райони</p>
+                    <p onClick={::this.hendlerChangeOT} id='region' ref="region" className="button_change_TO">Області</p>
+                    <p onClick={::this.hendlerChangeOT} id='district' ref="district" className="button_change_TO">Райони</p>
                     {/*<p onClick={::this.hendlerChangeOT} ref="area" className="button_change_TO">ОТГ</p>*/}
                     {/*<p onClick={::this.hendlerChangeOT} ref="area" className="button_change_TO">Міста</p>*/}
                 </div>

@@ -210,7 +210,6 @@ export function toggle_check(arr) {
 }
 
 export function toggle_data(state) {
-    console.log('state >>', state)
     return {
         type: TOGGLE_DATA,
         payload: !state
