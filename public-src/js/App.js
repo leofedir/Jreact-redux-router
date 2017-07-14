@@ -51,9 +51,9 @@ class App extends Component {
                             <Info />
                         </div>
                         <div className={`main__chart`}>
-                            {feature !== null || chart1 !== null || chart2 !== null ? <Chart /> : ""}
+                            {feature !== null || chart1 !== null || chart2 !== null || data_success ? <Chart /> : ""}
                             {data_success ? <BarChart /> : ''}
-                            {chart3 !== null ? <MultiChart /> : ''}
+                            {chart3 !== null  ? <MultiChart /> : ''}
                         </div>
                         {data_bubble ? <div className={`main__chart `}><BubbleChart /></div> : ''}
                     </div>
