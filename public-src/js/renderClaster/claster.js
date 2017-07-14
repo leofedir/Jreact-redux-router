@@ -2,15 +2,17 @@ import {Lmap} from "../PageElement/Map";
 import {store} from '../index'
 import L from 'leaflet';
 import esri from 'esri-leaflet/dist/esri-leaflet';
-import {clickOnFeatureClaster, set_chart_data} from '../REDUX/actions/get_map_area'
+import {clickOnFeatureClaster} from '../REDUX/actions/get_map_area'
 
 import {searchControlArea} from '../getMapArea'
 
 import 'leaflet.markercluster/dist/leaflet.markercluster-src';
 import '../../lib/search';
-import 'leaflet-pulse-icon/dist/L.Icon.Pulse.css'
-import 'leaflet-pulse-icon/dist/L.Icon.Pulse'
-import "leaflet-search/src/leaflet-search.css"
+import 'leaflet-pulse-icon/dist/L.Icon.Pulse.css';
+import 'leaflet-pulse-icon/dist/L.Icon.Pulse';
+import "leaflet-search/src/leaflet-search.css";
+
+import {chartData} from '../Function/chartData'
 
 // import getFields from './setFields';
 // import Cluster from 'esri-leaflet-cluster';
@@ -58,8 +60,9 @@ export default function claster(data) {
         Lmap.removeLayer(layer)
     });
 
-    Lmap.setView([49, 31], 5);
     esri.basemapLayer('Topographic').addTo(Lmap);
+    Lmap.setView([49, 31], 5);
+
 
     let icon = L.icon({
         iconUrl: '/img/marker-icon.svg',
@@ -70,6 +73,12 @@ export default function claster(data) {
     let pulsingIcon = L.icon.pulse({iconSize: [20, 20], color: 'red'});
 
     myClaster = L.markerClusterGroup({chunkedLoading: true}).addTo(Lmap);
+
+    setTimeout(() => {
+        Lmap.setView([49, 31], 5);
+        // Lmap.invalidateSize(false)
+    }, 300)
+
     myClaster.on('click', whenClicked);
 
     createMarkers = function (id) {
@@ -116,7 +125,7 @@ export default function claster(data) {
             searchControlPoint.options.marker.remove()
         }, 4000)
     });
-    
+
 
     function whenClicked(e) {
         let feature = e.layer.feature.properties;
@@ -126,50 +135,6 @@ export default function claster(data) {
         }
     }
 
-    function chartData(feature_claster) {
-        let chart1 = null;
-        let chart2 = null;
-        let chart3 = null;
-
-        if (feature_claster !== null) {
-            for (let key in feature_claster) {
-                if (feature_claster.hasOwnProperty(key)) {
-                    let name = key.slice(0, key.indexOf('_'));
-                    let serias = key.slice(7, key.length - 5);
-                    let year = +key.slice(key.length - 4);
-                    let value = +feature_claster[key];
-
-                    if (name == 'chart1') {
-                        chart1 === null ? chart1 = {} : '';
-                        chart1[serias] ? chart1[serias].push({year, value}) : chart1[serias] = [{year, value}];
-                    }
-                    else if (name == 'chart2') {
-                        chart2 === null ? chart2 = {} : '';
-                        chart2[serias] ? chart2[serias].push({year, value}) : chart2[serias] = [{year, value}];
-                    }
-                    else if (name == 'chart3' || name == 'kilkistuchniv') {
-                        chart3 === null ? chart3 = {} : '';
-                        chart3[serias] ? chart3[serias].push({year, value}) : chart3[serias] = [{year, value}];
-                    }
-                }
-            }
-
-            function sort_data(obj) {
-                for (let key in obj) {
-                    if (obj.hasOwnProperty(key)) {
-                        obj[key].sort((a, b) => a.year - b.year)
-                    }
-                }
-            }
-
-            sort_data(chart1);
-            sort_data(chart2);
-            sort_data(chart3);
-
-            store.dispatch(set_chart_data(chart1, chart2, chart3))
-
-        }
-    }
 
     showLayer(0)
 }
