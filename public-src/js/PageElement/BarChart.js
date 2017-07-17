@@ -64,8 +64,6 @@ class BarChart extends PureComponent {
         let yearToTitlaChart = item_name[range_item];
         let parametr;
 
-        console.log('dataChartRegion >>', dataChartRegion)
-
         if (data_success && propertiesMain && dataChartRegion) {
 
             storeParametr = submenu_item + curency.toLowerCase() + curent_year;

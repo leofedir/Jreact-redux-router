@@ -2,15 +2,17 @@ import {Lmap} from "../PageElement/Map";
 import {store} from '../index'
 import L from 'leaflet';
 import esri from 'esri-leaflet/dist/esri-leaflet';
-import {clickOnFeatureClaster, set_chart_data} from '../REDUX/actions/get_map_area'
+import {clickOnFeatureClaster} from '../REDUX/actions/get_map_area'
 
 import {searchControlArea} from '../getMapArea'
 
 import 'leaflet.markercluster/dist/leaflet.markercluster-src';
 import '../../lib/search';
-import 'leaflet-pulse-icon/dist/L.Icon.Pulse.css'
-import 'leaflet-pulse-icon/dist/L.Icon.Pulse'
-import "leaflet-search/src/leaflet-search.css"
+import 'leaflet-pulse-icon/dist/L.Icon.Pulse.css';
+import 'leaflet-pulse-icon/dist/L.Icon.Pulse';
+import "leaflet-search/src/leaflet-search.css";
+
+import {chartData} from '../Function/chartData'
 
 // import getFields from './setFields';
 // import Cluster from 'esri-leaflet-cluster';
@@ -59,8 +61,9 @@ export default function claster(data) {
         Lmap.removeLayer(layer)
     });
 
-    Lmap.setView([49, 31], 5);
     esri.basemapLayer('Topographic').addTo(Lmap);
+    Lmap.setView([49, 31], 5);
+
 
     let icon = L.icon({
         iconUrl: '/img/marker-icon.svg',
@@ -71,6 +74,12 @@ export default function claster(data) {
     let pulsingIcon = L.icon.pulse({iconSize: [20, 20], color: 'red'});
 
     myClaster = L.markerClusterGroup({chunkedLoading: true}).addTo(Lmap);
+
+    setTimeout(() => {
+        Lmap.setView([49, 31], 5);
+        // Lmap.invalidateSize(false)
+    }, 300)
+
     myClaster.on('click', whenClicked);
 
     createMarkers = function (id) {
@@ -117,7 +126,7 @@ export default function claster(data) {
             searchControlPoint.options.marker.remove()
         }, 4000)
     });
-    
+
 
     function whenClicked(e) {
         let feature = e.layer.feature.properties;
@@ -126,7 +135,7 @@ export default function claster(data) {
             chartData(feature)
         }
     }
-
+    
     function chartData(feature_claster) {
         let chart1 = null;
         let chart2 = null;
