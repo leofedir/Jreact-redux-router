@@ -77,7 +77,7 @@ class SliderRange extends PureComponent {
                 <div className="sliderRange">
                     <p className="rangeItem first">{firstItem}</p>
                     <div className="current-year-container">
-                        <div className="container-fa left" onClick={() => this.changeItem('-')}>
+                        <div className={curItem === firstItem ? "container-fa left noneVisability" : "container-fa left"} onClick={() => this.changeItem('-')}>
                             <i className="fa fa-caret-left" aria-hidden="true"></i>
                         </div>
 
@@ -85,7 +85,7 @@ class SliderRange extends PureComponent {
                             <span>{curItem}</span>
                         </div>
 
-                        <div className="container-fa right" onClick={() => this.changeItem('+')}>
+                        <div className={curItem === lastItem ? "container-fa right noneVisability" : "container-fa right"} onClick={() => this.changeItem('+')}>
                             <i className="fa fa-caret-right" aria-hidden="true"></i>
                         </div>
 

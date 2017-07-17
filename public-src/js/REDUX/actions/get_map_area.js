@@ -31,8 +31,9 @@ import {
     BUBBLE_CHART_TOGGLE,
     SET_CURENCY,
     IS_ATO_LAYER,
-    SET_IS_ALL_DATA,
     COMPARE_CLICK
+    SET_IS_ALL_DATA,
+    SET_BASE_MAP
 } from './constant';
 
 // export function get_map_area(url, rebuild = true, alias, isRegion) {
@@ -313,6 +314,13 @@ export function isAtoLayer(isAto) {
     return {
         type: IS_ATO_LAYER,
         payload: isAto
+    }
+}
+
+export function setBaseMap(map) {
+    return {
+        type: SET_BASE_MAP,
+        payload: map
     }
 }
 
