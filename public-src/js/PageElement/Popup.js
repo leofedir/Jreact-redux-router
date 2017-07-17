@@ -116,7 +116,7 @@ class Popup extends PureComponent {
                             {feature.name_ua}
                             <i className="fa fa-balance-scale icon_compare " aria-hidden="true"
                                onClick={::this.hendlerAddToCompare}>
-                                <i className={compareSet.has(feature.name_ua) ? "fa fa-check-circle" : 'none' } aria-hidden="true"/>
+                                <i className={compareSet.has(feature.name_ua) ? "fa fa-check compare_check" : 'none' } aria-hidden="true"/>
                             </i>
                         </div>
                     </div>
