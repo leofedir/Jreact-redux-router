@@ -234,14 +234,8 @@ class Map extends PureComponent {
         // console.log(curentMap)
         // toggle_data(false);
         //
-        
-
-
-
     }
-
-
-
+    
     zoom_in() {
         Lmap.zoomIn(1)
     }
@@ -255,11 +249,12 @@ class Map extends PureComponent {
     }
 
     createMap() {
-        const {set_data_district} = this.props.MapActions;
+        const {set_data_district, setBaseMap} = this.props.MapActions;
         Lmap = L.map('map', {zoomControl: false, minZoom: 3}).setView([49, 31], 6);
-        layer = esri.basemapLayer('Topographic');
+        const {baseMap} = this.props.map_reducer;
+        setBaseMap('Topographic');
+        layer = esri.basemapLayer(baseMap);
         Lmap.addLayer(layer);
-        
 
         function onMouseMove(e) {
             cordinateContainer.innerHTML = e.latlng.lat.toFixed(3) + "° пн. ш, " + e.latlng.lng.toFixed(3) + "° сх. д."
@@ -421,18 +416,20 @@ class Map extends PureComponent {
 
     changeBasemap(e) {
         Lmap.listens('click') ? Lmap.off('click', this.onMouseClick) : '';
+        const {setBaseMap} = this.props.MapActions;
 
         let map = e.target.value;
-
         if (layer) {
             Lmap.removeLayer(layer);
         }
 
         if (map == 'kadastr' && curentMap === null) {
             Lmap.hasLayer(ukraine) ? Lmap.removeLayer(ukraine) : '';
+            setBaseMap('Imagery');
+
             layer = L.layerGroup()
                 .addLayer(esri.basemapLayer('Imagery'));
-
+                
             setTimeout(() => {
                 layer.addLayer(kadastr)
             }, 100);
@@ -440,6 +437,8 @@ class Map extends PureComponent {
             Lmap.addLayer(layer);
             Lmap.on('click', this.onMouseClick)
         } else {
+            setBaseMap(e.target.value);
+
             layer = esri.basemapLayer(map);
             Lmap.addLayer(layer);
         }

@@ -27,6 +27,7 @@ import {
     SET_CURENCY,
     IS_ATO_LAYER,
     SET_IS_ALL_DATA,
+    SET_BASE_MAP
 } from '../actions/constant'
 
 const initialState = {
@@ -55,7 +56,8 @@ const initialState = {
     curency: null,
     isAllData: true,
     isAtoLayer: false,
-    selectedArea: null
+    selectedArea: null,
+    baseMap: 'Topographic'
 };
 
 export default function map(state = initialState, action) {
@@ -160,6 +162,9 @@ export default function map(state = initialState, action) {
             
         case SET_IS_ALL_DATA:
             return {...state, isAllData: action.payload};
+            
+        case SET_BASE_MAP:
+            return  {...state, baseMap: action.payload};
             
         default:
             return state;

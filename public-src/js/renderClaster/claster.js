@@ -33,6 +33,7 @@ export function layersTriger(id, status) {
 
 function showLayer(id) {
     createMarkers(id);
+    console.log('11')
 }
 
 function hideLayer(id) {
@@ -170,7 +171,9 @@ export default function claster(data) {
 
         }
     }
-
-    showLayer(0)
+    
+    console.log('22');
+    showLayer(0);
+    console.log('33');
 }
 
