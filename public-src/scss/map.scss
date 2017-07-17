@@ -5,7 +5,8 @@
 #zoom_in,
 #zoom_out,
 #geolocate,
-.search_div {
+.search_div,
+.icon_grt_compare {
   position: absolute;
 }
 
@@ -49,7 +50,7 @@
 .zoom_in_icon,
 .zoom_out_icon,
 .geolocate_icon,
-.search_icon {
+.icon_grt_compare {
   background: #4f5b62 none repeat scroll 0 0;
   color: white;
   height: 32px;
@@ -65,7 +66,7 @@
 .zoom_in_icon:hover,
 .zoom_out_icon:hover,
 .geolocate_icon:hover,
-.search_icon:hover {
+.icon_grt_compare:hover {
   opacity: 0.8;
   transition: all 0.2s ease 0s;
 }
@@ -81,7 +82,7 @@
 
 }
 
-.search_icon {
+.icon_grt_compare {
   border-radius: $radius;
 }
 
@@ -93,6 +94,24 @@
 .zoom_out_icon {
   border-radius: 0 0 $radius $radius;
   bottom: 47px;
+}
+
+.icon_grt_compare {
+  border-radius: $radius;
+  bottom: 115px;
+
+  span {
+    position: absolute;
+    background-color: #009971;
+    color: #fff;
+    border-radius: 100%;
+    font-size: 18px;
+    top: -9px;
+    left: 13px;
+    width: 25px;
+    height: 25px;
+    line-height: 26px;
+  }
 }
 
 .geolocate_icon {
