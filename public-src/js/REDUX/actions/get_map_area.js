@@ -31,6 +31,7 @@ import {
     BUBBLE_CHART_TOGGLE,
     SET_CURENCY,
     IS_ATO_LAYER,
+    COMPARE_CLICK,
     SET_IS_ALL_DATA,
     SET_BASE_MAP
 } from './constant';
@@ -320,5 +321,13 @@ export function setBaseMap(map) {
     return {
         type: SET_BASE_MAP,
         payload: map
+    }
+}
+
+export function click_on_compare_feature(compareSet, feature) {
+    compareSet.has(feature.name_ua) ? compareSet.delete(feature.name_ua) :  compareSet.set(feature.name_ua, feature)
+
+    return {
+        type: COMPARE_CLICK
     }
 }

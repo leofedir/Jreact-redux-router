@@ -13,20 +13,21 @@ let curency = null;
 export let curentCurency = null;
 
 class Popup extends PureComponent {
+
     setDataFromFeature() {
         const {curencyIndexCurency} = this.props.map_reducer;
         const {popup_fullsize, item_name, range_items} = this.props.main
         curency !== null ? curentCurency = curency[curencyIndexCurency] : curentCurency = "";
         const {feature} = this.props.map_reducer;
         let popupInfo = [];
-        
+
         item_name.forEach((item, i) => {
             let value = +feature[curentCurency + range_items[i]];
             popupInfo.push(<p key={feature.id + i}>Дані за {item} р.
                 <span>{new Intl.NumberFormat().format(value)}</span></p>);
             dataToChart.push(value);
         });
-        
+
         //popup if > 4
         popupInfo.reverse();
         const shortPopup = popupInfo.slice(0, 4);
@@ -34,21 +35,21 @@ class Popup extends PureComponent {
         return popup_fullsize ? <div className="popup-bottom-wrapper">{popupInfo}</div> :
             <div className="popup-bottom-wrapper">{shortPopup}</div>
     }
-    
+
     toggleFullSize = () => {
         const {toggle_Popup_Fullsize} = this.props.Actions;
         const {popup_fullsize} = this.props.main;
-        
+
         toggle_Popup_Fullsize(!popup_fullsize)
     }
-    
+
     buttonFullSize = () => {
         const {popup_fullsize} = this.props.main;
         // return popup_fullsize ? <i aria-hidden='true' className='fa fa-angle-up popup-toggle-button popup-down fa-2x'
         //                            onClick={this.toggleFullSize}/> :
         //                         <i aria-hidden='true' className='fa fa-angle-down popup-toggle-button popup-down fa-2x'
         //                            onClick={this.toggleFullSize}/>
-        
+
         return (
             <div className="arrow-container" onClick={this.toggleFullSize}>
                 <button data-am-linearrow="tooltip tooltip-bottom" value="Show Utilities">
@@ -58,7 +59,7 @@ class Popup extends PureComponent {
             </div>
         )
     }
-    
+
     setCurentCurency(e) {
         const {setCurency} = this.props.MapActions;
         let obj = {
@@ -67,7 +68,7 @@ class Popup extends PureComponent {
         };
         setCurency(obj)
     }
-    
+
     getCyrencyItems() {
         const {curencyIndexCurency} = this.props.map_reducer;
         return (
@@ -80,15 +81,22 @@ class Popup extends PureComponent {
             </select>
         )
     }
-    
+
+    hendlerAddToCompare() {
+        const {feature, compareSet} = this.props.map_reducer;
+        const {click_on_compare_feature} = this.props.MapActions;
+
+        click_on_compare_feature(compareSet, feature)
+    }
+
     getInfo() {
-        const {feature, alias, feature_claster} = this.props.map_reducer;
+        const {feature, alias, feature_claster, compareSet} = this.props.map_reducer;
         const {popup_fullsize} = this.props.main
         dataToChart = [];
         let popupItemCount = 0;
-        
+
         if (feature !== null) {
-            
+
             if (feature.parameter2) {
                 curency = feature.parameter2.toLowerCase().split(',');
                 curentCurency = curency[0]
@@ -96,14 +104,21 @@ class Popup extends PureComponent {
                 curency = null;
                 curentCurency = null;
             }
-            
+
             let tempObj = {...feature};
-            
+
             let objFeature = Object.keys(tempObj).filter(item => item.indexOf('year_') >= 0);
+
             return (
                 <div className="description">
                     <div className="item_header">
-                        <div className="map_heder_title">{feature.name_ua}</div>
+                        <div className="map_heder_title">
+                            {feature.name_ua}
+                            <i className="fa fa-balance-scale icon_compare " aria-hidden="true"
+                               onClick={::this.hendlerAddToCompare}>
+                                <i className={compareSet.has(feature.name_ua) ? "fa fa-check compare_check" : 'none' } aria-hidden="true"/>
+                            </i>
+                        </div>
                     </div>
                     <div className="item_content">
                         <div className="popup_top">
@@ -129,14 +144,14 @@ class Popup extends PureComponent {
                 </div>
             )
         } else if (feature_claster !== null) {
-            
+
             let fields = getFields();
-            
+
             let popapItems = [];
-            
-            
+
+
             fields.forEach((item, i) => {
-                
+
                 if (item.title === 'Назва') {
                     popapItems.push(<h5 key={feature_claster.object_id + (i + '')}
                                         className="name">{ feature_claster[item.key] }</h5>)
@@ -145,7 +160,7 @@ class Popup extends PureComponent {
                         className={ item.class }/><p>{ feature_claster[item.key] }</p></div>)
                 }
             });
-            
+
             return (
                 <div className="description">
                     <div className="item_header">
@@ -160,12 +175,12 @@ class Popup extends PureComponent {
             )
         }
     }
-    
+
     noInfo() {
         dataToChart = [];
         return null
     }
-    
+
     render() {
         const {feature, feature_claster} = this.props.map_reducer;
         return (feature !== null || feature_claster !== null) ? this.getInfo() : this.noInfo()

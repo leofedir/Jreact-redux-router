@@ -27,7 +27,8 @@ import {
     SET_CURENCY,
     IS_ATO_LAYER,
     SET_IS_ALL_DATA,
-    SET_BASE_MAP
+    SET_BASE_MAP,
+    COMPARE_CLICK
 } from '../actions/constant'
 
 const initialState = {
@@ -57,7 +58,8 @@ const initialState = {
     isAllData: true,
     isAtoLayer: false,
     selectedArea: null,
-    baseMap: 'Topographic'
+    baseMap: 'Topographic',
+    compareSet: new Map()
 };
 
 export default function map(state = initialState, action) {
@@ -123,7 +125,8 @@ export default function map(state = initialState, action) {
                 curency: '',
                 curencyIndexCurency: '0',
                 selectedArea: null,
-                dataChartRegion: true
+                dataChartRegion: true,
+                compareSet: new Map()
             };
 
         case SET_CLASTER_CHART_DATA:
@@ -134,13 +137,13 @@ export default function map(state = initialState, action) {
             return {...state, check: action.payload};
 
         case TOGGLE_CHECK:
-            return {...state, check: action.payload, chart1: null, chart2: null};
+            return {...state, check: action.payload, chart1: null, chart2: null, chart3: null};
 
         case CHECK_ALL_ICON:
             return {...state, checkAll: action.payload};
 
         case CHECK_ALL:
-            return {...state, check: action.payload};
+            return {...state, check: action.payload, chart1: null, chart2: null, chart3: null};
 
         case TOGGLE_DATA:
             return {...state, dataChartRegion: action.payload};
@@ -159,13 +162,16 @@ export default function map(state = initialState, action) {
         
         case IS_ATO_LAYER:
             return {...state, isAtoLayer: action.payload}
-            
+
         case SET_IS_ALL_DATA:
             return {...state, isAllData: action.payload};
-            
+
+        case COMPARE_CLICK:
+            return {...state,};
+
         case SET_BASE_MAP:
             return  {...state, baseMap: action.payload};
-            
+
         default:
             return state;
     }

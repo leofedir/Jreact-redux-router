@@ -159,7 +159,7 @@ class Map extends PureComponent {
             this.refs.district.classList.remove('active')
         }
     }
-    
+
     hendlerChangeOT(e) {
         let target = e.target;
         let id = e.target.id;
@@ -167,7 +167,6 @@ class Map extends PureComponent {
         const {fields, submenu_item} = this.props.main;
         const mapSet = fields[submenu_item];
         const {curentMap} = this.props.map_reducer;
-
 
 
         _curentMap === null ? _curentMap = curentMap : '';
@@ -198,7 +197,7 @@ class Map extends PureComponent {
 
             _curentMap = id
         }
-    
+
         // if (target.className.includes(' active')) {
         //     return
         // }
@@ -212,8 +211,8 @@ class Map extends PureComponent {
         //     toggle_data(true)
         //     target.className += ' active';
         // }
-        
-        
+
+
         // // initialize by default
         // const {toggle_data} = this.props.MapActions;
         // if (curentMap.search('district' > 0)) {
@@ -235,7 +234,7 @@ class Map extends PureComponent {
         // toggle_data(false);
         //
     }
-    
+
     zoom_in() {
         Lmap.zoomIn(1)
     }
@@ -250,7 +249,7 @@ class Map extends PureComponent {
 
     createMap() {
         // console.log('createMap <>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>');
-        
+
         const {set_data_district} = this.props.MapActions;
         const {baseMap} = this.props.map_reducer;
         Lmap = L.map('map', {zoomControl: false, minZoom: 3}).setView([49, 31], 6);
@@ -417,7 +416,7 @@ class Map extends PureComponent {
     }
 
     changeBasemap(e) {
-        
+
         Lmap.listens('click') ? Lmap.off('click', this.onMouseClick) : '';
         const {setBaseMap} = this.props.MapActions;
 
@@ -432,7 +431,7 @@ class Map extends PureComponent {
 
             layer = L.layerGroup()
                 .addLayer(esri.basemapLayer('Imagery'));
-                
+
             setTimeout(() => {
                 layer.addLayer(kadastr)
             }, 100);
@@ -454,8 +453,10 @@ class Map extends PureComponent {
         } else {
             return (
                 <div className="buttons_change_TO">
-                    <p onClick={::this.hendlerChangeOT} id='region' ref="region" className="button_change_TO">Області</p>
-                    <p onClick={::this.hendlerChangeOT} id='district' ref="district" className="button_change_TO">Райони</p>
+                    <p onClick={::this.hendlerChangeOT} id='region' ref="region" className="button_change_TO">
+                        Області</p>
+                    <p onClick={::this.hendlerChangeOT} id='district' ref="district" className="button_change_TO">
+                        Райони</p>
                     {/*<p onClick={::this.hendlerChangeOT} ref="area" className="button_change_TO">ОТГ</p>*/}
                     {/*<p onClick={::this.hendlerChangeOT} ref="area" className="button_change_TO">Міста</p>*/}
                 </div>
@@ -463,10 +464,10 @@ class Map extends PureComponent {
         }
 
     }
-    
+
     render() {
         const {fetching} = this.props.main;
-        console.log('render map >>>>>');
+        const {compareSet} = this.props.map_reducer;
         return (
             <div className="block block-top block_map">
                 <div className="item_header icon-container">
@@ -477,6 +478,9 @@ class Map extends PureComponent {
                 </div>
                 <div id="map_wrapper" className="map_wrapper">
                     <div id="loader" className={fetching ? "show" : ''}/>
+                    <i className="fa fa-balance-scale icon_grt_compare " aria-hidden="true">
+                        {compareSet.size === 0 ? '' : <span className="compare_count">{compareSet.size}</span>}
+                    </i>
                     <i className="fa fa-plus fa-1x zoom_in_icon" onClick={::this.zoom_in} id="zoom_in"/>
                     <i className="fa fa-minus fa-1x zoom_out_icon" onClick={::this.zoom_out} id="zoom_out"/>
                     <i className="fa fa-dot-circle-o fa-1x geolocate_icon" onClick={::this.geolocate} id="geolocate"/>

@@ -18,7 +18,8 @@ import {
     TOGGLE_POPUP_FULLSIZE,
     CHANGE_INPET_SEARCH,
     SHOW_INPUT,
-    SET_CLASTER_CHART_DATA
+    SET_CLASTER_CHART_DATA,
+    TOGGLE_CHECK
 
 } from '../actions/constant'
 
@@ -122,6 +123,9 @@ export default function main(state = initialState, action) {
 
         case SET_CLASTER_CHART_DATA:
             return {...state, mapFull: false};
+
+        case TOGGLE_CHECK:
+            return {...state, mapFull: true,};
 
         default:
             return state;

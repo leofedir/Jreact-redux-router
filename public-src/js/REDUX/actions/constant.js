@@ -44,3 +44,4 @@ export const SHOW_INPUT = 'SHOW_INPUT';
 export const IS_ATO_LAYER = 'IS_ATO_LAYER';
 export const SET_IS_ALL_DATA = 'SET_IS_ALL_DATA';
 export const SET_BASE_MAP = 'SET_BASE_MAP';
+export const COMPARE_CLICK = 'COMPARE_CLICK';
