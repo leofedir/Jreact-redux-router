@@ -111,7 +111,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
             Lmap.removeControl(searchControlPoint)
         }
         Lmap.setView([49, 31], 5);
-        esri.basemapLayer('Topographic').addTo(Lmap);
+        const {baseMap} = store.getState().map_reducer;
+        esri.basemapLayer(baseMap).addTo(Lmap);
     } else {
         if (isRegion) {
             data = propertiesMain.__region;

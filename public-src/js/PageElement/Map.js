@@ -249,10 +249,12 @@ class Map extends PureComponent {
     }
 
     createMap() {
-        const {set_data_district, setBaseMap} = this.props.MapActions;
-        Lmap = L.map('map', {zoomControl: false, minZoom: 3}).setView([49, 31], 6);
+        // console.log('createMap <>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>');
+        
+        const {set_data_district} = this.props.MapActions;
         const {baseMap} = this.props.map_reducer;
-        setBaseMap('Topographic');
+        Lmap = L.map('map', {zoomControl: false, minZoom: 3}).setView([49, 31], 6);
+        // setBaseMap('Topographic');
         layer = esri.basemapLayer(baseMap);
         Lmap.addLayer(layer);
 
@@ -415,6 +417,7 @@ class Map extends PureComponent {
     }
 
     changeBasemap(e) {
+        
         Lmap.listens('click') ? Lmap.off('click', this.onMouseClick) : '';
         const {setBaseMap} = this.props.MapActions;
 
@@ -463,7 +466,7 @@ class Map extends PureComponent {
     
     render() {
         const {fetching} = this.props.main;
-
+        console.log('render map >>>>>');
         return (
             <div className="block block-top block_map">
                 <div className="item_header icon-container">
