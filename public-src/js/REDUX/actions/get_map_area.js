@@ -31,7 +31,8 @@ import {
     BUBBLE_CHART_TOGGLE,
     SET_CURENCY,
     IS_ATO_LAYER,
-    SET_IS_ALL_DATA
+    SET_IS_ALL_DATA,
+    COMPARE_CLICK
 } from './constant';
 
 // export function get_map_area(url, rebuild = true, alias, isRegion) {
@@ -312,5 +313,13 @@ export function isAtoLayer(isAto) {
     return {
         type: IS_ATO_LAYER,
         payload: isAto
+    }
+}
+
+export function click_on_compare_feature(compareSet, feature) {
+    compareSet.has(feature.name_ua) ? compareSet.delete(feature.name_ua) :  compareSet.set(feature.name_ua, feature)
+
+    return {
+        type: COMPARE_CLICK
     }
 }
