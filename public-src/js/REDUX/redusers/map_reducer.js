@@ -27,7 +27,7 @@ import {
     SET_CURENCY,
     IS_ATO_LAYER,
     SET_IS_ALL_DATA,
-    SET_BASE_MAP
+    SET_BASE_MAP,
     COMPARE_CLICK
 } from '../actions/constant'
 
@@ -58,7 +58,7 @@ const initialState = {
     isAllData: true,
     isAtoLayer: false,
     selectedArea: null,
-    baseMap: 'Topographic'
+    baseMap: 'Topographic',
     compareSet: new Map()
 };
 

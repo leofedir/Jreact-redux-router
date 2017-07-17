@@ -31,7 +31,7 @@ import {
     BUBBLE_CHART_TOGGLE,
     SET_CURENCY,
     IS_ATO_LAYER,
-    COMPARE_CLICK
+    COMPARE_CLICK,
     SET_IS_ALL_DATA,
     SET_BASE_MAP
 } from './constant';
