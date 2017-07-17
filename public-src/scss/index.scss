@@ -597,17 +597,20 @@ body {
 }
 
 .icon_compare {
+  position:absolute;
   float: right;
   padding-right: 10px;
   cursor: pointer;
+  right: 15px;
 }
 
 .compare_check {
-  background-color: $green;
+  background-color: #009971;
   color: #fff;
   border-radius: 100%;
   padding: 2px;
   font-size: 9px;
-  position: relative;
-  top: -8px;
+  position: absolute;
+  top: -6px;
+  left: 10px;
 }
