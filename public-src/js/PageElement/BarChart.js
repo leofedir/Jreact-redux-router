@@ -237,7 +237,7 @@ class BarChart extends PureComponent {
                 },
                 yAxis: {
                     title: {
-                        // enabled: false
+                        enabled: false
                     }
                 },
                 plotOptions: {

@@ -60,8 +60,9 @@ export default function claster(data) {
     Lmap.eachLayer(function (layer) {
         Lmap.removeLayer(layer)
     });
-
-    esri.basemapLayer('Topographic').addTo(Lmap);
+    
+    const {baseMap} = store.getState().map_reducer;
+    esri.basemapLayer(baseMap).addTo(Lmap);
     Lmap.setView([49, 31], 5);
 
 
