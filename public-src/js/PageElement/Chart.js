@@ -119,7 +119,7 @@ class Chart extends PureComponent {
                         let s = '<p style="font-weight: 300">' + 'Станом на 01.01.' + (+this.x+1) + ' р.' + '</p>';
                         let p = '<br/><p>' + this.points.map(i => i.series.name) + ': '+
                             format(this.y) + ' '+ tooltipParametr + '</p>';
-                        
+
                         return s+p
                     },
                     shared: true,
@@ -217,7 +217,7 @@ class Chart extends PureComponent {
             });
         }
     }
-    
+
     componentDidMount() {
         this.Chart()
     }
@@ -284,10 +284,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chart);
-
-
-
-
-
-
-
