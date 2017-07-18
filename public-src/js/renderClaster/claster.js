@@ -133,7 +133,7 @@ export default function claster(data) {
         let feature = e.layer.feature.properties;
         store.dispatch(clickOnFeatureClaster(feature));
         if (Object.keys(feature).some(item => item.indexOf('chart'))) {
-            chartData(feature)
+            // chartData(feature) //disable chart
         }
     }
     
