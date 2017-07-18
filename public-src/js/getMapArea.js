@@ -442,9 +442,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
         store.dispatch(set_legend_data(legend_data));
         initArea();
         renderSelectedArea();
-        setTimeout(() => {
-            Lmap.invalidateSize();
-        }, 250)
     }
 
     renderLayer();

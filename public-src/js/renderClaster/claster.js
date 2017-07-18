@@ -35,7 +35,6 @@ export function layersTriger(id, status) {
 
 function showLayer(id) {
     createMarkers(id);
-    console.log('11')
 }
 
 function hideLayer(id) {
@@ -75,11 +74,6 @@ export default function claster(data) {
     let pulsingIcon = L.icon.pulse({iconSize: [20, 20], color: 'red'});
 
     myClaster = L.markerClusterGroup({chunkedLoading: true}).addTo(Lmap);
-
-    setTimeout(() => {
-        Lmap.setView([49, 31], 5);
-        // Lmap.invalidateSize(false)
-    }, 300)
 
     myClaster.on('click', whenClicked);
 

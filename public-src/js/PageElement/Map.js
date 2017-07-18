@@ -158,6 +158,12 @@ class Map extends PureComponent {
             this.refs.region.classList.remove('active')
             this.refs.district.classList.remove('active')
         }
+
+        Lmap.off('click', this.onMouseClick)
+
+        setTimeout(() => {
+            Lmap.invalidateSize();
+        }, 250)
     }
 
     hendlerChangeOT(e) {
@@ -440,7 +446,6 @@ class Map extends PureComponent {
             Lmap.on('click', this.onMouseClick)
         } else {
             setBaseMap(e.target.value);
-
             layer = esri.basemapLayer(map);
             Lmap.addLayer(layer);
         }
