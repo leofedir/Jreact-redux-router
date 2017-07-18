@@ -4,12 +4,10 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const prod = process.argv.indexOf('-p') !== -1;
 
-console.log(prod)
-
 const config = {
 
     context: __dirname + "/public-src/js",
-    devtool: "inline-source-map",
+    // devtool: "inline-source-map",
     entry: [
         'react-hot-loader/patch',
         // activate HMR for React
@@ -63,6 +61,21 @@ const config = {
         ],
     },
     plugins: [
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            beautify: false,
+            comments: false,
+            compress: {
+                sequences     : true,
+                booleans      : true,
+                loops         : true,
+                unused      : true,
+                warnings    : false,
+                drop_console: true,
+                unsafe      : true
+            }
+        }),
+        new webpack.NoEmitOnErrorsPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         // enable HMR globally
 
