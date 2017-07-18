@@ -11,7 +11,6 @@ import {LightenDarkenColor, rgbToHex} from './utils/colors'
 import {refsThisLegend} from './PageElement/Legend'
 import {searchControlPoint} from './renderClaster/claster'
 import '../lib/search';
-// import '../lib/leaflet.pattern'
 import "leaflet-search/src/leaflet-search.css"
 
 export let choroplethLayer = null;
@@ -31,7 +30,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
     let data = null;
     let layer = null;
     let searchItem = null;
-    // let districtContainer = [];
 
     if (unsubscribe !== null) {
         unsubscribe();
@@ -42,16 +40,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
         unsubscribeCurency();
         unsubscribeCurency = null
     }
-
-    // var stripes = new L.StripePattern({
-    //     'color': '#808080',
-    //     'weight': 1.5,
-    //     'spaceColor': '#c7c7c7',
-    //     'spaceOpacity': 1,
-    //     'spaceWeight': 7,
-    //     'angle': -45
-    // });
-    // stripes.addTo(Lmap);
 
     let myStyle = {
         "color": "#A9A9A9",
@@ -69,13 +57,9 @@ export default function getMap(properties, rebuild = true, isRegion) {
         if (isRegion) {
             data = propertiesMain.__region;
             filds = propertiesMain.__region[0].properties
-
-            // districtContainer = propertiesMain.__district;
         } else {
             data = propertiesMain.__district;
             filds = propertiesMain.__district[0].properties
-
-            // districtContainer = propertiesMain.__district;
         }
 
 
@@ -102,9 +86,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         Lmap.eachLayer(function (layer) {
             Lmap.removeLayer(layer)
-            // console.log('layer 1 >>', layer)
-            // layer.clearLayers()
-            // console.log('layer 2 >>', layer)
         });
 
         if (searchControlPoint !== null) {
@@ -117,13 +98,9 @@ export default function getMap(properties, rebuild = true, isRegion) {
         if (isRegion) {
             data = propertiesMain.__region;
             filds = propertiesMain.__region[0].properties;
-
-            // districtContainer = propertiesMain.__district;
         } else {
             data = propertiesMain.__district;
             filds = propertiesMain.__district[0].properties;
-
-            // districtContainer = propertiesMain.__district;
         }
     }
 
@@ -145,13 +122,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 atoData = data[1];
                 ato = L.geoJSON(atoData, {
                     style: myStyle
-                    //     {
-                    //     fillPattern: stripes,
-                    //     'color': '#808080',
-                    //     "fillOpacity": 1,
-                    //     'className': 'ato',
-                    //     "weight": 1.5,
-                    // }
                 });
                 Lmap.addLayer(ato)
             });
@@ -164,13 +134,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
             ato ? ato.clearLayers() && Lmap.removeLayer(ato) : ''
             ato = L.geoJSON(atoData, {
                 style: myStyle
-                //     {
-                //     fillPattern: stripes,
-                //     'color': '#808080',
-                //     "fillOpacity": 1,
-                //     'className': 'ato',
-                //     "weight": 1.5,
-                // }
             });
             setTimeout(() => {
                 Lmap.addLayer(ato)
@@ -274,7 +237,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
         for (i = 0; i < len; i++) {
             data[i].geometry = cordinate[data[i].id];
         }
-
     }
 
     randColor = rebuild ? getRandomColorLayer() : randColor;
@@ -282,7 +244,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
     isRegion ? joinGeometry(coordinate.region) : joinGeometry(coordinate.district)
 
     function renderLayer() {
-        console.log('render')
 
         if (Lmap.hasLayer(choroplethLayer)) {
             Lmap.removeLayer(choroplethLayer)
@@ -311,47 +272,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 layer.on(eventsMap)
             }
         };
-
-        //check all data is correct
-        // function isAllData() {
-        //     let state = store.getState();
-        //     let {curentMap} = state.map_reducer;
-        //     const dontSearchKoatuu = ['44', '14', '01', '85'];
-        //     const dontSearchAlias = [
-        //         'area_zemres_avgareapai',
-        //         'area_zemres_chastkaderjavnyh',
-        //         'area_zemres_chastkajytlova',
-        //         'area_zemres_chastkakomunalnyh',
-        //         'area_zemres_chastka',
-        //         'area_zemres_chastkapromyslovyh',
-        //         'area_zemres_chastkapryvatnyh',
-        //         'area_zemres_chastkspai',
-        //         'area_zemres_chastkasgzemel',
-        //         'area_zemres_komunalnizemli',
-        //         'area_zemres_derjavnizemli',
-        //         'area_zemres_chastkalisovi',
-        //         'area_zemres_rekreaciyazemli',
-        //         'area_zemres_lisovizemli'
-        //     ];
-        //
-        //     // cat of string __district or __region
-        //     let regExp = /(__)\w+/g;
-        //     curentMap = curentMap.replace(regExp, '');
-        //
-        //     for (let i of districtContainer) {
-        //         for (let j in i.properties) {
-        //             if (range_items !== undefined &&
-        //                 j === range_items[range_item] &&
-        //                 !dontSearchAlias.includes(curentMap) &&
-        //                 !dontSearchKoatuu.includes(i.properties.koatuu.substring(0,2))) {
-        //                     if(i.properties[j] === null) return false
-        //             }
-        //         }
-        //     }
-        //
-        //     return true
-        // }
-        // store.dispatch(set_isAllData(isAllData()));
 
         choroplethLayer = L.choropleth(data, layerObject);
 
@@ -522,7 +442,9 @@ export default function getMap(properties, rebuild = true, isRegion) {
         store.dispatch(set_legend_data(legend_data));
         initArea();
         renderSelectedArea();
-        Lmap.invalidateSize();
+        setTimeout(() => {
+            Lmap.invalidateSize();
+        }, 250)
     }
 
     renderLayer();

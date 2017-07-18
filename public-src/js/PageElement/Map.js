@@ -478,9 +478,9 @@ class Map extends PureComponent {
                 </div>
                 <div id="map_wrapper" className="map_wrapper">
                     <div id="loader" className={fetching ? "show" : ''}/>
-                    <i className="fa fa-balance-scale icon_grt_compare " aria-hidden="true">
-                        {compareSet.size === 0 ? '' : <span className="compare_count">{compareSet.size}</span>}
-                    </i>
+                    {/*<i className="fa fa-balance-scale icon_grt_compare " aria-hidden="true">*/}
+                        {/*{compareSet.size === 0 ? '' : <span className="compare_count">{compareSet.size}</span>}*/}
+                    {/*</i>*/}
                     <i className="fa fa-plus fa-1x zoom_in_icon" onClick={::this.zoom_in} id="zoom_in"/>
                     <i className="fa fa-minus fa-1x zoom_out_icon" onClick={::this.zoom_out} id="zoom_out"/>
                     <i className="fa fa-dot-circle-o fa-1x geolocate_icon" onClick={::this.geolocate} id="geolocate"/>
