@@ -325,7 +325,7 @@ export function setBaseMap(map) {
 }
 
 export function click_on_compare_feature(compareSet, feature) {
-    compareSet.has(feature.name_ua) ? compareSet.delete(feature.name_ua) :  compareSet.set(feature.name_ua, feature)
+    compareSet.has(feature.id) ? compareSet.delete(feature.id) :  compareSet.set(feature.id, feature)
 
     return {
         type: COMPARE_CLICK

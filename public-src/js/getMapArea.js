@@ -90,10 +90,10 @@ export default function getMap(properties, rebuild = true, isRegion) {
             a.length == 7 ? a = 'year_20' + a.substring(5) : '';
             b.length == 7 ? b = 'year_20' + b.substring(5) : '';
 
-            if (a < b ) {
+            if (a < b) {
                 return -1;
             }
-            if (a > b ) {
+            if (a > b) {
                 return 1;
             }
             return 0;
@@ -239,11 +239,11 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         return arrWithColor[randIndex]
     }
-    
-    function initArea () {
+
+    function initArea() {
         const state = store.getState();
         const {curentMap} = state.map_reducer;
-        
+
         if (curentMap !== null && curentMap.search('district') > 0) {
             store.dispatch(toggle_data(true));
         }
@@ -251,11 +251,12 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
     function renderSelectedArea() {
         let state = store.getState();
-        const {selectedArea} = state.map_reducer;
+        const {selectedArea, compareSet} = state.map_reducer;
 
-        Object.values(choroplethLayer._layers).forEach(layer => {
+        choroplethLayer.eachLayer(layer => {
 
-            if (layer.feature.id === selectedArea) {
+            if (layer.feature.id === selectedArea || compareSet.has(layer.feature.id)) {
+
                 let newColor = LightenDarkenColor(layer.options.fillColor, +50);
 
                 layer.setStyle({
@@ -281,8 +282,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
     isRegion ? joinGeometry(coordinate.region) : joinGeometry(coordinate.district)
 
     function renderLayer() {
-        console.log('create layer')
-
+        console.log('render')
 
         if (Lmap.hasLayer(choroplethLayer)) {
             Lmap.removeLayer(choroplethLayer)
@@ -399,20 +399,23 @@ export default function getMap(properties, rebuild = true, isRegion) {
         Lmap.addControl(searchControlArea);  //inizialize search control
 
         function onMouseout(e) {
-            let state = store.getState()
+            let state = store.getState();
+            const {selectedArea} = state.map_reducer;
             let item = e.target;
 
             handleUnhoverLegendItem()
-            if (item !== layer && item.feature.id !== state.map_reducer.selectedArea) {
+            if (item !== layer && item.feature.id !== selectedArea) {
                 choroplethLayer.resetStyle(item);
             }
         }
 
         function onMouseOver(e) {
+
             let state = store.getState();
+            const {selectedArea} = state.map_reducer;
             let item = e.target;
             handleHoverLegendItem(item);
-            if (item == layer || item.feature.id == state.map_reducer.selectedArea) return;
+            if (item == layer || item.feature.id == selectedArea) return;
 
             let color = item.options.fillColor;
             let newColor = LightenDarkenColor(color, +50);
@@ -473,7 +476,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 return
             }
 
-            Object.values(choroplethLayer._layers).forEach(layer => {
+            choroplethLayer.eachLayer(layer => {
 
                 if (layer.feature.id === selectedArea) {
                     choroplethLayer.resetStyle(layer)

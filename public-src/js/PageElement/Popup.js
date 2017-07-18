@@ -83,8 +83,10 @@ class Popup extends PureComponent {
     }
 
     hendlerAddToCompare() {
-        const {feature, compareSet} = this.props.map_reducer;
+        const {feature, compareSet, selectedArea} = this.props.map_reducer;
         const {click_on_compare_feature} = this.props.MapActions;
+
+        console.log('selectedArea >>', selectedArea)
 
         click_on_compare_feature(compareSet, feature)
     }
@@ -116,7 +118,7 @@ class Popup extends PureComponent {
                             {feature.name_ua}
                             <i className="fa fa-balance-scale icon_compare " aria-hidden="true"
                                onClick={::this.hendlerAddToCompare}>
-                                <i className={compareSet.has(feature.name_ua) ? "fa fa-check compare_check" : 'none' } aria-hidden="true"/>
+                                <i className={compareSet.has(feature.id) ? "fa fa-check compare_check" : 'none' } aria-hidden="true"/>
                             </i>
                         </div>
                     </div>
