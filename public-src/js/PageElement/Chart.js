@@ -109,7 +109,9 @@ class Chart extends PureComponent {
                             }
                         },
                         events: {
-                            click: compareChart
+                            click: e => {
+                                compareChart(e, feature, chart)
+                            }
                         }
                     }
                 },

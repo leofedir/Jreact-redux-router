@@ -8,7 +8,7 @@ export function clearSelectionChart() {
     _line = null;
 }
 
-export function compareChart(e) {
+export function compareChart(e, feature, chart) {
     if (Object.keys(_selectPoint).length < 2 && !e.point.selected) {
         _selectPoint[e.point.x] = e.point.y;
         e.point.select(true, true);
@@ -36,10 +36,11 @@ export function compareChart(e) {
         
         let keys = Object.keys(_selectPoint).map(i => +i).sort((a, b) => b - a);
         let resulr = _selectPoint[keys[0]] - _selectPoint[keys[1]];
+        console.log('feature >>', feature.parameter)
         let persent = (resulr / _selectPoint[keys[1]]) * 100;
-        persent = persent.toFixed(2);
+        persent = feature.parameter == "%" ? "" : `<span>  (${persent.toFixed(2)} %) </span>`;
 
-        _line = this.chart.addSeries({
+        _line = chart.addSeries({
             enableMouseTracking: false,
             dashStyle: 'Dash',
             _lineWidth: 1,
@@ -53,17 +54,15 @@ export function compareChart(e) {
                 [+keys[0], _selectPoint[keys[0]]], [+keys[0], _selectPoint[keys[1]]]
             ]
         });
-        let point = this.chart.series[1].points[1];
+        let point = chart.series[1].points[1];
 
-        let x = point.plotX + this.chart.plotLeft;
-        let y = point.plotY + this.chart.plotTop;
-        let chartW = this.chart.chartWidth;
-        //
-        // chartW - point.plotX < 100 ? point.plotX = point.plotX - 100 : '';
+        let x = point.plotX + chart.plotLeft;
+        let y = point.plotY + chart.plotTop;
+        let chartW = chart.chartWidth;
 
-        let labelTEXT = `<p className="labelChart">${new Intl.NumberFormat().format(resulr)} <span> (${persent}  %)</span></p> `;
+        let labelTEXT = `<p className="labelChart">${new Intl.NumberFormat().format(resulr) } ${feature.parameter}  ${persent}</p> `;
 
-        _label = this.chart.renderer.label(labelTEXT, point.plotX, point.plotY, 'callout', x, y, true)
+        _label = chart.renderer.label(labelTEXT, point.plotX, point.plotY, 'callout', x, y, true)
             .css({
                 color: '#FFFFFF'
             })
