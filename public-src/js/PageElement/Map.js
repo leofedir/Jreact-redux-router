@@ -112,10 +112,10 @@ function parserHTMLtoObject(obj) {
             return word.slice(0, word.length - 1);
         else
             return word
-    })
+    });
 
 
-    let dataObject = {}
+    let dataObject = {};
     //check only important data
     const goodKeys = [
         "Район",
@@ -149,6 +149,7 @@ class Map extends PureComponent {
 
     componentDidUpdate() {
         const {submenu_item} = this.props.main;
+        const {baseMap, curentMap} = this.props.map_reducer;
 
         _submenu_item === null ? _submenu_item = submenu_item : '';
 
@@ -159,7 +160,10 @@ class Map extends PureComponent {
             this.refs.district.classList.remove('active')
         }
 
-        Lmap.off('click', this.onMouseClick)
+        if (baseMap == 'kadastr' && curentMap !== null) {
+            Lmap.listens('click') ? Lmap.off('click', this.onMouseClick) : '';
+            this.changeBasemap(null, true)
+        }
 
         setTimeout(() => {
             Lmap.invalidateSize();
@@ -174,9 +178,7 @@ class Map extends PureComponent {
         const mapSet = fields[submenu_item];
         const {curentMap} = this.props.map_reducer;
 
-
         _curentMap === null ? _curentMap = curentMap : '';
-
 
         if (~_curentMap.indexOf(id)) {
             return
@@ -203,42 +205,6 @@ class Map extends PureComponent {
 
             _curentMap = id
         }
-
-        // if (target.className.includes(' active')) {
-        //     return
-        // }
-        //
-        // if (dataChartRegion) {
-        //     this.refs.area2.className = this.refs.area2.className.replace(' active', '');
-        //     toggle_data(false)
-        //     target.className += ' active';
-        // } else {
-        //     this.refs.area1.className = this.refs.area1.className.replace(' active', '');
-        //     toggle_data(true)
-        //     target.className += ' active';
-        // }
-
-
-        // // initialize by default
-        // const {toggle_data} = this.props.MapActions;
-        // if (curentMap.search('district' > 0)) {
-        //     console.log('y')
-        //
-        //     toggle_data(false);
-        //
-        // } else {
-        //     console.log('f')
-        //
-        //     toggle_data(true)
-        //
-        // }
-        //
-        // const {dataChartRegion} = this.props.map_reducer;
-        //
-        //
-        // console.log(curentMap)
-        // toggle_data(false);
-        //
     }
 
     zoom_in() {
@@ -254,12 +220,11 @@ class Map extends PureComponent {
     }
 
     createMap() {
-        // console.log('createMap <>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>');
 
         const {set_data_district} = this.props.MapActions;
         const {baseMap} = this.props.map_reducer;
         Lmap = L.map('map', {zoomControl: false, minZoom: 3}).setView([49, 31], 6);
-        // setBaseMap('Topographic');
+
         layer = esri.basemapLayer(baseMap);
         Lmap.addLayer(layer);
 
@@ -269,36 +234,6 @@ class Map extends PureComponent {
 
         // add event to map actions
         Lmap.on('mousemove', onMouseMove);
-        // Lmap.on('zoomend', ::this.zoomFunction);
-
-
-        // fetch("https://www.drv.gov.ua/portal/gis$core.Gis_DistrPoly?p_f5271=1&ts=0.5532982378139228", {
-        //     dataType: "json",
-        //     method: 'post',
-        //     mode: 'no-cors',
-        //     headers: {
-        //         "Content-type": "text/html; charset=WINDOWS-1251",
-        //         // "Access-Control-Allow-Origin": "http://localhost"
-        //     },
-        // })
-        //     // .then(checkStatus)
-        //     // .then(parseJSON)
-        //     .then(data => {
-        //         console.log('DATA >>', data.status , data.headers.get('Content-Type'))
-        //     })
-        //     .catch(e => {
-        //         console.log("Data err >> " ,  e);
-        //     })
-
-
-        // fetch to wuboru
-
-        // let getInfo = 'http://map.land.gov.ua/kadastrova-karta/find-Parcel?cadnum=3221483800%3A02%3A003%3A0009&activeArchLayer=0'
-        //
-        // fetch(getInfo)
-        //     .then(checkStatus)
-        //     .then(parseJSON)
-        //     .then(d => console.log('d >>', d))
 
         fetch('main', {
             method: 'post',
@@ -339,7 +274,7 @@ class Map extends PureComponent {
                 }
 
                 set_data_district();
-            })
+            });
 
         kadastr = L.tileLayer.wms("http://212.26.144.110/geowebcache/service/wms", {
             layers: 'kadastr',
@@ -421,19 +356,19 @@ class Map extends PureComponent {
             .catch(e => console.error('e >>', e))
     }
 
-    changeBasemap(e) {
+    changeBasemap(e, mapKadastr = false) {
 
         Lmap.listens('click') ? Lmap.off('click', this.onMouseClick) : '';
         const {setBaseMap} = this.props.MapActions;
 
-        let map = e.target.value;
+        let map = mapKadastr ? 'Topographic' : e.target.value;
         if (layer) {
             Lmap.removeLayer(layer);
         }
 
         if (map == 'kadastr' && curentMap === null) {
             Lmap.hasLayer(ukraine) ? Lmap.removeLayer(ukraine) : '';
-            setBaseMap('Imagery');
+            setBaseMap('kadastr');
 
             layer = L.layerGroup()
                 .addLayer(esri.basemapLayer('Imagery'));
@@ -445,7 +380,7 @@ class Map extends PureComponent {
             Lmap.addLayer(layer);
             Lmap.on('click', this.onMouseClick)
         } else {
-            setBaseMap(e.target.value);
+            setBaseMap(map);
             layer = esri.basemapLayer(map);
             Lmap.addLayer(layer);
         }
@@ -467,12 +402,11 @@ class Map extends PureComponent {
                 </div>
             )
         }
-
     }
 
     render() {
         const {fetching} = this.props.main;
-        const {compareSet} = this.props.map_reducer;
+        const {curentMap} = this.props.map_reducer;
         return (
             <div className="block block-top block_map">
                 <div className="item_header icon-container">
@@ -495,7 +429,7 @@ class Map extends PureComponent {
                         <p className="basemap_title">Базова карта</p>
                         <select name="basemaps" id="basemaps" onChange={::this.changeBasemap}>
                             <option value="Topographic">Топографічна</option>
-                            <option value="kadastr">Кадастрова карта</option>
+                            {curentMap === null ? <option value="kadastr">Кадастрова карта</option> : '' }
                             <option value="Streets">Вулиці</option>
                             <option value="Imagery">Супутникова</option>
                             <option value="NationalGeographic">National Geographic</option>
@@ -506,10 +440,6 @@ class Map extends PureComponent {
 
 
         );
-        // "streets" , "satellite" , "hybrid", "topo", "gray", "dark-gray", "oceans", "national-geographic", "terrain", "osm", "dark-gray-vector", gray-vector", " +
-        // ""streets-vector", "streets-night-vector", "streets-relief-vector", "streets-navigation-vector" and "topo-vector". Property added at v3.3. The "terrain" " +
-        // "and "dark-gray" options added at v3.12. The "dark-gray-vector", "gray-vector", "streets-vector", "streets-night-vector", "streets-relief-vector", " +
-        // ""streets-navigation-vector" and "topo-vector"
     }
 }
 
