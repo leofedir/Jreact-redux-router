@@ -12,14 +12,8 @@ import 'leaflet-pulse-icon/dist/L.Icon.Pulse.css';
 import 'leaflet-pulse-icon/dist/L.Icon.Pulse';
 import "leaflet-search/src/leaflet-search.css";
 
-import {chartData} from '../Function/chartData'
+// import {chartData} from '../Function/chartData'
 
-// import getFields from './setFields';
-// import Cluster from 'esri-leaflet-cluster';
-// import Geocoding from 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder';
-// import * as d3 from 'd3';
-// import React from 'react';
-// let currentSearcherControl = null;
 let layers = {},
     myClaster,
     createMarkers;
@@ -43,6 +37,7 @@ function hideLayer(id) {
 
 
 export default function claster(data) {
+
     if (0 in layers) {
         for (let key in layers) {
             if (layers.hasOwnProperty(key)) {
@@ -62,7 +57,7 @@ export default function claster(data) {
     
     const {baseMap} = store.getState().map_reducer;
     esri.basemapLayer(baseMap).addTo(Lmap);
-    Lmap.setView([49, 31], 5);
+    // Lmap.setView([49, 31], 5);
 
 
     let icon = L.icon({
