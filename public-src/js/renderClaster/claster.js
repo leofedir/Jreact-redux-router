@@ -12,7 +12,7 @@ import 'leaflet-pulse-icon/dist/L.Icon.Pulse.css';
 import 'leaflet-pulse-icon/dist/L.Icon.Pulse';
 import "leaflet-search/src/leaflet-search.css";
 
-// import {chartData} from '../Function/chartData'
+import {chartData} from '../Function/chartData'
 
 let layers = {},
     myClaster,
@@ -122,7 +122,7 @@ export default function claster(data) {
         let feature = e.layer.feature.properties;
         store.dispatch(clickOnFeatureClaster(feature));
         if (Object.keys(feature).some(item => item.indexOf('chart'))) {
-            // chartData(feature) //disable chart
+            chartData(feature) //disable chart
         }
     }
     

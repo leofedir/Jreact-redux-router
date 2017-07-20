@@ -31,7 +31,8 @@ module.exports = function (router) {
                                         obj.type = "Feature";
                                         obj.properties = {};
                                         for (let key in item) {
-                                            if (item.hasOwnProperty(key) && key !== 'geojson' && key !== 'geom' && !~key.indexOf('chart')) { //del chart
+                                            if (item.hasOwnProperty(key) && key !== 'geojson' && key !== 'geom') {
+                                            // if (item.hasOwnProperty(key) && key !== 'geojson' && key !== 'geom' && !~key.indexOf('chart')) { //del chart
                                                 obj.properties[key] = item[key];
                                                 if (key == 'info' && item[key] != null) {
                                                     info = item[key]
