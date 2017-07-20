@@ -277,7 +277,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         if (state.main.submenu_item == "area_atu") {
             let myStyle = {
-                "color": "#009971",
+                "color": "#bdc9e1",
+                "fillColor": "#bdc9e1",
                 "weight": 2,
                 "opacity": .9
             };
@@ -349,7 +350,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
         }
 
         function onMouseOver(e) {
-
             let state = store.getState();
             const {selectedArea} = state.map_reducer;
             let item = e.target;
@@ -407,7 +407,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
         }
 
         function whenClicked(e) {
-            console.log(e);
             let state = store.getState();
             const {selectedArea} = state.map_reducer;
 
