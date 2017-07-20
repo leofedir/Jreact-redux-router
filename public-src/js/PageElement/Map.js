@@ -260,7 +260,6 @@ class Map extends PureComponent {
             .then(checkStatus)
             .then(parseJSON)
             .then(data => {
-                console.log(data);
                 coordinate.region = {};
                 coordinate.district = {};
                 coordinate.otg = {};
@@ -280,8 +279,6 @@ class Map extends PureComponent {
                         coordinate.otg[key] = JSON.parse(data.otg[key])
                     }
                 }
-                
-                console.log(coordinate.otg)
 
                 set_data_district();
             });
