@@ -366,6 +366,7 @@ class Map extends PureComponent {
             .catch(e => console.error('e >>', e))
     }
 
+    
     changeBasemap(e, mapKadastr = false) {
 
         Lmap.listens('click') ? Lmap.off('click', this.onMouseClick) : '';
