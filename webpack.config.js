@@ -89,7 +89,8 @@ const config = {
             "/data_bubble": "http://localhost:8000",
             "/ato": "http://localhost:8000",
             "/info": "http://localhost:8000",
-            "/kadastr": "http://localhost:8000"
+            "/kadastr": "http://localhost:8000",
+            "/grab": "http://localhost:8000"
         }
     },
     resolve: {
