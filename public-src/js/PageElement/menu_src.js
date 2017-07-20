@@ -1,5 +1,11 @@
 export let menu = [
     {
+        key: 0,
+        name: 'Адміністративно-територіальний устрій ',
+        icon: '01.svg',
+        url: 'atu'
+    },
+    {
         key: 1,
         name: 'Демографія',
         icon: '4.svg',

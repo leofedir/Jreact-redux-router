@@ -260,8 +260,10 @@ class Map extends PureComponent {
             .then(checkStatus)
             .then(parseJSON)
             .then(data => {
+                console.log(data);
                 coordinate.region = {};
                 coordinate.district = {};
+                coordinate.otg = {};
                 for (let key in data.region) {
                     if (data.region.hasOwnProperty(key)) {
                         coordinate.region[key] = JSON.parse(data.region[key])
@@ -272,6 +274,14 @@ class Map extends PureComponent {
                         coordinate.district[key] = JSON.parse(data.district[key])
                     }
                 }
+    
+                for (let key in data.otg) {
+                    if (data.otg.hasOwnProperty(key)) {
+                        coordinate.otg[key] = JSON.parse(data.otg[key])
+                    }
+                }
+                
+                console.log(coordinate.otg)
 
                 set_data_district();
             });
