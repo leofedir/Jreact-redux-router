@@ -245,6 +245,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
     function renderLayer() {
 
+        console.log('state >>', state)
+
         if (Lmap.hasLayer(choroplethLayer)) {
             Lmap.removeLayer(choroplethLayer)
             choroplethLayer.clearLayers()
@@ -273,7 +275,24 @@ export default function getMap(properties, rebuild = true, isRegion) {
             }
         };
 
-        choroplethLayer = L.choropleth(data, layerObject);
+        if (state.main.submenu_item == "area_atu") {
+            let myStyle = {
+                "color": "#009971",
+                "weight": 2,
+                "opacity": .9
+            };
+            choroplethLayer = L.geoJSON(data, {
+                style: myStyle,
+                onEachFeature: function (feature, layer) {
+                    layer.on(eventsMap)
+                }
+            });
+        }
+        else {
+            choroplethLayer = L.choropleth(data, layerObject);
+        }
+
+
 
         if (searchControlArea !== null) {
             Lmap.removeControl(searchControlArea)
@@ -388,7 +407,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
         }
 
         function whenClicked(e) {
-            // console.log(e);
+            console.log(e);
             let state = store.getState();
             const {selectedArea} = state.map_reducer;
 
@@ -428,18 +447,28 @@ export default function getMap(properties, rebuild = true, isRegion) {
             store.dispatch(clickOnFeature(e.target.feature.properties, e.target.feature.properties.id))
         }
 
-        let legend_refs = [];
-        for (let i = 0; i < choroplethLayer.options.limits.length; i++)
-            legend_refs.push(`legend${i}`)
 
-        let legend_data = {
-            limits: choroplethLayer.options.limits,
-            colors: choroplethLayer.options.colors,
-            parametr: filds.parameter,
-            refs: legend_refs
-        };
         Lmap.addLayer(choroplethLayer);
-        store.dispatch(set_legend_data(legend_data));
+
+
+        if (state.main.submenu_item == "area_atu") {
+
+        }
+        else {
+            let legend_refs = [];
+            for (let i = 0; i < choroplethLayer.options.limits.length; i++)
+                legend_refs.push(`legend${i}`)
+
+            let legend_data = {
+                limits: choroplethLayer.options.limits,
+                colors: choroplethLayer.options.colors,
+                parametr: filds.parameter,
+                refs: legend_refs
+            };
+            store.dispatch(set_legend_data(legend_data));
+        }
+
+
         initArea();
         renderSelectedArea();
     }

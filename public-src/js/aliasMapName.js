@@ -219,12 +219,7 @@ export let alias = {
     area_infrastructure_vydatkytransportnaosobu:"Видатки місцевого бюджету на транспорт, дорожнє господарство, зв'язок, телекомунікації та інформатику в розрахунку на одну особу",
     area_infrastructure_dorohyderzh:'Протяжність автошляхів державного значення',
     area_infrastructure_dorohymistsevi:'Протяжність автошляхів місцевого значення',
-    area_ekonomika_kilkistaktyvnpidpr:'Кількість активних підприємств'
-
-
-
-
-
-
+    area_ekonomika_kilkistaktyvnpidpr:'Кількість активних підприємств',
+    area_atu:'area_atu__regio'
 
 }

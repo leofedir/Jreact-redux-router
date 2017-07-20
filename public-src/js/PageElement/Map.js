@@ -263,22 +263,32 @@ class Map extends PureComponent {
                 coordinate.region = {};
                 coordinate.district = {};
                 coordinate.otg = {};
+                coordinate.settelments = {};
                 for (let key in data.region) {
                     if (data.region.hasOwnProperty(key)) {
+                        // console.log('region >>')
                         coordinate.region[key] = JSON.parse(data.region[key])
                     }
                 }
                 for (let key in data.district) {
                     if (data.district.hasOwnProperty(key)) {
+                        // console.log('district >>')
                         coordinate.district[key] = JSON.parse(data.district[key])
                     }
                 }
-    
-                for (let key in data.otg) {
-                    if (data.otg.hasOwnProperty(key)) {
-                        coordinate.otg[key] = JSON.parse(data.otg[key])
-                    }
-                }
+                //
+                // for (let key in data.otg) {
+                //     if (data.otg.hasOwnProperty(key)) {
+                //         // console.log('otg >>')
+                //         coordinate.otg[key] = JSON.parse(data.otg[key])
+                //     }
+                // }
+                // for (let key in data.settelments) {
+                //     if (data.settelments.hasOwnProperty(key)) {
+                //         // console.log('settelments >>')
+                //         coordinate.settelments[key] = JSON.parse(data.settelments[key])
+                //     }
+                // }
 
                 set_data_district();
             });
