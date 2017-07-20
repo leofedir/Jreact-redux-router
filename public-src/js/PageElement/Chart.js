@@ -128,97 +128,98 @@ class Chart extends PureComponent {
                     hideDelay: 100,
                 },
             });
-        } else if (feature === null && chart !== null) {
+        //} else if (feature === null && chart !== null) {
+        } else if (feature === null && chart !== null && chart1 === null) {
             chart.destroy();
             chart = null
         }
-        // else if (chart1 !== null) {
-        //     tooltipParametr = 'UAH';
-        //     let myData2 = [];
-        //     let labels2 = [];
-        //
-        //     if (chart2 !== null) {
-        //
-        //         let i = 0;
-        //
-        //         for (let key in chart2) {
-        //             if (chart2.hasOwnProperty(key)) {
-        //
-        //                 let obj = {
-        //                     name: alias_series[key] || key,
-        //                     data: [],
-        //                     visible: i===0
-        //                 };
-        //
-        //                 chart2[key].forEach(item => {
-        //                     obj.data.push(item.value);
-        //                     i === 0 ? labels2.push(`${ item.year }р`) : ''
-        //                 });
-        //                 i++;
-        //                 myData2.push(obj)
-        //             }
-        //         }
-        //     }
-        //
-        //     let myData = [];
-        //     let labels = [];
-        //     let i = 0;
-        //
-        //
-        //     for (let key in chart1) {
-        //         if (chart1.hasOwnProperty(key)) {
-        //
-        //             let obj = {
-        //                 name: alias_series[key] || key,
-        //                 data: [],
-        //                 visible: i===0
-        //             };
-        //
-        //             chart1[key].forEach(item => {
-        //                 obj.data.push(item.value);
-        //                 i === 0 ? labels.push(`${ item.year }р`) : ''
-        //             });
-        //             i++;
-        //             myData.push(obj)
-        //         }
-        //     }
-        //
-        //     chart = Highcharts.chart('item_chart', {
-        //         colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
-        //         title: {
-        //             text: for1Student ? 'Витрати  шкільного бюджету в розрахунку на одного учня' : 'Загальні витрати та доходи шкільного бюджету'
-        //         },
-        //         chart: {
-        //             type: 'line',
-        //             marginRight: 20
-        //         },
-        //         credits: {
-        //             text: 'Енциклопедія територій',
-        //             href: 'http://enter.co.ua',
-        //             enabled: false
-        //         },
-        //         yAxis: {
-        //             title: {
-        //                 text: null
-        //             }
-        //         },
-        //         legend: {
-        //             layout: 'horizontal',
-        //             align: 'center',
-        //             verticalAlign: 'bottom'
-        //         },
-        //         xAxis: {
-        //             crosshair: true,
-        //             categories: for1Student ? labels2 : labels
-        //         },
-        //         tooltip: {
-        //             shared: true,
-        //             hideDelay: 100,
-        //             valueSuffix: ' ' + tooltipParametr
-        //         },
-        //         series: for1Student ? myData2 : myData
-        //     });
-        // }
+        else if (chart1 !== null) {
+            tooltipParametr = 'UAH';
+            let myData2 = [];
+            let labels2 = [];
+
+            if (chart2 !== null) {
+
+                let i = 0;
+
+                for (let key in chart2) {
+                    if (chart2.hasOwnProperty(key)) {
+
+                        let obj = {
+                            name: alias_series[key] || key,
+                            data: [],
+                            visible: i===0
+                        };
+
+                        chart2[key].forEach(item => {
+                            obj.data.push(item.value);
+                            i === 0 ? labels2.push(`${ item.year }р`) : ''
+                        });
+                        i++;
+                        myData2.push(obj)
+                    }
+                }
+            }
+
+            let myData = [];
+            let labels = [];
+            let i = 0;
+
+
+            for (let key in chart1) {
+                if (chart1.hasOwnProperty(key)) {
+
+                    let obj = {
+                        name: alias_series[key] || key,
+                        data: [],
+                        visible: i===0
+                    };
+
+                    chart1[key].forEach(item => {
+                        obj.data.push(item.value);
+                        i === 0 ? labels.push(`${ item.year }р`) : ''
+                    });
+                    i++;
+                    myData.push(obj)
+                }
+            }
+
+            chart = Highcharts.chart('item_chart', {
+                colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
+                title: {
+                    text: for1Student ? 'Витрати  шкільного бюджету в розрахунку на одного учня' : 'Загальні витрати та доходи шкільного бюджету'
+                },
+                chart: {
+                    type: 'line',
+                    marginRight: 20
+                },
+                credits: {
+                    text: 'Енциклопедія територій',
+                    href: 'http://enter.co.ua',
+                    enabled: false
+                },
+                yAxis: {
+                    title: {
+                        text: null
+                    }
+                },
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                },
+                xAxis: {
+                    crosshair: true,
+                    categories: for1Student ? labels2 : labels
+                },
+                tooltip: {
+                    shared: true,
+                    hideDelay: 100,
+                    valueSuffix: ' ' + tooltipParametr
+                },
+                series: for1Student ? myData2 : myData
+            });
+        }
     }
 
     componentDidMount() {
@@ -254,14 +255,14 @@ class Chart extends PureComponent {
                             Оберіть територію на мапі
                         </p>
                     </div>
-                    {/*<div className="region_toggle" style={chart2 === null ? {display: 'none'} : {display: 'block'}}>*/}
-                        {/*<div className="region_toggle_item">*/}
-                            {/*<p data-user='1' className={ for1Student ? 'toggle' : 'toggle active'}*/}
-                               {/*onClick={ ::this.toggleToStudent }>Загальні</p>*/}
-                            {/*<p data-user='0' className={ !for1Student ? 'toggle' : 'toggle active'}*/}
-                               {/*onClick={ ::this.toggleToStudent }>На 1 учня</p>*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
+                    <div className="region_toggle" style={chart2 === null ? {display: 'none'} : {display: 'block'}}>
+                        <div className="region_toggle_item">
+                            <p data-user='1' className={ for1Student ? 'toggle' : 'toggle active'}
+                               onClick={ ::this.toggleToStudent }>Загальні</p>
+                            <p data-user='0' className={ !for1Student ? 'toggle' : 'toggle active'}
+                               onClick={ ::this.toggleToStudent }>На 1 учня</p>
+                        </div>
+                    </div>
                     <div id="item_chart"/>
                 </div>
             </div>
