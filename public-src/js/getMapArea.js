@@ -245,8 +245,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
     function renderLayer() {
 
-        console.log('state >>', state)
-
         if (Lmap.hasLayer(choroplethLayer)) {
             Lmap.removeLayer(choroplethLayer)
             choroplethLayer.clearLayers()
@@ -275,7 +273,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             }
         };
 
-        if (state.main.submenu_item == "area_atu") {
+        if (~state.main.submenu_item.indexOf('area_atu')) {
             let myStyle = {
                 "color": "#bdc9e1",
                 "fillColor": "#bdc9e1",
@@ -450,7 +448,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
         Lmap.addLayer(choroplethLayer);
 
 
-        if (state.main.submenu_item == "area_atu") {
+        if (~state.main.submenu_item.indexOf('area_atu')) {
 
         }
         else {

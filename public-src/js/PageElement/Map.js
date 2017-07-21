@@ -235,30 +235,6 @@ class Map extends PureComponent {
         // add event to map actions
         Lmap.on('mousemove', onMouseMove);
 
-        // var myHeaders = new Headers();
-        // myHeaders.append("Content-Type", "application/json");
-        // myHeaders.append("Accept", "application/json, text/javascript, */*; q=0.01");
-        //
-        //
-        // for (let i = 2; i < 3; i++) {
-        //
-        //     fetch(`https://www.drv.gov.ua/portal/gis$core.Gis_DistrPoly?p_f5271=${i}&ts=0.0325268442642479`, {
-        //         method: 'GET',
-        //         // headers: myHeaders,
-        //         mode: 'no-cors'
-        //     })
-        //         // .then(checkStatus)
-        //         // .then(parseJSON)
-        //         .then(data => {
-        //             console.log('data >>', data)
-        //             // fetch('grab', {
-        //             //     method: 'post',
-        //             //     body: `table=${data}`
-        //             // })
-        //
-        //             // INSERT INTO table_name (id , bbox ... ) VALUES (1,2,3,4) , (5,6,7,8) , (9,10,11) ...
-        //         })
-        // }
         fetch('main', {
             method: 'post',
             body: ''
@@ -397,7 +373,7 @@ class Map extends PureComponent {
             .catch(e => console.error('e >>', e))
     }
 
-    
+
     changeBasemap(e, mapKadastr = false) {
 
         Lmap.listens('click') ? Lmap.off('click', this.onMouseClick) : '';
@@ -460,7 +436,7 @@ class Map extends PureComponent {
                 <div id="map_wrapper" className="map_wrapper">
                     <div id="loader" className={fetching ? "show" : ''}/>
                     {/*<i className="fa fa-balance-scale icon_grt_compare " aria-hidden="true">*/}
-                        {/*{compareSet.size === 0 ? '' : <span className="compare_count">{compareSet.size}</span>}*/}
+                    {/*{compareSet.size === 0 ? '' : <span className="compare_count">{compareSet.size}</span>}*/}
                     {/*</i>*/}
                     <i className="fa fa-plus fa-1x zoom_in_icon" onClick={::this.zoom_in} id="zoom_in"/>
                     <i className="fa fa-minus fa-1x zoom_out_icon" onClick={::this.zoom_out} id="zoom_out"/>
