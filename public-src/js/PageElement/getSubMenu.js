@@ -38,6 +38,9 @@ class SubMenu extends PureComponent {
         else if (arr.some(item => item == "__otg")) {
             getMapData(tableData, arr, mapName + "__otg", true, alias[mapName], false)
         }
+        else if (arr.some(item => item == "__settelments")) {
+            getMapData(tableData, arr, mapName + "__settelments", true, alias[mapName], false)
+        }
         else if (!mapName.startsWith('area')) {
             show_claster(claster, mapName)
         }

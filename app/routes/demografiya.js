@@ -8,7 +8,7 @@ module.exports = function (router) {
 
     router.post('/getmapdata', function (req, res) {
         let { table, arr} = req.body;
-        console.log('table >>', table)
+
         table = table.split(',');
         arr = arr.split(',');
         if (req.body.table in dataObj) {
@@ -24,7 +24,7 @@ module.exports = function (router) {
                             obj.type = "Feature";
                             obj.properties = {};
                             for (let key in item) {
-                                if (item.hasOwnProperty(key)) {
+                                if (item.hasOwnProperty(key) && item[key] != 'geojson') {
                                     obj.properties[key] = item[key];
                                     if (key == 'info' && item[key] != null) {
                                         info = item[key]

@@ -10,9 +10,9 @@ let geometry = {};
 let data_buble = {};
 const geometryQuery = [
     `SELECT * FROM geom_region`,
-    `SELECT * FROM geom_district`
-    // `SELECT * FROM geom_otg`,
-    // `SELECT * FROM geom_settelments`
+    `SELECT * FROM geom_district`,
+    `SELECT * FROM geom_otg`,
+    `SELECT * FROM geom_settelments`
 ];
 
 router.use(compression({
@@ -84,12 +84,12 @@ router.post('/region', function (req, res) {
                             break;
                         case 2:
                             item.forEach((i) => {
-                                obj3[i.gid] = JSON.parse(i.geojson)
+                                obj3[i.id] = JSON.parse(i.geojson)
                             });
                             break;
                         case 3:
                             item.forEach((i) => {
-                                obj4[i.geo_id] = JSON.parse(i.geojson)
+                                obj4[i.id] = JSON.parse(i.geojson)
                             });
                             break;
 

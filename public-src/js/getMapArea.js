@@ -53,13 +53,23 @@ export default function getMap(properties, rebuild = true, isRegion) {
     let PropertiesLayer = [];
     if (rebuild) {
         propertiesMain = properties;
+        console.log('propertiesMain >>', propertiesMain)
 
         if (isRegion) {
             data = propertiesMain.__region;
             filds = propertiesMain.__region[0].properties
-        } else {
+        }
+        else if ('__district' in propertiesMain){
             data = propertiesMain.__district;
             filds = propertiesMain.__district[0].properties
+        }
+        else if ('__otg' in propertiesMain){
+            data = propertiesMain.__otg;
+            filds = propertiesMain.__otg[0].properties
+        }
+        else if ('__settelments' in propertiesMain){
+            data = propertiesMain.__settelments;
+            filds = propertiesMain.__settelments[0].properties
         }
 
 
@@ -97,10 +107,19 @@ export default function getMap(properties, rebuild = true, isRegion) {
     } else {
         if (isRegion) {
             data = propertiesMain.__region;
-            filds = propertiesMain.__region[0].properties;
-        } else {
+            filds = propertiesMain.__region[0].properties
+        }
+        else if ('__district' in propertiesMain){
             data = propertiesMain.__district;
-            filds = propertiesMain.__district[0].properties;
+            filds = propertiesMain.__district[0].properties
+        }
+        else if ('__otg' in propertiesMain){
+            data = propertiesMain.__otg;
+            filds = propertiesMain.__otg[0].properties
+        }
+        else if ('__settelments' in propertiesMain){
+            data = propertiesMain.__settelments;
+            filds = propertiesMain.__settelments[0].properties
         }
     }
 
@@ -241,9 +260,21 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
     randColor = rebuild ? getRandomColorLayer() : randColor;
     // join geometry
-    isRegion ? joinGeometry(coordinate.region) : joinGeometry(coordinate.district)
+    if (isRegion) {
+        joinGeometry(coordinate.region)
+    }
+    else if ('__district' in propertiesMain){
+        joinGeometry(coordinate.district)
+    }
+    else if ('__otg' in propertiesMain){
+        joinGeometry(coordinate.otg)
+    }
+    else if ('__settelments' in propertiesMain){
+        joinGeometry(coordinate.settelments)
+    }
 
     function renderLayer() {
+        console.log('sdfds')
 
         if (Lmap.hasLayer(choroplethLayer)) {
             Lmap.removeLayer(choroplethLayer)
@@ -280,6 +311,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 "weight": 2,
                 "opacity": .9
             };
+
             choroplethLayer = L.geoJSON(data, {
                 style: myStyle,
                 onEachFeature: function (feature, layer) {
