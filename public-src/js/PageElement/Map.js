@@ -151,6 +151,8 @@ class Map extends PureComponent {
         const {submenu_item} = this.props.main;
         const {baseMap, curentMap} = this.props.map_reducer;
 
+
+
         _submenu_item === null ? _submenu_item = submenu_item : '';
 
         if (submenu_item != _submenu_item && Object.keys(this.refs).length > 1) {
@@ -223,7 +225,11 @@ class Map extends PureComponent {
 
         const {set_data_district} = this.props.MapActions;
         const {baseMap} = this.props.map_reducer;
-        Lmap = L.map('map', {zoomControl: false, minZoom: 3}).setView([49, 31], 6);
+        Lmap = L.map('map', {
+            zoomControl: false,
+            minZoom: 3,
+            renderer: L.canvas()
+        }).setView([49, 31], 6);
 
         layer = esri.basemapLayer(baseMap);
         Lmap.addLayer(layer);

@@ -53,7 +53,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
     let PropertiesLayer = [];
     if (rebuild) {
         propertiesMain = properties;
-        console.log('propertiesMain >>', propertiesMain)
 
         if (isRegion) {
             data = propertiesMain.__region;
@@ -294,6 +293,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             steps: 5,
             mode: 'q',
             smoothFactor: 0,
+            attribution: 'OpenData.ua',
             style: {
                 color: randColor.color,
                 weight: 0.2,
@@ -313,6 +313,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             };
 
             choroplethLayer = L.geoJSON(data, {
+                attribution: 'OpenData.ua',
                 style: myStyle,
                 onEachFeature: function (feature, layer) {
                     layer.on(eventsMap)

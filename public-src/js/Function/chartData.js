@@ -41,7 +41,8 @@ export function chartData(feature_claster) {
         sort_data(chart2);
         sort_data(chart3);
 
-        store.dispatch(set_chart_data(chart1, chart2, chart3))
-
+        if (chart1 !== null) {
+            store.dispatch(set_chart_data(chart1, chart2, chart3))
+        }
     }
 }
