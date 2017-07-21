@@ -74,22 +74,22 @@ router.post('/region', function (req, res) {
                     switch (i) {
                         case 0 :
                             item.forEach(i => {
-                                obj1[i.id] = i.geojson
+                                obj1[i.id] = JSON.parse(i.geojson)
                             });
                             break;
                         case 1 :
                             item.forEach(i => {
-                                obj2[i.id] = i.geojson
+                                obj2[i.id] = JSON.parse(i.geojson)
                             });
                             break;
                         case 2:
                             item.forEach((i) => {
-                                obj3[i.gid] = i.geojson
+                                obj3[i.gid] = JSON.parse(i.geojson)
                             });
                             break;
                         case 3:
                             item.forEach((i) => {
-                                obj4[i.geo_id] = i.geojson
+                                obj4[i.geo_id] = JSON.parse(i.geojson)
                             });
                             break;
 

@@ -88,8 +88,11 @@ export function getMapData(tableData = null, arr = null, url, rebuild = true, al
                 },
                 body: `table=${ tableData }&arr=${arr}`
             })
+                .then(checkStatus)
                 .then(parseJSON)
                 .then((res) => {
+
+                console.log('res >>', res)
                     dispatch({
                         type: GET_MAP_AREA_SUCCESS,
                         payload: res[1]

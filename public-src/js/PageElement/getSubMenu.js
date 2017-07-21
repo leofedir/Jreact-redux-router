@@ -29,11 +29,16 @@ class SubMenu extends PureComponent {
 
         let tableData = arr.map(item => mapName + item);
         // mapName.startsWith('area') && tableData.length > 1 ? getMapData(tableData, arr, mapName + '__district', true, alias[mapName], false) : '';
-        if (arr.some(item => item === '__region')) {
+        if (arr.some(item => item == '__region')) {
             getMapData(tableData, arr, mapName + '__region', true, alias[mapName], true)
-        } else if (arr.some(item => item === '__district')) {
+        }
+        else if (arr.some(item => item == '__district')) {
             getMapData(tableData, arr, mapName + '__district', true, alias[mapName], false)
-        } else if (!mapName.startsWith('area')) {
+        }
+        else if (arr.some(item => item == "__otg")) {
+            getMapData(tableData, arr, mapName + "__otg", true, alias[mapName], false)
+        }
+        else if (!mapName.startsWith('area')) {
             show_claster(claster, mapName)
         }
     }
