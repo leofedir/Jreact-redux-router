@@ -221,6 +221,7 @@ export let alias = {
     area_infrastructure_dorohymistsevi:'Протяжність автошляхів місцевого значення',
     area_ekonomika_kilkistaktyvnpidpr:'Кількість активних підприємств',
     area_atu_1r:'Області',
-    area_atu_2d:'Райони та міста обласного підпорядкування'
-
+    area_atu_2d:'Райони та міста обласного підпорядкування',
+    area_atu_3ot:"Об'єднано-територіальні громади",
+    area_atu_4set:'Населені пункти'
 }
