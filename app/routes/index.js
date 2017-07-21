@@ -27,54 +27,6 @@ router.post('/main', function (req, res) {
     GeoJson.queryBase(req.originalUrl, 'borders', res);
 });
 
-const createBulkQuery = (obj) => {
-    let values = 0;
-    let sql = `INSERT INTO table (distr, geometry, geomtype, id, info, okrug, name,  ) VALUES ${values}`;
-    let sqlParts=``;
-    obj.forEach((e , i) => {
-        // for (let s in e){
-        //     sqlParts += ''
-        // }
-       console.log(e);
-    })
-}
-
-router.post('/grab', function (req, res) {
-
-    console.log(req.body)
-
-// let a = [
-//
-//     {
-//         distr: "800086",
-//         geometry:{type: "Point", coordinates:[30.6175359455, 50.4133775951]},
-//         geomtype:"9",
-//         icon:"hand-paper-o",
-//         id:"80695",
-//         info:"вул.Здолбунівська, 7Б, м.Київ, 02081 (школа №111, рекреація, 1-й поверх)",
-//         okrug:"212",
-//         properties:{name: "800086"},
-//         rowscn:"90557762869",
-//         type:"Feature"
-//     },
-//     {
-//         distr: "800086",
-//         geometry:{type: "Point", coordinates:[30.6175359455, 50.4133775951]},
-//         geomtype:"9",
-//         icon:"hand-paper-o",
-//         id:"80695",
-//         info:"вул.Здолбунівська, 7Б, м.Київ, 02081 (школа №111, рекреація, 1-й поверх)",
-//         okrug:"212",
-//         properties:{name: "800086"},
-//         rowscn:"90557762869",
-//         type:"Feature"
-//     }
-// ];
-//     createBulkQuery(a);
-
-
-})
-
 router.post('/data_bubble', function (req, res) {
     const year = req.body.year
     if (data_buble[year] in data_buble) {
