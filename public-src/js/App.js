@@ -16,6 +16,7 @@ import Legend from './PageElement/Legend';
 import Info from './PageElement/info';
 import MapTitle from './PageElement/MapTitle';
 import BubbleChart from './PageElement/BubbleChart';
+import Compare from './PageElement/Compare';
 
 // let wrapper = document.getElementById('wrapper');
 
@@ -25,7 +26,7 @@ class App extends Component {
     }
 
     render() {
-        const {showMenu, mapFull} = this.props.main;
+        const {showMenu, mapFull, showCompare} = this.props.main;
         const {data_bubble, chart3, data_success, feature, chart1, chart2} = this.props.map_reducer;
         // const mainRightStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `disabled` : ``;
         // const mainChartStyle = ((bubble_chart_full || bar_chart_full) || (chart_full)) ? `zero-height`: ``;
@@ -51,9 +52,10 @@ class App extends Component {
                             <Info />
                         </div>
                         <div className={`main__chart`}>
-                            {/*{feature !== null || data_success ? <Chart /> : ""}*/}
-                            {feature !== null || chart1 !== null || chart2 !== null || data_success ? <Chart /> : ""}
-                            {data_success ? <BarChart /> : ''}
+                            {console.log('showCompare >>', !showCompare && (feature !== null || chart1 !== null || chart2 !== null || data_success))}
+                            {showCompare ? <Compare /> : ''}
+                            { !showCompare && (feature !== null || chart1 !== null || chart2 !== null || data_success) ? <Chart /> : ""}
+                            {!showCompare && data_success ? <BarChart /> : ''}
                             {chart3 !== null  ? <MultiChart /> : ''}
                         </div>
                         {data_bubble ? <div className={`main__chart `}><BubbleChart /></div> : ''}

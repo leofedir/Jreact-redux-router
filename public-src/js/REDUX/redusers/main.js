@@ -19,7 +19,8 @@ import {
     CHANGE_INPET_SEARCH,
     SHOW_INPUT,
     SET_CLASTER_CHART_DATA,
-    TOGGLE_CHECK
+    TOGGLE_CHECK,
+    SHOW_COMPARE
 
 } from '../actions/constant'
 
@@ -39,7 +40,8 @@ const initialState = {
     slider_range_picker: false,
     popup_fullsize: false,
     searchValue: '',
-    show_input: false
+    show_input: false,
+    showCompare: false
 };
 
 export default function main(state = initialState, action) {
@@ -58,7 +60,8 @@ export default function main(state = initialState, action) {
                 claster_layers: null,
                 mapFull: true,
                 show_range: false,
-                fetching: true
+                fetching: true,
+                showCompare: false
             };
 
         case GET_SUBMENU_REQUEST:
@@ -126,6 +129,9 @@ export default function main(state = initialState, action) {
 
         case TOGGLE_CHECK:
             return {...state, mapFull: true,};
+
+        case SHOW_COMPARE:
+            return {...state, showCompare: action.payload,};
 
         default:
             return state;

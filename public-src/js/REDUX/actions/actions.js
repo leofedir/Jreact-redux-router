@@ -12,7 +12,8 @@ import {
     TOGGLE_SLIDER_PICKER,
     TOGGLE_POPUP_FULLSIZE,
     CHANGE_INPET_SEARCH,
-    SHOW_INPUT
+    SHOW_INPUT,
+    SHOW_COMPARE
 
 
 } from './constant';
@@ -126,5 +127,12 @@ export function showInput(bool) {
     return {
         type: SHOW_INPUT,
         payload: !bool
+    }
+}
+
+export function showCompareFunc(bool) {
+    return {
+        type: SHOW_COMPARE,
+        payload: bool
     }
 }

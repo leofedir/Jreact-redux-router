@@ -257,9 +257,9 @@ class Map extends PureComponent {
                 });
                 Lmap.addLayer(ukraine)
             });
-        // var db = new Dexie("FriendDatabase");
+        // var db = new Dexie("CoordinateDatabase");
         // db.version(1).stores({
-        //     coordinate: "++id,name",
+        //     coordinate: "++id,name,coordinate",
         // });
         //
         // console.log(Dexie.exists("FriendDatabase"))
@@ -281,13 +281,10 @@ class Map extends PureComponent {
                 // Manipulate and Query Database
                 //
 
-                // db.coordinate.add({name: JSON.stringify(coordinate)}).then(function() {
-                //     return db.coordinate;
-                // }).then(function (youngFriends) {
-                //     console.log ("My young friends: " + JSON.stringify(youngFriends));
-                // }).catch(function (e) {
-                //     console.log ("Error: " + (e.stack || e));
-                // });
+                // db.coordinate.add({name: 'region', coordinate: JSON.stringify(coordinate.region)});
+                // db.coordinate.add({name: 'district', coordinate: JSON.stringify(coordinate.district)});
+                // db.coordinate.add({name: 'otg', coordinate: JSON.stringify(coordinate.otg)});
+                // db.coordinate.add({name: 'settelments', coordinate: JSON.stringify(coordinate.settelments)});
 
                 set_data_district();
             });
@@ -421,22 +418,32 @@ class Map extends PureComponent {
         }
     }
 
+    clickOnCompare() {
+        const {showCompareFunc} = this.props.Actions;
+        const {compareSet} = this.props.map_reducer;
+        if (compareSet.size >= 2){
+            console.log('compare')
+            showCompareFunc(true)
+        }
+
+
+    }
+
     render() {
         const {fetching} = this.props.main;
-        const {curentMap} = this.props.map_reducer;
+        const {curentMap, compareSet} = this.props.map_reducer;
         return (
             <div className="block block-top block_map">
                 <div className="item_header icon-container">
                     <SubMenu />
                     {::this.button()}
-
                     <i className="fa fa-expand fa-1x ico_map_full ico_hover" onClick={::this.omButtonMapClick}/>
                 </div>
                 <div id="map_wrapper" className="map_wrapper">
                     <div id="loader" className={fetching ? "show" : ''}/>
-                    {/*<i className="fa fa-balance-scale icon_grt_compare " aria-hidden="true">*/}
-                    {/*{compareSet.size === 0 ? '' : <span className="compare_count">{compareSet.size}</span>}*/}
-                    {/*</i>*/}
+                    <i className="fa fa-balance-scale icon_grt_compare " aria-hidden="true" onClick={::this.clickOnCompare}>
+                    {compareSet.size === 0 ? '' : <span className="compare_count">{compareSet.size}</span>}
+                    </i>
                     <i className="fa fa-plus fa-1x zoom_in_icon" onClick={::this.zoom_in} id="zoom_in"/>
                     <i className="fa fa-minus fa-1x zoom_out_icon" onClick={::this.zoom_out} id="zoom_out"/>
                     <i className="fa fa-dot-circle-o fa-1x geolocate_icon" onClick={::this.geolocate} id="geolocate"/>
