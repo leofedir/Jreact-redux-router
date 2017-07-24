@@ -3,6 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../REDUX/actions/actions';
 import * as MapActions from '../REDUX/actions/get_map_area';
+import Dexie from 'dexie';
 
 import {checkStatus, parseJSON} from '../checkJSON';
 import L from 'leaflet';
@@ -152,7 +153,6 @@ class Map extends PureComponent {
         const {baseMap, curentMap} = this.props.map_reducer;
 
 
-
         _submenu_item === null ? _submenu_item = submenu_item : '';
 
         if (submenu_item != _submenu_item && Object.keys(this.refs).length > 1) {
@@ -222,7 +222,6 @@ class Map extends PureComponent {
     }
 
     createMap() {
-
         const {set_data_district} = this.props.MapActions;
         const {baseMap} = this.props.map_reducer;
         Lmap = L.map('map', {
@@ -258,6 +257,12 @@ class Map extends PureComponent {
                 });
                 Lmap.addLayer(ukraine)
             });
+        // var db = new Dexie("FriendDatabase");
+        // db.version(1).stores({
+        //     coordinate: "++id,name",
+        // });
+        //
+        // console.log(Dexie.exists("FriendDatabase"))
 
         fetch('region', {
             method: 'post',
@@ -266,36 +271,23 @@ class Map extends PureComponent {
             .then(checkStatus)
             .then(parseJSON)
             .then(data => {
-                coordinate = data
-                // coordinate.region = {};
-                // coordinate.district = {};
-                // coordinate.otg = {};
-                // coordinate.settelments = {};
-                // for (let key in data.region) {
-                //     if (data.region.hasOwnProperty(key)) {
-                //         // console.log('region >>')
-                //         coordinate.region[key] = JSON.parse(data.region[key])
-                //     }
-                // }
-                // for (let key in data.district) {
-                //     if (data.district.hasOwnProperty(key)) {
-                //         // console.log('district >>')
-                //         coordinate.district[key] = JSON.parse(data.district[key])
-                //     }
-                // }
+                coordinate = data;
                 //
-                // for (let key in data.otg) {
-                //     if (data.otg.hasOwnProperty(key)) {
-                //         // console.log('otg >>')
-                //         coordinate.otg[key] = JSON.parse(data.otg[key])
-                //     }
-                // }
-                // for (let key in data.settelments) {
-                //     if (data.settelments.hasOwnProperty(key)) {
-                //         // console.log('settelments >>')
-                //         coordinate.settelments[key] = JSON.parse(data.settelments[key])
-                //     }
-                // }
+                // Declare Database
+                //
+
+
+                //
+                // Manipulate and Query Database
+                //
+
+                // db.coordinate.add({name: JSON.stringify(coordinate)}).then(function() {
+                //     return db.coordinate;
+                // }).then(function (youngFriends) {
+                //     console.log ("My young friends: " + JSON.stringify(youngFriends));
+                // }).catch(function (e) {
+                //     console.log ("Error: " + (e.stack || e));
+                // });
 
                 set_data_district();
             });
@@ -413,7 +405,7 @@ class Map extends PureComponent {
 
     button() {
         const {submenu_item} = this.props.main;
-        if (submenu_item.indexOf('area_') < 0) {
+        if (!~submenu_item.indexOf('area_') || !~submenu_item.indexOf('"area_atu"')) {
             return null;
         } else {
             return (
