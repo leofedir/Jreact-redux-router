@@ -120,15 +120,15 @@ export default function claster(data) {
 
 
     function whenClicked(e, search) {
-        if (lastSearch !== null) {
-            lastSearch.layer.setIcon(icon)
-        }
-        
+        // if (lastSearch !== null) {
+        //     lastSearch.layer.setIcon(icon)
+        // }
+        //
         if (!search) {
-            e.layer.setIcon(pulsingIcon);
+            // e.layer.setIcon(pulsingIcon);
             searchControlPoint.options.marker.remove()
         }
-        lastSearch = e
+        // lastSearch = e
         
         let feature = e.layer.feature.properties;
         store.dispatch(clickOnFeatureClaster(feature));
