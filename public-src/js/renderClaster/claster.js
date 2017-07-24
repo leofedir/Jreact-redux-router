@@ -14,6 +14,7 @@ import "leaflet-search/src/leaflet-search.css";
 
 import {chartData} from '../Function/chartData'
 
+let lastSearch = null;
 let layers = {},
     myClaster,
     createMarkers;
@@ -110,15 +111,25 @@ export default function claster(data) {
     // searchControlPoint.__proto__._handleAutoresize = () => {}; //need to fix resize bug
 
     searchControlPoint.on('search:locationfound', function (e) {
-        whenClicked(e) // call click action
+        whenClicked(e, true) // call click action
         Lmap.flyTo(e.latlng, 14);
-        setTimeout(() => {
-            searchControlPoint.options.marker.remove()
-        }, 4000)
+        // setTimeout(() => {
+        //     searchControlPoint.options.marker.remove()
+        // }, 4000)
     });
 
 
-    function whenClicked(e) {
+    function whenClicked(e, search) {
+        if (lastSearch !== null) {
+            lastSearch.layer.setIcon(icon)
+        }
+        
+        if (!search) {
+            e.layer.setIcon(pulsingIcon);
+            searchControlPoint.options.marker.remove()
+        }
+        lastSearch = e
+        
         let feature = e.layer.feature.properties;
         store.dispatch(clickOnFeatureClaster(feature));
         if (Object.keys(feature).some(item => item.indexOf('chart'))) {
