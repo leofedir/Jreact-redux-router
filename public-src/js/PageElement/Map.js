@@ -405,7 +405,7 @@ class Map extends PureComponent {
 
     button() {
         const {submenu_item} = this.props.main;
-        if (submenu_item.indexOf('area_') < 0) {
+        if (!~submenu_item.indexOf('area_') || !~submenu_item.indexOf('"area_atu"')) {
             return null;
         } else {
             return (
