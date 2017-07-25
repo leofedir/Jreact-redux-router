@@ -422,7 +422,6 @@ class Map extends PureComponent {
         const {showCompareFunc} = this.props.Actions;
         const {compareSet} = this.props.map_reducer;
         if (compareSet.size >= 2){
-            console.log('compare')
             showCompareFunc(true)
         }
 

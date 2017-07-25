@@ -77,7 +77,6 @@ class Compare extends Component {
             }
             for (let key in item) {
                 if (item.hasOwnProperty(key) && key.indexOf(curency.toLowerCase() + 'year') === 0) {
-                    console.log('key >>', key)
                     obj.data.push(+item[key])
                 }
             }
@@ -124,7 +123,6 @@ class Compare extends Component {
 
 
     render() {
-        console.log('compare')
         return (
             <div className="compareCahrt">
                 <div className="item_header">
