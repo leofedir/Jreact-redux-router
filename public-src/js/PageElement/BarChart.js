@@ -274,6 +274,12 @@ class BarChart extends PureComponent {
     }
     componentDidMount() {
         console.log('update')
+        if (this.props.map_reducer.compareSet.size <= 2) {
+            setTimeout(() => {
+                this.createChart()
+            }, 200)
+
+        }
         // this.createChart()
     }
 

@@ -20,7 +20,8 @@ import {
     SHOW_INPUT,
     SET_CLASTER_CHART_DATA,
     TOGGLE_CHECK,
-    SHOW_COMPARE
+    SHOW_COMPARE,
+    TOGGLE_DATA
 
 } from '../actions/constant'
 
@@ -132,6 +133,9 @@ export default function main(state = initialState, action) {
 
         case SHOW_COMPARE:
             return {...state, showCompare: action.payload,};
+
+        case TOGGLE_DATA:
+            return {...state, showCompare: false};
 
         default:
             return state;

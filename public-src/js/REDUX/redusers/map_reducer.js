@@ -146,7 +146,7 @@ export default function map(state = initialState, action) {
             return {...state, check: action.payload, chart1: null, chart2: null, chart3: null};
 
         case TOGGLE_DATA:
-            return {...state, dataChartRegion: action.payload};
+            return {...state, dataChartRegion: action.payload, compareSet: new Map()};
 
         case TOGGLE_CURENCY:
             return {...state, dataChartUsd: action.payload};
