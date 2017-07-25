@@ -1,9 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
+import {compareChart, clearSelectionChart}  from '../Function/compareChart'
+
 const Highcharts = require('highcharts');
 
 class Compare extends Component {
+    componentDidUpdate() {
+        this.createChart()
+        clearSelectionChart();
+    }
 
     getRowsCompare() {
         const {alias, curency, feature} = this.props.map_reducer;
@@ -82,7 +88,7 @@ class Compare extends Component {
             myData.push(obj)
         });
 
-        Highcharts.chart('item_chart_compare', {
+        let chart = Highcharts.chart('item_chart_compare', {
             // colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
             title: {
                 text: 'Порівняння територій'
@@ -114,6 +120,25 @@ class Compare extends Component {
                 shared: true,
                 hideDelay: 100,
                 valueSuffix: ' ' + tooltipParametr
+            },
+            plotOptions: {
+                series: {
+                    cursor: 'pointer',
+                    marker: {
+                        states: {
+                            select: {
+                                fillColor: '#f00',
+                                lineWidth: 0,
+                                enabled: true
+                            }
+                        }
+                    },
+                    events: {
+                        click: e => {
+                            compareChart(e, feature, chart)
+                        }
+                    }
+                }
             },
             series: myData
         });
