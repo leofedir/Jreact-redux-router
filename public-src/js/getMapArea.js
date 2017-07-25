@@ -372,7 +372,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             let state = store.getState();
             const {selectedArea, compareSet} = state.map_reducer;
             let item = e.target;
-
+            
             handleUnhoverLegendItem()
 
             if (item !== layer && item.feature.id !== selectedArea && !compareSet.has(item.feature.id)) {
@@ -382,8 +382,14 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         function onMouseOver(e) {
             let state = store.getState();
-            const {selectedArea} = state.map_reducer;
+            const {selectedArea, compareSet} = state.map_reducer;
             let item = e.target;
+    
+            if(compareSet.has(item.feature.id)) { // double area hover fix
+                return
+            }
+    
+    
             handleHoverLegendItem(item);
 
             if (item == layer || item.feature.id == selectedArea) return;
