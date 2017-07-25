@@ -422,8 +422,9 @@ class Map extends PureComponent {
     clickOnCompare() {
         const {showCompareFunc} = this.props.Actions;
         const {compareSet} = this.props.map_reducer;
+        const {showCompare} = this.props.main;
         if (compareSet.size >= 2) {
-            showCompareFunc(true)
+            showCompareFunc(!showCompare)
         }
     }
 
