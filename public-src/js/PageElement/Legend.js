@@ -33,7 +33,7 @@ class Legend extends PureComponent  {
         const color = rgbToHex(e.target.style.backgroundColor);
     
         //search and modificate layer
-        Object.values(choroplethLayer._layers).map((layer) => {
+        choroplethLayer.eachLayer(layer => {
             if (layer.options.fillColor === color) {
                 layer.setStyle({
                     weight: 2, // border of region or district
@@ -44,8 +44,21 @@ class Legend extends PureComponent  {
     }
     
     handleOnUnhover = () => {
-        Object.values(choroplethLayer._layers).map((layer) => {
-            choroplethLayer.resetStyle(layer);
+        const {compareSet} = this.props.map_reducer;
+        choroplethLayer.eachLayer(layer => {
+            if (compareSet.has(layer.feature.id)) {
+                console.log('sdfdsfsdfsdfdsfdfds >>')
+                let color = layer.options.fillColor;
+                let newColor = LightenDarkenColor(color, +50);
+                layer.setStyle({
+                    fillColor: color,
+                    weight: 3
+                });
+            } else {
+                choroplethLayer.resetStyle(layer);
+            }
+
+
         })
     }
     

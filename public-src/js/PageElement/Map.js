@@ -369,7 +369,6 @@ class Map extends PureComponent {
             .catch(e => console.error('e >>', e))
     }
 
-
     changeBasemap(e, mapKadastr = false) {
 
         Lmap.listens('click') ? Lmap.off('click', this.onMouseClick) : '';
@@ -401,10 +400,14 @@ class Map extends PureComponent {
     }
 
     button() {
-        const {submenu_item} = this.props.main;
-        if (!~submenu_item.indexOf('area_') || !~submenu_item.indexOf('"area_atu"')) {
+        const {submenu_item, title_map} = this.props.main;
+        const {claster} = this.props.map_reducer;
+        // console.log(submenu_item.indexOf('"area_atu_"'))
+        if (title_map == "Адміністративно-територіальний устрій " || submenu_item == "" || claster) {
+            console.log('return')
             return null;
         } else {
+            console.log('else')
             return (
                 <div className="buttons_change_TO">
                     <p onClick={::this.hendlerChangeOT} id='region' ref="region" className="button_change_TO">
@@ -421,11 +424,9 @@ class Map extends PureComponent {
     clickOnCompare() {
         const {showCompareFunc} = this.props.Actions;
         const {compareSet} = this.props.map_reducer;
-        if (compareSet.size >= 2){
+        if (compareSet.size >= 2) {
             showCompareFunc(true)
         }
-
-
     }
 
     render() {
@@ -440,8 +441,9 @@ class Map extends PureComponent {
                 </div>
                 <div id="map_wrapper" className="map_wrapper">
                     <div id="loader" className={fetching ? "show" : ''}/>
-                    <i className="fa fa-balance-scale icon_grt_compare " aria-hidden="true" onClick={::this.clickOnCompare}>
-                    {compareSet.size === 0 ? '' : <span className="compare_count">{compareSet.size}</span>}
+                    <i className="fa fa-balance-scale icon_grt_compare " aria-hidden="true"
+                       onClick={::this.clickOnCompare}>
+                        {compareSet.size === 0 ? '' : <span className="compare_count">{compareSet.size}</span>}
                     </i>
                     <i className="fa fa-plus fa-1x zoom_in_icon" onClick={::this.zoom_in} id="zoom_in"/>
                     <i className="fa fa-minus fa-1x zoom_out_icon" onClick={::this.zoom_out} id="zoom_out"/>

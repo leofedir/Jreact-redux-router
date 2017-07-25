@@ -27,22 +27,21 @@ class Compare extends Component {
 
         function getItems(keyi) {
             let t = []
-            compareSet.forEach(item => {
+            compareSet.forEach((item, i1) => {
                 if (i <= 1 ) {
-                    t.push(<td>{item[keyi]}</td>)
+                    t.push(<td key={i + i1}>{item[keyi]}</td>)
                 } else {
-                    t.push(<td>{format(item[keyi])}</td>)
+                    t.push(<td key={i + i1}>{format(item[keyi])}</td>)
                 }
 
             })
             return t
         }
 
-
         for (let key in rows) {
             if (rows.hasOwnProperty(key)) {
                 tempArr.push(
-                    <tr>
+                    <tr key={i}>
                         <td>
                             {rows[key]}
                         </td>
@@ -74,7 +73,7 @@ class Compare extends Component {
             let obj = {
                 name: item.name_ua,
                 data: []
-            }
+            };
             for (let key in item) {
                 if (item.hasOwnProperty(key) && key.indexOf(curency.toLowerCase() + 'year') === 0) {
                     obj.data.push(+item[key])
@@ -82,7 +81,6 @@ class Compare extends Component {
             }
             myData.push(obj)
         });
-
 
         Highcharts.chart('item_chart_compare', {
             // colors: ['#ffc20e', '#8dc63f', '#00aeef', '#bd1a8d'],
@@ -120,7 +118,6 @@ class Compare extends Component {
             series: myData
         });
     }
-
 
     render() {
         return (

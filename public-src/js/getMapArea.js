@@ -371,11 +371,12 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         function onMouseout(e) {
             let state = store.getState();
-            const {selectedArea} = state.map_reducer;
+            const {selectedArea, compareSet} = state.map_reducer;
             let item = e.target;
 
             handleUnhoverLegendItem()
-            if (item !== layer && item.feature.id !== selectedArea) {
+
+            if (item !== layer && item.feature.id !== selectedArea && !compareSet.has(item.feature.id)) {
                 choroplethLayer.resetStyle(item);
             }
         }
@@ -385,6 +386,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             const {selectedArea} = state.map_reducer;
             let item = e.target;
             handleHoverLegendItem(item);
+
             if (item == layer || item.feature.id == selectedArea) return;
 
             let color = item.options.fillColor;
@@ -439,27 +441,33 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         function whenClicked(e) {
             let state = store.getState();
-            const {selectedArea} = state.map_reducer;
+            const {selectedArea, compareSet} = state.map_reducer;
+            const item = e.target;
 
-            if (e.target.feature.id === selectedArea) {
+            if (item.feature.id === selectedArea) {
                 return
             }
 
-            choroplethLayer.eachLayer(layer => {
+            // choroplethLayer.eachLayer(layer => {
+            //     console.log('eachLayer')
+            //     if (layer.feature.id === selectedArea) {
+            //         choroplethLayer.resetStyle(layer)
+            //     }
+            // });
 
-                if (layer.feature.id === selectedArea) {
-                    choroplethLayer.resetStyle(layer)
-                }
-            });
-
-            const bounds = e.target.getBounds();
+            const bounds = item.getBounds();
             if (searchItem !== null) {
                 choroplethLayer.resetStyle(searchItem);
             }
 
             if (layer === null) {
                 layer = e.target;
-            } else if (layer !== null && layer.feature.properties.name_ua != e.target.feature.properties.name_ua) {
+            }
+            else if (compareSet.has(layer.feature.id)) {
+                handleUnhoverLegendItem();
+                layer = e.target;
+            }
+            else if (layer !== null && layer.feature.properties.name_ua != e.target.feature.properties.name_ua ) {
                 choroplethLayer.resetStyle(layer);
                 handleUnhoverLegendItem();
                 layer = e.target;
