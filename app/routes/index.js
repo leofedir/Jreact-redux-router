@@ -10,7 +10,7 @@ let geometry = {};
 let data_buble = {};
 const geometryQuery = [
     `SELECT * FROM geom_region`,
-    `SELECT * FROM geom_district`
+    `SELECT * FROM geom_district`,
     `SELECT * FROM geom_otg`,
     `SELECT * FROM geom_settelments`
 ];
