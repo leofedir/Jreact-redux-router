@@ -52,7 +52,6 @@ class App extends Component {
                             <Info />
                         </div>
                         <div className={`main__chart`}>
-                            {console.log('showCompare >>', !showCompare && (feature !== null || chart1 !== null || chart2 !== null || data_success))}
                             {showCompare ? <Compare /> : ''}
                             { !showCompare && (feature !== null || chart1 !== null || chart2 !== null || data_success) ? <Chart /> : ""}
                             {!showCompare && data_success ? <BarChart /> : ''}

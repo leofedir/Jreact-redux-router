@@ -65,15 +65,6 @@ class Chart extends PureComponent {
                 title: {
                     text: feature.name_ua
                 },
-                exporting: {
-                    buttons: {
-                        exportButton: {
-                            symbol: 'url(http://highcharts.com/demo/gfx/sun.png)',
-                            symbolX: 5,
-                            symbolY: 0
-                        }
-                    }
-                },
                 chart: {
                     type: 'line',
                     marginRight: 20

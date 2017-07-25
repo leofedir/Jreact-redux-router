@@ -85,8 +85,9 @@ class Popup extends PureComponent {
     hendlerAddToCompare() {
         const {feature, compareSet, selectedArea} = this.props.map_reducer;
         const {click_on_compare_feature} = this.props.MapActions;
-
-        click_on_compare_feature(compareSet, feature)
+        let newFeature = feature;
+        newFeature.data = dataToChart
+        click_on_compare_feature(compareSet, newFeature)
     }
 
     getInfo() {

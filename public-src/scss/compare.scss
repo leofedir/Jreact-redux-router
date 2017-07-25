@@ -1,3 +1,10 @@
 .compareCahrt {
-  width: 100%
+  width: 100%;
+
+  td {
+      padding: 0 10px;
+    }
+  .item_content {
+    height: auto;
+  }
 }
