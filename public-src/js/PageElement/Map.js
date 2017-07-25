@@ -404,10 +404,8 @@ class Map extends PureComponent {
         const {claster} = this.props.map_reducer;
         // console.log(submenu_item.indexOf('"area_atu_"'))
         if (title_map == "Адміністративно-територіальний устрій " || submenu_item == "" || claster) {
-            console.log('return')
             return null;
         } else {
-            console.log('else')
             return (
                 <div className="buttons_change_TO">
                     <p onClick={::this.hendlerChangeOT} id='region' ref="region" className="button_change_TO">

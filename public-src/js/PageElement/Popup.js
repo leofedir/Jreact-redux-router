@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 
 import {toggle_Popup_Fullsize} from '../REDUX/actions/actions';
 import * as MapActions from '../REDUX/actions/get_map_area';
+import * as Actions from '../REDUX/actions/actions';
 
 export let dataToChart = [];
 
@@ -83,11 +84,15 @@ class Popup extends PureComponent {
     }
 
     hendlerAddToCompare() {
-        const {feature, compareSet, selectedArea} = this.props.map_reducer;
+        const {feature, compareSet} = this.props.map_reducer;
         const {click_on_compare_feature} = this.props.MapActions;
+        const {showCompareFunc} = this.props.Actions;
         let newFeature = feature;
         newFeature.data = dataToChart
         click_on_compare_feature(compareSet, newFeature)
+        if (compareSet.size <= 2) {
+            showCompareFunc(false)
+        }
     }
 
     getInfo() {
@@ -198,7 +203,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         MapActions: bindActionCreators(MapActions, dispatch),
-        Actions: bindActionCreators({toggle_Popup_Fullsize}, dispatch)
+        Actions: bindActionCreators(Actions, dispatch)
     }
 }
 

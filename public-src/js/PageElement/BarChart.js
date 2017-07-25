@@ -268,10 +268,12 @@ class BarChart extends PureComponent {
     }
 
     componentDidUpdate() {
+
         this.createChart(this.props.map_reducer.bar_chart_full)
         // this.props.map_reducer.chart3 !== null ? this.getMultiChart() : null
     }
     componentDidMount() {
+        console.log('update')
         // this.createChart()
     }
 

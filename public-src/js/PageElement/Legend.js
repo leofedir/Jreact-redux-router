@@ -47,7 +47,6 @@ class Legend extends PureComponent  {
         const {compareSet} = this.props.map_reducer;
         choroplethLayer.eachLayer(layer => {
             if (compareSet.has(layer.feature.id)) {
-                console.log('sdfdsfsdfsdfdsfdfds >>')
                 let color = layer.options.fillColor;
                 let newColor = LightenDarkenColor(color, +50);
                 layer.setStyle({

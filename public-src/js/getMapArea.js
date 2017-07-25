@@ -273,7 +273,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
     }
 
     function renderLayer() {
-        console.log('sdfds')
 
         if (Lmap.hasLayer(choroplethLayer)) {
             Lmap.removeLayer(choroplethLayer)
