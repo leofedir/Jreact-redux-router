@@ -113,7 +113,19 @@ class Compare extends Component {
             tooltip: {
                 shared: true,
                 hideDelay: 100,
-                valueSuffix: ' ' + tooltipParametr
+                // valueSuffix: ' ' + tooltipParametr,
+                formatter: function() {
+                    var s = [];
+                    let d = Object.values(this.points).sort(function(a,b){return b.y-a.y})
+
+                    d.map((i,iter) => {
+                        let fillColor = i.color;
+                        s.push(`<tspan style="fill:${fillColor}" x="8" dy="15">●</tspan> `+'<span>'+ i.series.name +' : '+
+                            i.y + '</span>' + '<span> ' + tooltipParametr + '</span>'+'<br>') ;
+                    });
+
+                    return s
+                }
             },
             series: myData
         });
