@@ -33,7 +33,7 @@ class Compare extends Component {
         let i = 0;
         const format = new Intl.NumberFormat().format;
         let self = this;
-        console.log(rows);
+
         function getItems(keyi) {
             let t = []
             compareSet.forEach((item, i1) => {
@@ -70,14 +70,11 @@ class Compare extends Component {
     
     handleDeleteArea = (e) => {
         const {compareSet} = this.props.map_reducer;
-        const {deleteMapItem} = this.props.MapActions;
-        
+        const {click_on_compare_feature} = this.props.MapActions;
+    
         // check if e.id === key of Map
         // and if true delete item from Map
-        if (compareSet.has(e.id)) {
-            compareSet.delete(e.id)
-            deleteMapItem(compareSet)
-        }
+        click_on_compare_feature(compareSet, e)
     };
 
     componentDidUpdate() {

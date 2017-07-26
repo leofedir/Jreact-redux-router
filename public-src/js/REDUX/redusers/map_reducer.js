@@ -172,9 +172,6 @@ export default function map(state = initialState, action) {
 
         case SET_BASE_MAP:
             return  {...state, baseMap: action.payload};
-            
-        case DELETE_MAP_ITEM:
-            return {...state, compareSet: action.payload};
 
         default:
             return state;
