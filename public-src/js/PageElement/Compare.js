@@ -22,7 +22,8 @@ class Compare extends Component {
             koatuu: 'Код КОАТУУ',
             population: 'Населення (01.01.2017р.), осіб',
             area: 'Площа території, га',
-            [curency.toLowerCase() + curentYear]: `${alias} на ${item_name[range_item] } р., ${curency == "" ? feature.parameter : curency}`
+            [curency.toLowerCase() + curentYear]: `${alias} на ${item_name[range_item] } р., ${curency == "" ? feature.parameter : curency}`,
+            remove: 'Видалити з набору'
         }
     }
 
