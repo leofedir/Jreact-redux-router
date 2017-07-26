@@ -28,7 +28,8 @@ import {
     IS_ATO_LAYER,
     SET_IS_ALL_DATA,
     SET_BASE_MAP,
-    COMPARE_CLICK
+    COMPARE_CLICK,
+    DELETE_MAP_ITEM
 } from '../actions/constant'
 
 const initialState = {
@@ -171,6 +172,9 @@ export default function map(state = initialState, action) {
 
         case SET_BASE_MAP:
             return  {...state, baseMap: action.payload};
+            
+        case DELETE_MAP_ITEM:
+            return {...state, compareSet: action.payload};
 
         default:
             return state;

@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import * as MapActions from '../REDUX/actions/get_map_area';
 
 import {compareChart, clearSelectionChart}  from '../Function/compareChart'
 
@@ -14,7 +16,7 @@ class Compare extends Component {
     getRowsCompare() {
         const {alias, curency, feature} = this.props.map_reducer;
         const {range_items, range_item, item_name} = this.props.main;
-        let curentYear = range_items[range_item]
+        let curentYear = range_items[range_item];
         return {
             name_ua: 'Назва території',
             koatuu: 'Код КОАТУУ',
@@ -30,17 +32,23 @@ class Compare extends Component {
         let rows = this.getRowsCompare();
         let i = 0;
         const format = new Intl.NumberFormat().format;
-
+        let self = this;
+        console.log(rows);
         function getItems(keyi) {
             let t = []
             compareSet.forEach((item, i1) => {
                 if (i <= 1 ) {
                     t.push(<td key={i + i1}>{item[keyi]}</td>)
+                } else if (i === Object.values(rows).length-1) {
+                    t.push(<td key={i + i1}>
+                        <i onClick={() => self.handleDeleteArea(item)} className="fa fa-times ui-exit" aria-hidden="true"></i>
+                    </td>)
                 } else {
                     t.push(<td key={i + i1}>{format(item[keyi])}</td>)
                 }
 
             })
+            
             return t
         }
 
@@ -59,6 +67,18 @@ class Compare extends Component {
         }
         return tempArr
     }
+    
+    handleDeleteArea = (e) => {
+        const {compareSet} = this.props.map_reducer;
+        const {deleteMapItem} = this.props.MapActions;
+        
+        // check if e.id === key of Map
+        // and if true delete item from Map
+        if (compareSet.has(e.id)) {
+            compareSet.delete(e.id)
+            deleteMapItem(compareSet)
+        }
+    };
 
     componentDidUpdate() {
         this.createChart()
@@ -183,7 +203,13 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(Compare);
+function mapDispatchToProps(dispatch) {
+    return {
+        MapActions: bindActionCreators(MapActions, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Compare);
 
 
 

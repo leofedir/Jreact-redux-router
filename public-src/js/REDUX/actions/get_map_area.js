@@ -30,7 +30,8 @@ import {
     IS_ATO_LAYER,
     COMPARE_CLICK,
     SET_IS_ALL_DATA,
-    SET_BASE_MAP
+    SET_BASE_MAP,
+    DELETE_MAP_ITEM
 } from './constant';
 
 // export function get_map_area(url, rebuild = true, alias, isRegion) {
@@ -327,5 +328,12 @@ export function click_on_compare_feature(compareSet, feature) {
 
     return {
         type: COMPARE_CLICK
+    }
+}
+
+export function deleteMapItem(newCompareSet) {
+    return {
+        type: DELETE_MAP_ITEM,
+        payload: newCompareSet
     }
 }
