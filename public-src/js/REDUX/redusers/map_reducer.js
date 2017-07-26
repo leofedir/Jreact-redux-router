@@ -28,7 +28,7 @@ import {
     IS_ATO_LAYER,
     SET_IS_ALL_DATA,
     SET_BASE_MAP,
-    COMPARE_CLICK
+    COMPARE_CLICK,
 } from '../actions/constant'
 
 const initialState = {
