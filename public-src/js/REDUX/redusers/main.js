@@ -42,7 +42,8 @@ const initialState = {
     popup_fullsize: false,
     searchValue: '',
     show_input: false,
-    showCompare: false
+    showCompare: false,
+    maps: null
 };
 
 export default function main(state = initialState, action) {
@@ -56,17 +57,18 @@ export default function main(state = initialState, action) {
         case SET_SUBMENU_ITEM:
             return {
                 ...state,
-                submenu_item: action.payload,
+                submenu_item: action.payload[0],
                 legend_data: null,
                 claster_layers: null,
                 mapFull: true,
                 show_range: false,
                 fetching: true,
-                showCompare: false
+                showCompare: false,
+                maps: action.payload[1]
             };
 
         case GET_SUBMENU_REQUEST:
-            return {...state, claster_layers: null, title_map: action.payload};
+            return {...state, claster_layers: null, title_map: action.payload, maps: null};
 
         case SET_RANGE_ITEMS:
             return {
