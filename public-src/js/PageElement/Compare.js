@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as MapActions from '../REDUX/actions/get_map_area';
+import * as Actions from '../REDUX/actions/actions';
 
 import {compareChart, clearSelectionChart}  from '../Function/compareChart'
 
@@ -9,9 +10,11 @@ const Highcharts = require('highcharts');
 
 class Compare extends Component {
     componentDidUpdate() {
-        this.createChart()
+        console.log('did update Compare component');
         clearSelectionChart();
+        this.createChart();
     }
+    
 
     getRowsCompare() {
         const {alias, curency, feature} = this.props.map_reducer;
@@ -71,15 +74,15 @@ class Compare extends Component {
     handleDeleteArea(e) {
         const {compareSet} = this.props.map_reducer;
         const {click_on_compare_feature} = this.props.MapActions;
-    
+        const {showCompareFunc} = this.props.Actions;
         // check if e.id === key of Map
         // and if true delete item from Map
         click_on_compare_feature(compareSet, e)
+        
+        if (compareSet.size < 2) {
+            showCompareFunc(false)
+        }
     };
-
-    componentDidUpdate() {
-        this.createChart()
-    }
 
     componentDidMount() {
         this.createChart()
@@ -202,7 +205,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        MapActions: bindActionCreators(MapActions, dispatch)
+        MapActions: bindActionCreators(MapActions, dispatch),
+        Actions: bindActionCreators(Actions, dispatch)
     }
 }
 

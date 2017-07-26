@@ -90,7 +90,7 @@ class Popup extends PureComponent {
         let newFeature = feature;
         newFeature.data = dataToChart
         click_on_compare_feature(compareSet, newFeature)
-        if (compareSet.size <= 2) {
+        if (compareSet.size < 2) {
             showCompareFunc(false)
         }
     }
