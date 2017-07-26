@@ -33,7 +33,7 @@ class Compare extends Component {
         let i = 0;
         const format = new Intl.NumberFormat().format;
         let self = this;
-
+        
         function getItems(keyi) {
             let t = []
             compareSet.forEach((item, i1) => {
@@ -41,7 +41,7 @@ class Compare extends Component {
                     t.push(<td key={i + i1}>{item[keyi]}</td>)
                 } else if (i === Object.values(rows).length-1) {
                     t.push(<td key={i + i1}>
-                        <i onClick={() => self.handleDeleteArea(item)} className="fa fa-times ui-exit" aria-hidden="true"></i>
+                        <i onClick={() => ::self.handleDeleteArea(item)} className="fa fa-times ui-exit" aria-hidden="true"></i>
                     </td>)
                 } else {
                     t.push(<td key={i + i1}>{format(item[keyi])}</td>)
@@ -68,7 +68,7 @@ class Compare extends Component {
         return tempArr
     }
     
-    handleDeleteArea = (e) => {
+    handleDeleteArea(e) {
         const {compareSet} = this.props.map_reducer;
         const {click_on_compare_feature} = this.props.MapActions;
     

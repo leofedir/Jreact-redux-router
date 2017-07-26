@@ -29,7 +29,6 @@ import {
     SET_IS_ALL_DATA,
     SET_BASE_MAP,
     COMPARE_CLICK,
-    DELETE_MAP_ITEM
 } from '../actions/constant'
 
 const initialState = {
