@@ -72,15 +72,20 @@ class Compare extends Component {
     }
     
     handleDeleteArea(e) {
+        const {showCompare} = this.props.main;
         const {compareSet} = this.props.map_reducer;
         const {click_on_compare_feature} = this.props.MapActions;
         const {showCompareFunc} = this.props.Actions;
         // check if e.id === key of Map
         // and if true delete item from Map
-        click_on_compare_feature(compareSet, e)
+        click_on_compare_feature(compareSet, e);
         
         if (compareSet.size < 2) {
-            showCompareFunc(false)
+            if (showCompare) {
+                compareSet.clear()
+            }
+            
+            showCompareFunc(false);
         }
     };
 
