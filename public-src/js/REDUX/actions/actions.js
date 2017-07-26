@@ -63,10 +63,10 @@ export function get_submenu(url, title) {
     }
 }
 
-export function set_submenu_item(item) {
+export function set_submenu_item(item, maps) {
     return {
         type: SET_SUBMENU_ITEM,
-        payload: item
+        payload: [item, maps]
     }
 }
 

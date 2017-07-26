@@ -158,8 +158,8 @@ class Map extends PureComponent {
         if (submenu_item != _submenu_item && Object.keys(this.refs).length > 1) {
             _submenu_item = submenu_item;
             _curentMap = null;
-            this.refs.region.classList.remove('active')
-            this.refs.district.classList.remove('active')
+            this.refs.region ? this.refs.region.classList.remove('active') : '';
+            this.refs.district ? this.refs.district.classList.remove('active') : '';
         }
 
         if (baseMap == 'kadastr' && curentMap !== null) {
@@ -176,8 +176,7 @@ class Map extends PureComponent {
         let target = e.target;
         let id = e.target.id;
 
-        const {fields, submenu_item} = this.props.main;
-        const mapSet = fields[submenu_item];
+        const {maps} = this.props.main;
         const {curentMap} = this.props.map_reducer;
 
         _curentMap === null ? _curentMap = curentMap : '';
@@ -186,7 +185,7 @@ class Map extends PureComponent {
             return
         }
 
-        if (id == 'region' && mapSet.some(a => ~a.indexOf('__region'))) {
+        if (id == 'region' && maps.some(a => ~a.indexOf('__region'))) {
             target.classList.add('active')
             this.refs.district.classList.remove('active')
             getMap(null, false, true)
@@ -196,7 +195,7 @@ class Map extends PureComponent {
 
             _curentMap = id
 
-        } else if (id == 'district' && mapSet.some(a => ~a.indexOf('__district'))) {
+        } else if (id == 'district' && maps.some(a => ~a.indexOf('__district'))) {
             target.classList.add('active')
             this.refs.region.classList.remove('active')
 
@@ -400,20 +399,21 @@ class Map extends PureComponent {
     }
 
     button() {
-        const {submenu_item, title_map} = this.props.main;
+        const {submenu_item, title_map, maps} = this.props.main;
         const {claster} = this.props.map_reducer;
         // console.log(submenu_item.indexOf('"area_atu_"'))
         if (title_map == "Адміністративно-територіальний устрій " || submenu_item == "" || claster) {
             return null;
         } else {
+            let button = [];
+            maps.some(i => ~i.indexOf('__region')) ?
+                button.push(<p key="1" onClick={::this.hendlerChangeOT} id='region' ref="region" className="button_change_TO">Області</p> ) : ''
+
+            maps.some(i => ~i.indexOf('__district')) ?
+                button.push(<p key="2" onClick={::this.hendlerChangeOT} id='district' ref="district" className="button_change_TO">Райони</p> ) : ''
             return (
                 <div className="buttons_change_TO">
-                    <p onClick={::this.hendlerChangeOT} id='region' ref="region" className="button_change_TO">
-                        Області</p>
-                    <p onClick={::this.hendlerChangeOT} id='district' ref="district" className="button_change_TO">
-                        Райони</p>
-                    {/*<p onClick={::this.hendlerChangeOT} ref="area" className="button_change_TO">ОТГ</p>*/}
-                    {/*<p onClick={::this.hendlerChangeOT} ref="area" className="button_change_TO">Міста</p>*/}
+                    {button}
                 </div>
             )
         }
