@@ -143,7 +143,6 @@ function parserHTMLtoObject(obj) {
 
 class Map extends PureComponent {
     componentDidMount() {
-
         this.createMap();
         cordinateContainer = this.refs.coordinate
     }

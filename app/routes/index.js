@@ -5,6 +5,7 @@ const router = require('express').Router(),
     claster = require('./claster'),
     GeoJson = require('../libs/createGeoJson'),
     compression = require('compression');
+var fs = require('fs');
 
 let geometry = {};
 let data_buble = {};
@@ -26,6 +27,58 @@ router.use(bodyParser.urlencoded({
 router.post('/main', function (req, res) {
     GeoJson.queryBase(req.originalUrl, 'borders', res);
 });
+
+// const createBulkQuery = (arr) => {
+//     let sqlParts = ``;
+//     let i = 0;
+//     arr.forEach((e) => {
+//
+//         if (+e.id > 100000) {
+//             return false
+//         }
+//         i === 0 ? '' : sqlParts += ', ';
+//         i++;
+//         sqlParts += '(';
+//         sqlParts += e.distr + ', ';
+//         sqlParts += "'" + JSON.stringify(e.geometry) + "', ";
+//         sqlParts += e.geomtype + ', ';
+//         sqlParts += e.id + ', ';
+//         sqlParts += "'" + e.info + "', ";
+//         sqlParts += e.okrug;
+//         sqlParts += ')';
+//     })
+//
+//     // arr.forEach((e, i) => {
+//     //     i === 0 ? '' : sqlParts += ', ';
+//     //     sqlParts += '(';
+//     //     sqlParts += e.id + ', ';
+//     //     sqlParts += "'" + JSON.stringify(e.geometry) + "', ";
+//     //     sqlParts += e.distr + ', ';
+//     //     sqlParts += e.geomtype;
+//     //     sqlParts += ')';
+//     // })
+//
+//     let sql = `INSERT INTO tmp_vubor_point (distr, geometry, geomtype, id, info, okrug) VALUES ${sqlParts}`;
+//
+//     // let sql = `INSERT INTO tmp_vubor_area (id, geometry, distr, geomtype) VALUES ${sqlParts}`;
+//     pgdb.query(sql)
+//         .catch(e => {
+//             console.log('e >>', e)
+//             console.log('sql >>', sql)
+//         })
+// }
+
+
+// router.get('/test', function (req, res) {
+//     for (let i = 2; i < 225; i++) {
+//         fs.readFile(`./encode/point/point (${i}).json`, 'utf8', function (err, data) {
+//             if (err) throw err;
+//             let obj = JSON.parse(data);
+//             createBulkQuery(obj.features);
+//         });
+//     }
+//     console.log('finish >>')
+// });
 
 router.post('/data_bubble', function (req, res) {
     const year = req.body.year

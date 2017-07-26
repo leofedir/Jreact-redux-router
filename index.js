@@ -28,5 +28,3 @@ EventEmitter.defaultMaxListeners = config.db.max + 10;
 const routes = require('./app/routes');
 
 app.use('/', routes);
-
-
