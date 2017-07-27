@@ -100,7 +100,7 @@ class Compare extends Component {
 
     createChart() {
         const {curency, compareSet, feature} = this.props.map_reducer;
-        const {item_name} = this.props.main;
+        const {item_name, range_items} = this.props.main;
         let tooltipParametr = curency == "" ? feature.parameter : curency
         let myData = [];
 
@@ -109,11 +109,25 @@ class Compare extends Component {
                 name: item.name_ua,
                 data: []
             };
-            for (let key in item) {
-                if (item.hasOwnProperty(key) && key.indexOf(curency.toLowerCase() + 'year') === 0) {
-                    obj.data.push(+item[key])
-                }
-            }
+            Object.keys(item)
+                .filter(i => i.indexOf(curency.toLowerCase() + 'year') === 0)
+                .sort((a, b) => {
+                    a.length == 7 ? a = 'year_20' + a.substring(5) : '';
+                    b.length == 7 ? b = 'year_20' + b.substring(5) : '';
+
+                    if (a < b) {
+                        return -1;
+                    }
+                    if (a > b) {
+                        return 1;
+                    }
+                    return 0;
+
+                })
+                .forEach(e => {
+                    obj.data.push(+item[e])
+                });
+
             myData.push(obj)
         });
 
