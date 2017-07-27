@@ -3,7 +3,6 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../REDUX/actions/actions';
 import * as MapActions from '../REDUX/actions/get_map_area';
-// import Dexie from 'dexie';
 
 import {checkStatus, parseJSON} from '../checkJSON';
 import L from 'leaflet';
@@ -13,7 +12,6 @@ import getMap from './../getMapArea';
 
 export let Lmap = null;
 export let ukraine = null;
-// export let coordinate = {};
 
 let icon = L.icon({
     iconUrl: '/img/marker-icon.svg',
@@ -28,10 +26,8 @@ let curentMap = null;
 let cadastral = null;
 let _curentMap = null;
 let _submenu_item = null;
-let objectStore = null;
 
 //add two finger scroll
-
 L.WheelPanHandler = L.Handler.extend({
     addHooks: function () {
         L.DomEvent.on(map, 'wheel', this._wheelpan, this);
@@ -59,16 +55,13 @@ L.WheelPanHandler = L.Handler.extend({
 
 function tmpl(dataObject) {
     let template = ``;
-
     let titleLayer = `<div class="cadastral_title_layer"></div>`;
     template += titleLayer;
-
     let unorderList = `<ul>`;
     for (let i in dataObject) {
         unorderList += `<li class="cadastral_li_item"><p>${i}:</p><span>${dataObject[i]}</span></li>`;
     }
     unorderList += `</ul>`;
-
     template += unorderList;
     return template
 }
@@ -116,7 +109,6 @@ function parserHTMLtoObject(obj) {
             return word
     });
 
-
     let dataObject = {};
     //check only important data
     const goodKeys = [
@@ -138,7 +130,6 @@ function parserHTMLtoObject(obj) {
         }
         j++;
     }
-
     return dataObject
 }
 
@@ -151,7 +142,6 @@ class Map extends PureComponent {
     componentDidUpdate() {
         const {submenu_item} = this.props.main;
         const {baseMap, curentMap} = this.props.map_reducer;
-
 
         _submenu_item === null ? _submenu_item = submenu_item : '';
 
@@ -245,7 +235,6 @@ class Map extends PureComponent {
             "weight": 2,
             "opacity": .9
         };
-
 
         let checkDB = indexedDB.open("coordinates")
         checkDB.onsuccess = function(e) {

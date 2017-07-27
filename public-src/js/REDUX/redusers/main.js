@@ -12,7 +12,6 @@ import {
     GET_CLASTER_REQUEST,
     GET_CLASTER_SUCCESS,
     GET_CLASTER_ERROR,
-    GET_MAP_AREA_SUCCESS,
     SET_DATA_DISTRICT,
     TOGGLE_SLIDER_PICKER,
     TOGGLE_POPUP_FULLSIZE,
@@ -109,8 +108,8 @@ export default function main(state = initialState, action) {
         case GET_CLASTER_ERROR:
             return {...state, fetching: false};
 
-        case GET_MAP_AREA_SUCCESS:
-            return {...state, fetching: false};
+        // case GET_MAP_AREA_SUCCESS:
+        //     return {...state, fetching: false};
 
         case SET_DATA_DISTRICT:
             return {...state, fetching: false};
