@@ -3,8 +3,8 @@ import {Lmap, ukraine} from "./PageElement/Map";
 import esri from 'esri-leaflet/dist/esri-leaflet';
 import {checkStatus, parseJSON} from './checkJSON';
 
-import {set_Range_items, set_legend_data} from './REDUX/actions/actions'
-import {clickOnFeature, set_Hover_Color, set_isAllData, isAtoLayer, toggle_data} from './REDUX/actions/get_map_area'
+import {set_Range_items, set_legend_data, finishFething} from './REDUX/actions/actions'
+import {clickOnFeature, set_Hover_Color, toggle_data} from './REDUX/actions/get_map_area'
 import {store} from './index';
 // import {coordinate} from './PageElement/Map'
 import {LightenDarkenColor, rgbToHex} from './utils/colors'
@@ -24,6 +24,7 @@ let randColor = {};
 let myCurency = '';
 export let searchControlArea = null;
 let layerObject;
+let cordinate = {};
 
 export default function getMap(properties, rebuild = true, isRegion) {
 
@@ -245,33 +246,46 @@ export default function getMap(properties, rebuild = true, isRegion) {
     }
 
     function joinGeometry(name) {
-        let checkDB = indexedDB.open("coordinates")
-        checkDB.onsuccess = function(e) {
-            let db = e.target.result;
-            let transaction = db.transaction(["geometry"]);
-            let objectStore = transaction.objectStore("geometry");
-            let request = objectStore.get(name);
-            request.onerror = function(event) {
-                // Handle errors!
-            };
-            request.onsuccess = function(event) {
-                // Do something with the request.result!
-                let cordinate = JSON.parse(request.result.coordinate)
-                let i;
-                let len = data.length;
+        if(name in cordinate) {
+            let i;
+            let len = data.length;
 
-                for (i = 0; i < len; i++) {
-                    data[i].geometry = cordinate[data[i].id];
-                }
-                renderLayer();
+            for (i = 0; i < len; i++) {
+                data[i].geometry = cordinate[name][data[i].id];
+            }
+            renderLayer();
+        }
+        else {
+            let checkDB = indexedDB.open("coordinates");
+            checkDB.onsuccess = function(e) {
+                let db = e.target.result;
+                let transaction = db.transaction(["geometry"], "readonly");
+                let objectStore = transaction.objectStore("geometry");
+                let request = objectStore.get(name);
+                request.onerror = function(event) {
+                    // Handle errors!
+                };
+                request.onsuccess = function(event) {
+                    // Do something with the request.result!
+                    cordinate[name] = JSON.parse(request.result.coordinate)
+                    let i;
+                    let len = data.length;
+
+                    for (i = 0; i < len; i++) {
+                        data[i].geometry = cordinate[name][data[i].id];
+                    }
+                    renderLayer();
+                    db.close();
+                };
+
             };
 
+            checkDB.onerror = function(e) {
+                console.log('onerror  >>', e)
+
+            }
         }
 
-        checkDB.onerror = function(e) {
-            console.log('onerror  >>', e)
-
-        }
     }
 
     randColor = rebuild ? getRandomColorLayer() : randColor;
@@ -335,12 +349,11 @@ export default function getMap(properties, rebuild = true, isRegion) {
                     layer.on(eventsMap)
                 }
             });
+            store.dispatch(finishFething()) // call click action
         }
         else {
             choroplethLayer = L.choropleth(data, layerObject);
         }
-
-
 
         if (searchControlArea !== null) {
             Lmap.removeControl(searchControlArea)

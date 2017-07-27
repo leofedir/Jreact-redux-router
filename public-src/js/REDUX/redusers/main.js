@@ -20,7 +20,8 @@ import {
     SET_CLASTER_CHART_DATA,
     TOGGLE_CHECK,
     SHOW_COMPARE,
-    TOGGLE_DATA
+    TOGGLE_DATA,
+    FINISH_FETCH
 
 } from '../actions/constant'
 
@@ -75,7 +76,8 @@ export default function main(state = initialState, action) {
                 item_name: action.payload.item_name,
                 range_items: action.payload.items,
                 range_item: action.payload.item,
-                show_range: true
+                show_range: true,
+                // fetching: false
             };
 
         case SET_RANGE_ITEM:
@@ -137,6 +139,9 @@ export default function main(state = initialState, action) {
 
         case TOGGLE_DATA:
             return {...state, showCompare: false};
+
+        case FINISH_FETCH:
+            return {...state, fetching: false};
 
         default:
             return state;

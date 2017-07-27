@@ -13,7 +13,8 @@ import {
     TOGGLE_POPUP_FULLSIZE,
     CHANGE_INPET_SEARCH,
     SHOW_INPUT,
-    SHOW_COMPARE
+    SHOW_COMPARE,
+    FINISH_FETCH
 
 
 } from './constant';
@@ -134,5 +135,11 @@ export function showCompareFunc(bool) {
     return {
         type: SHOW_COMPARE,
         payload: bool
+    }
+}
+
+export function finishFething() {
+    return {
+        type: FINISH_FETCH
     }
 }

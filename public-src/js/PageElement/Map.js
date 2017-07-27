@@ -237,28 +237,30 @@ class Map extends PureComponent {
         };
 
         let checkDB = indexedDB.open("coordinates")
-        checkDB.onsuccess = function(e) {
+        checkDB.onsuccess = function (e) {
             let db = e.target.result;
-            let transaction = db.transaction(["geometry"]);
+            let transaction = db.transaction(["geometry"], "readonly");
             let objectStore = transaction.objectStore("geometry");
             let request = objectStore.get("ukraine");
-            request.onerror = function(e) {
+            request.onerror = function (e) {
                 console.log('onerror >>', e)
             };
-            request.onsuccess = function() {
+            request.onsuccess = function () {
                 // Do something with the request.result!
-                ukraine = L.geoJSON(JSON.parse(request.result.coordinate), {
-                    style: myStyle
-                });
-                Lmap.addLayer(ukraine)
+                if (request.result !== undefined) {
+                    ukraine = L.geoJSON(JSON.parse(request.result.coordinate), {
+                        style: myStyle
+                    });
+                    Lmap.addLayer(ukraine)
+                }
             };
 
             set_data_district();
         }
-        checkDB.onerror = function(e) {
+        checkDB.onerror = function (e) {
             console.log('onerror  >>', e)
         }
-        checkDB.onupgradeneeded = function(e) {
+        checkDB.onupgradeneeded = function (e) {
             let db = e.target.result;
             let objectStore = db.createObjectStore("geometry", {keyPath: "name"});
             objectStore.createIndex("coordinate", "coordinate", {unique: false});
@@ -287,12 +289,13 @@ class Map extends PureComponent {
                     let coordinate = data;
                     let transaction = db.transaction(["geometry"], "readwrite");
                     // Do something when all the data is added to the database.
-                    transaction.oncomplete = function(event) {
+                    transaction.oncomplete = function (event) {
                         console.log("All done!");
+                        db.close();
                         set_data_district();
                     };
 
-                    transaction.onerror = function(event) {
+                    transaction.onerror = function (event) {
                         console.log("error!");
                         set_data_district();
                     };
@@ -448,7 +451,7 @@ class Map extends PureComponent {
             showCompareFunc(!showCompare)
         }
     }
-    
+
     hoverTooltip() {
         const {compareSet} = this.props.map_reducer;
         if (this.refs.uiCompareTooltip) {
@@ -459,7 +462,7 @@ class Map extends PureComponent {
             }
         }
     }
-    
+
     unhoverTooltip() {
         this.refs.uiCompareTooltip.className += ' disabled'
     }
@@ -467,7 +470,7 @@ class Map extends PureComponent {
     render() {
         const {fetching} = this.props.main;
         const {curentMap, compareSet} = this.props.map_reducer;
-        
+
         return (
             <div className="block block-top block_map">
                 <div className="item_header icon-container">
@@ -480,11 +483,11 @@ class Map extends PureComponent {
                     <i className="fa fa-balance-scale icon_grt_compare " aria-hidden="true"
                        onClick={::this.clickOnCompare} onMouseOver={::this.hoverTooltip}
                        onMouseOut={::this.unhoverTooltip}>
-                        
+
                         <div className="hovering-tooltip-compare disabled" ref="uiCompareTooltip">
                             <p>Додайте більше ніж один елемент для порівняння</p>
                         </div>
-                        
+
                         {compareSet.size === 0 ? '' : <span className="compare_count">{compareSet.size}</span>}
                     </i>
                     <i className="fa fa-plus fa-1x zoom_in_icon" onClick={::this.zoom_in} id="zoom_in"/>
