@@ -241,6 +241,31 @@ input {
   outline: -webkit-focus-ring-color auto 0px !important;
   padding: 0 5px;
 }
+
+.hovering-tooltip-compare {
+  color: #000;
+  opacity: 1;
+  position: relative;
+  bottom: 66px;
+  left: 23px;
+  background: #FDF7EF ;
+  width: 203px;
+  border-radius: 8px;
+  transition: 1.5s;
+  font-family: "Open Sans", serif;
+  font-size: 14px;
+
+  &:before {
+    content: ' ';
+    height: 18px;
+    width: 18px;
+    position: absolute;
+    background: #FDF7EF ;
+    left: 13px;
+    bottom: -12px;
+    border-bottom-right-radius: 100px;
+  }
+}
 //
 //#map .leaflet-control-search.leaflet-control {
 //  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;

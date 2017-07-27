@@ -365,7 +365,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
         Lmap.addControl(searchControlArea);  //inizialize search control
 
         function onMouseout(e) {
-            console.log(e);
             
             let state = store.getState();
             const {selectedArea, compareSet} = state.map_reducer;
