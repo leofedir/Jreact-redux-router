@@ -4,14 +4,11 @@ import {connect} from 'react-redux';
 import * as MapActions from '../REDUX/actions/get_map_area';
 
 import {compareChart, clearSelectionChart}  from '../Function/compareChart'
+import {choroplethLayer}  from '../getMapArea'
 
 const Highcharts = require('highcharts');
 
 class Compare extends Component {
-    componentDidUpdate() {
-        this.createChart()
-        clearSelectionChart();
-    }
 
     getRowsCompare() {
         const {alias, curency, feature} = this.props.map_reducer;
@@ -27,31 +24,30 @@ class Compare extends Component {
         }
     }
 
-    getInfoCompare() {
+    getItems(keyi, i) {
         const {compareSet} = this.props.map_reducer;
+        const format = new Intl.NumberFormat().format;
+        let t = []
+        let rows = this.getRowsCompare();
+
+        compareSet.forEach((item, i1) => {
+            if (i <= 1) {
+                t.push(<td key={i + i1}>{item[keyi]}</td>)
+            } else if (i === Object.values(rows).length - 1) {
+                t.push(<td key={i + i1}>
+                    <i onClick={this.handleDeleteArea.bind(this, item)} className="fa fa-times ui-exit" aria-hidden="true"/>
+                </td>)
+            } else {
+                t.push(<td key={i + i1}>{format(item[keyi])}</td>)
+            }
+        });
+        return t
+    }
+
+    getInfoCompare() {
         let tempArr = [];
         let rows = this.getRowsCompare();
         let i = 0;
-        const format = new Intl.NumberFormat().format;
-        let self = this;
-        
-        function getItems(keyi) {
-            let t = []
-            compareSet.forEach((item, i1) => {
-                if (i <= 1 ) {
-                    t.push(<td key={i + i1}>{item[keyi]}</td>)
-                } else if (i === Object.values(rows).length-1) {
-                    t.push(<td key={i + i1}>
-                        <i onClick={() => ::self.handleDeleteArea(item)} className="fa fa-times ui-exit" aria-hidden="true"></i>
-                    </td>)
-                } else {
-                    t.push(<td key={i + i1}>{format(item[keyi])}</td>)
-                }
-
-            })
-            
-            return t
-        }
 
         for (let key in rows) {
             if (rows.hasOwnProperty(key)) {
@@ -60,26 +56,31 @@ class Compare extends Component {
                         <td>
                             {rows[key]}
                         </td>
-                        {getItems(key)}
+                        {::this.getItems(key, i)}
                     </tr>
-                )
+                );
                 i++;
             }
         }
         return tempArr
     }
-    
+
     handleDeleteArea(e) {
         const {compareSet} = this.props.map_reducer;
         const {click_on_compare_feature} = this.props.MapActions;
-    
-        // check if e.id === key of Map
-        // and if true delete item from Map
+
         click_on_compare_feature(compareSet, e)
+        choroplethLayer.eachLayer(item => {
+            if (item.feature.id == e.id) {
+                choroplethLayer.resetStyle(item);
+            }
+        })
+
     };
 
     componentDidUpdate() {
         this.createChart()
+        clearSelectionChart();
     }
 
     componentDidMount() {
@@ -89,7 +90,6 @@ class Compare extends Component {
     createChart() {
         const {curency, compareSet, feature} = this.props.map_reducer;
         const {item_name} = this.props.main;
-
         let tooltipParametr = curency == "" ? feature.parameter : curency
         let myData = [];
 
@@ -138,16 +138,16 @@ class Compare extends Component {
                 shared: true,
                 hideDelay: 100,
                 // valueSuffix: ' ' + tooltipParametr,
-                formatter: function() {
+                formatter: function () {
                     var s = [];
-                    let d = Object.values(this.points).sort(function(a,b){return b.y-a.y})
-
-                    d.map((i,iter) => {
-                        let fillColor = i.color;
-                        s.push(`<tspan style="fill:${fillColor}" x="8" dy="15">●</tspan> `+'<span>'+ i.series.name +' : '+
-                            i.y + '</span>' + '<span> ' + tooltipParametr + '</span>'+'<br>') ;
+                    let d = Object.values(this.points).sort(function (a, b) {
+                        return b.y - a.y
                     });
-
+                    d.map(i => {
+                        let fillColor = i.color;
+                        s.push(`<tspan style="fill:${fillColor}" x="8" dy="15">●</tspan> ` + '<span>' + i.series.name + ' : ' +
+                            i.y + '</span>' + '<span> ' + tooltipParametr + '</span>' + '<br>');
+                    });
                     return s
                 }
             },

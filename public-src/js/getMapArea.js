@@ -14,9 +14,9 @@ import '../lib/search';
 import "leaflet-search/src/leaflet-search.css"
 
 export let choroplethLayer = null;
-export let ato = null;
+// export let ato = null;
 export let propertiesMain = null;
-let atoData = null;
+// let atoData = null;
 
 let unsubscribe = null;
 let unsubscribeCurency = null;
@@ -130,49 +130,49 @@ export default function getMap(properties, rebuild = true, isRegion) {
     let state = store.getState();
     let {range_item, range_items,} = state.main;
 
-    function fetchAto() {
-        fetch('/ato', {
-            method: 'post'
-        })
-            .then(checkStatus)
-            .then(parseJSON)
-            .then(data => {
-                atoData = data[1];
-                ato = L.geoJSON(atoData, {
-                    style: myStyle
-                });
-                Lmap.addLayer(ato)
-            });
-    }
+    // function fetchAto() {
+    //     fetch('/ato', {
+    //         method: 'post'
+    //     })
+    //         .then(checkStatus)
+    //         .then(parseJSON)
+    //         .then(data => {
+    //             atoData = data[1];
+    //             ato = L.geoJSON(atoData, {
+    //                 style: myStyle
+    //             });
+    //             Lmap.addLayer(ato)
+    //         });
+    // }
 
-    function getAto(item) {
-        Lmap.hasLayer(ato) ? Lmap.removeLayer(ato) : "";
-        let {range_items,} = state.main;
-        if (range_items[item] > 'year_13' && atoData !== null) {
-            ato ? ato.clearLayers() && Lmap.removeLayer(ato) : ''
-            ato = L.geoJSON(atoData, {
-                style: myStyle
-            });
-            setTimeout(() => {
-                Lmap.addLayer(ato)
-            }, 500);
-
-            store.dispatch(isAtoLayer(true))
-        } else if (range_items[item] > 'year_13' && atoData === null) {
-            fetchAto()
-
-            store.dispatch(isAtoLayer(true))
-        } else if (range_items[item] <= 'year_13' && ato !== null) {
-
-            store.dispatch(isAtoLayer(false))
-            ato.clearLayers();
-            setTimeout(() => {
-                Lmap.removeLayer(ato);
-                ato = null;
-            }, 500);
-
-        }
-    }
+    // function getAto(item) {
+    //     Lmap.hasLayer(ato) ? Lmap.removeLayer(ato) : "";
+    //     let {range_items,} = state.main;
+    //     if (range_items[item] > 'year_13' && atoData !== null) {
+    //         ato ? ato.clearLayers() && Lmap.removeLayer(ato) : ''
+    //         ato = L.geoJSON(atoData, {
+    //             style: myStyle
+    //         });
+    //         setTimeout(() => {
+    //             Lmap.addLayer(ato)
+    //         }, 500);
+    //
+    //         store.dispatch(isAtoLayer(true))
+    //     } else if (range_items[item] > 'year_13' && atoData === null) {
+    //         fetchAto()
+    //
+    //         store.dispatch(isAtoLayer(true))
+    //     } else if (range_items[item] <= 'year_13' && ato !== null) {
+    //
+    //         store.dispatch(isAtoLayer(false))
+    //         ato.clearLayers();
+    //         setTimeout(() => {
+    //             Lmap.removeLayer(ato);
+    //             ato = null;
+    //         }, 500);
+    //
+    //     }
+    // }
 
     function handleChange() {
         let nexItem = store.getState().main.range_item;
@@ -216,9 +216,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             }
         ];
 
-        let randIndex = Math.floor(Math.random() * 3);
-
-        return arrWithColor[randIndex]
+        return arrWithColor[Math.floor(Math.random() * 3)]
     }
 
     function initArea() {
@@ -237,9 +235,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
         choroplethLayer.eachLayer(layer => {
 
             if (layer.feature.id === selectedArea || compareSet.has(layer.feature.id)) {
-
                 let newColor = LightenDarkenColor(layer.options.fillColor, +50);
-
                 layer.setStyle({
                     fillColor: newColor,
                     weight: 3
