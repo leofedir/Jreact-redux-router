@@ -69,14 +69,24 @@ class Compare extends Component {
         const {showCompare} = this.props.main;
         const {compareSet} = this.props.map_reducer;
         const {click_on_compare_feature} = this.props.MapActions;
-
-        click_on_compare_feature(compareSet, e)
+        const {showCompareFunc} = this.props.Actions;
+        
+        click_on_compare_feature(compareSet, e);
+    
+    
+        if (compareSet.size < 2) {
+            if (showCompare) {
+                compareSet.clear()
+            }
+        
+            showCompareFunc(false);
+        }
+        
         choroplethLayer.eachLayer(item => {
             if (item.feature.id == e.id) {
                 choroplethLayer.resetStyle(item);
             }
         })
-
     }
 
     componentDidUpdate() {
