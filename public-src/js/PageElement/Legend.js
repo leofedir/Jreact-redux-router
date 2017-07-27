@@ -1,4 +1,4 @@
-import React, {PureComponent } from 'react';
+import React, {PureComponent} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../REDUX/actions/actions';
@@ -9,11 +9,12 @@ import {alias} from '../aliasMapName';
 
 export let refsThisLegend;
 
-class Legend extends PureComponent  {
+class Legend extends PureComponent {
     constructor() {
         super()
         refsThisLegend = this
     }
+
     handleChange(e) {
         const {check} = this.props.map_reducer;
         const {toggle_layer, toggle_check} = this.props.MapActions;
@@ -29,26 +30,27 @@ class Legend extends PureComponent  {
         const {check_all} = this.props.MapActions;
         check_all(checkAll, check)
     }
+
     handleOnHover = (e) => {
         const color = rgbToHex(e.target.style.backgroundColor);
-    
+
         //search and modificate layer
         choroplethLayer.eachLayer(layer => {
             if (layer.options.fillColor === color) {
                 layer.setStyle({
-                    weight: 2, // border of region or district
-                    fillColor: LightenDarkenColor(color, +60), // + light | - dark
+                    weight: 2,
+                    fillColor: LightenDarkenColor(color, +60),
                 })
             }
         })
-    }
-    
+    };
+
     handleOnUnhover = () => {
-        const {compareSet} = this.props.map_reducer;
+        const {compareSet, selectedArea} = this.props.map_reducer;
+
         choroplethLayer.eachLayer(layer => {
-            if (compareSet.has(layer.feature.id)) {
+            if (compareSet.has(layer.feature.id) || selectedArea == layer.feature.id) {
                 let color = layer.options.fillColor;
-                let newColor = LightenDarkenColor(color, +50);
                 layer.setStyle({
                     fillColor: color,
                     weight: 3
@@ -56,14 +58,12 @@ class Legend extends PureComponent  {
             } else {
                 choroplethLayer.resetStyle(layer);
             }
-
-
         })
-    }
-    
+    };
+
     handleHoverMapLegend = (hc, c) => {
         return hc === c
-    }
+    };
 
     createItem() {
         const {check, clasterCount, checkAll, hoverColor, curency, isAtoLayer} = this.props.map_reducer;
@@ -79,12 +79,14 @@ class Legend extends PureComponent  {
                         <span> { legend_data != null ? valueCur : ''}</span>
                     </h5>
                     {limits.map((item, i) => {
-                        if (limits[i] == limits[i + 1] && limits[i] == 0){
+                        if (limits[i] == limits[i + 1] && limits[i] == 0) {
                             return null
                         } else {
                             return (
                                 <p key={ i } ref={legend_data.refs[i]}>
-                                    <i className={this.handleHoverMapLegend(hoverColor, colors[i]) ? 'legend-active' : ''} onMouseMove={this.handleOnHover}  onMouseOut={this.handleOnUnhover} style={{backgroundColor: colors[i]}}/>
+                                    <i className={this.handleHoverMapLegend(hoverColor, colors[i]) ? 'legend-active' : ''}
+                                       onMouseMove={this.handleOnHover} onMouseOut={this.handleOnUnhover}
+                                       style={{backgroundColor: colors[i]}}/>
                                     {((limits[i] !== null) ? ' ' + format(limits[i]) : dani) + ((i !== limits.length - 1 && limits[i + 1] !== null) ? ' < ' + format(limits[i + 1]) : (limits[i] !== null) ? '  <' : '')}
                                 </p>
                             )
@@ -110,7 +112,8 @@ class Legend extends PureComponent  {
                                 <p key={ i }
                                    onClick={::this.handleChange}
                                    id={i}>
-                                    <i className={ !check[i] ? 'fa-2x fa fa-eye-slash' : "fa-2x fa fa-eye" } aria-hidden="true"/>
+                                    <i className={ !check[i] ? 'fa-2x fa fa-eye-slash' : "fa-2x fa fa-eye" }
+                                       aria-hidden="true"/>
                                     <span>
                                     <span className="icon"/>
                                     <span
