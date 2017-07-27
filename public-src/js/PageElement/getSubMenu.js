@@ -12,10 +12,8 @@ class SubMenu extends PureComponent {
     getMap(e, firstMap) {
         let mapName = e !== null ? e.target.value : firstMap;
         let arr = this.props.main.fields[mapName];
-        console.log('arr >>', arr)
         const {claster} = this.props.map_reducer;
         const {range_item, range_items} = this.props.main;
-        
         const {getMapData, show_claster, set_data_bubble} = this.props.MapActions;
         const {set_submenu_item, toggle_Popup_Fullsize} = this.props.Actions;
         
@@ -67,7 +65,6 @@ class SubMenu extends PureComponent {
         if (submenu_item == '' && itemMenu !== null) {
             this.getMap(null, itemMenu)
         }
-
     }
 
     render() {
