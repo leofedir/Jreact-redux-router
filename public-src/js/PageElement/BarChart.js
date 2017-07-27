@@ -18,46 +18,22 @@ let storeParametr;
 let myChart = null;
 let dataStore = {};
 
-// Highcharts.Point.prototype.highlight = function (event) {
-//     this.onMouseOver(); // Show the hover marker
-//     // this.series.chart.tooltip.refresh(); // Show the tooltip
-//     this.series.chart.xAxis[0].drawCrosshair(event, this); // Show the crosshair
-// };
-//
-// // Highcharts.Pointer.prototype.reset = function () {
-// //     return undefined;
-// // };
-//
-// function syncExtremes(e) {
-//     let thisChart = this.chart;
-//
-//     if (e.trigger !== 'syncExtremes') { // Prevent feedback loop z
-//         Highcharts.each(Highcharts.charts, function (chart) {
-//             if (chart !== thisChart) {
-//                 if (chart.xAxis[0].setExtremes) { // It is null while updating
-//                     chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {trigger: 'syncExtremes'});
-//                 }
-//             }
-//         });
-//     }
-// }
-
 class BarChart extends PureComponent {
 
     toggleChart() {
-
         const {barChartToggle} = this.props.MapActions;
         barChartToggle(this.props.map_reducer.bar_chart_full);
         if (!this.props.map_reducer.bar_chart_full) {
             document.body.style.overflow = 'hidden'
+            this.refs.fullChart.onscroll = e => {
+                console.log("scrolling", e.srcElement.scrollTop);
+            };
         } else {
-            document.body.style.overflow = 'auto'
+            document.body.style.overflow = 'auto';
         }
     }
 
     createChart(full = null) {
-
-
         const {alias, data_success, dataChartRegion, curency} = this.props.map_reducer;
         const {range_item, range_items, submenu_item, item_name} = this.props.main;
         let curent_year = range_items[range_item] || 'year_13';
@@ -65,7 +41,6 @@ class BarChart extends PureComponent {
         let parametr;
 
         if (data_success && propertiesMain && dataChartRegion) {
-
             storeParametr = submenu_item + curency.toLowerCase() + curent_year;
 
             if ('__district' in propertiesMain) {
@@ -75,17 +50,13 @@ class BarChart extends PureComponent {
             }
 
             myCurency = curency.toLowerCase()
-
             let district = {};
 
             if (!dataStore[storeParametr + '__district'] && '__district' in propertiesMain) {
-
                 dataStore[storeParametr + '__district'] = [];
                 propertiesMain.__district.forEach(item => {
                     district[item.properties.koatuu.slice(0, 2)] ? '' : district[item.properties.koatuu.slice(0, 2)] = [];
-
                     let _item = district[item.properties.koatuu.slice(0, 2)];
-
                     _item.push([item.properties.name_ua, +item.properties[myCurency + curent_year]])
 
                 });
@@ -119,7 +90,6 @@ class BarChart extends PureComponent {
                 // sort data to enable labels
                 propertiesMain.__region.sort((a, b) => b.properties[myCurency + curent_year] - a.properties[myCurency + curent_year]);
                 let i = 1;
-
                 dataStore[storeParametr + '__region'] = propertiesMain.__region.map(item => {
                     let obj = {};
                     obj.name = item.properties.name_ua + `  (${ i })`;
@@ -192,17 +162,13 @@ class BarChart extends PureComponent {
             });
         }
         else if (data_success && propertiesMain && '__district' in propertiesMain && !dataChartRegion) {
-
             parametr = curency == '' ? propertiesMain.__district[0].properties.parameter : curency
             myCurency = curency.toLowerCase()
-
             storeParametr = submenu_item + curency.toLowerCase() + curent_year;
 
             if (!dataStore[storeParametr]) {
-
                 propertiesMain.__district.sort((a, b) => b.properties[myCurency + curent_year] - a.properties[myCurency + curent_year]);
                 let i = 1;
-
                 dataStore[storeParametr] = propertiesMain.__district.map(item => {
                     let obj = {};
                     obj.name = item.properties.name_ua + `  (${ i })`;
@@ -268,42 +234,29 @@ class BarChart extends PureComponent {
     }
 
     componentDidUpdate() {
-
         this.createChart(this.props.map_reducer.bar_chart_full)
-        // this.props.map_reducer.chart3 !== null ? this.getMultiChart() : null
     }
+
     componentDidMount() {
-        console.log('update')
         if (this.props.map_reducer.compareSet.size <= 2) {
             setTimeout(() => {
                 this.createChart()
             }, 200)
 
         }
-        // this.createChart()
     }
 
     componentWillUpdate() {
-        this.createChart(this.props.map_reducer.bar_chart_full)
+        this.createChart(this.props.map_reducer.bar_chart_full);
         window.scrollTo(0,0);
     }
 
-    // toggleChartData() {
-    //     this.props.MapActions.toggle_data(this.props.map_reducer.dataChartRegion)
-    // }
-
     render() {
-        const {bar_chart_full, chart3, dataChartRegion, data_success, bubble_chart_full, chart_full, claster} = this.props.map_reducer;
-        // const chartDiv = <div ref="multiChart" className="multiChart" onMouseMove={::this.handlerOnMouseMove}>
-        //     <div id="chart0" className="item_bar_chart"/>
-        //     <div id="chart1" className="item_bar_chart"/>
-        //     <div id="chart2" className="item_bar_chart"/>
-        // </div>;
+        const {bar_chart_full, chart3, bubble_chart_full, chart_full} = this.props.map_reducer;
         const chartStyle = (bubble_chart_full || chart_full) ? `disabled` : ``;
 
         return (
-            <div className={bar_chart_full ? `chart_2 barChart_full` : `chart_2 ${chartStyle}`}>
-                {/*Title for right Trend BarChart*/}
+            <div ref='fullChart' className={bar_chart_full ? `chart_2 barChart_full` : `chart_2 ${chartStyle}`}>
                 <div className="item_header" >
                     <div className="map_heder_title">
                         {chart3 || !propertiesMain ? 'Тренд' : 'Діаграма-рейтинг (ТОП-5)'}
@@ -312,17 +265,7 @@ class BarChart extends PureComponent {
                         <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"/>
                     </div>
                 </div>
-
-                {/*Right Trend BarChart*/}
                 <div className="item_content">
-                    {/*<div className="region_toggle"*/}
-                         {/*style={propertiesMain === null && !data_success || claster ? {display: 'none'} : {display: 'block'}}*/}
-                         {/*onClick={::this.toggleChartData}>*/}
-                        {/*<div className="region_toggle_item">Області*/}
-                            {/*{chart3 ? '' :*/}
-                                {/*<i className={ !dataChartRegion ? "fa fa-toggle-on" : 'fa fa-toggle-on fa-flip-horizontal' }/>}Райони*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
                     <div ref='chartDiv' id="item_bar_chart" className="item_bar_chart">
                         {chart3 !== null ? chartDiv : null}
                     </div>
