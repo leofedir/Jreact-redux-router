@@ -459,10 +459,26 @@ class Map extends PureComponent {
             showCompareFunc(!showCompare)
         }
     }
+    
+    hoverTooltip() {
+        const {compareSet} = this.props.map_reducer;
+        if (this.refs.uiCompareTooltip) {
+            if (compareSet.size < 2) {
+                this.refs.uiCompareTooltip.className = 'hovering-tooltip-compare'
+            } else {
+                this.refs.uiCompareTooltip.className += ' disabled'
+            }
+        }
+    }
+    
+    unhoverTooltip() {
+        this.refs.uiCompareTooltip.className += ' disabled'
+    }
 
     render() {
         const {fetching} = this.props.main;
         const {curentMap, compareSet} = this.props.map_reducer;
+        
         return (
             <div className="block block-top block_map">
                 <div className="item_header icon-container">
@@ -473,7 +489,13 @@ class Map extends PureComponent {
                 <div id="map_wrapper" className="map_wrapper">
                     <div id="loader" className={fetching ? "show" : ''}/>
                     <i className="fa fa-balance-scale icon_grt_compare " aria-hidden="true"
-                       onClick={::this.clickOnCompare}>
+                       onClick={::this.clickOnCompare} onMouseOver={::this.hoverTooltip}
+                       onMouseOut={::this.unhoverTooltip}>
+                        
+                        <div className="hovering-tooltip-compare disabled" ref="uiCompareTooltip">
+                            <p>Додайте більше ніж один елемент для порівняння</p>
+                        </div>
+                        
                         {compareSet.size === 0 ? '' : <span className="compare_count">{compareSet.size}</span>}
                     </i>
                     <i className="fa fa-plus fa-1x zoom_in_icon" onClick={::this.zoom_in} id="zoom_in"/>
