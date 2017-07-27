@@ -6,7 +6,7 @@ import {checkStatus, parseJSON} from './checkJSON';
 import {set_Range_items, set_legend_data} from './REDUX/actions/actions'
 import {clickOnFeature, set_Hover_Color, set_isAllData, isAtoLayer, toggle_data} from './REDUX/actions/get_map_area'
 import {store} from './index';
-import {coordinate} from './PageElement/Map'
+// import {coordinate} from './PageElement/Map'
 import {LightenDarkenColor, rgbToHex} from './utils/colors'
 import {refsThisLegend} from './PageElement/Legend'
 import {searchControlPoint} from './renderClaster/claster'
@@ -244,28 +244,49 @@ export default function getMap(properties, rebuild = true, isRegion) {
         });
     }
 
-    function joinGeometry(cordinate) {
-        let i;
-        let len = data.length;
+    function joinGeometry(name) {
+        let checkDB = indexedDB.open("coordinates")
+        checkDB.onsuccess = function(e) {
+            let db = e.target.result;
+            let transaction = db.transaction(["geometry"]);
+            let objectStore = transaction.objectStore("geometry");
+            let request = objectStore.get(name);
+            request.onerror = function(event) {
+                // Handle errors!
+            };
+            request.onsuccess = function(event) {
+                // Do something with the request.result!
+                let cordinate = JSON.parse(request.result.coordinate)
+                let i;
+                let len = data.length;
 
-        for (i = 0; i < len; i++) {
-            data[i].geometry = cordinate[data[i].id];
+                for (i = 0; i < len; i++) {
+                    data[i].geometry = cordinate[data[i].id];
+                }
+                renderLayer();
+            };
+
+        }
+
+        checkDB.onerror = function(e) {
+            console.log('onerror  >>', e)
+
         }
     }
 
     randColor = rebuild ? getRandomColorLayer() : randColor;
     // join geometry
     if (isRegion) {
-        joinGeometry(coordinate.region)
+        joinGeometry('region')
     }
     else if ('__district' in propertiesMain){
-        joinGeometry(coordinate.district)
+        joinGeometry('district')
     }
     else if ('__otg' in propertiesMain){
-        joinGeometry(coordinate.otg)
+        joinGeometry("otg")
     }
     else if ('__settelments' in propertiesMain){
-        joinGeometry(coordinate.settelments)
+        joinGeometry("settelments")
     }
 
     function renderLayer() {
@@ -365,8 +386,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
         Lmap.addControl(searchControlArea);  //inizialize search control
 
         function onMouseout(e) {
-            console.log(e);
-            
+
             let state = store.getState();
             const {selectedArea, compareSet} = state.map_reducer;
             let item = e.target;
@@ -428,7 +448,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
                         const hexRef = rgbToHex(elI.style.backgroundColor);
                         const lighterRef = LightenDarkenColor(hexRef, +50);
 
-
                         if (c === hexRef || c === lighterRef) {
                             elI.style.marginLeft = '-3px';
                             elI.style.width = '42px';
@@ -450,13 +469,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
             if (item.feature.id === selectedArea) {
                 return
             }
-
-            // choroplethLayer.eachLayer(layer => {
-            //     console.log('eachLayer')
-            //     if (layer.feature.id === selectedArea) {
-            //         choroplethLayer.resetStyle(layer)
-            //     }
-            // });
 
             const bounds = item.getBounds();
             if (searchItem !== null) {
@@ -514,6 +526,6 @@ export default function getMap(properties, rebuild = true, isRegion) {
         renderSelectedArea();
     }
 
-    renderLayer();
+    // renderLayer();
     // getAto(range_item);
 }

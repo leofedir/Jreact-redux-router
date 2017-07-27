@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../REDUX/actions/actions';
 import * as MapActions from '../REDUX/actions/get_map_area';
-import Dexie from 'dexie';
+// import Dexie from 'dexie';
 
 import {checkStatus, parseJSON} from '../checkJSON';
 import L from 'leaflet';
@@ -13,7 +13,7 @@ import getMap from './../getMapArea';
 
 export let Lmap = null;
 export let ukraine = null;
-export let coordinate = {};
+// export let coordinate = {};
 
 let icon = L.icon({
     iconUrl: '/img/marker-icon.svg',
@@ -28,6 +28,7 @@ let curentMap = null;
 let cadastral = null;
 let _curentMap = null;
 let _submenu_item = null;
+let objectStore = null;
 
 //add two finger scroll
 
@@ -238,54 +239,84 @@ class Map extends PureComponent {
         // add event to map actions
         Lmap.on('mousemove', onMouseMove);
 
-        fetch('main', {
-            method: 'post',
-            body: ''
-        })
-            .then(checkStatus)
-            .then(parseJSON)
-            .then(data => {
-                let myStyle = {
-                    "color": "#009971",
-                    "weight": 2,
-                    "opacity": .9
-                };
-                ukraine = L.geoJSON(data[1], {
+        let ukraineCoordinate = null;
+        let myStyle = {
+            "color": "#009971",
+            "weight": 2,
+            "opacity": .9
+        };
+
+
+        let checkDB = indexedDB.open("coordinates")
+        checkDB.onsuccess = function(e) {
+            let db = e.target.result;
+            let transaction = db.transaction(["geometry"]);
+            let objectStore = transaction.objectStore("geometry");
+            let request = objectStore.get("ukraine");
+            request.onerror = function(e) {
+                console.log('onerror >>', e)
+            };
+            request.onsuccess = function() {
+                // Do something with the request.result!
+                ukraine = L.geoJSON(JSON.parse(request.result.coordinate), {
                     style: myStyle
                 });
                 Lmap.addLayer(ukraine)
-            });
-        // var db = new Dexie("CoordinateDatabase");
-        // db.version(1).stores({
-        //     coordinate: "++id,name,coordinate",
-        // });
-        //
-        // console.log(Dexie.exists("FriendDatabase"))
+            };
 
-        fetch('region', {
-            method: 'post',
-            body: 'table=geojson'
-        })
-            .then(checkStatus)
-            .then(parseJSON)
-            .then(data => {
-                coordinate = data;
-                //
-                // Declare Database
-                //
+            set_data_district();
+        }
+        checkDB.onerror = function(e) {
+            console.log('onerror  >>', e)
+        }
+        checkDB.onupgradeneeded = function(e) {
+            let db = e.target.result;
+            let objectStore = db.createObjectStore("geometry", {keyPath: "name"});
+            objectStore.createIndex("coordinate", "coordinate", {unique: false});
 
+            fetch('main', {
+                method: 'post',
+                body: ''
+            })
+                .then(checkStatus)
+                .then(parseJSON)
+                .then(data => {
+                    ukraineCoordinate = data[1]
+                    ukraine = L.geoJSON(data[1], {
+                        style: myStyle
+                    });
+                    Lmap.addLayer(ukraine)
+                });
 
-                //
-                // Manipulate and Query Database
-                //
+            fetch('region', {
+                method: 'post',
+                body: 'table=geojson'
+            })
+                .then(checkStatus)
+                .then(parseJSON)
+                .then(data => {
+                    let coordinate = data;
+                    let transaction = db.transaction(["geometry"], "readwrite");
+                    // Do something when all the data is added to the database.
+                    transaction.oncomplete = function(event) {
+                        console.log("All done!");
+                        set_data_district();
+                    };
 
-                // db.coordinate.add({name: 'region', coordinate: JSON.stringify(coordinate.region)});
-                // db.coordinate.add({name: 'district', coordinate: JSON.stringify(coordinate.district)});
-                // db.coordinate.add({name: 'otg', coordinate: JSON.stringify(coordinate.otg)});
-                // db.coordinate.add({name: 'settelments', coordinate: JSON.stringify(coordinate.settelments)});
+                    transaction.onerror = function(event) {
+                        console.log("error!");
+                        set_data_district();
+                    };
 
-                set_data_district();
-            });
+                    objectStore = transaction.objectStore("geometry");
+
+                    objectStore.add({name: 'region', coordinate: JSON.stringify(coordinate.region)});
+                    objectStore.add({name: 'district', coordinate: JSON.stringify(coordinate.district)});
+                    objectStore.add({name: 'otg', coordinate: JSON.stringify(coordinate.otg)});
+                    objectStore.add({name: 'settelments', coordinate: JSON.stringify(coordinate.settelments)});
+                    objectStore.add({name: 'ukraine', coordinate: JSON.stringify(ukraineCoordinate)});
+                });
+        };
 
         kadastr = L.tileLayer.wms("http://212.26.144.110/geowebcache/service/wms", {
             layers: 'kadastr',
@@ -406,10 +437,12 @@ class Map extends PureComponent {
         } else {
             let button = [];
             maps.some(i => ~i.indexOf('__region')) ?
-                button.push(<p key="1" onClick={::this.hendlerChangeOT} id='region' ref="region" className="button_change_TO">Області</p> ) : ''
+                button.push(<p key="1" onClick={::this.hendlerChangeOT} id='region' ref="region"
+                               className="button_change_TO">Області</p>) : ''
 
             maps.some(i => ~i.indexOf('__district')) ?
-                button.push(<p key="2" onClick={::this.hendlerChangeOT} id='district' ref="district" className="button_change_TO">Райони</p> ) : ''
+                button.push(<p key="2" onClick={::this.hendlerChangeOT} id='district' ref="district"
+                               className="button_change_TO">Райони</p>) : ''
             return (
                 <div className="buttons_change_TO">
                     {button}
