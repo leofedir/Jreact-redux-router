@@ -162,7 +162,7 @@ class Compare extends Component {
             tooltip: {
                 shared: true,
                 hideDelay: 100,
-                // valueSuffix: ' ' + tooltipParametr,
+                // valueSuffix: ' ' + tooltipParametr ,
                 formatter: function () {
                     var s = [];
                     let d = Object.values(this.points).sort(function (a, b) {
