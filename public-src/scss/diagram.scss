@@ -83,6 +83,41 @@
 .icon-container {
   position: relative;;
 }
+
+.to-top-button {
+  position: fixed;
+  top: 135px;
+  left: 12px;
+  opacity: .5;
+  //background: red;
+  //width: 100px;
+  //height: 30px;
+  //border-radius: 16px;
+  //color: white;
+  //font-weight: bold;
+  //font-family: "Open-sans", sans-serif;
+  z-index: inherit;
+  cursor: pointer;
+  transition: .5s;
+
+  &:hover {
+    opacity: .9;
+  }
+
+  &:hover, &:focus{
+    outline: none;
+  }
+
+  .fa-arrow-up {
+    top: 5px !important;
+    left: 6px !important;
+  }
+}
+
+
+.invisibility {
+  opacity: 0;
+}
 //
 //.highcharts-drilldown-data-label text tspan {
 //  text-decoration: none;

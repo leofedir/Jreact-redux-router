@@ -27,6 +27,12 @@ class BarChart extends PureComponent {
             document.body.style.overflow = 'hidden'
             this.refs.fullChart.onscroll = e => {
                 console.log("scrolling", e.srcElement.scrollTop);
+            
+                if (e.srcElement.scrollTop > 500) {
+                    this.refs.toTopButton.className = "to-top-button"
+                } else if (this.refs.toTopButton.className === "to-top-button" && e.srcElement.scrollTop < 2000){
+                    this.refs.toTopButton.className += " invisibility"
+                }
             };
         } else {
             document.body.style.overflow = 'auto';
@@ -250,18 +256,32 @@ class BarChart extends PureComponent {
         this.createChart(this.props.map_reducer.bar_chart_full);
         window.scrollTo(0,0);
     }
+    
+    
+    scrollToTop() {
+        console.log('scroll top');
+        console.log(this.refs.fullChart)
+        this.refs.fullChart.scrollTop = 0;
+    }
 
     render() {
         const {bar_chart_full, chart3, bubble_chart_full, chart_full} = this.props.map_reducer;
         const chartStyle = (bubble_chart_full || chart_full) ? `disabled` : ``;
-
         return (
             <div ref='fullChart' className={bar_chart_full ? `chart_2 barChart_full` : `chart_2 ${chartStyle}`}>
+                <span  ref="toTopButton" className="fa-stack fa-lg  trans disabled"  onClick={::this.scrollToTop}>
+                    <i className="fa fa-circle fa-stack-2x"></i>
+                    <i className="fa fa-arrow-up fa-stack-1x fa-inverse"></i>
+                </span>
+               
+     
+                {/*<button className="to-top-button " onClick={::this.scrollToTop}>Up</button>*/}
+                
                 <div className="item_header" >
                     <div className="map_heder_title">
                         {chart3 || !propertiesMain ? 'Тренд' : 'Діаграма-рейтинг (ТОП-5)'}
                     </div>
-                    <div className="icon-container" onClick={ ::this.toggleChart }>
+                    <div className="icon-container" onClick={::this.toggleChart }>
                         <i className="fa fa-expand fa-1x menu_ico ico_map_full ico_hover"/>
                     </div>
                 </div>
