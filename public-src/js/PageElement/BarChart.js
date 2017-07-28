@@ -28,7 +28,7 @@ class BarChart extends PureComponent {
             this.refs.fullChart.onscroll = e => {
                 console.log("scrolling", e.srcElement.scrollTop);
             
-                if (e.srcElement.scrollTop > 2000) {
+                if (e.srcElement.scrollTop > 500) {
                     this.refs.toTopButton.className = "to-top-button"
                 } else if (this.refs.toTopButton.className === "to-top-button" && e.srcElement.scrollTop < 2000){
                     this.refs.toTopButton.className += " invisibility"
@@ -261,7 +261,7 @@ class BarChart extends PureComponent {
     scrollToTop() {
         console.log('scroll top');
         console.log(this.refs.fullChart)
-        scrollTo(document.body, this.refs.fullChart, 100);
+        this.refs.fullChart.scrollTop = 0;
     }
 
     render() {
@@ -269,7 +269,13 @@ class BarChart extends PureComponent {
         const chartStyle = (bubble_chart_full || chart_full) ? `disabled` : ``;
         return (
             <div ref='fullChart' className={bar_chart_full ? `chart_2 barChart_full` : `chart_2 ${chartStyle}`}>
-                <button ref="toTopButton" className="to-top-button trans invisibility" onClick={::this.scrollToTop}>Up</button>
+                <span  ref="toTopButton" className="fa-stack fa-lg  trans disabled"  onClick={::this.scrollToTop}>
+                    <i className="fa fa-circle fa-stack-2x"></i>
+                    <i className="fa fa-arrow-up fa-stack-1x fa-inverse"></i>
+                </span>
+               
+     
+                {/*<button className="to-top-button " onClick={::this.scrollToTop}>Up</button>*/}
                 
                 <div className="item_header" >
                     <div className="map_heder_title">
