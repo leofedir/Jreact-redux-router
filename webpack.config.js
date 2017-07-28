@@ -90,7 +90,8 @@ const config = {
             "/ato": "http://localhost:8000",
             "/info": "http://localhost:8000",
             "/kadastr": "http://localhost:8000",
-            "/test": "http://localhost:8000"
+            "/test": "http://localhost:8000",
+
         }
     },
     resolve: {

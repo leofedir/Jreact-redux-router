@@ -5,7 +5,7 @@ const router = require('express').Router(),
     claster = require('./claster'),
     GeoJson = require('../libs/createGeoJson'),
     compression = require('compression');
-var fs = require('fs');
+
 
 let geometry = {};
 let data_buble = {};
@@ -23,6 +23,57 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({
     extended: true
 }));
+
+
+
+
+router.get('/',function (req, res, next) {
+
+    if(req.session && req.session.cookie.secure==1 ){
+        res.render('index.html');
+    }else{
+        res.redirect('/login');
+    }
+
+
+});
+
+
+
+
+
+
+
+
+router.get('/login',function (req, res, next) {
+  console.log(req.session);
+    res.render('form.html');
+
+});
+
+
+
+router.get('/exit',function (req, res, next) {
+    req.session.cookie.secure=false;
+  //  req.session.save();
+    res.redirect('/');
+
+});
+
+
+
+
+router.post('/login',function (req, res, next) {
+    console.log(req.body);
+    if( req.body.p =='12345' && req.body.u=='admin'){
+        req.session.cookie.secure=true;
+       // req.session.pass.save();
+    }
+
+    res.redirect('/');
+});
+
+
 
 router.post('/main', function (req, res) {
     GeoJson.queryBase(req.originalUrl, 'borders', res);
@@ -173,5 +224,13 @@ router.post('/kadastr', function (req, res) {
 });
 
 demografiya(router);
-claster(router)
+claster(router);
+
+router.use('/*',(req,res)=>{
+
+    res.redirect('/');
+})
+
+
+
 module.exports = router;

@@ -27,6 +27,14 @@ let cadastral = null;
 let _curentMap = null;
 let _submenu_item = null;
 
+// проверяем существования префикса.
+window.indexedDB ? '':  window.indexedD =window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+// НЕ ИСПОЛЬЗУЙТЕ "var indexedDB = ..." вне функции.
+// также могут отличаться и window.IDB* objects: Transaction, KeyRange и тд
+window.IDBTransaction ? '' : window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+window.IDBKeyRange ? '' : window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+// (Mozilla никогда не создавала префиксов для объектов, поэтому window.mozIDB* не требуется проверять)
+
 //add two finger scroll
 L.WheelPanHandler = L.Handler.extend({
     addHooks: function () {
