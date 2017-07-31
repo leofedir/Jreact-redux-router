@@ -65,7 +65,7 @@ router.get('/exit',function (req, res, next) {
 
 router.post('/login',function (req, res, next) {
     console.log(req.body);
-    if( req.body.p =='12345' && req.body.u=='admin'){
+    if( req.body.p =='05071962' && req.body.u=='admin'){
         req.session.cookie.secure=true;
        // req.session.pass.save();
     }
