@@ -18,14 +18,11 @@ const geometryQuery = [
 
 router.use(compression({
     level: 4
-}))
+}));
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({
     extended: true
 }));
-
-
-
 
 router.get('/',function (req, res, next) {
 
@@ -34,46 +31,26 @@ router.get('/',function (req, res, next) {
     }else{
         res.redirect('/login');
     }
-
-
 });
 
-
-
-
-
-
-
-
-router.get('/login',function (req, res, next) {
-  console.log(req.session);
+router.get('/login',function (req, res) {
     res.render('form.html');
-
 });
 
-
-
-router.get('/exit',function (req, res, next) {
+router.get('/exit',function (req, res) {
     req.session.cookie.secure=false;
   //  req.session.save();
     res.redirect('/');
 
 });
 
-
-
-
-router.post('/login',function (req, res, next) {
-    console.log(req.body);
+router.post('/login',function (req, res) {
     if( req.body.p =='05071962' && req.body.u=='admin'){
         req.session.cookie.secure=true;
        // req.session.pass.save();
     }
-
     res.redirect('/');
 });
-
-
 
 router.post('/main', function (req, res) {
     GeoJson.queryBase(req.originalUrl, 'borders', res);
@@ -141,7 +118,6 @@ router.post('/data_bubble', function (req, res) {
 
                 let myData = d.map(item => {
                     let mySet = {};
-
                     mySet.country = item.name_ua;
                     mySet.name = item.alias;
                     mySet.y = +item.area;
@@ -155,7 +131,6 @@ router.post('/data_bubble', function (req, res) {
                 res.json(data_buble[year]);
             })
     }
-
 });
 
 router.post('/ato', function (req, res) {
@@ -227,10 +202,7 @@ demografiya(router);
 claster(router);
 
 router.use('/*',(req,res)=>{
-
     res.redirect('/');
-})
-
-
+});
 
 module.exports = router;
