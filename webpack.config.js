@@ -78,7 +78,7 @@ const config = {
         compress: true,
         hot: true,
         stats: {colors: true},
-        contentBase: path.join(__dirname, "public-src"),
+        contentBase: path.join(__dirname, "public-src/views"),
         proxy: {
             "/main": "http://localhost:8000",
             "/region": "http://localhost:8000",
@@ -90,8 +90,8 @@ const config = {
             "/ato": "http://localhost:8000",
             "/info": "http://localhost:8000",
             "/kadastr": "http://localhost:8000",
-            "/test": "http://localhost:8000",
-
+            "/views": "http://localhost:8000",
+            "/": "http://localhost:8000"
         }
     },
     resolve: {

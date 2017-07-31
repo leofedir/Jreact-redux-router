@@ -25,7 +25,6 @@ router.use(bodyParser.urlencoded({
 }));
 
 router.get('/',function (req, res, next) {
-
     if(req.session && req.session.cookie.secure==1 ){
         res.render('index.html');
     }else{
