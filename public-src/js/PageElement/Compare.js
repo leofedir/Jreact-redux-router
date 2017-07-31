@@ -75,14 +75,12 @@ class Compare extends Component {
         
         if (compareSet.size < 2) {
             
-            //code chunk for resetStyling last element when remove area from compare
-            compareSet.forEach(i => {
+            // code chunk for resetStyling last element when remove area from compare
                 choroplethLayer.eachLayer(item => {
-                    if (item.feature.id == i.id) {
+                    if (item.feature.id == compareSet.values().id) {
                         choroplethLayer.resetStyle(item);
                     }
-                })
-            })
+                });
             
             if (showCompare) {
                 compareSet.clear()
