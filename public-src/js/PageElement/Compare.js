@@ -72,13 +72,23 @@ class Compare extends Component {
         const {showCompareFunc} = this.props.Actions;
         
         click_on_compare_feature(compareSet, e);
-    
-    
+        
         if (compareSet.size < 2) {
+            
+            //code chunk for resetStyling last element when remove area from compare
+            compareSet.forEach(i => {
+                choroplethLayer.eachLayer(item => {
+                    if (item.feature.id == i.id) {
+                        choroplethLayer.resetStyle(item);
+                    }
+                })
+            })
+            
             if (showCompare) {
                 compareSet.clear()
             }
-        
+            
+           
             showCompareFunc(false);
         }
         
