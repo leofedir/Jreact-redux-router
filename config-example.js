@@ -12,5 +12,9 @@ module.exports = {
         min: 10, //set min pool size to 4
         idleTimeoutMillis: 30000 ,
         application_name: 'gisportal'
+    },
+    mc: {
+        host: '192.168.30.11:11211',
+        options: ''
     }
 };

@@ -6,7 +6,6 @@ const router = require('express').Router(),
     GeoJson = require('../libs/createGeoJson'),
     compression = require('compression');
 
-
 let geometry = {};
 let data_buble = {};
 const geometryQuery = [

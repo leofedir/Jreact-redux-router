@@ -8,7 +8,6 @@ module.exports = function (router) {
 
     router.post('/getmapdata', function (req, res) {
         let { table, arr} = req.body;
-
         table = table.split(',');
         arr = arr.split(',');
         if (req.body.table in dataObj) {
