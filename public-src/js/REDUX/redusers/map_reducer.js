@@ -59,7 +59,8 @@ const initialState = {
     isAtoLayer: false,
     selectedArea: null,
     baseMap: 'Topographic',
-    compareSet: new Map()
+    compareSet: new Map(),
+    searchItem: null
 };
 
 export default function map(state = initialState, action) {
@@ -87,7 +88,7 @@ export default function map(state = initialState, action) {
             return {...state, bubble_chart_full: action.payload};
 
         case CLICK_ON_FEATURE:
-            return {...state, feature: action.payload.feature, selectedArea: action.payload.selectedArea};
+            return {...state, feature: action.payload.feature, selectedArea: action.payload.selectedArea, searchItem: action.payload.searchItem};
 
         case CLICK_ON_FEATURE_CLASTER:
             return {...state, feature_claster: action.payload};

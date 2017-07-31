@@ -184,9 +184,9 @@ class Map extends PureComponent {
         }
 
         if (id == 'region' && maps.some(a => ~a.indexOf('__region'))) {
-            target.classList.add('active')
-            this.refs.district.classList.remove('active')
-            getMap(null, false, true)
+            target.classList.add('active');
+            this.refs.district.classList.remove('active');
+            getMap(null, false, true);
 
             // toggle BarChart
             this.props.MapActions.toggle_data(this.props.map_reducer.dataChartRegion)
