@@ -72,13 +72,21 @@ class Compare extends Component {
         const {showCompareFunc} = this.props.Actions;
         
         click_on_compare_feature(compareSet, e);
-    
-    
+        
         if (compareSet.size < 2) {
+            
+            // code chunk for resetStyling last element when remove area from compare
+                choroplethLayer.eachLayer(item => {
+                    if (item.feature.id == compareSet.values().id) {
+                        choroplethLayer.resetStyle(item);
+                    }
+                });
+            
             if (showCompare) {
                 compareSet.clear()
             }
-        
+            
+           
             showCompareFunc(false);
         }
         
@@ -168,10 +176,25 @@ class Compare extends Component {
                     let d = Object.values(this.points).sort(function (a, b) {
                         return b.y - a.y
                     });
+                    
                     d.map(i => {
+                        //
+                        let str = i.y.toString();
+                        let newS = "";
+    
+                        for (let j = str.length-1; j > -1; j--) {
+                            if (j%3===0) {
+                                newS+= " "+str[j]
+                            } else {
+                                newS+=str[j]
+                            }
+                        }
+                        let result = newS.split('').reverse().join('').trim();
+                        //
+                       
                         let fillColor = i.color;
                         s.push(`<tspan style="fill:${fillColor}" x="8" dy="15">●</tspan> ` + '<span>' + i.series.name + ' : ' +
-                            i.y + '</span>' + '<span> ' + tooltipParametr + '</span>' + '<br>');
+                            result + '</span>' + '<span> ' + tooltipParametr + '</span>' + '<br>');
                     });
                     return s
                 }

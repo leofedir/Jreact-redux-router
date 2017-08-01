@@ -368,23 +368,27 @@ export default function getMap(properties, rebuild = true, isRegion) {
         });
 
         searchControlArea.on('search:locationfound', function (e) {
+            const {searchItem}  = state.map_reducer;
             const bounds = e.layer._bounds;
+            
             if (searchItem !== null) {
                 choroplethLayer.resetStyle(searchItem);
             }
-            store.dispatch(clickOnFeature(e.layer.feature.properties, e.layer.feature.properties.id)) // call click action
-            searchItem = e.layer;
-            let color = searchItem.options.fillColor;
+            let nextSearchItem = e.layer;
+            console.log(e.layer)
+            store.dispatch(clickOnFeature(e.layer.feature.properties, e.layer.feature.properties.id, nextSearchItem))// call click action
+           
+            let color = nextSearchItem.options.fillColor;
             let newColor = LightenDarkenColor(color, +50);
             if (layer !== null) {
                 choroplethLayer.resetStyle(layer);
             }
-
-            searchItem.setStyle({
+    
+            nextSearchItem.setStyle({
                 fillColor: newColor,
                 weight: 3
             });
-            searchItem.bindTooltip(searchItem.feature.properties.name_ua, {
+            nextSearchItem.bindTooltip(nextSearchItem.feature.properties.name_ua, {
                 direction: 'top',
                 sticky: true
             }).openTooltip();
@@ -393,7 +397,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 padding: [10, 10]
             });
             setTimeout(() => {
-                searchItem.closeTooltip()
+                nextSearchItem.closeTooltip()
             }, 2000)
         });
         console.log('Lmap >>', Lmap.options.attributionControl)
@@ -479,7 +483,9 @@ export default function getMap(properties, rebuild = true, isRegion) {
 
         function whenClicked(e) {
             let state = store.getState();
-            const {selectedArea, compareSet} = state.map_reducer;
+            const {selectedArea, compareSet, searchItem} = state.map_reducer;
+            let nextSearchItem = searchItem ? Object.assign({}, searchItem) : null;
+            
             const item = e.target;
 
             if (item.feature.id === selectedArea) {
@@ -487,8 +493,9 @@ export default function getMap(properties, rebuild = true, isRegion) {
             }
 
             const bounds = item.getBounds();
-            if (searchItem !== null) {
-                choroplethLayer.resetStyle(searchItem);
+            if (nextSearchItem !== null) {
+                choroplethLayer.resetStyle(nextSearchItem);
+                nextSearchItem = null;
             }
 
             if (layer === null) {
@@ -513,7 +520,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 padding: [10, 10]
             });
 
-            store.dispatch(clickOnFeature(e.target.feature.properties, e.target.feature.properties.id))
+            store.dispatch(clickOnFeature(e.target.feature.properties, e.target.feature.properties.id, nextSearchItem))
         }
 
 
