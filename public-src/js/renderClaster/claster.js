@@ -69,7 +69,10 @@ export default function claster(data) {
 
     let pulsingIcon = L.icon.pulse({iconSize: [20, 20], color: 'red'});
 
-    myClaster = L.markerClusterGroup({chunkedLoading: true}).addTo(Lmap);
+    myClaster = L.markerClusterGroup({
+        chunkedLoading: true,
+        attribution: '<a href="opendata.ua">opendata.ua</a>'
+    }).addTo(Lmap);
 
     myClaster.on('click', whenClicked);
 

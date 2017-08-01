@@ -224,11 +224,17 @@ class Map extends PureComponent {
         Lmap = L.map('map', {
             zoomControl: false,
             minZoom: 3,
-            renderer: L.canvas()
+            renderer: L.canvas(),
+            attributionControl: false
         }).setView([49, 31], 6);
 
         layer = esri.basemapLayer(baseMap);
         Lmap.addLayer(layer);
+
+        let atribution = L.control.attribution({
+            prefix: '<a href="opendata.ua">opendata.ua</a>'
+        })
+        Lmap.addControl(atribution)
 
         function onMouseMove(e) {
             cordinateContainer.innerHTML = e.latlng.lat.toFixed(3) + "° пн. ш, " + e.latlng.lng.toFixed(3) + "° сх. д."

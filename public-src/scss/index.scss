@@ -27,6 +27,15 @@ body {
   font-weight: 300;
 }
 
+.esri-dynamic-attribution {
+  display: none;
+
+
+}
+a[href="http://leafletjs.com"] {
+  display: none;
+}
+
 .content__wrap {
   display: -webkit-box;
   display: -moz-box;

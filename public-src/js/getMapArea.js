@@ -1,7 +1,7 @@
 import choropleth from './colorRender'
-import {Lmap, ukraine} from "./PageElement/Map";
+import {Lmap} from "./PageElement/Map";
 import esri from 'esri-leaflet/dist/esri-leaflet';
-import {checkStatus, parseJSON} from './checkJSON';
+// import {checkStatus, parseJSON} from './checkJSON';
 
 import {set_Range_items, set_legend_data, finishFething} from './REDUX/actions/actions'
 import {clickOnFeature, set_Hover_Color, toggle_data} from './REDUX/actions/get_map_area'
@@ -323,7 +323,7 @@ export default function getMap(properties, rebuild = true, isRegion) {
             steps: 5,
             mode: 'q',
             smoothFactor: 0,
-            attribution: 'OpenData.ua',
+            attribution: '<a href="opendata.ua">opendata.ua</a>',
             style: {
                 color: randColor.color,
                 weight: 0.2,
@@ -343,8 +343,8 @@ export default function getMap(properties, rebuild = true, isRegion) {
             };
 
             choroplethLayer = L.geoJSON(data, {
-                attribution: 'OpenData.ua',
                 style: myStyle,
+                attribution: '<a href="opendata.ua">opendata.ua</a>',
                 onEachFeature: function (feature, layer) {
                     layer.on(eventsMap)
                 }
@@ -396,6 +396,9 @@ export default function getMap(properties, rebuild = true, isRegion) {
                 searchItem.closeTooltip()
             }, 2000)
         });
+        console.log('Lmap >>', Lmap.options.attributionControl)
+        console.log('choroplethLayer >>', choroplethLayer)
+
         Lmap.addControl(searchControlArea);  //inizialize search control
 
         function onMouseout(e) {
