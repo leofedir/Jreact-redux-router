@@ -1,55 +1,33 @@
 import createLogger from 'redux-logger';
-import { createStore, applyMiddleware, compose } from 'redux';
-import { fromJS } from 'immutable';
+import { createStore, applyMiddleware } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
-import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
 
-const sagaMiddleware = createSagaMiddleware();
 
-export default function configureStore(initialState = {}, history) {
-  const logger = createLogger;
-  const middlewares = [
-    sagaMiddleware,
-    routerMiddleware(history),
-    logger
-  ];
+export default function configureStore( history ) {
+	const initialState = {};
+	const logger = createLogger;
+	const middlewares = [
+		routerMiddleware(history),
+		logger
+	];
 
-  const enhancers = [
-    applyMiddleware(...middlewares),
-  ];
+	const store = createStore(
+		createReducer(),
+		initialState,
+		applyMiddleware(...middlewares)
+	);
 
-  // If Redux DevTools Extension is installed use it, otherwise use Redux compose
-  /* eslint-disable no-underscore-dangle */
-  const composeEnhancers =
-    process.env.NODE_ENV !== 'production' &&
-    typeof window === 'object' &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
-  /* eslint-enable */
+	if (module.hot) {
+		module.hot.accept('./reducers', () => {
+			import('./reducers').then(( reducerModule ) => {
+				const createReducers = reducerModule.default;
+				const nextReducers = createReducers(store.asyncReducers);
 
-  const store = createStore(
-    createReducer(),
-    fromJS(initialState),
-    composeEnhancers(...enhancers)
-  );
+				store.replaceReducer(nextReducers);
+			});
+		});
+	}
 
-  // Extensions
-  store.runSaga = sagaMiddleware.run;
-  store.asyncReducers = {}; // Async reducer registry
-
-  // Make reducers hot reloadable, see http://mxs.is/googmo
-  /* istanbul ignore next */
-  if (module.hot) {
-    module.hot.accept('./reducers', () => {
-      import('./reducers').then((reducerModule) => {
-        const createReducers = reducerModule.default;
-        const nextReducers = createReducers(store.asyncReducers);
-
-        store.replaceReducer(nextReducers);
-      });
-    });
-  }
-
-  return store;
+	return store;
 }

@@ -81,7 +81,8 @@ const config = {
 		compress: true,
 		hot: true,
 		stats: { colors: true },
-		contentBase: path.join(__dirname, "src")
+		contentBase: path.join(__dirname, "src"),
+		historyApiFallback: true,
 		// proxy: {
 		//     "/main": "http://localhost:8000",
 		//     "/region": "http://localhost:8000",
