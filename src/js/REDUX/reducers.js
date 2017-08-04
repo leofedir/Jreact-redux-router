@@ -7,6 +7,7 @@ import { fromJS } from 'immutable';
 import { combineReducers } from 'redux-immutable';
 import { LOCATION_CHANGE } from 'react-router-redux';
 
+
 // Initial routing state
 const routeInitialState = fromJS({
   locationBeforeTransitions: null,

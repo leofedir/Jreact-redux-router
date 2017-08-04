@@ -1,6 +1,3 @@
-/**
- * Create the store with asynchronously loaded reducers
- */
 import createLogger from 'redux-logger';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { fromJS } from 'immutable';

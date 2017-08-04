@@ -11,7 +11,7 @@ class App extends Component {
     render() {
         return (
           <div className="main">
-              <h1 className="top">Hello World</h1>
+              <h1>Hello, World</h1>
           </div>
         );
     }
@@ -20,6 +20,7 @@ class App extends Component {
 function mapStateToProps(state) {
     return {
         main: state.main,
+        map_reducer: state.map_reducer
     }
 }
 

@@ -1,37 +1,32 @@
+import 'react-hot-loader/patch';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import { Router } from 'react-router';
+import {AppContainer} from 'react-hot-loader';
+// AppContainer is a necessary wrapper component for HMR
 
 import App from './App';
+import {Provider} from 'react-redux';
 import configureStore from './REDUX/store';
-import createRoutes from './routes';
 
-const initialState = {};
-const store = configureStore(initialState, BrowserRouter);
+import '../scss/index.scss'
 
-const rootRoute = {
-	component: App,
-	childRoutes: createRoutes(store),
-};
+export const store = configureStore();
 
-const render = () => {
+const rootEl = document.getElementById('root');
+const render = (Component) => {
 	ReactDOM.render(
-		<Provider store={store}>
-			<Router
-				history={history}
-				routes={rootRoute}
-			/>
-		</Provider>,
-		document.getElementById('root')
+		<AppContainer>
+			<Provider store={store}>
+				<Component />
+			</Provider>
+		</AppContainer>, rootEl
 	);
 };
 
+render(App);
+
 if (module.hot) {
 	module.hot.accept('./App', () => {
-		render();
+		render(App)
 	});
 }
-
-
