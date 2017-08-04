@@ -1,11 +1,7 @@
 const webpack = require("webpack");
 const path = require("path");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-const prod = process.argv.indexOf('-p') !== -1;
-
-console.log(prod)
-
+const prod = ~process.argv.indexOf('-p');
 
 const config = {
 
@@ -33,14 +29,6 @@ const config = {
 					loader: "sass-loader" // compiles Sass to CSS
 				}]
 			},
-			// {
-			// 	test: /\.scss$/,
-			// 	use: ExtractTextPlugin.extract({
-			// 		fallback: 'style-loader',
-			// 		//resolve-url-loader may be chained before sass-loader if necessary
-			// 		use: ['css-loader?sourceMap=true', 'sass-loader?sourceMap=true']
-			// 	})
-			// },
 			{
 				test: /\.css$/,
 				use: ["style-loader", "css-loader"],
@@ -66,11 +54,6 @@ const config = {
 
 		new webpack.NamedModulesPlugin(),
 		// prints more readable module names in the browser console on HMR updates
-		// new ExtractTextPlugin({
-		// 	publicPath: __dirname + "/src",
-		// 	filename: "bundle.css",
-		// 	allChunks: true,
-		// }),
 		new webpack.DefinePlugin({
 			'process.env': {
 				NODE_ENV: JSON.stringify(process.env.NODE_ENV),
@@ -103,7 +86,7 @@ const config = {
 	}
 };
 
-if (!prod) {
+if (prod) {
 	config.entry = [
 		'react-hot-loader/patch',
 		// activate HMR for React
