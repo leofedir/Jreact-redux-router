@@ -7,9 +7,6 @@
     "node": "7.4.0"
   },
   "scripts": {
-    "start": "gulp",
-    "server": "node index.js",
-    "pm2": "pm2 start index.js",
     "webpack": "webpack-dev-server",
     "webpack-p": "webpack --color -p"
   },
